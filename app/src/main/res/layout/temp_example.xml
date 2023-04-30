@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="18dp"
+    android:paddingTop="141dp"
+    android:paddingBottom="16dp">
+
+    <TextView
+        android:id="@+id/tv_example_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="smeem"
+        android:textAppearance="@style/TextAppearance.Smeem.Headline1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_example_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="일기로 시작하는 영어 아웃풋 훈련, 스밈입니다."
+        android:textAppearance="@style/TextAppearance.Smeem.Body4.Height22"
+        app:layout_constraintStart_toStartOf="@+id/tv_example_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_example_title"
+        app:layout_constraintWidth_max="214dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_example_correction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?colorSurface"
+        android:layout_marginBottom="20dp"
+        android:paddingVertical="20dp"
+        android:paddingStart="14dp"
+        android:paddingEnd="22dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_example_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_example_correction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30일 전의 일기가 기다리고 있어요!"
+            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_example_correction_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="이전 일기를 첨삭하고 더 어쩌구 해보세요"
+            android:textAppearance="@style/TextAppearance.Smeem.Caption3"
+            app:layout_constraintStart_toStartOf="@id/tv_example_correction"
+            app:layout_constraintTop_toBottomOf="@id/tv_example_correction" />
+
+        <ImageButton
+            android:id="@+id/btn_example_correction"
+            android:layout_width="14dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@color/gray_300"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_example_login"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="이미 계정이 있어요."
+        android:textAppearance="@style/TextAppearance.Smeem.Body4"
+        android:textColor="@color/gray_600"
+        app:layout_constraintBottom_toTopOf="@+id/btn_example_start"
+        app:layout_constraintEnd_toEndOf="@+id/btn_example_start"
+        app:layout_constraintStart_toStartOf="@+id/btn_example_start" />
+
+    <Button
+        android:id="@+id/btn_example_start"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?colorSecondary"
+        android:paddingVertical="20dp"
+        android:text="시작하기"
+        android:textAppearance="@style/TextAppearance.Smeem.Subtitle1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
