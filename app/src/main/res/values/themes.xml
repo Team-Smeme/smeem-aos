@@ -17,5 +17,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?android:colorBackground</item>
 
+        <!-- etc -->
+        <item name="materialButtonStyle">@style/Widget.Smeem.Button</item>
     </style>
 </resources>
