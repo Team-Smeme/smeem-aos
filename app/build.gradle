@@ -18,9 +18,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String","KAKAO_API_KEY",properties['kakao_api_key']
+        buildConfigField "String", "KAKAO_API_KEY", properties['kakao_api_key']
         // buildConfigField "String","API_SERVER_URL",properties['api_server_url']
-        manifestPlaceholders = [KAKAO_API_KEY:properties['kakao_api_key']]
+        manifestPlaceholders = [KAKAO_API_KEY: properties['kakao_api_key']]
     }
 
     buildTypes {
@@ -40,6 +40,9 @@ android {
         jvmTarget = '11'
     }
 
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
