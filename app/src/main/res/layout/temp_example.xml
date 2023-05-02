@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:text="일기로 시작하는 영어 아웃풋 훈련, 스밈입니다."
-        android:textAppearance="@style/TextAppearance.Smeem.Body4.Height22"
+        android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
         app:layout_constraintStart_toStartOf="@+id/tv_example_title"
         app:layout_constraintTop_toBottomOf="@id/tv_example_title"
         app:layout_constraintWidth_max="214dp" />
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="30일 전의 일기가 기다리고 있어요!"
-            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1"
+            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="이전 일기를 첨삭하고 더 어쩌구 해보세요"
-            android:textAppearance="@style/TextAppearance.Smeem.Caption3"
+            android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
             app:layout_constraintStart_toStartOf="@id/tv_example_correction"
             app:layout_constraintTop_toBottomOf="@id/tv_example_correction" />
 
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="이미 계정이 있어요."
-        android:textAppearance="@style/TextAppearance.Smeem.Body4"
+        android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
         android:textColor="@color/gray_600"
         app:layout_constraintBottom_toTopOf="@+id/btn_example_start"
         app:layout_constraintEnd_toEndOf="@+id/btn_example_start"
@@ -93,7 +93,7 @@
         android:backgroundTint="?colorSecondary"
         android:paddingVertical="20dp"
         android:text="시작하기"
-        android:textAppearance="@style/TextAppearance.Smeem.Subtitle1"
+        android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

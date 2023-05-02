@@ -22,63 +22,63 @@
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
 
-    <style name="TextAppearance.Smeem.Subtitle1">
+    <style name="TextAppearance.Smeem.Subtitle1_bold">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
-    <style name="TextAppearance.Smeem.Subtitle1.Spacing">
+    <style name="TextAppearance.Smeem.Subtitle1_bold.Spacing_14">
         <item name="android:letterSpacing">0.14</item>
     </style>
-    <style name="TextAppearance.Smeem.Subtitle2">
+    <style name="TextAppearance.Smeem.Subtitle2_semibold">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item>
     </style>
-    <style name="TextAppearance.Smeem.Subtitle3">
+    <style name="TextAppearance.Smeem.Subtitle3_medium">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
-    <style name="TextAppearance.Smeem.Subtitle3.Spacing">
+    <style name="TextAppearance.Smeem.Subtitle3_medium.Spacing_neg4">
         <item name="android:letterSpacing">-0.04</item>
     </style>
-    <style name="TextAppearance.Smeem.Subtitle4">
+    <style name="TextAppearance.Smeem.Subtitle4_regular">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
 
-    <style name="TextAppearance.Smeem.Body1">
+    <style name="TextAppearance.Smeem.Body1_bold">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
-    <style name="TextAppearance.Smeem.Body2">
+    <style name="TextAppearance.Smeem.Body2_semibold">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item>
     </style>
-    <style name="TextAppearance.Smeem.Body3">
+    <style name="TextAppearance.Smeem.Body3_medium">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
-    <style name="TextAppearance.Smeem.Body4">
+    <style name="TextAppearance.Smeem.Body4_regular">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
-    <style name="TextAppearance.Smeem.Body4.Height22">
+    <style name="TextAppearance.Smeem.Body4_regular.Height_22">
         <item name="android:lineHeight">22dp</item>
     </style>
 
-    <style name="TextAppearance.Smeem.Caption1">
+    <style name="TextAppearance.Smeem.Caption1_bold">
         <item name="android:textSize">14sp</item>
         <item name="android:lineHeight">21dp</item>
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
-    <style name="TextAppearance.Smeem.Caption2">
+    <style name="TextAppearance.Smeem.Caption2_medium">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
-    <style name="TextAppearance.Smeem.Caption3">
+    <style name="TextAppearance.Smeem.Caption3_regular">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
-    <style name="TextAppearance.Smeem.Caption4">
+    <style name="TextAppearance.Smeem.Caption4_regular_12">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
