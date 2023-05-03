@@ -1,4 +1,4 @@
-package com.sopt.smeem.core.network
+package com.sopt.smeem.util.network
 
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -15,5 +15,5 @@ class RequestInterceptor(
     )
 }
 
-internal val API_ACCESS_TOKEN_HEADER = "Authorization"
+internal val API_ACCESS_TOKEN_HEADER = "token"
 internal val API_REFRESH_TOKEN_HEADER = "not yet" // TODO
