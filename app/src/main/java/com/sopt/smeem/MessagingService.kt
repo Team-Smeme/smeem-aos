@@ -1,4 +1,4 @@
-package com.sopt.smeem.core.notification
+package com.sopt.smeem
 
 import android.content.Intent
 import com.google.firebase.messaging.FirebaseMessagingService
