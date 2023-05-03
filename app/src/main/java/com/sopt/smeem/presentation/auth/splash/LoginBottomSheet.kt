@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.auth.login
+package com.sopt.smeem.presentation.auth.splash
 
 import android.os.Bundle
 import android.view.LayoutInflater

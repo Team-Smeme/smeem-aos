@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">smeem</string>
+    <string name="splash_header">smeem</string>
+    <string name="splash_body">일기로 시작하는 영어 아웃풋 훈련, \n스밈입니다.</string>
+    <string name="splash_footer">이미 계정이 있어요.</string>
+    <string name="button_start">시작하기</string>
 </resources>

@@ -29,7 +29,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".presentation.auth.login.LoginActivity"
+            android:name=".presentation.auth.splash.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
