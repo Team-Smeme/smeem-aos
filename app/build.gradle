@@ -92,8 +92,6 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.5.0')
     implementation 'com.google.firebase:firebase-analytics-ktx:21.2.2'
     implementation 'com.google.firebase:firebase-messaging-ktx:23.1.2'
-    implementation 'androidx.databinding:databinding-runtime:7.3.1'
-    implementation 'androidx.databinding:library:3.2.0-alpha11'
 
     // test
     testImplementation 'junit:junit:4.13.2'
