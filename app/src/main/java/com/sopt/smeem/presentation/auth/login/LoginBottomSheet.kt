@@ -1,4 +1,4 @@
-package com.sopt.smeem.domain.main
+package com.sopt.smeem.presentation.auth.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kakao.sdk.user.UserApiClient
-import com.sopt.smeem.R
 import com.sopt.smeem.databinding.BottomSheetAuthBinding
 
-class AuthBottomSheet : BottomSheetDialogFragment() {
+class LoginBottomSheet : BottomSheetDialogFragment() {
     var _binding : BottomSheetAuthBinding? = null
     private val binding: BottomSheetAuthBinding
      get() = requireNotNull(_binding)
