@@ -1,4 +1,4 @@
-package com.sopt.smeem.core.network
+package com.sopt.smeem.util.network
 
 import okhttp3.Interceptor
 import okhttp3.Response

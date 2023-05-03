@@ -1,4 +1,4 @@
-package com.sopt.smeem.domain.binding
+package com.sopt.smeem.presentation
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes
