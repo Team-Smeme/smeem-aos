@@ -14,7 +14,6 @@ class LoginBottomSheet : BottomSheetDialogFragment() {
     private val binding: BottomSheetAuthBinding
      get() = requireNotNull(_binding)
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,7 +27,7 @@ class LoginBottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val context = requireContext()
         // TODO : 구현만 확인, 이후 코드 정리 및 절차별 분기 구현 필요
-        binding.btnKakao.setOnClickListener {
+        binding.tvKakao.setOnClickListener {
             if(UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
                 UserApiClient.instance.loginWithKakaoTalk(requireContext()) { token, error ->
                     if(error != null) {

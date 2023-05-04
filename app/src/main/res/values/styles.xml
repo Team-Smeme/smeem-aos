@@ -6,4 +6,26 @@
         <item name="android:insetBottom">0dp</item>
         <item name="cornerRadius">6dp</item>
     </style>
+
+    <style name="Widget.Smeem.BottomSheetDialog" parent="Widget.Design.BottomSheet.Modal">
+        <item name="backgroundTint">@color/white</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Smeem.BottomSheet</item>
+    </style>
+
+
+    <style name="ShapeAppearance.Smeem.BottomSheet" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+
+        <item name="cornerSizeTopLeft">30dp</item>
+        <item name="cornerSizeTopRight">30dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <style name="kakao">
+        <item name="android:background">@color/kakao</item>
+        <item name="android:radius">30dp</item>
+        <item name="android:shape">ring</item>
+    </style>
 </resources>

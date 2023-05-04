@@ -19,5 +19,11 @@
 
         <!-- etc -->
         <item name="materialButtonStyle">@style/Widget.Smeem.Button</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Smeem.BottomSheetDialog</item>
     </style>
+
+    <style name="ThemeOverlay.Smeem.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Smeem.BottomSheetDialog</item>
+    </style>
+
 </resources>
