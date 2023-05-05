@@ -1,4 +1,4 @@
-package com.sopt.smeem.util.network
+package com.sopt.smeem.data
 
 import com.sopt.smeem.BuildConfig.API_SERVER_URL
 import okhttp3.OkHttpClient
