@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
 }
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     namespace 'com.sopt.smeem'
@@ -16,8 +18,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        // buildConfigField "String","KAKAO_API_KEY",properties['kakao_api_key']
-        // buildConfigField "String","API_SERVER_URL",properties['api_server_url']
+        buildConfigField "String","KAKAO_API_KEY",properties['kakao_api_key']
+        buildConfigField "String","API_SERVER_URL",properties['api_server_url']
     }
 
     buildTypes {
@@ -50,7 +52,7 @@ dependencies {
 
     // retrofit2
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation "com.squareup.retrofit2:converter-jackson:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0'
     // OkHttp
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
