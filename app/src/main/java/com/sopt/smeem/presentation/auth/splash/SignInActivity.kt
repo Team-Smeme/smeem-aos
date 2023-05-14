@@ -1,8 +1,10 @@
 package com.sopt.smeem.presentation.auth.splash
 
+import android.content.Intent
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivitySignInBinding
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.auth.onboarding.OnBoardingActivity
 
 class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_sign_in) {
     lateinit var bs: LoginBottomSheet
@@ -31,6 +33,10 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
         }
 
         binding.btnAuthStart.setOnClickListener {
+            val toOnBoarding = Intent(this, OnBoardingActivity::class.java)
+            startActivity(toOnBoarding)
+
+            if (!isFinishing) finish()
         }
     }
 }
