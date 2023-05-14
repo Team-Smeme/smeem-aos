@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="18dp"
+        android:layout_marginBottom="16dp"
+        tools:context=".presentation.auth.onboarding.OnBoardingActivity">
+
+        <TextView
+            android:id="@+id/tv_on_boarding_header_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="36dp"
+
+            android:layout_marginStart="10dp"
+            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
+            android:textColor="@color/point"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_on_boarding_header_no_static"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="3dp"
+            android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
+            app:layout_constraintBottom_toBottomOf="@id/tv_on_boarding_header_no"
+            app:layout_constraintStart_toEndOf="@id/tv_on_boarding_header_no"
+            app:layout_constraintTop_toTopOf="@id/tv_on_boarding_header_no"
+            android:text="@string/on_boarding_header_no_static" />
+
+        <TextView
+            android:id="@+id/tv_on_boarding_header_title_static"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="18dp"
+            android:text="@string/on_boarding_goal_header_title"
+            android:textAppearance="@style/TextAppearance.Smeem.Headline2"
+            app:layout_constraintStart_toStartOf="@id/tv_on_boarding_header_no"
+            app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_header_no" />
+
+        <TextView
+            android:id="@+id/tv_on_boarding_header_description_static"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="6dp"
+            android:text="@string/on_boarding_goal_header_description"
+            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+            app:layout_constraintStart_toStartOf="@id/tv_on_boarding_header_title_static"
+            app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_header_title_static"
+            app:layout_constraintBottom_toTopOf="@id/fcv_on_boarding"/>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcv_on_boarding"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="78dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_header_description_static"
+            app:layout_constraintBottom_toTopOf="@id/btn_on_boarding_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout="@layout/fragment_setting_goal" />
+
+        <Button
+            android:id="@+id/btn_on_boarding_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:paddingVertical="20dp"
+            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/on_boarding_activity_next" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
