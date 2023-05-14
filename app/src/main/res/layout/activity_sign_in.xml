@@ -30,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5.3dp"
-            android:textAppearance="@style/TextAppearance.Smeem.Headline1"
+            android:textAppearance="@style/TextAppearance.Smeem.Urbanist_semibold"
 
             app:layout_constraintStart_toEndOf="@id/iv_sign_in_header"
             app:layout_constraintTop_toTopOf="parent"
