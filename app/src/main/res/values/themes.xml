@@ -47,4 +47,9 @@
         <item name="android:windowBackground">@drawable/shape_dialog</item>
     </style>
 
+
+    <style name="B14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
