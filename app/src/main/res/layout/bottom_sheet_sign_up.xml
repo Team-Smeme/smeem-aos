@@ -7,6 +7,7 @@
     android:paddingTop="40dp"
     android:paddingBottom="40dp">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,13 +17,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            android:text="@string/splash_bs_header"
+            android:text="@string/on_boarding_sign_up"
             android:textAppearance="@style/TextAppearance.Smeem.Headline3"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_kakao_start"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="40dp"
@@ -44,20 +46,35 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/tv_kakao"
+                android:id="@+id/tv_sign_up_kakao"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
                 android:gravity="center"
-                android:text="@string/splash_bs_kakao"
+                android:text="@string/on_boarding_kakao_start"
                 android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/tv_sign_up_anonymous"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
+            android:textColor="@color/gray_600"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_kakao_start"
+
+            android:text="@string/on_boarding_start_with_anonymous"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,18 +1,23 @@
 package com.sopt.smeem.presentation.auth.splash
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.kakao.sdk.user.UserApiClient
 import com.sopt.smeem.databinding.BottomSheetAuthBinding
+import com.sopt.smeem.presentation.auth.LoginProcess
+import com.sopt.smeem.presentation.auth.LoginResult
+import com.sopt.smeem.presentation.auth.entrance.EntranceNicknameActivity
+import com.sopt.smeem.presentation.auth.onboarding.OnBoardingActivity
 
-class LoginBottomSheet : BottomSheetDialogFragment() {
-    var _binding : BottomSheetAuthBinding? = null
+class LoginBottomSheet : BottomSheetDialogFragment(), LoginProcess {
+    var _binding: BottomSheetAuthBinding? = null
     private val binding: BottomSheetAuthBinding
-     get() = requireNotNull(_binding)
+        get() = requireNotNull(_binding)
+    lateinit var loginResult: LoginResult
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,41 +31,66 @@ class LoginBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = requireContext()
-        // TODO : 구현만 확인, 이후 코드 정리 및 절차별 분기 구현 필요
+
         binding.tvKakao.setOnClickListener {
-            if(UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
-                UserApiClient.instance.loginWithKakaoTalk(requireContext()) { token, error ->
-                    if(error != null) {
-                        // login failed
-                        Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
-                    }
-                    else if (token != null) {
-                        // login succeed
+            if (KakaoHandler.isAppEnabled(context)) {
+                KakaoHandler.loginOnApp(context,
+                    onSuccess = { accessToken, refreshToken ->
                         Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
-                    }
-                }
+                        loginResult = sendServer(requireContext(), accessToken)
+                        doAfterLoginSuccess()
+                    },
+                    onFailed = {
+                        Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    })
             }
+
+            // kakao app 이 없는 경우, web 으로 로그인 시도
             else {
-                UserApiClient.instance.loginWithKakaoAccount(context, callback = {token, error ->
-                    run {
-                        if (error != null) {
-                            // login failed
-                            Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
-                        } else if (token != null) {
-                            // login succeed
-                            Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                })
+                KakaoHandler.loginOnWeb(context,
+                    onSuccess = { accessToken, refreshToken ->
+                        Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
+                        loginResult = sendServer(requireContext(), accessToken)
+                        doAfterLoginSuccess()
+                    },
+                    onFailed = {
+                        Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    })
             }
-
         }
-
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun gotoHome() {
+        // TODO : go to home activity
+    }
+
+    private fun gotoNicknameEntrance() {
+        val goToNicknameEntrance = Intent(context, EntranceNicknameActivity::class.java)
+        startActivity(goToNicknameEntrance)  // sign in activity already finished
+    }
+
+    private fun gotoPlanOnBoarding() {
+        val goToOnBoarding = Intent(context, OnBoardingActivity::class.java)
+        startActivity(goToOnBoarding)  // sign in activity already finished
+    }
+
+    override fun doAfterLoginSuccess() {
+        when (loginResult.isRegistered) {
+            // 이미 등록된 경우라면, 메인으로 바로 이동
+            true -> gotoHome()
+            false -> {
+                when (loginResult.isPlanRegistered) {
+                    true -> gotoNicknameEntrance() // plan 이 등록된 상태라면, nickname entrance 로 이동
+                    false -> gotoPlanOnBoarding() // plan 이 등록되지 않은 상태라면, plan onBoarding 으로 이동
+                }
+            }
+        }
+        onDestroy()
     }
 
     companion object {

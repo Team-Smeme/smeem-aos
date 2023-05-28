@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.auth.onboarding.OnBoardingActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_on_boarding_encouraging_box"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+
+            android:background="@drawable/shape_rounded_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_on_boarding_encouraging_box_header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_encouraging_box_header"
+                android:paddingStart="20dp"
+                android:paddingTop="22dp"
+                android:paddingEnd="60dp"
+                android:paddingBottom="14dp">
+
+                <ImageView
+                    android:id="@+id/iv_encouraging_box_logo"
+                    android:layout_width="34dp"
+                    android:layout_height="21dp"
+
+                    android:src="@drawable/common_google_signin_btn_icon_dark"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_encouraging_box_header_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="23dp"
+                    android:text="@string/on_boarding_encouraging_box_header_title"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_encouraging_box_logo" />
+
+                <TextView
+                    android:id="@+id/tv_encouraging_box_header_body"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/on_boarding_encouraging_box_header_body"
+                    android:textAppearance="@style/TextAppearance.Smeem.Headline3"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_encouraging_box_header_title" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_on_boarding_encouraging_box_how_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/on_boarding_encouraging_box_how_title"
+                android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_on_boarding_encouraging_box_header" />
+
+            <TextView
+                android:id="@+id/tv_on_boarding_encouraging_box_how_body"
+                android:layout_width="0dp"
+
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                android:textColor="@color/gray_600"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_encouraging_box_how_title"
+                tools:text="주 3회 이상 일기 작성하기 \n편지글 현태의 일기 작성하기" />
+
+            <TextView
+                android:id="@+id/tv_on_boarding_encouraging_box_goal_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="39dp"
+                android:text="@string/on_boarding_encouraging_box_goal_title"
+                android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_encouraging_box_how_body" />
+
+            <TextView
+                android:id="@+id/tv_on_boarding_encouraging_box_goal_body"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+
+                android:paddingBottom="24dp"
+                android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                android:textColor="@color/gray_600"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_encouraging_box_goal_title"
+                tools:text="사전 보지 않고 일기 작성하기 \nTOEIC 단어책 뭐뭐하기" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

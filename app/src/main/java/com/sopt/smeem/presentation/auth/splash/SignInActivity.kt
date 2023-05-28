@@ -30,6 +30,7 @@ class SignInActivity : BindingActivity<ActivitySignInBinding>(R.layout.activity_
     private fun onTouch() {
         binding.tvAlreadyAuthed.setOnClickListener {
             bs.show(supportFragmentManager, LoginBottomSheet.TAG)
+            if(supportFragmentManager.isDestroyed) finish()
         }
 
         binding.btnAuthStart.setOnClickListener {

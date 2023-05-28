@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="76dp"
+        android:layout_marginBottom="16dp"
+        android:paddingHorizontal="18dp">
+
+        <TextView
+            android:id="@+id/tv_entrance_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+
+            android:text="@string/entrance_nickname_header"
+            android:textAppearance="@style/TextAppearance.Smeem.Headline2"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_entrance_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:text="@string/entrance_nickname_description"
+            app:layout_constraintStart_toStartOf="@id/tv_entrance_header"
+
+            app:layout_constraintTop_toBottomOf="@id/tv_entrance_header" />
+
+        <EditText
+            android:id="@+id/et_entrance_nickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="28dp"
+            android:background="@drawable/shape_rounded_et"
+            android:paddingHorizontal="14sp"
+
+            android:paddingTop="17sp"
+            android:paddingBottom="15sp"
+            android:textAppearance="@style/TextAppearance.Smeem.Headline3"
+            android:textColor="@color/point"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@id/tv_entrance_description"
+            tools:text="정요니" />
+
+        <TextView
+            android:id="@+id/tv_entrance_nickname_caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp"
+            android:text="@string/entrance_nickname_caption"
+            android:textAppearance="@style/TextAppearance.Smeem.Caption4_regular_12"
+            android:textColor="@color/gray_500"
+            app:layout_constraintEnd_toEndOf="@id/et_entrance_nickname"
+            app:layout_constraintTop_toBottomOf="@id/et_entrance_nickname" />
+
+        <TextView
+            android:id="@+id/tv_entrance_nickname_duplicated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp"
+            android:text="@string/entrance_nickname_duplicated"
+            android:textAppearance="@style/TextAppearance.Smeem.Caption4_regular_12"
+            android:textColor="@color/point"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/et_entrance_nickname"
+            app:layout_constraintTop_toBottomOf="@id/et_entrance_nickname" />
+
+        <Button
+            android:id="@+id/btn_entrance_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:backgroundTint="@color/point_inactive"
+            android:enabled="false"
+            android:paddingVertical="20dp"
+            android:text="@string/on_boarding_activity_next"
+            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

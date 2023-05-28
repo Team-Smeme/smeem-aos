@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.auth.onboarding.OnBoardingActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_on_boarding_time_body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/shape_rounded_box"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_on_boarding_time_days"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/shape_rounded_box_top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:selectionRequired="true"
+                app:singleSelection="false">
+
+                <TextView
+                    android:id="@+id/tv_on_boarding_time_mon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="20dp"
+                    android:text="월"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+                    android:textColor="@color/gray_500"
+
+                    app:layout_constraintEnd_toStartOf="@id/tv_on_boarding_time_tue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_on_boarding_time_tue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="20dp"
+                    android:text="화"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+                    android:textColor="@color/gray_500"
+                    app:layout_constraintEnd_toStartOf="@id/tv_on_boarding_time_wed"
+                    app:layout_constraintStart_toEndOf="@id/tv_on_boarding_time_mon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_on_boarding_time_wed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="20dp"
+                    android:text="수"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+                    android:textColor="@color/gray_500"
+                    app:layout_constraintEnd_toStartOf="@id/tv_on_boarding_time_thr"
+                    app:layout_constraintStart_toEndOf="@id/tv_on_boarding_time_tue"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_on_boarding_time_thr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="20dp"
+                    android:text="목"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+                    android:textColor="@color/gray_500"
+                    app:layout_constraintEnd_toStartOf="@id/tv_on_boarding_time_fri"
+                    app:layout_constraintStart_toEndOf="@id/tv_on_boarding_time_wed"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_on_boarding_time_fri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="20dp"
+                    android:text="금"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+                    android:textColor="@color/gray_500"
+                    app:layout_constraintEnd_toStartOf="@id/tv_on_boarding_time_sat"
+                    app:layout_constraintStart_toEndOf="@id/tv_on_boarding_time_thr"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_on_boarding_time_sat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="20dp"
+                    android:text="토"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+                    android:textColor="@color/gray_500"
+                    app:layout_constraintEnd_toStartOf="@id/tv_on_boarding_time_sun"
+                    app:layout_constraintStart_toEndOf="@id/tv_on_boarding_time_fri"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_on_boarding_time_sun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="20dp"
+                    android:text="일"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+                    android:textColor="@color/gray_500"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_on_boarding_time_sat"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_on_boarding_time_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_on_boarding_time_days">
+
+                <TextView
+                    android:id="@+id/tv_on_boarding_time_box_title_static"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="알림 시간"
+                    android:textAppearance="@style/TextAppearance.Smeem.Caption2_medium"
+                    android:textColor="@color/point"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_on_boarding_time_box_body"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
+                    android:textColor="@color/point"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_time_box_title_static"
+                    tools:text="10:00 PM" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_on_boarding_time_later_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@id/layout_on_boarding_time_body"
+            android:layout_marginTop="240dp"
+            android:text="@string/on_boarding_time_later"
+            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+            android:textColor="@color/gray_600"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

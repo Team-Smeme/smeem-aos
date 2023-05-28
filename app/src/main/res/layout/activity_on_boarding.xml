@@ -80,6 +80,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
+            android:enabled="false"
             android:paddingVertical="20dp"
             android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
             app:layout_constraintBottom_toBottomOf="parent"

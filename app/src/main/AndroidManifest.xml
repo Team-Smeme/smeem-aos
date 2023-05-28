@@ -50,6 +50,27 @@
                     android:scheme="kakao${KAKAO_API_KEY}" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".presentation.auth.entrance.EntranceNicknameActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize|stateAlwaysVisible">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="oauth"
+                    android:scheme="kakao${KAKAO_API_KEY}" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".presentation.auth.entrance.EntranceAgreementActivity"
+            android:exported="false">
+
+        </activity>
     </application>
 
 </manifest>
