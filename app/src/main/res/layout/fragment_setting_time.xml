@@ -177,8 +177,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            app:layout_constraintTop_toBottomOf="@id/layout_on_boarding_time_body"
             android:layout_marginTop="240dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/on_boarding_time_later"
             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
             android:textColor="@color/gray_600"

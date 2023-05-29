@@ -34,6 +34,7 @@ class SettingTimeFragment :
     override fun addListeners() {
         onTouchDays()
         onTouchTime()
+        onTouchLater()
     }
 
     override fun onDestroyView() {
@@ -105,6 +106,12 @@ class SettingTimeFragment :
     private fun onTouchTime() {
         binding.layoutOnBoardingTimeTime.setOnClickListener {
             timePickerDialog?.show()
+        }
+    }
+
+    private fun onTouchLater() {
+        binding.tvOnBoardingTimeLaterStatic.setOnClickListener {
+            vm.timeLater()
         }
     }
 

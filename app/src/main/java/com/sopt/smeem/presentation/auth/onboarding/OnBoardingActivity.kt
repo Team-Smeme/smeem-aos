@@ -18,6 +18,7 @@ class OnBoardingActivity :
 
     override fun addListeners() {
         onNext()
+        onSetTimeLater()
     }
 
     override fun addObservers() {
@@ -60,6 +61,14 @@ class OnBoardingActivity :
                     .commit()
                 vm.goToNext()
             } else if (vm.step == 2) {
+                bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
+            }
+        }
+    }
+
+    private fun onSetTimeLater() {
+        vm.setTimeLater.observe(this) {
+            if (it) { // true
                 bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
             }
         }
