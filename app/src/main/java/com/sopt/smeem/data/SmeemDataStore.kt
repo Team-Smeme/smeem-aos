@@ -1,4 +1,4 @@
-package com.sopt.smeem
+package com.sopt.smeem.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
