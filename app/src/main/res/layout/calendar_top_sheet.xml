@@ -4,7 +4,6 @@
     android:id="@+id/top_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/teal_200"
     app:behavior_hideable="false"
     app:behavior_peekHeight="56dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
