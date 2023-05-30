@@ -26,10 +26,10 @@ class CalendarActivity : AppCompatActivity() {
 
         // Bottom Sheet가 숨겨질 수 없게 지정
         bottomSheetBehavior.isHideable = false
-        bottomSheetBehavior.addBottomSheetCallback(object :
-            BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
+//        bottomSheetBehavior.addBottomSheetCallback(object :
+//            BottomSheetBehavior.BottomSheetCallback() {
+//            override fun onStateChanged(bottomSheet: View, newState: Int) {
+//                when (newState) {
 //                    // BottomSheet가 당겨지면 Monthly Calendar로 전환
 //                    BottomSheetBehavior.STATE_HIDDEN -> {
 //                        binding.monthCalendar.visibility = View.VISIBLE
@@ -44,13 +44,13 @@ class CalendarActivity : AppCompatActivity() {
 //
 //                    // 원하는 로직에 따라 이벤트 추가
 //                    else -> {}
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                // 슬라이딩 이벤트 처리
-            }
-        }
+//                }
+//            }
+//
+//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+//                // 슬라이딩 이벤트 처리
+//            }
+//        }
     }
 
 
