@@ -3,8 +3,11 @@ package com.sopt.smeem.calendar
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.sopt.smeem.R
+import com.sopt.smeem.calendar.monthly.MonthlyCalendar
+import com.sopt.smeem.calendar.weekly.WeeklyCalendar
 import com.sopt.smeem.databinding.ActivityCalendarBinding
 
 class CalendarActivity : AppCompatActivity() {
@@ -15,43 +18,31 @@ class CalendarActivity : AppCompatActivity() {
         binding = ActivityCalendarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        binding.weekCalendar.visibility = View.VISIBLE
-//        binding.monthCalendar.visibility = View.GONE
+        val topSheet = findViewById<CoordinatorLayout>(R.id.top_sheet)
+        val bottomSheetBehavior = BottomSheetBehavior.from(topSheet)
 
-        val topSheet = binding.coordinator.findViewById<View>(R.id.top_sheet)
-        val bottomSheetBehavior: BottomSheetBehavior<View> = BottomSheetBehavior.from(topSheet)
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                // Bottom Sheet의 상태가 변경될 때
+            }
 
-        // 상단 위치 지정
-        bottomSheetBehavior.peekHeight = resources.getDimensionPixelSize(R.dimen.actionBarSize)
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                val weeklyCalendar = findViewById<WeeklyCalendar>(R.id.week_calendar)
+                val monthlyCalendar = findViewById<MonthlyCalendar>(R.id.month_calendar)
 
-        // Bottom Sheet가 숨겨질 수 없게 지정
-        bottomSheetBehavior.isHideable = false
-//        bottomSheetBehavior.addBottomSheetCallback(object :
-//            BottomSheetBehavior.BottomSheetCallback() {
-//            override fun onStateChanged(bottomSheet: View, newState: Int) {
-//                when (newState) {
-//                    // BottomSheet가 당겨지면 Monthly Calendar로 전환
-//                    BottomSheetBehavior.STATE_HIDDEN -> {
-//                        binding.monthCalendar.visibility = View.VISIBLE
-//                        binding.weekCalendar.visibility = View.GONE
-//                    }
-//
-//                    // BottomSheet가 원래 위치로 이동하면 Weekly Calendar로 전환
-//                    BottomSheetBehavior.STATE_EXPANDED -> {
-//                        binding.monthCalendar.visibility = View.GONE
-//                        binding.weekCalendar.visibility = View.VISIBLE
-//                    }
-//
-//                    // 원하는 로직에 따라 이벤트 추가
-//                    else -> {}
-//                }
-//            }
-//
-//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-//                // 슬라이딩 이벤트 처리
-//            }
-//        }
+                if (slideOffset > 0.5) {
+                    // MonthlyCalendar를 표시하고 WeeklyCalendar를 숨깁니다.
+                    // 0.5 값을 기준으로 바꾸려면 원하는 값으로 조정하십시오.
+                    weeklyCalendar.visibility = View.GONE
+                    monthlyCalendar.visibility = View.VISIBLE
+                } else {
+                    // WeeklyCalendar를 표시하고 MonthlyCalendar를 숨깁니다.
+                    weeklyCalendar.visibility = View.VISIBLE
+                    monthlyCalendar.visibility = View.GONE
+                }
+            }
+        })
     }
-
 
 }

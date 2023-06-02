@@ -79,6 +79,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name=".WeekActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".MonthActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".calendar.CalendarActivity"
+            />
     </application>
 
 </manifest>
