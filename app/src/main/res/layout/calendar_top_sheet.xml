@@ -18,18 +18,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <com.sopt.smeem.calendar.weekly.WeeklyCalendar
+                android:id="@+id/week_calendar"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:orientation="horizontal"
-                android:paddingTop="56dp">
-
-                <com.sopt.smeem.calendar.weekly.WeeklyCalendar
-                    android:id="@+id/week_calendar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="10dp" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp" />
 
             <com.sopt.smeem.calendar.monthly.MonthlyCalendar
                 android:id="@+id/month_calendar"
@@ -37,11 +30,8 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="vertical" />
 
-
         </LinearLayout>
 
-
     </FrameLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
