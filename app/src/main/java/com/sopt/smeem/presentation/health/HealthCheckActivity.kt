@@ -6,7 +6,8 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHealthCheckBinding
 import com.sopt.smeem.presentation.BindingActivity
 
-class HealthCheckActivity : BindingActivity<ActivityHealthCheckBinding>(R.layout.activity_health_check) {
+class HealthCheckActivity :
+    BindingActivity<ActivityHealthCheckBinding>(R.layout.activity_health_check) {
     private val healthViewModel: ViewModel by viewModels()
 
     override fun constructLayout() {
@@ -18,7 +19,7 @@ class HealthCheckActivity : BindingActivity<ActivityHealthCheckBinding>(R.layout
         super.addListeners()
         binding.btnHealthCheck.setOnClickListener {
             healthViewModel.connect(
-                onError = { t ->  Toast.makeText(this, t.cause.toString(), Toast.LENGTH_SHORT).show()}
+                onError = { t -> Toast.makeText(this, t.message, Toast.LENGTH_SHORT).show() }
             )
         }
     }

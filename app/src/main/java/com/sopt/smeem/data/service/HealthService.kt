@@ -4,6 +4,6 @@ import com.sopt.smeem.data.model.response.ApiResponse
 import retrofit2.http.GET
 
 interface HealthService {
-    @GET("/readiness")
+    @GET("/api/v2/health")
     suspend fun getStatus(): ApiResponse<Unit>
 }
