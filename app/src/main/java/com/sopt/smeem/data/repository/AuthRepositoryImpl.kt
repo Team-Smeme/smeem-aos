@@ -47,11 +47,12 @@ class AuthRepositoryImpl(
                     requireNotNull(authentication.accessToken) { "NPE when register authentication with refreshToken" }
             }
         } catch (e: IOException) {
-            throw SmeemException(errorCode = SmeemErrorCode.SYSTEM_ERROR)
+            throw SmeemException(errorCode = SmeemErrorCode.SYSTEM_ERROR, throwable = e)
         } catch (e: IllegalArgumentException) {
             throw SmeemException(
                 errorCode = SmeemErrorCode.SYSTEM_ERROR,
-                logMessage = "token 값 저장 중, null 로 접근하였습니다. (authentication = $authentication)"
+                logMessage = "token 값 저장 중, null 로 접근하였습니다. (authentication = $authentication)",
+                throwable = e
             )
         }
     }

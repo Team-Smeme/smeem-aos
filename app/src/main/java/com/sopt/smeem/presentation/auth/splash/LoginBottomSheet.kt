@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sopt.smeem.databinding.BottomSheetAuthBinding
+import com.sopt.smeem.logging
 import com.sopt.smeem.presentation.auth.LoginProcess
 import com.sopt.smeem.presentation.auth.LoginResult
 import com.sopt.smeem.presentation.auth.entrance.EntranceNicknameActivity
@@ -36,26 +36,20 @@ class LoginBottomSheet : BottomSheetDialogFragment(), LoginProcess {
             if (KakaoHandler.isAppEnabled(context)) {
                 KakaoHandler.loginOnApp(context,
                     onSuccess = { accessToken, refreshToken ->
-                        Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
                         loginResult = sendServer(requireContext(), accessToken)
                         doAfterLoginSuccess()
                     },
-                    onFailed = {
-                        Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
-                    })
+                    onFailed = { exception -> exception.logging("KAKAO_LOGIN") })
             }
 
             // kakao app 이 없는 경우, web 으로 로그인 시도
             else {
                 KakaoHandler.loginOnWeb(context,
                     onSuccess = { accessToken, refreshToken ->
-                        Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
                         loginResult = sendServer(requireContext(), accessToken)
                         doAfterLoginSuccess()
                     },
-                    onFailed = {
-                        Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
-                    })
+                    onFailed = { exception -> exception.logging("KAKAO_LOGIN") })
             }
         }
     }
@@ -81,8 +75,7 @@ class LoginBottomSheet : BottomSheetDialogFragment(), LoginProcess {
 
     override fun doAfterLoginSuccess() {
         when (loginResult.isRegistered) {
-            // 이미 등록된 경우라면, 메인으로 바로 이동
-            true -> gotoHome()
+            true -> gotoHome() // 이미 등록된 경우라면, 메인으로 바로 이동
             false -> {
                 when (loginResult.isPlanRegistered) {
                     true -> gotoNicknameEntrance() // plan 이 등록된 상태라면, nickname entrance 로 이동
