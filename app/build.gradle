@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -107,4 +109,8 @@ dependencies {
 
     // kakao
     implementation "com.kakao.sdk:v2-user:2.13.0"
+
+    // Hilt
+    implementation 'com.google.dagger:hilt-android:2.44.2'
+    kapt 'com.google.dagger:hilt-compiler:2.44.2'
 }
