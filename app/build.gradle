@@ -20,11 +20,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String","KAKAO_API_KEY",properties['kakao_api_key']
         buildConfigField "String","API_SERVER_URL",properties['api_server_url']
-        manifestPlaceholders = [KAKAO_API_KEY: properties['kakao_api_key']]
+        manifestPlaceholders = [KAKAO_API_KEY:properties['kakao_api_key_manifest']]
     }
 
     buildTypes {
-        debub {
+        debug {
             minifyEnabled false
         }
         release {
