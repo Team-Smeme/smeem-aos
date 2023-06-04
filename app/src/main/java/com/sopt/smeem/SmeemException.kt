@@ -20,6 +20,7 @@ enum class SmeemErrorCode(
     CLIENT_ERROR(3, "잘못된 접근입니다."),
     FORBIDDEN(4, "권한이 필요한 접근입니다."),
     UNAUTHORIZED(5, "인증이 필요한 접근입니다."),
+    UNKNOWN_ERROR(6, "알 수 없는 에러가 발생했습니다.")
 }
 
 fun SmeemException.description() = this.errorCode.message

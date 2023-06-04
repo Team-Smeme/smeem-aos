@@ -22,6 +22,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -33,8 +34,7 @@
 
         <activity
             android:name=".presentation.auth.onboarding.OnBoardingActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
 
         <activity
             android:name=".presentation.health.HealthCheckActivity"
@@ -52,7 +52,7 @@
         </activity>
 
         <activity
-            android:name=".presentation.auth.splash.SignInActivity"
+            android:name=".presentation.auth.splash.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

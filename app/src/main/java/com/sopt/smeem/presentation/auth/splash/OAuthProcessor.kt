@@ -1,9 +1,11 @@
 package com.sopt.smeem.presentation.auth.splash
 
 import android.content.Context
+import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.common.model.ApiError
 import com.kakao.sdk.common.model.AuthError
 import com.kakao.sdk.common.model.ClientError
+import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.sopt.smeem.SmeemErrorCode
 import com.sopt.smeem.SmeemException
@@ -14,31 +16,68 @@ object KakaoHandler : OAuthHandler {
 
     override fun loginOnApp(
         context: Context,
-        onSuccess: (String, String) -> Unit,
+        onSuccess: (String) -> Unit,
         onFailed: (SmeemException) -> Unit
     ) {
         UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
             if (error != null) {
                 handleError(error) { onFailed(it) }
             } else if (token != null) {
-                onSuccess(token.accessToken, token.refreshToken)
+                if (AuthApiClient.instance.hasToken()) {
+                    UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                        run {
+                            UserApiClient.instance.me { user, error ->
+                                if (error != null) {
+                                    handleError(error) { onFailed(it) }
+                                } else if (user == null) {
+                                    handleError(
+                                        ClientError(
+                                            reason = ClientErrorCause.IllegalState,
+                                            msg = "카카오로부터 유저정보를 불러오지 못했습니다."
+                                        )
+                                    ) { onFailed(it) }
+                                } else {
+                                    onSuccess("kakao_${user.id}")
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
-
     override fun loginOnWeb(
         context: Context,
-        onSuccess: (String, String) -> Unit,
+        onSuccess: (String) -> Unit,
         onFailed: (SmeemException) -> Unit
     ) {
-        UserApiClient.instance.loginWithKakaoAccount(context, callback = { token, error ->
+        UserApiClient.instance.loginWithKakaoAccount(context) { token, error ->
             if (error != null) {
                 handleError(error) { onFailed(it) }
             } else if (token != null) {
-                onSuccess(token.accessToken, token.refreshToken)
+                if (AuthApiClient.instance.hasToken()) {
+                    UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                        run {
+                            UserApiClient.instance.me { user, error ->
+                                if (error != null) {
+                                    handleError(error) { onFailed(it) }
+                                } else if (user == null) {
+                                    handleError(
+                                        ClientError(
+                                            reason = ClientErrorCause.IllegalState,
+                                            msg = "카카오로부터 유저정보를 불러오지 못했습니다."
+                                        )
+                                    ) { onFailed(it) }
+                                } else {
+                                    onSuccess("kakao_${user.id}")
+                                }
+                            }
+                        }
+                    }
+                }
             }
-        })
+        }
     }
 
     private fun handleError(error: Throwable, catch: (SmeemException) -> Unit) {
