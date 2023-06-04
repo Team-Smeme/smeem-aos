@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sopt.smeem.Day
 import com.sopt.smeem.databinding.BottomSheetSignUpBinding
+import com.sopt.smeem.description
+import com.sopt.smeem.logging
 import com.sopt.smeem.presentation.auth.LoginProcess
 import com.sopt.smeem.presentation.auth.LoginResult
 import com.sopt.smeem.presentation.auth.entrance.EntranceNicknameActivity
@@ -45,23 +47,21 @@ class SignUpBottomSheet : BottomSheetDialogFragment(), LoginProcess {
             if (KakaoHandler.isAppEnabled(context)) {
                 KakaoHandler.loginOnApp(context,
                     onSuccess = { accessToken, refreshToken ->
-                        Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
                         loginResult = sendServer(requireContext(), accessToken)
                         doAfterLoginSuccess()
                     },
-                    onFailed = { error ->
-                        Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    onFailed = { exception ->
+                        exception.logging("KAKAO_LOGIN")
                     })
             } else {
                 KakaoHandler.loginOnWeb(
                     context,
                     onSuccess = { accessToken, refreshToken ->
-                        Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
                         loginResult = sendServer(requireContext(), accessToken)
                         doAfterLoginSuccess()
                     },
-                    onFailed = { error ->
-                        Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    onFailed = { exception ->
+                        exception.logging("KAKAO_LOGIN")
                     })
             }
         }
