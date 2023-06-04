@@ -3,15 +3,32 @@ package com.sopt.smeem.presentation.auth.onboarding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.Day
+import com.sopt.smeem.SmeemException
+import com.sopt.smeem.SocialType
+import com.sopt.smeem.data.datasource.Login
+import com.sopt.smeem.data.onHttpFailure
+import com.sopt.smeem.data.repository.LoginRepositoryImpl
+import com.sopt.smeem.domain.model.auth.LoginResult
+import com.sopt.smeem.domain.repository.LoginRepository
+import kotlinx.coroutines.launch
 
-class OnBoardingVM : ViewModel() {
+class OnBoardingVM(
+    private val loginRepository: LoginRepository = LoginRepositoryImpl(Login())
+) : ViewModel() {
+    private val _loginResult = MutableLiveData<LoginResult>()
+    val loginResult: LiveData<LoginResult>
+        get() = _loginResult
     private val _selectedGoal = MutableLiveData<GoalSelection>()
     val selectedGoal: LiveData<GoalSelection>
         get() = _selectedGoal
     private val _setTimeLater = MutableLiveData<Boolean>()
     val setTimeLater: LiveData<Boolean>
         get() = _setTimeLater
+    private val _goAnonymous = MutableLiveData<Boolean>()
+    val goAnonymous: LiveData<Boolean>
+        get() = _goAnonymous
 
     var step: Int = 0
     val days = mutableListOf<Day>()
@@ -41,6 +58,30 @@ class OnBoardingVM : ViewModel() {
 
     fun timeLater() {
         _setTimeLater.value = true
+    }
+
+    fun login(
+        idToken: String,
+        socialType: SocialType,
+        onError: (SmeemException) -> Unit
+    ) {
+        viewModelScope.launch {
+            loginRepository.execute(idToken, socialType)
+                .onSuccess { _loginResult.value = it }
+                .onHttpFailure { e -> onError(e) }
+        }
+    }
+
+    fun goAnonymous() {
+        _goAnonymous.value = true
+    }
+
+    fun sendPlanData() {
+        // TODO : server 로 온보딩 정보 전달
+    }
+
+    fun saveOnBoardingData() {
+        // TODO : Room 에 보관하기
     }
 }
 

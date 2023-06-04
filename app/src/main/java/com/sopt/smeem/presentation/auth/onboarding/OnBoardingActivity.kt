@@ -1,9 +1,11 @@
 package com.sopt.smeem.presentation.auth.onboarding
 
+import android.content.Intent
 import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityOnBoardingBinding
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.auth.entrance.EntranceNicknameActivity
 
 class OnBoardingActivity :
     BindingActivity<ActivityOnBoardingBinding>(R.layout.activity_on_boarding) {
@@ -23,6 +25,8 @@ class OnBoardingActivity :
 
     override fun addObservers() {
         onNextChanged()
+        doAfterLoginSuccess()
+        goAnonymous()
     }
 
     private fun setUpBottomSheet() {
@@ -80,5 +84,38 @@ class OnBoardingActivity :
         ) {
             binding.btnOnBoardingNext.isEnabled = it != GoalSelection.NONE
         }
+    }
+
+    private fun doAfterLoginSuccess() {
+        vm.loginResult.observe(this@OnBoardingActivity) {
+            when (it.isRegistered) {
+                true -> gotoHome()
+                false -> {
+                    vm.sendPlanData()
+                    val toEntrance = Intent(this@OnBoardingActivity, EntranceNicknameActivity::class.java)
+                    startActivity(toEntrance)
+
+                    if (!isFinishing) finish()
+                }
+            }
+        }
+    }
+
+    private fun goAnonymous() {
+        vm.goAnonymous.observe(this@OnBoardingActivity) { wantToBeAnonymous ->
+            when (wantToBeAnonymous) {
+                true -> {
+                    vm.saveOnBoardingData()
+                    gotoHome()
+                }
+
+                false -> { // TODO : 어떻게 해야하지? }
+                }
+            }
+        }
+    }
+
+    private fun gotoHome() {
+        // TODO : HomeActivity 로 이동
     }
 }
