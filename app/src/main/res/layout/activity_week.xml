@@ -10,7 +10,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".WeekActivity">
+        tools:context=".calendar.WeekActivity">
 
         <com.sopt.smeem.calendar.weekly.WeeklyCalendar
             android:layout_width="match_parent"

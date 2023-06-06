@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sopt.smeem.SocialType
+import com.sopt.smeem.calendar.Day
 import com.sopt.smeem.databinding.BottomSheetSignUpBinding
 import com.sopt.smeem.logging
 import com.sopt.smeem.presentation.auth.LoginProcess

@@ -1,4 +1,4 @@
-package com.sopt.smeem
+package com.sopt.smeem.calendar
 
 enum class Day(private val korean: String) {
     MON("월"),

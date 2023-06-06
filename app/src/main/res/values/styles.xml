@@ -79,4 +79,10 @@
         <item name="android:textColorHighlight">@color/point_opacity_30</item>
     </style>
 
+
+    <!-- TopSheet_Dialog Animation -->
+    <style name="TopSheet_DialogAnimation">
+        <item name="android:windowEnterAnimation">@animator/slide_out_from_top</item>
+        <item name="android:windowExitAnimation">@animator/slide_back_to_top</item>
+    </style>
 </resources>
