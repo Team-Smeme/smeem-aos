@@ -1,4 +1,4 @@
-package com.sopt.smeem
+package com.sopt.smeem.calendar
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

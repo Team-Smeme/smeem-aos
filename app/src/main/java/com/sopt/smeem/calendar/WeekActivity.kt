@@ -1,6 +1,7 @@
-package com.sopt.smeem
+package com.sopt.smeem.calendar
 
 import android.os.Bundle
+import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityWeekBinding
 import com.sopt.smeem.presentation.BindingActivity
 

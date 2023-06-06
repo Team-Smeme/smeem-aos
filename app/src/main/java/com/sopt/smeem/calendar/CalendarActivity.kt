@@ -18,31 +18,6 @@ class CalendarActivity : AppCompatActivity() {
         binding = ActivityCalendarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val topSheet = findViewById<CoordinatorLayout>(R.id.top_sheet)
-        val bottomSheetBehavior = BottomSheetBehavior.from(topSheet)
 
-        bottomSheetBehavior.addBottomSheetCallback(object :
-            BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                // Bottom Sheet의 상태가 변경될 때
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                val weeklyCalendar = findViewById<WeeklyCalendar>(R.id.week_calendar)
-                val monthlyCalendar = findViewById<MonthlyCalendar>(R.id.month_calendar)
-
-                if (slideOffset > 0.5) {
-                    // MonthlyCalendar를 표시하고 WeeklyCalendar를 숨깁니다.
-                    // 0.5 값을 기준으로 바꾸려면 원하는 값으로 조정하십시오.
-                    weeklyCalendar.visibility = View.GONE
-                    monthlyCalendar.visibility = View.VISIBLE
-                } else {
-                    // WeeklyCalendar를 표시하고 MonthlyCalendar를 숨깁니다.
-                    weeklyCalendar.visibility = View.VISIBLE
-                    monthlyCalendar.visibility = View.GONE
-                }
-            }
-        })
     }
-
 }
