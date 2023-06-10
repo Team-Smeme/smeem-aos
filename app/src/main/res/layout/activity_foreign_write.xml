@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +18,7 @@
             android:id="@+id/layout_foreign_write_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="?background"
+            android:backgroundTint="?android:colorBackground"
             android:paddingBottom="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,50 +60,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
             android:id="@+id/layout_foreign_write_random_topic"
+            layout="@layout/random_topic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="?colorSurface"
-            android:paddingHorizontal="18dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="16dp"
+            app:isRefresh="@{View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_foreign_write_toolbar">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Q."
-                android:textAppearance="@style/TextAppearance.Smeem.Body1_bold"
-                android:textColor="@color/point"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_foreign_write_random_topic"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:text="     "
-                android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
-                app:layout_constraintEnd_toStartOf="@id/btn_foreign_write_topic_refresh"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="     오늘부터 딱 일주일 후! 설레는 크리스마스네요. 일주일 전부터 세워보는 나의 크리스마스 계획은?" />
-
-            <ImageView
-                android:id="@+id/btn_foreign_write_topic_refresh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_write_refresh"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_foreign_write_random_topic" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@id/layout_foreign_write_toolbar" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -126,8 +94,6 @@
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
                     android:textColor="?colorOnBackground" />
 
-                <requestFocus />
-
             </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -136,7 +102,7 @@
             android:id="@+id/layout_foreign_write_bottom_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/gray_100"
+            android:background="?colorSurface"
             android:paddingHorizontal="18dp"
             android:paddingVertical="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
