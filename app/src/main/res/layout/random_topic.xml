@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name="isRefresh"
+            name="refreshVisibility"
             type="int" />
     </data>
 
@@ -43,8 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:visibility="@{isRefresh}"
             android:src="@drawable/ic_write_refresh"
+            android:visibility="@{refreshVisibility}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_content" />
 
