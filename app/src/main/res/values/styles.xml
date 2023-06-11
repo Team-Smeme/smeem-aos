@@ -9,8 +9,8 @@
 
     <!-- random topic checkbox -->
     <style name="Widget.Smeem.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
-        <item name="buttonTint">@null</item>
-        <item name="android:button">@drawable/selector_write_checkbox</item>
+        <item name="android:background">@drawable/selector_write_checkbox</item>
+        <item name="android:button">@null</item>
         <item name="android:minWidth">0dp</item>
         <item name="android:minHeight">0dp</item>
     </style>

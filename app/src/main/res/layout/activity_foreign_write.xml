@@ -16,13 +16,13 @@
 
         <include
             android:id="@+id/layout_foreign_write_toolbar"
+            layout="@layout/diary_write_toolbar"
             android:layout_width="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:stepVisibility="@{View.INVISIBLE}"
             android:layout_height="wrap_content"
-            layout="@layout/diary_write_toolbar" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:stepVisibility="@{View.INVISIBLE}" />
 
         <include
             android:id="@+id/layout_foreign_write_random_topic"
@@ -30,10 +30,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:refreshVisibility="@{View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_foreign_write_toolbar" />
+            app:layout_constraintTop_toBottomOf="@id/layout_foreign_write_toolbar"
+            app:refreshVisibility="@{View.VISIBLE}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -62,42 +62,15 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
             android:id="@+id/layout_foreign_write_bottom_toolbar"
+            layout="@layout/diary_write_bottom_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="?colorSurface"
-            android:paddingHorizontal="18dp"
-            android:paddingVertical="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <CheckBox
-                android:id="@+id/cb_foreign_write_random_topic"
-                style="@style/Widget.Smeem.CheckBox"
-                android:layout_width="14dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="4dp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_foreign_write_random_topic_label"
-                app:layout_constraintDimensionRatio="1"
-                app:layout_constraintEnd_toStartOf="@id/tv_foreign_write_random_topic_label"
-                app:layout_constraintTop_toTopOf="@id/tv_foreign_write_random_topic_label"
-                tools:checked="true" />
-
-            <TextView
-                android:id="@+id/tv_foreign_write_random_topic_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="랜덤 주제"
-                android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
-                android:textColor="?colorPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:translateVisibility="@{View.GONE}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

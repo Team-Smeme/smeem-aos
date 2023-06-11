@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="translateVisibility"
+            type="int" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorSurface"
+        android:paddingHorizontal="18dp"
+        android:paddingVertical="17dp">
+
+        <ToggleButton
+            android:id="@+id/btn_translate"
+            android:layout_width="wrap_content"
+            android:layout_height="29dp"
+            android:background="@drawable/selector_write_translate"
+            android:textOff=""
+            android:textOn=""
+            android:visibility="@{translateVisibility}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:checked="true" />
+
+        <CheckBox
+            android:id="@+id/cb_random_topic"
+            style="@style/Widget.Smeem.CheckBox"
+            android:layout_width="14dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_random_topic_label"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintEnd_toStartOf="@id/tv_random_topic_label"
+            app:layout_constraintTop_toTopOf="@id/tv_random_topic_label"
+            tools:checked="true" />
+
+        <TextView
+            android:id="@+id/tv_random_topic_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="랜덤 주제"
+            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+            android:textColor="?colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
