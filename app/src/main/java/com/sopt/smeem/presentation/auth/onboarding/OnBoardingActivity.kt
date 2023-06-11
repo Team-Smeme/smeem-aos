@@ -75,8 +75,10 @@ class OnBoardingActivity :
                     )
                     .commit()
                 vm.goToNext()
-                vm.checkToken()
             } else if (vm.step == 2) {
+                vm.checkToken()
+                vm.goToNext()
+            } else if (vm.step == 3) {
                 bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
             }
         }
@@ -148,6 +150,7 @@ class OnBoardingActivity :
     private fun alreadyHasToken() {
         vm.alreadyHasToken.observe(this@OnBoardingActivity) {
             if (it) {
+                vm.goToNext()
                 vm.sendPlanData(
                     onSuccess = {
                         val toEntrance =
