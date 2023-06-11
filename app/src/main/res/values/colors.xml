@@ -3,6 +3,7 @@
     <!-- keycolor -->
     <color name="point">#FF6D4C</color>
     <color name="point_inactive">#FFDCD4</color>
+    <color name="point_opacity_30">#4DFF6D4C</color>
     <!-- grayscale -->
     <color name="white">#FFFFFF</color>
     <color name="gray_100">#F5F5F5</color>

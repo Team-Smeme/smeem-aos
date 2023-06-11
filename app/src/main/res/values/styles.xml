@@ -7,7 +7,6 @@
         <item name="cornerRadius">6dp</item>
     </style>
 
-    <!-- random topic checkbox -->
     <style name="Widget.Smeem.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
         <item name="android:background">@drawable/selector_write_checkbox</item>
         <item name="android:button">@null</item>
@@ -51,5 +50,10 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="Style.Smeem.Text" parent="">
+        <item name="colorControlActivated">?colorPrimary</item>
+        <item name="android:textCursorDrawable">?colorPrimary</item>
+        <item name="android:textColorHighlight">@color/point_opacity_30</item>
+    </style>
 
 </resources>
