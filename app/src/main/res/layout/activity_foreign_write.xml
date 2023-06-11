@@ -47,7 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingHorizontal="18dp"
-                android:paddingVertical="20dp">
+                android:paddingVertical="20dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
 
                 <EditText
                     android:id="@+id/et_foreign_write"
@@ -55,11 +56,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:privateImeOptions="defaultInputmode==english"
-                    android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
                     android:hint="외국어로 일기를 작성해주세요"
+                    android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+                    android:privateImeOptions="defaultInputmode==english"
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
-                    android:textColor="?colorOnBackground" />
+                    android:textColor="?colorOnBackground"
+                    android:textColorHint="@color/gray_300" />
 
             </androidx.core.widget.NestedScrollView>
 
