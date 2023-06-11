@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.*
 import com.sopt.smeem.SmeemErrorCode
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.SmeemDataStore.dataStore
-import com.sopt.smeem.domain.model.auth.Authentication
+import com.sopt.smeem.domain.model.Authentication
 import com.sopt.smeem.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.firstOrNull

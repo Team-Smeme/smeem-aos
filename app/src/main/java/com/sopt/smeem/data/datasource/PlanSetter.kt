@@ -3,7 +3,7 @@ package com.sopt.smeem.data.datasource
 import com.sopt.smeem.data.model.request.PlanRequest
 import com.sopt.smeem.data.model.response.ApiResponse
 import com.sopt.smeem.data.service.UserService
-import com.sopt.smeem.domain.model.auth.OnBoarding
+import com.sopt.smeem.domain.model.OnBoarding
 
 class PlanSetter(
     private val userService: UserService

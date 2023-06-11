@@ -7,7 +7,7 @@
 
         <variable
             name="onBoardingGoal"
-            type="com.sopt.smeem.domain.model.auth.OnBoardingGoal" />
+            type="com.sopt.smeem.domain.model.OnBoardingGoal" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
