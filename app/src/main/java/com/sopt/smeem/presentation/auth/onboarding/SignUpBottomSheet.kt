@@ -41,9 +41,10 @@ class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
 
             if (KakaoHandler.isAppEnabled(context)) {
                 KakaoHandler.loginOnApp(context,
-                    onSuccess = { idToken ->
+                    onSuccess = { kakaoAccessToken, kakaoRefreshToken ->
                         vm.login(
-                            idToken = idToken,
+                            kakaoAccessToken = kakaoAccessToken,
+                            kakaoRefreshToken = kakaoRefreshToken,
                             socialType = SocialType.KAKAO,
                             onError = { e -> e.logging("LOGIN_FAILED") }
                         )
@@ -52,9 +53,10 @@ class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
             } else {
                 KakaoHandler.loginOnWeb(
                     context,
-                    onSuccess = { idToken ->
+                    onSuccess = { kakaoAccessToken, kakaoRefreshToken ->
                         vm.login(
-                            idToken = idToken,
+                            kakaoAccessToken = kakaoAccessToken,
+                            kakaoRefreshToken = kakaoRefreshToken,
                             socialType = SocialType.KAKAO,
                             onError = { e -> e.logging("LOGIN_FAILED") }
                         )

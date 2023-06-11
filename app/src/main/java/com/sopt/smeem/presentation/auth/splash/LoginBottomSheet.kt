@@ -42,9 +42,10 @@ class LoginBottomSheet: BottomSheetDialogFragment(), LoginProcess {
         binding.tvKakao.setOnClickListener {
             if (KakaoHandler.isAppEnabled(context)) {
                 KakaoHandler.loginOnApp(context,
-                    onSuccess = { idToken ->
+                    onSuccess = { kakaoAccessToken, kakaoRefreshToken ->
                         vm.login(
-                            idToken = idToken,
+                            kakaoAccessToken = kakaoAccessToken,
+                            kakaoRefreshToken = kakaoRefreshToken,
                             socialType = SocialType.KAKAO,
                             onError = { exception ->
                                 exception.logging("LOGIN_FAILED")
@@ -59,9 +60,10 @@ class LoginBottomSheet: BottomSheetDialogFragment(), LoginProcess {
             // kakao app 이 없는 경우, web 으로 로그인 시도
             else {
                 KakaoHandler.loginOnWeb(context,
-                    onSuccess = { idToken ->
+                    onSuccess = { kakaoAccessToken, kakaoRefreshToken ->
                         vm.login(
-                            idToken = idToken,
+                            kakaoAccessToken = kakaoAccessToken,
+                            kakaoRefreshToken = kakaoRefreshToken,
                             socialType = SocialType.KAKAO,
                             onError = { exception ->
                                 exception.logging("LOGIN_FAILED")

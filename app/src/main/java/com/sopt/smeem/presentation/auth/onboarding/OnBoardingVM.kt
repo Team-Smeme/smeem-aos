@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.Authenticated
 import com.sopt.smeem.Day
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
@@ -95,13 +96,24 @@ class OnBoardingVM @Inject constructor() : ViewModel() {
     }
 
     fun login(
-        idToken: String,
+        kakaoAccessToken: String,
+        kakaoRefreshToken: String,
         socialType: SocialType,
         onError: (SmeemException) -> Unit
     ) {
         viewModelScope.launch {
-            loginRepository.execute(idToken, socialType)
-                .onSuccess { _loginResult.value = it }
+            loginRepository.execute(accessToken = kakaoAccessToken, socialType)
+                .onSuccess {
+                    // save on local storage
+                    authRepository.setAuthentication(
+                        Authentication(
+                            accessToken = it.apiAccessToken,
+                            refreshToken = it.apiRefreshToken
+                        )
+                    )
+
+                    _loginResult.value = it
+                }
                 .onHttpFailure { e -> onError(e) }
         }
     }
