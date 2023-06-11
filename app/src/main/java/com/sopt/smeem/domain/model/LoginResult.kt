@@ -4,7 +4,7 @@ import com.sopt.smeem.data.model.response.LoginResponse
 
 data class LoginResult(
     val apiAccessToken: String,
-    val apiRefreshToken: String,
+    val apiRefreshToken: String? = null,
     val isRegistered: Boolean,
     val isPlanRegistered: Boolean
 ) {

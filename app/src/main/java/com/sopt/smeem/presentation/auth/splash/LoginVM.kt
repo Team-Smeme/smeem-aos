@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.Authenticated
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
 import com.sopt.smeem.domain.model.Authentication
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.repository.AuthRepository
 import com.sopt.smeem.domain.repository.LoginRepository
-import com.sopt.smeem.Authenticated
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,25 +31,28 @@ internal class LoginVM @Inject constructor() : ViewModel() {
         get() = _loginResult
 
     fun login(
-        idToken: String,
+        kakaoAccessToken: String,
+        kakaoRefreshToken: String,
         socialType: SocialType,
         onError: (SmeemException) -> Unit
     ) {
-
         viewModelScope.launch {
-            _loginResult.value = LoginResult(
-                apiAccessToken = "abc-user",
-                apiRefreshToken = "abc-user-2",
-                isRegistered = false,
-                isPlanRegistered = false
-            );
-
-            authRepository.setAuthentication(
-                Authentication(
-                    accessToken = "abc-user",
-                    refreshToken = "abc-user-2"
-                )
+            loginRepository.execute(
+                accessToken = kakaoAccessToken,
+                socialType = socialType
             )
+                .onSuccess {
+                    // save on local storage
+                    authRepository.setAuthentication(
+                        Authentication(
+                            accessToken = it.apiAccessToken,
+                            refreshToken = it.apiRefreshToken
+                        )
+                    )
+
+                    _loginResult.value = it
+                }
+                .onHttpFailure { e -> onError(e) }
         }
 
         /* TODO : server 로그인 api 개선 시 적용
