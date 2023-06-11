@@ -7,8 +7,9 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityEntranceAgreementBinding
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.auth.entrance.EntranceConstant.NICKNAME
-import com.sopt.smeem.presentation.auth.onboarding.switchOff
-import com.sopt.smeem.presentation.auth.onboarding.switchOn
+import com.sopt.smeem.util.ButtonUtil.switchOff
+import com.sopt.smeem.util.ButtonUtil.switchOn
+
 
 class EntranceAgreementActivity :
     BindingActivity<ActivityEntranceAgreementBinding>(R.layout.activity_entrance_agreement) {

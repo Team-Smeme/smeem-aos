@@ -7,7 +7,9 @@ import com.sopt.smeem.databinding.ActivityLogInBinding
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.auth.entrance.EntranceNicknameActivity
 import com.sopt.smeem.presentation.auth.onboarding.OnBoardingActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : BindingActivity<ActivityLogInBinding>(R.layout.activity_log_in) {
     lateinit var bs: LoginBottomSheet
     private val vm: LoginVM by viewModels()
@@ -54,7 +56,7 @@ class LoginActivity : BindingActivity<ActivityLogInBinding>(R.layout.activity_lo
         if (!isFinishing) finish()
     }
 
-    private fun gotoPlanOnBoarding() {
+    private fun gotoOnBoarding() {
         val goToOnBoarding = Intent(this@LoginActivity, OnBoardingActivity::class.java)
         startActivity(goToOnBoarding)
 
@@ -68,7 +70,7 @@ class LoginActivity : BindingActivity<ActivityLogInBinding>(R.layout.activity_lo
                 false -> {
                     when (it.isPlanRegistered) {
                         true -> gotoNicknameEntrance()
-                        false -> gotoPlanOnBoarding()
+                        false -> gotoOnBoarding()
                     }
                 }
             }

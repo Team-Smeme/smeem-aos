@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="onBoardingEncouraging"
-            type="com.sopt.smeem.domain.model.auth.OnBoardingEncouraging" />
+            name="onBoardingGoal"
+            type="com.sopt.smeem.domain.model.auth.OnBoardingGoal" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,7 +65,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
 
-                    android:text="@{onBoardingEncouraging.goal}"
+                    android:text="@{onBoardingGoal.goal}"
                     android:textAppearance="@style/TextAppearance.Smeem.Headline3"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +106,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_encouraging_box_how_title"
                     app:layout_constraintVertical_bias="0.6"
 
-                    tools:text="@{onBoardingEncouraging.howTo}" />
+                    tools:text="@{onBoardingGoal.howTo}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -140,7 +140,7 @@
                     android:textColor="@color/gray_600"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_encouraging_box_goal_title"
-                    tools:text="@{onBoardingEncouraging.goalDetail}" />
+                    tools:text="@{onBoardingGoal.goalDetail}" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

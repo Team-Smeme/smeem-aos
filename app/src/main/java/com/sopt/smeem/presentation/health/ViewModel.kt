@@ -3,17 +3,20 @@ package com.sopt.smeem.presentation.health
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.data.datasource.HealthChecking
-import com.sopt.smeem.data.onHttpFailure
-import com.sopt.smeem.data.repository.HealthRepositoryImpl
+import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.health.HealthStatus
 import com.sopt.smeem.domain.repository.HealthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class ViewModel(
-    private val _result: MutableLiveData<HealthStatus> = MutableLiveData<HealthStatus>(),
-    private val healthRepository: HealthRepository = HealthRepositoryImpl(HealthChecking())
-) : androidx.lifecycle.ViewModel() {
+@HiltViewModel
+internal class ViewModel @Inject constructor() : androidx.lifecycle.ViewModel() {
+
+    @Inject
+    lateinit var healthRepository: HealthRepository
+
+    private val _result: MutableLiveData<HealthStatus> = MutableLiveData<HealthStatus>()
     val result: LiveData<HealthStatus>
         get() = _result
 

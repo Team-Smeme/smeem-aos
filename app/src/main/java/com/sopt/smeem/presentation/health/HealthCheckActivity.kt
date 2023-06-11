@@ -5,7 +5,9 @@ import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHealthCheckBinding
 import com.sopt.smeem.presentation.BindingActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HealthCheckActivity :
     BindingActivity<ActivityHealthCheckBinding>(R.layout.activity_health_check) {
     private val healthViewModel: ViewModel by viewModels()

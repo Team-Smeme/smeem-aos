@@ -14,14 +14,14 @@ import com.sopt.smeem.logging
 import com.sopt.smeem.presentation.auth.LoginProcess
 import com.sopt.smeem.presentation.auth.splash.KakaoHandler
 
-class SignUpBottomSheet : BottomSheetDialogFragment(), LoginProcess {
+class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
     var _binding: BottomSheetSignUpBinding? = null
     private val binding: BottomSheetSignUpBinding
         get() = requireNotNull(_binding)
     private val vm: OnBoardingVM by lazy {
         ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>) = OnBoardingVM() as T
-        }).get(OnBoardingVM::class.java)
+        })[OnBoardingVM::class.java]
     }
 
     override fun onCreateView(
@@ -44,8 +44,9 @@ class SignUpBottomSheet : BottomSheetDialogFragment(), LoginProcess {
                     onSuccess = { idToken ->
                         vm.login(
                             idToken = idToken,
-                            socialType = SocialType.KAKAO
-                        ) { e -> e.logging("LOGIN_FAILED") }
+                            socialType = SocialType.KAKAO,
+                            onError = { e -> e.logging("LOGIN_FAILED") }
+                        )
                     },
                     onFailed = { exception -> exception.logging("KAKAO_LOGIN") })
             } else {
@@ -54,8 +55,9 @@ class SignUpBottomSheet : BottomSheetDialogFragment(), LoginProcess {
                     onSuccess = { idToken ->
                         vm.login(
                             idToken = idToken,
-                            socialType = SocialType.KAKAO
-                        ) { e -> e.logging("LOGIN_FAILED") }
+                            socialType = SocialType.KAKAO,
+                            onError = { e -> e.logging("LOGIN_FAILED") }
+                        )
                     },
                     onFailed = { exception -> exception.logging("KAKAO_LOGIN") })
             }

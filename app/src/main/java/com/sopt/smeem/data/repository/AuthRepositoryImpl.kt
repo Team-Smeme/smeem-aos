@@ -1,19 +1,21 @@
 package com.sopt.smeem.data.repository
 
+import android.content.Context
 import android.util.Log
-import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import com.sopt.smeem.SmeemErrorCode
 import com.sopt.smeem.SmeemException
+import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.domain.model.auth.Authentication
 import com.sopt.smeem.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import java.io.IOException
+import javax.inject.Inject
 
-class AuthRepositoryImpl(
-    private val dataStore: DataStore<Preferences>
+class AuthRepositoryImpl @Inject constructor(
+    private val context: Context
 ) : AuthRepository {
 
     /**
@@ -22,7 +24,7 @@ class AuthRepositoryImpl(
      * (already cached on DataStore Layer)
      */
     override suspend fun getAuthentication(): Authentication? {
-        return dataStore.data
+        return context.dataStore.data
             .catch { e: Throwable ->
                 Log.e(
                     "dataStore_auth",
@@ -40,7 +42,7 @@ class AuthRepositoryImpl(
 
     override suspend fun setAuthentication(authentication: Authentication) {
         try {
-            dataStore.edit { mutablePreferences: MutablePreferences ->
+            context.dataStore.edit { mutablePreferences: MutablePreferences ->
                 mutablePreferences[API_ACCESS_TOKEN] =
                     requireNotNull(authentication.accessToken) { "NPE when register authentication with accessToken" }
                 mutablePreferences[API_REFRESH_TOKEN] =
@@ -60,7 +62,9 @@ class AuthRepositoryImpl(
     /**
      * LocalStorage 에 accessToken 이 저장되었는지 확인
      */
-    override suspend fun isAuthenticated(): Boolean = getAuthentication() != null
+    override suspend fun isAuthenticated(): Boolean {
+        return getAuthentication()?.isAuthenticated() ?: false
+    }
 
     companion object {
         private val API_ACCESS_TOKEN = stringPreferencesKey("api_access_token")

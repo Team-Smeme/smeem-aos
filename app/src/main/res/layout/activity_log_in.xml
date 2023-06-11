@@ -23,7 +23,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/common_google_signin_btn_icon_dark" />
+            android:src="@mipmap/ic_smeem"/>
 
         <TextView
             android:id="@+id/tv_sign_in_header"
@@ -33,7 +33,8 @@
             android:textAppearance="@style/TextAppearance.Smeem.Urbanist_semibold"
 
             app:layout_constraintStart_toEndOf="@id/iv_sign_in_header"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_sign_in_header"
+            app:layout_constraintBottom_toBottomOf="@id/iv_sign_in_header"
             android:text="@string/splash_header" />
 
         <TextView

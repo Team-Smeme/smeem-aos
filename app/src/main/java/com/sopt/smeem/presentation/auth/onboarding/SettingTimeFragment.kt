@@ -19,7 +19,7 @@ class SettingTimeFragment :
     private val vm: OnBoardingVM by lazy {
         ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>) = OnBoardingVM() as T
-        }).get(OnBoardingVM::class.java)
+        })[OnBoardingVM::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
