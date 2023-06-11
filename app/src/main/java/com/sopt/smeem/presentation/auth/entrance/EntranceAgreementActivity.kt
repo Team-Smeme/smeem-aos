@@ -5,12 +5,15 @@ import androidx.activity.viewModels
 import com.google.android.material.button.MaterialButton
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityEntranceAgreementBinding
+import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.auth.entrance.EntranceConstant.NICKNAME
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class EntranceAgreementActivity :
     BindingActivity<ActivityEntranceAgreementBinding>(R.layout.activity_entrance_agreement) {
     private var elements: Map<EntranceSelection, MaterialButton>? = null
@@ -88,8 +91,15 @@ class EntranceAgreementActivity :
     }
 
     private fun sendServer(nickname: String, selected: Set<EntranceSelection>) {
-        // TODO : PATCH 유저정보 설정 API call
-        Toast.makeText(this, "닉네임 변경 API 호출", Toast.LENGTH_SHORT).show()
+        vm.registerNicknameAndAcceptance(
+            nickname,
+            selected,
+            onSuccess = { Toast.makeText(this, "닉네임 변경 API 호출", Toast.LENGTH_SHORT).show() },
+            onError = { e ->
+                Toast.makeText(this@EntranceAgreementActivity, e.description(), Toast.LENGTH_SHORT)
+                    .show()
+            }
+        )
     }
 }
 

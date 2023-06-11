@@ -1,6 +1,7 @@
 package com.sopt.smeem.module
 
 import com.sopt.smeem.Authenticated
+import com.sopt.smeem.data.datasource.JoinHelper
 import com.sopt.smeem.data.datasource.PlanSetter
 import com.sopt.smeem.data.repository.UserRepositoryImpl
 import com.sopt.smeem.data.service.UserService
@@ -19,12 +20,14 @@ object UserModule {
     @Authenticated
     fun userRepository(
         networkModule: NetworkModule
-    ): UserRepository =
-        UserRepositoryImpl(
-            PlanSetter(
-                networkModule.apiServerRetrofitForAuthentication.create(
-                    UserService::class.java
-                )
-            )
+    ): UserRepository {
+        val userService = networkModule.apiServerRetrofitForAuthentication.create(
+            UserService::class.java
         )
+
+        return UserRepositoryImpl(
+            planSetter = PlanSetter(userService),
+            joinHelper = JoinHelper(userService)
+        )
+    }
 }
