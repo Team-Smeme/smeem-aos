@@ -55,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:privateImeOptions="defaultInputmode==english"
+                    android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
                     android:hint="외국어로 일기를 작성해주세요"
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
                     android:textColor="?colorOnBackground" />
