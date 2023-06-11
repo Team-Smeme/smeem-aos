@@ -51,6 +51,7 @@
 
                 <EditText
                     android:id="@+id/et_foreign_write"
+                    style="@style/Style.Smeem.Text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
