@@ -12,7 +12,6 @@ class LoginExecutor(
     suspend fun execute(
         accessToken: String,
         socialType: SocialType
-        // refreshToken: String
     ): ApiResponse<LoginResponse> =
         loginService.login(accessToken = "Bearer $accessToken", LoginRequest(socialType))
 }

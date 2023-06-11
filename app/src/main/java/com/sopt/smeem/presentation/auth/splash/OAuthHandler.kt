@@ -8,13 +8,13 @@ interface OAuthHandler {
 
     fun loginOnApp(
         context: Context,
-        onSuccess: (String) -> Unit,
+        onSuccess: (String, String) -> Unit,
         onFailed: (SmeemException) -> Unit
     )
 
     fun loginOnWeb(
         context: Context,
-        onSuccess: (String) -> Unit,
+        onSuccess: (String, String) -> Unit,
         onFailed: (SmeemException) -> Unit
     )
 }
