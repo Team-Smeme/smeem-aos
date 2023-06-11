@@ -1,4 +1,4 @@
-package com.sopt.smeem.domain.model.auth
+package com.sopt.smeem.domain.model
 
 import com.sopt.smeem.Day
 import com.sopt.smeem.StudyGoal

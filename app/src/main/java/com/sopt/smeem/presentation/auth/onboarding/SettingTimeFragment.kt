@@ -7,10 +7,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sopt.smeem.Day
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.FragmentSettingTimeBinding
 import com.sopt.smeem.presentation.BindingFragment
+import com.sopt.smeem.util.ButtonUtil.switchOff
+import com.sopt.smeem.util.ButtonUtil.switchOn
 
 class SettingTimeFragment :
     BindingFragment<FragmentSettingTimeBinding>(R.layout.fragment_setting_time) {
@@ -87,7 +88,6 @@ class SettingTimeFragment :
         days?.values?.forEach { day ->
             run {
                 day.setOnClickListener {
-                    val v = vm
                     // 요일이 선택되어있는 경우
                     if (vm.isDaySelected(day.text.toString())) {
                         day.switchOff()
@@ -115,29 +115,5 @@ class SettingTimeFragment :
         }
     }
 
-    private fun TextView.switchOff() {
-        if (Day.from(this.text.toString()) == Day.MON) {
-            this.setBackgroundResource(R.drawable.shape_time_day_inactive_left)
-            this.setTextColor(resources.getColor(R.color.gray_500, null))
-        } else if (Day.from(this.text.toString()) == Day.SUN) {
-            this.setBackgroundResource(R.drawable.shape_time_day_inactive_right)
-            this.setTextColor(resources.getColor(R.color.gray_500, null))
-        } else {
-            this.setBackgroundResource(R.drawable.shape_time_day_inactive)
-            this.setTextColor(resources.getColor(R.color.gray_500, null))
-        }
-    }
 
-    private fun TextView.switchOn() {
-        if (Day.from(this.text.toString()) == Day.MON) {
-            this.setBackgroundResource(R.drawable.shape_time_day_active_left)
-            this.setTextColor(resources.getColor(R.color.white, null))
-        } else if (Day.from(this.text.toString()) == Day.SUN) {
-            this.setBackgroundResource(R.drawable.shape_time_day_active_right)
-            this.setTextColor(resources.getColor(R.color.white, null))
-        } else {
-            this.setBackgroundColor(resources.getColor(R.color.point, null))
-            this.setTextColor(resources.getColor(R.color.white, null))
-        }
-    }
 }

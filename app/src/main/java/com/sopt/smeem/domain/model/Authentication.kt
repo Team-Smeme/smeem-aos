@@ -1,4 +1,4 @@
-package com.sopt.smeem.domain.model.auth
+package com.sopt.smeem.domain.model
 
 data class Authentication(
     val accessToken: String? = null,

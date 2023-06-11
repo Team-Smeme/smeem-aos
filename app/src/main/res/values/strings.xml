@@ -39,4 +39,8 @@
     <string name="entrance_agreement_personal">[필수] 개인정보 수집 및 이용 동의</string>
     <string name="entrance_agreement_location">[필수] 위치기반 서비스 이용약관 동의</string>
     <string name="entrance_agreement_marketing">[선택] 마케팅 정보 활용 동의</string>
+    <string name="my_page_badges">내 배지</string>
+    <string name="my_page_languages">학습 언어</string>
+    <string name="my_page_alarm">학습 알림</string>
+    <string name="my_page_push">트레이닝 푸시알림</string>
 </resources>

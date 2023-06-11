@@ -1,6 +1,6 @@
 package com.sopt.smeem.domain.repository
 
-import com.sopt.smeem.domain.model.auth.Authentication
+import com.sopt.smeem.domain.model.Authentication
 
 interface AuthRepository {
     suspend fun getAuthentication(): Authentication?

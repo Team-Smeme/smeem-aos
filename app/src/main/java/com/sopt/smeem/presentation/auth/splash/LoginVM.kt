@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
-import com.sopt.smeem.domain.model.auth.Authentication
-import com.sopt.smeem.domain.model.auth.LoginResult
+import com.sopt.smeem.domain.model.Authentication
+import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.repository.AuthRepository
 import com.sopt.smeem.domain.repository.LoginRepository
 import com.sopt.smeem.Authenticated
