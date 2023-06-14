@@ -48,4 +48,6 @@
     <string name="diary_write_cancel">취소</string>
     <string name="diary_write_step_1">STEP 1</string>
     <string name="diary_write_step_2">STEP 2</string>
+    <string name="language_english">English</string>
+    <string name="language_korean">한국어</string>
 </resources>
