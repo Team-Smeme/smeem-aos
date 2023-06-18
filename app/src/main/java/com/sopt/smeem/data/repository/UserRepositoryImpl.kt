@@ -2,6 +2,7 @@ package com.sopt.smeem.data.repository
 
 import com.sopt.smeem.LanguageCode
 import com.sopt.smeem.data.datasource.JoinHelper
+import com.sopt.smeem.data.datasource.MyBadgeRetriever
 import com.sopt.smeem.data.datasource.MyPageRetriever
 import com.sopt.smeem.data.datasource.PlanSetter
 import com.sopt.smeem.domain.model.Badge
@@ -15,7 +16,8 @@ import com.sopt.smeem.domain.repository.UserRepository
 class UserRepositoryImpl(
     private val planSetter: PlanSetter? = null,
     private val joinHelper: JoinHelper? = null,
-    private val myPageRetriever: MyPageRetriever? = null
+    private val myPageRetriever: MyPageRetriever? = null,
+    private val myBadgeRetriever: MyBadgeRetriever? = null,
 ) : UserRepository {
     override suspend fun patchOnBoarding(onBoarding: OnBoarding): Result<Unit> =
         kotlin.runCatching { planSetter!!.patch(onBoarding) }
@@ -57,4 +59,20 @@ class UserRepositoryImpl(
                 )
             )
         }
+
+    override suspend fun getMyBadges(): Result<List<Badge>> =
+        kotlin.runCatching {
+            myBadgeRetriever!!.getResponse()
+        }.map { response ->
+            response.data!!.badges.map { badgeResponse ->
+                Badge(
+                    badgeId = badgeResponse.id,
+                    title = badgeResponse.name,
+                    description = badgeResponse.description,
+                    imageUrl = badgeResponse.imageUrl,
+                    badgeType = badgeResponse.type
+                )
+            }
+        }
+
 }

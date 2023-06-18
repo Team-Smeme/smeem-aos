@@ -10,6 +10,7 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityMyPageBinding
 import com.sopt.smeem.domain.model.AlarmEnabledDay
 import com.sopt.smeem.domain.model.Badge
+import com.sopt.smeem.domain.model.BadgeType
 import com.sopt.smeem.domain.model.Language
 import com.sopt.smeem.domain.model.OnBoardingGoal
 import com.sopt.smeem.presentation.BindingActivity
@@ -38,6 +39,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         onTouchSwitchingPush()
         onEditNickname()
         onTouchDays()
+        onTouchBadge()
         // onEditGoal()
     }
 
@@ -82,6 +84,11 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         }
     }
 
+    private fun onTouchBadge() {
+        binding.layoutMyPageBadges.setOnClickListener {
+            startActivity(Intent(this, MyBadgesActivity::class.java))
+        }
+    }
     private fun setData() { // TODO : mocking 대신 호출되어져야함
         vm.response.observe(this) {
             binding.tvMyPageNickname.text = it.username
@@ -186,7 +193,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
             "매일 매일 꼬박꼬박 읽으세요\n읽다보면 늘어나요",
             "외국어 원서 다 읽기\n영어 고득점 받기"
         )
-        binding.latestBadge = Badge(badgeId = 1, title = "웰컴뱃지", description = "한 줄 설명 설명 환영합니다")
+        binding.latestBadge = Badge(badgeId = 1, title = "웰컴뱃지", description = "한 줄 설명 설명 환영합니다", badgeType = BadgeType.WELCOME)
         binding.alarmEnabledDay =
             AlarmEnabledDay(days = setOf(Day.SUN), hour = 11, minute = 10, ampm = "AM")
         languageAdaptor.submitList(listOf(Language(code = 1L)))
