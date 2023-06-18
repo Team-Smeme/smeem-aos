@@ -85,6 +85,11 @@
         </activity>
 
         <activity android:name=".presentation.mypage.ChangingNicknameActivity" android:exported="false"/>
+
+        <activity android:name=".presentation.mypage.MyBadgesActivity"
+            android:exported="false">
+
+        </activity>
     </application>
 
 </manifest>
