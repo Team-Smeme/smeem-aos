@@ -1,6 +1,7 @@
 package com.sopt.smeem.data.model.response
 
 import com.sopt.smeem.Day
+import com.sopt.smeem.domain.model.BadgeType
 
 data class MyPageResponse(
     val username: String,
@@ -21,7 +22,8 @@ data class MyPageResponse(
     data class BadgeResponse(
         val id: Long,
         val name: String,
-        val type: String,
-        val imageUrl: String
+        val type: BadgeType,
+        val imageUrl: String,
+        val description: String
     )
 }
