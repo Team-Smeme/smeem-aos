@@ -4,18 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.Authenticated
 import com.sopt.smeem.Day
-import com.sopt.smeem.data.datasource.MyPageRetriever
-import com.sopt.smeem.data.model.response.MyPageResponse
-import com.sopt.smeem.data.repository.MyPageRepositoryImpl
-import com.sopt.smeem.domain.repository.MyPageRepository
+import com.sopt.smeem.domain.model.MyPage
+import com.sopt.smeem.domain.repository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class MyPageVM(
-    private val myPageRepository: MyPageRepository = MyPageRepositoryImpl(MyPageRetriever())
-) : ViewModel() {
-    private val _response: MutableLiveData<MyPageResponse> = MutableLiveData<MyPageResponse>()
-    val response: LiveData<MyPageResponse>
+@HiltViewModel
+internal class MyPageVM @Inject constructor() : ViewModel() {
+
+    @Inject
+    @Authenticated
+    lateinit var userRepository: UserRepository
+
+    private val _response: MutableLiveData<MyPage> = MutableLiveData<MyPage>()
+    val response: LiveData<MyPage>
         get() = _response
 
     var isTimeSet: Boolean = false
@@ -23,11 +28,11 @@ internal class MyPageVM(
 
     fun getData(onError: (Throwable) -> Unit) {
         viewModelScope.launch {
-            myPageRepository.getResponse().apply {
+            userRepository.getMyPage().apply {
                 this.onSuccess {
                     _response.value = it
-                    isTimeSet = it.hasPushAlarm && it.trainingTime.isSet()
-                    days.addAll(it.trainingTime.day)
+                    isTimeSet = it.hasPushAlarm && it.training.isSet()
+                    days.addAll(it.training.days)
                 }
                 this.onFailure { onError(it) }
             }

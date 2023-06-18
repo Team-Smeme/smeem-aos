@@ -9,14 +9,14 @@ import com.sopt.smeem.Day
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
 import com.sopt.smeem.StudyGoal
+import com.sopt.smeem.data.ApiPool.onHttpFailure
+import com.sopt.smeem.domain.model.Authentication
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.model.OnBoarding
+import com.sopt.smeem.domain.model.OnBoardingGoal
 import com.sopt.smeem.domain.repository.AuthRepository
 import com.sopt.smeem.domain.repository.LoginRepository
 import com.sopt.smeem.domain.repository.UserRepository
-import com.sopt.smeem.Authenticated
-import com.sopt.smeem.data.ApiPool.onHttpFailure
-import com.sopt.smeem.domain.model.OnBoardingGoal
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
