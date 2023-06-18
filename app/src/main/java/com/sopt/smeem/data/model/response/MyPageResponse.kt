@@ -16,9 +16,7 @@ data class MyPageResponse(
         val day: Set<Day>,
         val hour: String,
         val minute: String
-    ) {
-        fun isSet() = day.isNotEmpty()
-    }
+    )
 
     data class BadgeResponse(
         val id: Long,

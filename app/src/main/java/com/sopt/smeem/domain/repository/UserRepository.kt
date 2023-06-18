@@ -1,7 +1,8 @@
 package com.sopt.smeem.domain.repository
 
 import com.sopt.smeem.domain.model.OnBoarding
-import com.sopt.smeem.domain.model.auth.Joining
+import com.sopt.smeem.domain.model.Joining
+import com.sopt.smeem.domain.model.MyPage
 
 interface UserRepository {
     /**
@@ -16,4 +17,6 @@ interface UserRepository {
         nickname: String,
         marketingAcceptance: Boolean? = null
     ): Result<Joining>
+
+    suspend fun getMyPage() : Result<MyPage>
 }
