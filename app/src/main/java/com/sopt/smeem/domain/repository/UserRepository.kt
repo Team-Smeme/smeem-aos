@@ -1,5 +1,6 @@
 package com.sopt.smeem.domain.repository
 
+import com.sopt.smeem.domain.model.Badge
 import com.sopt.smeem.domain.model.OnBoarding
 import com.sopt.smeem.domain.model.Joining
 import com.sopt.smeem.domain.model.MyPage
@@ -19,4 +20,9 @@ interface UserRepository {
     ): Result<Joining>
 
     suspend fun getMyPage() : Result<MyPage>
+
+    /**
+     * 나의 뱃지 정보를 조회합니다.
+     */
+    suspend fun getMyBadges() : Result<List<Badge>>
 }
