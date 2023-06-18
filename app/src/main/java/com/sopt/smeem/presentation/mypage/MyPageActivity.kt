@@ -85,12 +85,8 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     private fun setData() { // TODO : mocking 대신 호출되어져야함
         vm.response.observe(this) {
             binding.tvMyPageNickname.text = it.username
-            binding.onBoardingGoal = OnBoardingGoal(
-                goal = it.target,
-                howTo = it.targetHowTo ?: "",
-                goalDetail = it.targetDetail ?: ""
-            )
-            binding.latestBadge = Badge.from(it.badge)
+            binding.onBoardingGoal = it.goal
+            binding.latestBadge = it.badge
 
             if (it.hasPushAlarm) {
                 unFreezeTimeTable()
@@ -102,7 +98,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
             } else {
                 freezeTimeTable()
             }
-            languageAdaptor.submitList(Language.from(it))
+            languageAdaptor.submitList(listOf(it.language))
         }
     }
 

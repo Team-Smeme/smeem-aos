@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.Authenticated
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
+import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.Authentication
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.repository.AuthRepository
@@ -54,22 +55,5 @@ internal class LoginVM @Inject constructor() : ViewModel() {
                 }
                 .onHttpFailure { e -> onError(e) }
         }
-
-        /* TODO : server 로그인 api 개선 시 적용
-
-            viewModelScope.launch {
-                loginRepository.execute(idToken, socialType)
-                    .onSuccess {
-                        _loginResult.value = it;
-                        authRepository.setAuthentication(
-                            Authentication(
-                                accessToken = it.apiAccessToken,
-                                refreshToken = it.apiRefreshToken
-                            )
-                        )
-                    }
-                    .onHttpFailure { e -> onError(e) }
-
-            }*/
     }
 }
