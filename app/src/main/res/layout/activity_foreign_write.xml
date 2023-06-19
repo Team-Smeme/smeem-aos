@@ -51,8 +51,6 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="18dp"
-                android:paddingVertical="20dp"
                 android:scrollbarAlwaysDrawVerticalTrack="true">
 
                 <EditText
@@ -63,6 +61,8 @@
                     android:background="@null"
                     android:hint="@string/diary_write_hint"
                     android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="20dp"
                     android:privateImeOptions="defaultInputmode==english"
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
                     android:textColor="?colorOnBackground"
