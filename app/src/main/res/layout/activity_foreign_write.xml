@@ -7,6 +7,9 @@
 
         <import type="android.view.View" />
 
+        <variable
+            name="vm"
+            type="com.sopt.smeem.presentation.write.foreign.ForeignWriteViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

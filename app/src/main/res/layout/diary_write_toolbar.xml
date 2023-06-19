@@ -5,6 +5,7 @@
 
     <data>
 
+        <!-- 모두 xml 상에서만 수정 -->
         <variable
             name="stepVisibility"
             type="int" />

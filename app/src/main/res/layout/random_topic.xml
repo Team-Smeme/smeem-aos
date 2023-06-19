@@ -5,12 +5,19 @@
 
     <data>
 
+        <!-- xml 상에서만 수정 -->
         <variable
             name="refreshVisibility"
             type="int" />
+
+        <!-- activity_foreign_write에서 데바로 가져오기 -->
+        <variable
+            name="randomTopic"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?colorSurface"
@@ -32,7 +39,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:text="     "
+            android:text="@{`     ` + randomTopic}"
             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
