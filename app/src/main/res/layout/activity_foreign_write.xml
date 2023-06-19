@@ -38,6 +38,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             app:layout_constraintBottom_toTopOf="@id/layout_foreign_write_bottom_toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,12 +58,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:hint="외국어로 일기를 작성해주세요"
+                    android:hint="@string/diary_write_hint"
                     android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
                     android:privateImeOptions="defaultInputmode==english"
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
                     android:textColor="?colorOnBackground"
                     android:textColorHint="@color/gray_300" />
+
+                <requestFocus />
 
             </androidx.core.widget.NestedScrollView>
 
