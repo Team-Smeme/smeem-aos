@@ -5,7 +5,7 @@ import com.sopt.smeem.data.model.response.ApiResponse
 import com.sopt.smeem.data.service.DiaryService
 import com.sopt.smeem.domain.model.Diary
 
-class DiaryWriter(
+class DiaryCommander(
     private val diaryService: DiaryService
 ) {
     suspend fun writeDiary(diary: Diary): ApiResponse<Unit> = diaryService.post(
@@ -15,10 +15,14 @@ class DiaryWriter(
         )
     )
 
-    fun editDiary(diary: Diary): ApiResponse<Unit> = diaryService.patch(
+    suspend fun editDiary(diary: Diary): ApiResponse<Unit> = diaryService.patch(
         request = DiaryRequest.Editing(
             content = diary.content,
         ),
+        diaryId = diary.id!!
+    )
+
+    suspend fun removeDiary(diary: Diary) = diaryService.delete(
         diaryId = diary.id!!
     )
 
