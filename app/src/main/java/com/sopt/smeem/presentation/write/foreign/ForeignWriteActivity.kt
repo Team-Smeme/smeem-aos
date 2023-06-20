@@ -46,7 +46,6 @@ class ForeignWriteActivity :
                             resources.getColor(R.color.point, null)
                         )
                         // TODO: 새로운 랜덤 주제 불러오기
-//                        layoutForeignWriteRandomTopic.tvContent.text =
                         layoutForeignWriteRandomTopic.layoutSection.visibility = View.VISIBLE
                     }
 
