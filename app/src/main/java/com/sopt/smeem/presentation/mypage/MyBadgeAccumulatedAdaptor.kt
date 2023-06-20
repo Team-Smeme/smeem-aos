@@ -27,7 +27,7 @@ class MyBadgeAccumulatedAdaptor :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(data: Badge) {
             with(binding) {
-                binding.badge = data
+                badge = data
             }
         }
     }
