@@ -34,7 +34,7 @@
 
         <activity
             android:name=".presentation.auth.onboarding.OnBoardingActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
 
         <activity
             android:name=".presentation.health.HealthCheckActivity"
@@ -76,12 +76,7 @@
 
         <activity
             android:name=".presentation.mypage.MyPageActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
 
         <activity android:name=".presentation.mypage.ChangingNicknameActivity" android:exported="false"/>
