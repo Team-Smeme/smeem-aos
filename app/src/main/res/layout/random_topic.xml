@@ -10,7 +10,7 @@
             name="refreshVisibility"
             type="int" />
 
-        <!-- activity_foreign_write에서 데바로 가져오기 -->
+        <!-- 뷰모델에서 데바로 가져오기 -->
         <variable
             name="randomTopic"
             type="String" />
