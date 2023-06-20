@@ -8,5 +8,8 @@ interface DiaryRepository {
      */
     suspend fun postDiary(diary: Diary): Result<Unit>
 
-
+    /**
+     * 일기 내용을 수정합니다.
+     */
+    suspend fun patchDiary(diary: Diary): Result<Unit>
 }

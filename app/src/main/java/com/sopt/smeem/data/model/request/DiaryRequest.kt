@@ -5,4 +5,8 @@ class DiaryRequest {
         val content: String,
         val topicId: Long?
     )
+
+    data class Editing(
+        val content: String
+    )
 }
