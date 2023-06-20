@@ -9,4 +9,7 @@ class DiaryRepositoryImpl(
 ) : DiaryRepository {
     override suspend fun postDiary(diary: Diary): Result<Unit> =
         kotlin.runCatching { diaryWriter.writeDiary(diary) }
+
+    override suspend fun patchDiary(diary: Diary): Result<Unit> =
+        kotlin.runCatching { diaryWriter.editDiary(diary) }
 }

@@ -15,4 +15,11 @@ class DiaryWriter(
         )
     )
 
+    fun editDiary(diary: Diary): ApiResponse<Unit> = diaryService.patch(
+        request = DiaryRequest.Editing(
+            content = diary.content,
+        ),
+        diaryId = diary.id!!
+    )
+
 }
