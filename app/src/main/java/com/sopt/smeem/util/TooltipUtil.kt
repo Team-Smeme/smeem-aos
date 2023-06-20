@@ -38,12 +38,15 @@ object TooltipUtil {
             .setDismissWhenTouchOutside(false)
             .build()
         this.showAlignTop(tooltip)
-        tooltip.dismissTooltip()
+        tooltip.dismissTooltip(this)
     }
 
-    // 툴팁 클릭 시 제거
-    private fun Balloon.dismissTooltip() {
+    // 툴팁, 랜덤주제 체크박스 클릭 시 제거
+    private fun Balloon.dismissTooltip(view: View) {
         this.setOnBalloonClickListener {
+            this.dismiss()
+        }
+        view.setOnClickListener {
             this.dismiss()
         }
     }
