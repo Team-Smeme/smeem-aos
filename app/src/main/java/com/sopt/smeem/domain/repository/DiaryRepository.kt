@@ -12,4 +12,9 @@ interface DiaryRepository {
      * 일기 내용을 수정합니다.
      */
     suspend fun patchDiary(diary: Diary): Result<Unit>
+
+    /**
+     * 일기를 제거한다.
+     */
+    suspend fun removeDiary(diary: Diary) : Result<Unit>
 }

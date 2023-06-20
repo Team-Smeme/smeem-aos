@@ -3,6 +3,7 @@ package com.sopt.smeem.data.service
 import com.sopt.smeem.data.model.request.DiaryRequest
 import com.sopt.smeem.data.model.response.ApiResponse
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -14,8 +15,13 @@ interface DiaryService {
     ): ApiResponse<Unit>
 
     @PATCH("/api/v2/diaries/{diaryId}")
-    abstract fun patch(
+    suspend fun patch(
         @Body request: DiaryRequest.Editing,
+        @Query("diaryId") diaryId: Long
+    ): ApiResponse<Unit>
+
+    @DELETE("/api/v2/diaries/{diaryId}")
+    suspend fun delete(
         @Query("diaryId") diaryId: Long
     ): ApiResponse<Unit>
 }
