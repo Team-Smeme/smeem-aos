@@ -6,6 +6,7 @@ import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.domain.model.Diary
 import com.sopt.smeem.domain.model.DiarySummaries
 import com.sopt.smeem.domain.model.DiarySummary
+import com.sopt.smeem.domain.model.Topic
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.util.DateUtil
 import java.time.MonthDay
@@ -13,7 +14,7 @@ import java.time.Year
 
 class DiaryRepositoryImpl(
     private val diaryCommander: DiaryCommander,
-    private val diaryReader: DiaryReader
+    private val diaryReader: DiaryReader,
 ) : DiaryRepository {
     override suspend fun postDiary(diary: Diary): Result<Unit> =
         kotlin.runCatching { diaryCommander.writeDiary(diary) }
@@ -29,11 +30,11 @@ class DiaryRepositoryImpl(
             .map { response ->
                 Diary(
                     id = response.data!!.diaryId,
-                    content = response.data!!.content,
-                    topic = response.data!!.topic,
-                    createdAt = response.data!!.createdAt,
-                    username = response.data!!.username,
-                    corrections = response.data!!.correctionResponses?.map {
+                    content = response.data.content,
+                    topic = response.data.topic,
+                    createdAt = response.data.createdAt,
+                    username = response.data.username,
+                    corrections = response.data.correctionResponses?.map {
                         Diary.Correction(
                             id = it.correctionId,
                             before = it.before,
@@ -70,7 +71,17 @@ class DiaryRepositoryImpl(
 
                         }
                     ),
-                    has30Past = response.data!!.has30Past
+                    has30Past = response.data.has30Past
                 )
             }
+
+    override suspend fun getTopic(): Result<Topic> =
+        kotlin.runCatching {
+            diaryReader.getTopic()
+        }.map { response ->
+            Topic(
+                id = response.data!!.topicId,
+                content = response.data.content
+            )
+        }
 }

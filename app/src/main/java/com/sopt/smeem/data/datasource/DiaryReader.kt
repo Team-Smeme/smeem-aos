@@ -47,6 +47,7 @@ class DiaryReader(
         }
     }
 
+    suspend fun getTopic() : ApiResponse<DiaryResponse.Topic> = diaryService.getTopic()
     private fun patternCheck(vararg dates: String) {
         dates.forEach {
             if (!Pattern.compile(YYYY_MM_DD).matcher(it).matches()) {

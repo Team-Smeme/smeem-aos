@@ -37,4 +37,7 @@ interface DiaryService {
         @Query("start") startDate: String,
         @Query("end") endDate: String
     ): ApiResponse<DiaryResponse.Diaries>
+
+    @GET("/api/v2/topics/random")
+    suspend fun getTopic(): ApiResponse<DiaryResponse.Topic>
 }

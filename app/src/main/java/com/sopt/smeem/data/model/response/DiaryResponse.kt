@@ -26,4 +26,9 @@ class DiaryResponse {
         val diaries: List<Summary> = emptyList(),
         val has30Past: Boolean
     )
+
+    data class Topic(
+        val topicId: Long,
+        val content: String
+    )
 }
