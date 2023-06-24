@@ -65,10 +65,9 @@
                     android:paddingHorizontal="18dp"
                     android:paddingVertical="20dp"
                     android:privateImeOptions="defaultInputmode==english"
-                    android:text="@{vm.diary}"
+                    android:text="@={vm.diary}"
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
-                    android:textColor="?colorOnBackground"
-                    android:textColorHint="@color/gray_300" />
+                    android:textColor="?colorOnBackground" />
 
                 <requestFocus />
 

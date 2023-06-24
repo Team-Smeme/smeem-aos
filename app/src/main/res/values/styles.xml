@@ -51,8 +51,8 @@
     </style>
 
     <style name="Style.Smeem.Text" parent="">
-        <item name="colorControlActivated">?colorPrimary</item>
-        <item name="android:textCursorDrawable">?colorPrimary</item>
+        <item name="android:textColorHint">@color/gray_300</item>
+        <item name="android:textCursorDrawable">@drawable/shape_cursor</item>
         <item name="android:textColorHighlight">@color/point_opacity_30</item>
     </style>
 
