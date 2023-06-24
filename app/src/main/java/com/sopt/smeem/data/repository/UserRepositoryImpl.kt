@@ -44,12 +44,12 @@ class UserRepositoryImpl(
         }.map { response ->
             MyPage(
                 username = response.data!!.username,
-                badge = Badge.from(response.data.badge),
+                badge = Badge.from(response.data.badges[0]),
                 hasPushAlarm = response.data.hasPushAlarm,
                 goal = OnBoardingGoal(
                     goal = response.data.target,
-                    goalDetail = response.data.targetDetail ?: "",
-                    howTo = response.data.targetHowTo ?: ""
+                    goalDetail = response.data.detail ?: "",
+                    howTo = response.data.way ?: ""
                 ),
                 language = LanguageCode.en.language,
                 training = Training(

@@ -6,12 +6,12 @@ import com.sopt.smeem.domain.model.BadgeType
 data class MyPageResponse(
     val username: String,
     val target: String,
-    val targetHowTo: String?,
-    val targetDetail: String?,
+    val way: String?,
+    val detail: String?,
     val targetLang: String,
     val hasPushAlarm: Boolean,
     val trainingTime: TrainingResponse,
-    val badge: BadgeResponse
+    val badges: List<BadgeResponse>
 ) {
     data class TrainingResponse(
         val day: Set<Day>,
@@ -24,6 +24,6 @@ data class MyPageResponse(
         val name: String,
         val type: BadgeType,
         val imageUrl: String,
-        val description: String
+        val description: String?
     )
 }
