@@ -18,6 +18,7 @@
         <item name="android:statusBarColor">?android:colorBackground</item>
 
         <!-- etc -->
+        <item name="colorControlActivated">@color/point</item>
         <item name="materialButtonStyle">@style/Widget.Smeem.Button</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Smeem.BottomSheetDialog</item>
         <item name="android:timePickerStyle">@style/Widget.Smeem.TimePicker</item>
