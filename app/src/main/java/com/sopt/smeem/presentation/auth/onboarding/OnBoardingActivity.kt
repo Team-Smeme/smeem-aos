@@ -4,7 +4,7 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.sopt.smeem.R
-import com.sopt.smeem.StudyGoal
+import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.databinding.ActivityOnBoardingBinding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
@@ -96,7 +96,7 @@ class OnBoardingActivity :
         vm.selectedGoal.observe(
             this@OnBoardingActivity
         ) {
-            binding.btnOnBoardingNext.isEnabled = (it != StudyGoal.NONE)
+            binding.btnOnBoardingNext.isEnabled = (it != TrainingGoalType.NONE)
         }
     }
 

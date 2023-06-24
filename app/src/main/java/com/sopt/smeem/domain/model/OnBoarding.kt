@@ -1,11 +1,11 @@
 package com.sopt.smeem.domain.model
 
 import com.sopt.smeem.Day
-import com.sopt.smeem.StudyGoal
+import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.data.model.request.PlanRequest
 
 data class OnBoarding(
-    val studyGoal: StudyGoal,
+    val trainingGoalType: TrainingGoalType,
     val hasAlarm: Boolean,
     val day: List<Day> = emptyList(),
     val hour: Int?,

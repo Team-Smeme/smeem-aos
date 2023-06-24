@@ -1,8 +1,7 @@
 package com.sopt.smeem.data.model.response
 
-// TODO : server spec 에 맞춰
-data class GoalDetailResponse(
+data class TrainingGoalResponse(
     val goal: String,
-    val howTo: String,
+    val way: String,
     val detail: String
 )

@@ -114,6 +114,4 @@ class SettingTimeFragment :
             vm.timeLater()
         }
     }
-
-
 }
