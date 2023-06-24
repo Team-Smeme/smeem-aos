@@ -4,23 +4,23 @@ import com.sopt.smeem.LanguageCode
 import com.sopt.smeem.data.datasource.JoinHelper
 import com.sopt.smeem.data.datasource.MyBadgeRetriever
 import com.sopt.smeem.data.datasource.MyPageRetriever
-import com.sopt.smeem.data.datasource.PlanSetter
+import com.sopt.smeem.data.datasource.TrainingManager
 import com.sopt.smeem.domain.model.Badge
 import com.sopt.smeem.domain.model.Joining
 import com.sopt.smeem.domain.model.MyPage
 import com.sopt.smeem.domain.model.OnBoarding
-import com.sopt.smeem.domain.model.OnBoardingGoal
+import com.sopt.smeem.domain.model.TrainingGoal
 import com.sopt.smeem.domain.model.Training
 import com.sopt.smeem.domain.repository.UserRepository
 
 class UserRepositoryImpl(
-    private val planSetter: PlanSetter? = null,
+    private val trainingManager: TrainingManager? = null,
     private val joinHelper: JoinHelper? = null,
     private val myPageRetriever: MyPageRetriever? = null,
     private val myBadgeRetriever: MyBadgeRetriever? = null,
 ) : UserRepository {
     override suspend fun patchOnBoarding(onBoarding: OnBoarding): Result<Unit> =
-        kotlin.runCatching { planSetter!!.patch(onBoarding) }
+        kotlin.runCatching { trainingManager!!.patch(onBoarding) }
 
     override suspend fun patchNicknameAndAcceptance(
         username: String,
@@ -46,10 +46,10 @@ class UserRepositoryImpl(
                 username = response.data!!.username,
                 badge = Badge.from(response.data.badges[0]),
                 hasPushAlarm = response.data.hasPushAlarm,
-                goal = OnBoardingGoal(
+                goal = TrainingGoal(
                     goal = response.data.target,
-                    goalDetail = response.data.detail ?: "",
-                    howTo = response.data.way ?: ""
+                    detail = response.data.detail ?: "",
+                    way = response.data.way ?: ""
                 ),
                 language = LanguageCode.en.language,
                 training = Training(

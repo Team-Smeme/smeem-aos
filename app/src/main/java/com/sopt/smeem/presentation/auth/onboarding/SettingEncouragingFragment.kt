@@ -21,8 +21,8 @@ class SettingEncouragingFragment :
             Toast.makeText(context, e.description(), Toast.LENGTH_SHORT).show()
         }
 
-        vm.onBoardingGoal.observe(this) {
-            binding.onBoardingGoal = it
+        vm.trainingGoal.observe(this) {
+            binding.trainingGoal = it
         }
     }
 }

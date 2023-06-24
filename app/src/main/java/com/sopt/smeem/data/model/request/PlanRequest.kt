@@ -1,10 +1,10 @@
 package com.sopt.smeem.data.model.request
 
 import com.sopt.smeem.Day
-import com.sopt.smeem.StudyGoal
+import com.sopt.smeem.TrainingGoalType
 
 data class PlanRequest(
-    val target: StudyGoal,
+    val target: TrainingGoalType,
     val trainingTime: TrainingTime?,
     val hasAlarm: Boolean
 ) {

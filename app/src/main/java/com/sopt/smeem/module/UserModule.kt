@@ -2,7 +2,7 @@ package com.sopt.smeem.module
 
 import com.sopt.smeem.Authenticated
 import com.sopt.smeem.data.datasource.JoinHelper
-import com.sopt.smeem.data.datasource.PlanSetter
+import com.sopt.smeem.data.datasource.TrainingManager
 import com.sopt.smeem.data.repository.UserRepositoryImpl
 import com.sopt.smeem.data.service.UserService
 import com.sopt.smeem.domain.repository.UserRepository
@@ -26,7 +26,7 @@ object UserModule {
         )
 
         return UserRepositoryImpl(
-            planSetter = PlanSetter(userService),
+            trainingManager = TrainingManager(userService),
             joinHelper = JoinHelper(userService)
         )
     }
