@@ -9,8 +9,8 @@ import com.sopt.smeem.domain.model.Badge
 import com.sopt.smeem.domain.model.Joining
 import com.sopt.smeem.domain.model.MyPage
 import com.sopt.smeem.domain.model.OnBoarding
-import com.sopt.smeem.domain.model.TrainingGoal
 import com.sopt.smeem.domain.model.Training
+import com.sopt.smeem.domain.model.TrainingGoal
 import com.sopt.smeem.domain.repository.UserRepository
 
 class UserRepositoryImpl(
@@ -74,5 +74,4 @@ class UserRepositoryImpl(
                 )
             }
         }
-
 }
