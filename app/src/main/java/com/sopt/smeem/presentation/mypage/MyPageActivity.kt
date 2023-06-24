@@ -92,7 +92,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     private fun setData() { // TODO : mocking 대신 호출되어져야함
         vm.response.observe(this) {
             binding.tvMyPageNickname.text = it.username
-            binding.onBoardingGoal = it.goal
+            binding.trainingGoal = it.goal
             binding.latestBadge = it.badge
 
             if (it.hasPushAlarm) {
@@ -188,7 +188,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     // TODO : remove
     fun mocking() {
         binding.tvMyPageNickname.text = "정요니"
-        binding.onBoardingGoal = TrainingGoal(
+        binding.trainingGoal = TrainingGoal(
             "외국어 원서 읽기",
             "매일 매일 꼬박꼬박 읽으세요\n읽다보면 늘어나요",
             "외국어 원서 다 읽기\n영어 고득점 받기"
