@@ -3,6 +3,7 @@ package com.sopt.smeem.domain.repository
 import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.domain.model.Diary
 import com.sopt.smeem.domain.model.DiarySummaries
+import com.sopt.smeem.domain.model.Topic
 
 interface DiaryRepository {
     /**
@@ -52,4 +53,9 @@ interface DiaryRepository {
      *     start : 2023-04-10, end : 2023-10-20  => 예외 발생
      */
     suspend fun getDiaries(start: String? = null, end: String? = null): Result<DiarySummaries>
+
+    /**
+     * 일기 랜덤 주제를 조회합니다.
+     */
+    suspend fun getTopic(): Result<Topic>
 }
