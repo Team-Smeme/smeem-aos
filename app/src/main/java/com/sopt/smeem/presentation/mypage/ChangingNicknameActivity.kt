@@ -8,8 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityChangingNicknameBinding
 import com.sopt.smeem.presentation.BindingActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ChangingNicknameActivity :
     BindingActivity<ActivityChangingNicknameBinding>(R.layout.activity_changing_nickname) {
     private val vm: ChangingNicknameVM by viewModels()

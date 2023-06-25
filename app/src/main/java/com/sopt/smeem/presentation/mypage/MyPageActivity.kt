@@ -5,34 +5,28 @@ import android.content.res.ColorStateList
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.sopt.smeem.Day
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityMyPageBinding
-import com.sopt.smeem.domain.model.AlarmEnabledDay
-import com.sopt.smeem.domain.model.Badge
-import com.sopt.smeem.domain.model.BadgeType
-import com.sopt.smeem.domain.model.Language
-import com.sopt.smeem.domain.model.TrainingGoal
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_my_page) {
     private val vm: MyPageVM by viewModels()
     private var days: Map<Int, TextView>? = null
     private lateinit var languageAdaptor: LanguagesAdaptor
 
     override fun constructLayout() {
-        // TODO : 서버의 값으로만 치환할 수 있도록
-        //  getFromServer()
+        getFromServer()
         setAdaptor()
         setPush()
         setUpDays()
     }
 
     override fun addObservers() {
-        // setData()
-        mocking()
+        setData()
     }
 
     override fun addListeners() {
@@ -60,6 +54,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
             startActivity(Intent(this, EditTrainingGoalActivity::class.java))
         }
     }
+
     private fun onTouchDays() {
         days?.values?.forEach { day ->
             run {
@@ -94,7 +89,8 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
             startActivity(Intent(this, MyBadgesActivity::class.java))
         }
     }
-    private fun setData() { // TODO : mocking 대신 호출되어져야함
+
+    private fun setData() {
         vm.response.observe(this) {
             binding.tvMyPageNickname.text = it.username
             binding.trainingGoal = it.goal
@@ -188,22 +184,6 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
 
     fun getFromServer() {
         vm.getData { t -> Toast.makeText(this, t.cause.toString(), Toast.LENGTH_SHORT).show() }
-    }
-
-    // TODO : remove
-    fun mocking() {
-        binding.tvMyPageNickname.text = "정요니"
-        binding.trainingGoal = TrainingGoal(
-            "외국어 원서 읽기",
-            "매일 매일 꼬박꼬박 읽으세요\n읽다보면 늘어나요",
-            "외국어 원서 다 읽기\n영어 고득점 받기"
-        )
-        binding.latestBadge = Badge(badgeId = 1, title = "웰컴뱃지", description = "한 줄 설명 설명 환영합니다", badgeType = BadgeType.WELCOME)
-        binding.alarmEnabledDay =
-            AlarmEnabledDay(days = setOf(Day.SUN), hour = 11, minute = 10, ampm = "AM")
-        languageAdaptor.submitList(listOf(Language(code = 1L)))
-
-        freezeTimeTable()
     }
 
     private fun cannotTouch() {

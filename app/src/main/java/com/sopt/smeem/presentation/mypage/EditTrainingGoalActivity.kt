@@ -9,7 +9,9 @@ import com.sopt.smeem.databinding.ActivityEditTrainingGoalBinding
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EditTrainingGoalActivity :
     BindingActivity<ActivityEditTrainingGoalBinding>(R.layout.activity_edit_training_goal) {
 

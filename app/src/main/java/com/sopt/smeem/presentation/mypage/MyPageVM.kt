@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.Authenticated
 import com.sopt.smeem.Day
+import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.MyPage
 import com.sopt.smeem.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,7 +35,7 @@ internal class MyPageVM @Inject constructor() : ViewModel() {
                     isTimeSet = it.hasPushAlarm && it.trainingTime.isSet()
                     days.addAll(it.trainingTime.days)
                 }
-                this.onFailure { onError(it) }
+                this.onHttpFailure { onError(it) }
             }
         }
     }
