@@ -48,11 +48,20 @@
         <activity
             android:name=".presentation.auth.splash.LoginActivity"
             android:exported="true">
+
+
+        </activity>
+
+        <activity
+            android:name=".presentation.auth.splash.SignInActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".presentation.auth.entrance.EntranceNicknameActivity"
@@ -84,11 +93,13 @@
             android:name=".WeekActivity"
             android:exported="false"/>
         <activity
-            android:name=".MonthActivity"
-            android:exported="true"/>
+            android:name=".calendar.MonthActivity"
+            android:exported="true" />
         <activity
             android:name=".calendar.CalendarActivity"
-            />
+            android:exported="true">
+
+        </activity>
     </application>
 
 </manifest>
