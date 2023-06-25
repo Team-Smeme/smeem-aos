@@ -9,11 +9,11 @@ import com.sopt.smeem.data.service.UserService
 import com.sopt.smeem.domain.model.OnBoarding
 
 class TrainingManager(
-    private val userService: UserService,
+    private val userService: UserService? = null,
     private val trainingService: TrainingService
 ) {
     suspend fun patch(onBoarding: OnBoarding): ApiResponse<Unit> =
-        userService.patchPlan(
+        userService!!.patchPlan(
             request = PlanRequest(
                 target = onBoarding.trainingGoalType,
                 trainingTime = onBoarding.extractTime(),

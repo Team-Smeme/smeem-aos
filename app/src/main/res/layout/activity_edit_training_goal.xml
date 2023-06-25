@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topbar_my_page_training"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_narrow_back"
+            app:title="학습 목표 설정"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
+
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_my_page_training"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/topbar_my_page_training"
+            android:paddingHorizontal="18dp"
+            android:layout_marginTop="24dp"
+            >
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ic_my_page_training_button1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:backgroundTint="@color/white"
+
+                android:gravity="start|center_vertical"
+                android:text="@string/on_boarding_goal_button1"
+                android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+
+                android:textColor="@color/gray_600"
+                app:cornerRadius="6dp"
+                app:icon="@drawable/ic_selection_inactive"
+                app:iconSize="20dp"
+                app:iconTintMode="multiply"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/gray_100"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ic_my_page_training_button2"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+                android:gravity="start|center_vertical"
+                android:text="@string/on_boarding_goal_button2"
+                android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+
+                android:textColor="@color/gray_600"
+                app:cornerRadius="6dp"
+                app:icon="@drawable/ic_selection_inactive"
+                app:iconSize="20dp"
+                app:iconTintMode="multiply"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ic_my_page_training_button1"
+                app:strokeColor="@color/gray_100"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ic_my_page_training_button3"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+                android:gravity="start|center_vertical"
+
+                android:text="@string/on_boarding_goal_button3"
+                android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+
+                android:textColor="@color/gray_600"
+                app:cornerRadius="6dp"
+                app:icon="@drawable/ic_selection_inactive"
+                app:iconSize="20dp"
+                app:iconTintMode="multiply"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ic_my_page_training_button2"
+                app:strokeColor="@color/gray_100"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ic_my_page_training_button4"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+                android:gravity="start|center_vertical"
+
+                android:text="@string/on_boarding_goal_button4"
+                android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+
+                android:textColor="@color/gray_600"
+                app:cornerRadius="6dp"
+                app:icon="@drawable/ic_selection_inactive"
+                app:iconSize="20dp"
+                app:iconTintMode="multiply"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ic_my_page_training_button3"
+                app:strokeColor="@color/gray_100"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ic_my_page_training_button5"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+
+                android:gravity="start|center_vertical"
+                android:text="@string/on_boarding_goal_button5"
+                android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+
+                android:textColor="@color/gray_600"
+                app:cornerRadius="6dp"
+                app:icon="@drawable/ic_selection_inactive"
+                app:iconSize="20dp"
+                app:iconTintMode="multiply"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ic_my_page_training_button4"
+                app:strokeColor="@color/gray_100"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ic_my_page_training_button6"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+
+                android:gravity="start|center_vertical"
+                android:text="@string/on_boarding_goal_button6"
+                android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
+
+                android:textColor="@color/gray_600"
+                app:cornerRadius="6dp"
+                app:icon="@drawable/ic_selection_inactive"
+                app:iconSize="20dp"
+                app:iconTintMode="multiply"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ic_my_page_training_button5"
+                app:strokeColor="@color/gray_100"
+                app:strokeWidth="1dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_my_page_training_goal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+
+
+            android:enabled="false"
+            android:text="완료"
+            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
