@@ -69,11 +69,14 @@ class OnBoardingVM @Inject constructor() : ViewModel() {
     var minute: Int = 0
 
     fun goToNext() {
-        step++
+        if(step < 4) {
+            step++
+        }
     }
 
     fun checkToken() {
         viewModelScope.launch {
+            val a= authRepository.isAuthenticated()
             _alreadyHasToken.value = authRepository.isAuthenticated()
         }
     }

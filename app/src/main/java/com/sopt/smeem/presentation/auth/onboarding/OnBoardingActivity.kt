@@ -78,8 +78,6 @@ class OnBoardingActivity :
             } else if (vm.step == 2) {
                 vm.checkToken()
                 vm.goToNext()
-            } else if (vm.step == 3) {
-                bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
             }
         }
     }
@@ -134,7 +132,10 @@ class OnBoardingActivity :
             when (wantToBeAnonymous) {
                 true -> {
                     vm.saveOnBoardingData()
-                    gotoHome()
+
+                    // TODO : remove
+                    Toast.makeText(this, "비회원 기능은 아직 정상 동작하지 않습니다.", Toast.LENGTH_SHORT).show()
+                    // gotoHome()
                 }
 
                 false -> { // TODO : 어떻게 해야하지? }
@@ -163,6 +164,9 @@ class OnBoardingActivity :
                             .show()
                     }
                 )
+            }
+            else if(vm.step == 2) {
+                bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
             }
         }
     }

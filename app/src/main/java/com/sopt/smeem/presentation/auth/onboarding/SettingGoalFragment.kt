@@ -11,6 +11,7 @@ import com.sopt.smeem.TrainingGoalType.DEVELOP
 import com.sopt.smeem.TrainingGoalType.EXAM
 import com.sopt.smeem.TrainingGoalType.HOBBY
 import com.sopt.smeem.TrainingGoalType.NONE
+import com.sopt.smeem.TrainingGoalType.NO_IDEA
 import com.sopt.smeem.databinding.FragmentSettingGoalBinding
 import com.sopt.smeem.presentation.BindingFragment
 import com.sopt.smeem.util.ButtonUtil.switchOff
@@ -50,7 +51,7 @@ class SettingGoalFragment :
     private fun onTouchButtons() {
         buttons?.values?.forEach { button ->
             button.setOnClickListener {
-                if (NONE != vm.selectedGoal.value) {
+                if (NO_IDEA != vm.selectedGoal.value) {
                     buttons!![vm.selectedGoal.value]?.switchOff() // 기존 off
                     vm.upsert(TrainingGoalType.findById(button.id))
 
