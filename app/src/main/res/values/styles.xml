@@ -19,6 +19,17 @@
         <item name="shapeAppearance">@style/ShapeAppearance.Smeem.BottomSheet</item>
     </style>
 
+    <style name="Widget.Smeem.Snackbar" parent="Widget.Material3.Snackbar">
+        <item name="backgroundTint">@color/snackbar</item>
+        <item name="shapeAppearanceOverlay">@drawable/shape_snackbar</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="Widget.Smeem.Snackbar.TextView" parent="Widget.Material3.Snackbar.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Smeem.Caption2_medium</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="ShapeAppearance.Smeem.BottomSheet" parent="ShapeAppearance.Material3.LargeComponent">
         <item name="cornerFamilyTopLeft">rounded</item>
         <item name="cornerFamilyTopRight">rounded</item>

@@ -22,6 +22,8 @@
         <item name="materialButtonStyle">@style/Widget.Smeem.Button</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Smeem.BottomSheetDialog</item>
         <item name="android:timePickerStyle">@style/Widget.Smeem.TimePicker</item>
+        <item name="snackbarStyle">@style/Widget.Smeem.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/Widget.Smeem.Snackbar.TextView</item>
     </style>
 
     <style name="ThemeOverlay.Smeem.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
