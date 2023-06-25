@@ -40,7 +40,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         onEditNickname()
         onTouchDays()
         onTouchBadge()
-        // onEditGoal()
+        onEditGoal()
     }
 
     private fun setUpDays() {
@@ -55,6 +55,11 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         )
     }
 
+    private fun onEditGoal() {
+        binding.ivMyPageEditEncouraging.setOnClickListener {
+            startActivity(Intent(this, EditTrainingGoalActivity::class.java))
+        }
+    }
     private fun onTouchDays() {
         days?.values?.forEach { day ->
             run {

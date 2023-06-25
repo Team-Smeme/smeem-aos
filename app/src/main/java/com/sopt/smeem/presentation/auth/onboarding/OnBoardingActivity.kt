@@ -96,7 +96,7 @@ class OnBoardingActivity :
         vm.selectedGoal.observe(
             this@OnBoardingActivity
         ) {
-            binding.btnOnBoardingNext.isEnabled = (it != TrainingGoalType.NONE)
+            binding.btnOnBoardingNext.isEnabled = (it != TrainingGoalType.NO_IDEA)
         }
     }
 

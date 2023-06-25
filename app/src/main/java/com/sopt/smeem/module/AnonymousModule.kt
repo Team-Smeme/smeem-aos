@@ -3,6 +3,7 @@ package com.sopt.smeem.module
 import com.sopt.smeem.Authenticated
 import com.sopt.smeem.data.datasource.TrainingManager
 import com.sopt.smeem.data.repository.UserRepositoryImpl
+import com.sopt.smeem.data.service.TrainingService
 import com.sopt.smeem.data.service.UserService
 import com.sopt.smeem.domain.repository.UserRepository
 import dagger.Module
@@ -20,5 +21,10 @@ object AnonymousModule {
     fun anonymousMemberRepository(
         networkModule: NetworkModule
     ): UserRepository =
-        UserRepositoryImpl(TrainingManager(networkModule.apiServerRetrofitForAnonymous.create(UserService::class.java)))
+        UserRepositoryImpl(
+            TrainingManager(
+                userService = networkModule.apiServerRetrofitForAnonymous.create(UserService::class.java),
+                trainingService = networkModule.apiServerRetrofitForAnonymous.create(TrainingService::class.java)
+            )
+        )
 }
