@@ -4,7 +4,6 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sopt.smeem.calendar.weekly.listener.OnWeeklyDayClickListener
 import com.sopt.smeem.databinding.ViewWeeklyCalendarDayBinding
-import com.sopt.smeem.util.dayNameParseToAlphabet
 import java.sql.Date
 import java.time.LocalDate
 
@@ -26,7 +25,6 @@ class WeeklyViewHolder(
         this.weeklyDate = weeklyDate
         with(binding) {
             date = weeklyDate.dayOfMonth.toString()
-            day = weeklyDate.dayOfWeek.name.dayNameParseToAlphabet()
         }
     }
 
@@ -35,5 +33,5 @@ class WeeklyViewHolder(
         onWeeklyDayClickListener.onWeeklyDayClick(view, weeklyDate)
     }
 
-    override fun onLongClick(p0: View?) : Boolean = false
+    override fun onLongClick(p0: View?): Boolean = false
 }

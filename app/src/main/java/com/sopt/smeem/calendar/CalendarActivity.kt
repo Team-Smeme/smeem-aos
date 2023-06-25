@@ -1,13 +1,9 @@
 package com.sopt.smeem.calendar
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.sopt.smeem.R
-import com.sopt.smeem.calendar.monthly.MonthlyCalendar
-import com.sopt.smeem.calendar.weekly.WeeklyCalendar
 import com.sopt.smeem.databinding.ActivityCalendarBinding
 
 class CalendarActivity : AppCompatActivity() {
@@ -18,6 +14,47 @@ class CalendarActivity : AppCompatActivity() {
         binding = ActivityCalendarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initializePersistentBottomSheet()
+    }
 
+    private fun initializePersistentBottomSheet() {
+        val topSheetBehavior = TopSheetBehavior.from(binding.topSheetView)
+        binding.clCalendar.bringToFront()
+        topSheetBehavior.peekHeight = 200
+
+        topSheetBehavior.addTopSheetCallback(object : TopSheetBehavior.SheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    TopSheetBehavior.STATE_HIDDEN -> {
+                        Log.d("MainActivity", "state: hidden")
+                    }
+
+                    TopSheetBehavior.STATE_EXPANDED -> {
+                        Log.d("MainActivity", "state: expanded")
+                    }
+
+                    TopSheetBehavior.STATE_COLLAPSED -> {
+                        Log.d("MainActivity", "state: collapsed")
+                    }
+
+                    TopSheetBehavior.STATE_DRAGGING -> {
+                        Log.d("MainActivity", "state: dragging")
+                    }
+
+                    TopSheetBehavior.STATE_SETTLING -> {
+                        Log.d("MainActivity", "state: settling")
+                    }
+
+                    TopSheetBehavior.STATE_HALF_EXPANDED -> {
+                        Log.d("MainActivity", "state: half expanded")
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -19,12 +18,13 @@ import com.sopt.smeem.calendar.model.DAY_COLUMN_COUNT
 import com.sopt.smeem.calendar.model.DateType
 import com.sopt.smeem.calendar.model.MonthlyCalendarDay
 import com.sopt.smeem.calendar.model.TOTAL_COLUMN_COUNT
-import com.sopt.smeem.databinding.ViewCalendarWeekDescriptonBinding
-import com.sopt.smeem.dpToPx
 import com.sopt.smeem.util.isWeekend
 import com.sopt.smeem.util.toPrettyDateString
 import com.sopt.smeem.util.toPrettyMonthString
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 class MonthlyCalendar @JvmOverloads constructor(
     context: Context,
@@ -58,23 +58,23 @@ class MonthlyCalendar @JvmOverloads constructor(
 //        setBackgroundResource(R.drawable.bg_monthly_calendar_current_month)
     }
 
-    private val calendarHeaderLinearLayout = LinearLayout(context).apply {
-        id = ViewCompat.generateViewId()
-        orientation = HORIZONTAL
-        gravity = Gravity.CENTER
-        layoutParams = LayoutParams(
-            LayoutParams.MATCH_PARENT,
-            LayoutParams.WRAP_CONTENT
-        )
-        setPadding(0, context.dpToPx(24), 0, context.dpToPx(24))
-
-        addView(currentDateTextView)
-
-    }
-
-    private val calendarWeekDescriptionView = ViewCalendarWeekDescriptonBinding.inflate(
-        LayoutInflater.from(context), this, false
-    )
+//    private val calendarHeaderLinearLayout = LinearLayout(context).apply {
+//        id = ViewCompat.generateViewId()
+//        orientation = HORIZONTAL
+//        gravity = Gravity.CENTER
+//        layoutParams = LayoutParams(
+//            LayoutParams.MATCH_PARENT,
+//            LayoutParams.WRAP_CONTENT
+//        )
+//        setPadding(0, context.dpToPx(24), 0, context.dpToPx(24))
+//
+//        addView(currentDateTextView)
+//
+//    }
+//
+//    private val calendarWeekDescriptionView = ViewCalendarWeekDescriptonBinding.inflate(
+//        LayoutInflater.from(context), this, false
+//    )
 
     private val monthRecyclerView = NoRippleRecyclerView(context).apply {
         id = ViewCompat.generateViewId()
@@ -101,8 +101,8 @@ class MonthlyCalendar @JvmOverloads constructor(
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         orientation = LinearLayout.VERTICAL
 
-        addView(calendarHeaderLinearLayout)
-        addView(calendarWeekDescriptionView.root)
+//        addView(calendarHeaderLinearLayout)
+//        addView(calendarWeekDescriptionView.root)
         addView(monthRecyclerView)
         initBackgroundColor()
         initializeSmeemMonthCalendar()
@@ -114,7 +114,7 @@ class MonthlyCalendar @JvmOverloads constructor(
     }
 
     private fun initBackgroundColor() {
-        setBackgroundColor(Color.parseColor("#ffffff"))
+        setBackgroundColor(Color.parseColor("#FFFFFF"))
     }
 
     private fun initializeSmeemMonthCalendar() {
@@ -199,6 +199,7 @@ class MonthlyCalendar @JvmOverloads constructor(
                         )
                     )
                 }
+
                 totalDayInMonth -> {
                     monthlyCalendarDayList.add(
                         MonthlyCalendarDay.DayMonthly(
@@ -215,6 +216,7 @@ class MonthlyCalendar @JvmOverloads constructor(
                         )
                     )
                 }
+
                 else -> {
                     monthlyCalendarDayList.add(
                         MonthlyCalendarDay.DayMonthly(

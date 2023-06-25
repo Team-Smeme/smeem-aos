@@ -15,8 +15,8 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 
 class WeeklyCalendar @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : RecyclerView(context, attrs, defStyleAttr), OnWeeklyDayClickListener {
+    context: Context, attrs: AttributeSet? = null, defStyle: Int = 0
+) : RecyclerView(context, attrs, defStyle), OnWeeklyDayClickListener {
 
     private val weeklyAdapter = WeeklyAdapter(this)
     private var currentDate = LocalDate.now()
@@ -168,6 +168,7 @@ class WeeklyCalendar @JvmOverloads constructor(
         weeklyAdapter.setSelectedDay(localDate)
         onWeeklyDayClickListener?.onWeeklyDayClick(view, localDate)
     }
+
 
     companion object {
         private const val SWIPE_THRESHOLD = 100
