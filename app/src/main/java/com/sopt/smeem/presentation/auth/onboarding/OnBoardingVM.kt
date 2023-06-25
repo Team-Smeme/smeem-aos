@@ -132,7 +132,7 @@ class OnBoardingVM @Inject constructor() : ViewModel() {
 
     fun sendPlanData(onSuccess: (Unit) -> Unit, onError: (SmeemException) -> Unit) {
         viewModelScope.launch {
-            userRepository.patchOnBoarding(
+            userRepository.registerOnBoarding(
                 OnBoarding(
                     trainingGoalType = selectedGoal.value ?: TrainingGoalType.NO_IDEA,
                     hasAlarm = setTimeLater.value?.not() ?: false,

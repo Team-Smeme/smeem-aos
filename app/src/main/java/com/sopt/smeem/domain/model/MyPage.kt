@@ -6,5 +6,5 @@ data class MyPage(
     val hasPushAlarm: Boolean,
     val goal: TrainingGoal,
     val language: Language,
-    val training: Training
+    val trainingTime: TrainingTime
 )

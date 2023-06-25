@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.mypage
 
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.google.android.material.button.MaterialButton
 import com.sopt.smeem.R
@@ -57,6 +58,14 @@ class EditTrainingGoalActivity :
                     vm.upsert(TrainingGoalType.findById(button.id))
                 }
             }
+        }
+
+        binding.btnMyPageTrainingGoal.setOnClickListener {
+            vm.sendServer(
+                onError = { e ->
+                    Toast.makeText(this, e.errorCode.message, Toast.LENGTH_SHORT).show()
+                }
+            )
         }
     }
 

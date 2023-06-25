@@ -1,14 +1,26 @@
 package com.sopt.smeem.presentation.mypage
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.Authenticated
+import com.sopt.smeem.SmeemException
 import com.sopt.smeem.TrainingGoalType
+import com.sopt.smeem.data.ApiPool.onHttpFailure
+import com.sopt.smeem.domain.model.Training
+import com.sopt.smeem.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class EditTrainingVM @Inject constructor() : ViewModel() {
+    @Inject
+    @Authenticated
+    lateinit var userRepository: UserRepository
+
     private val _selectedGoal = MutableLiveData<TrainingGoalType>()
     val selectedGoal: LiveData<TrainingGoalType>
         get() = _selectedGoal
@@ -25,6 +37,16 @@ class EditTrainingVM @Inject constructor() : ViewModel() {
 
     fun none() {
         _selectedGoal.value = TrainingGoalType.NO_IDEA
+    }
+
+    fun sendServer(onError: (SmeemException) -> Unit) {
+        viewModelScope.launch {
+            userRepository.editTraining(
+                Training(
+                    type = selectedGoal.value!!,
+                )
+            ).onHttpFailure { e -> onError(e) }
+        }
     }
 
 }

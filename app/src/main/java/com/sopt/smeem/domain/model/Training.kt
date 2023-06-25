@@ -1,11 +1,22 @@
 package com.sopt.smeem.domain.model
 
-import com.sopt.smeem.Day
+import com.sopt.smeem.TrainingGoalType
+import com.sopt.smeem.data.model.request.TrainingRequest
 
 data class Training(
-    val days: Set<Day>,
-    val hour: Int,
-    val minute: Int
+    val type: TrainingGoalType,
+    val trainingTime: TrainingTime? = null,
+    val hasAlarm: Boolean? = null
 ) {
-    fun isSet() = days.isNotEmpty()
+    fun extractTime(): TrainingRequest.TrainingTime? {
+        if (trainingTime == null) {
+            return null
+        }
+
+        return TrainingRequest.TrainingTime(
+            day = trainingTime.days.toList(),
+            hour = trainingTime.hour,
+            minute = trainingTime.minute
+        )
+    }
 }
