@@ -11,6 +11,7 @@ import com.sopt.smeem.domain.model.MyPage
 import com.sopt.smeem.domain.model.OnBoarding
 import com.sopt.smeem.domain.model.Training
 import com.sopt.smeem.domain.model.TrainingGoal
+import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.domain.repository.UserRepository
 
 class UserRepositoryImpl(
@@ -19,8 +20,8 @@ class UserRepositoryImpl(
     private val myPageRetriever: MyPageRetriever? = null,
     private val myBadgeRetriever: MyBadgeRetriever? = null,
 ) : UserRepository {
-    override suspend fun patchOnBoarding(onBoarding: OnBoarding): Result<Unit> =
-        kotlin.runCatching { trainingManager!!.patch(onBoarding) }
+    override suspend fun registerOnBoarding(onBoarding: OnBoarding): Result<Unit> =
+        kotlin.runCatching { trainingManager!!.registerOnBoarding(onBoarding) }
 
     override suspend fun patchNicknameAndAcceptance(
         username: String,
@@ -52,7 +53,7 @@ class UserRepositoryImpl(
                     way = response.data.way ?: ""
                 ),
                 language = LanguageCode.en.language,
-                training = Training(
+                trainingTime = TrainingTime(
                     days = response.data.trainingTime.day,
                     hour = response.data.trainingTime.hour.toInt(),
                     minute = response.data.trainingTime.minute.toInt()
@@ -73,5 +74,10 @@ class UserRepositoryImpl(
                     badgeType = badgeResponse.type
                 )
             }
+        }
+
+    override suspend fun editTraining(training: Training): Result<Unit> =
+        kotlin.runCatching {
+            trainingManager!!.patchTraining(training)
         }
 }

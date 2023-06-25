@@ -31,8 +31,8 @@ internal class MyPageVM @Inject constructor() : ViewModel() {
             userRepository.getMyPage().apply {
                 this.onSuccess {
                     _response.value = it
-                    isTimeSet = it.hasPushAlarm && it.training.isSet()
-                    days.addAll(it.training.days)
+                    isTimeSet = it.hasPushAlarm && it.trainingTime.isSet()
+                    days.addAll(it.trainingTime.days)
                 }
                 this.onFailure { onError(it) }
             }
