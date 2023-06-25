@@ -67,7 +67,6 @@
                     android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
                     android:paddingHorizontal="18dp"
                     android:paddingVertical="20dp"
-                    android:privateImeOptions="defaultInputmode==korean"
                     android:text="@={vm.diary}"
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
                     android:textColor="?colorOnBackground" />
