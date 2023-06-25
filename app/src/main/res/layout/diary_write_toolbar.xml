@@ -18,6 +18,10 @@
             name="step"
             type="String" />
 
+        <variable
+            name="language"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
-            android:text="@string/language_english"
+            android:text="@{language, default=@string/language_english}"
             android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
             android:textColor="?colorOnBackground"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +58,6 @@
             android:id="@+id/tv_step"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:text="@{step, default=@string/diary_write_step_1}"
             android:textAppearance="@style/TextAppearance.Smeem.Caption4_regular_12"
             android:textColor="@color/gray_500"
