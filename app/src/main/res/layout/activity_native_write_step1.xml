@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.sopt.smeem.presentation.write.natiive.NativeWriteStep1ViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.write.natiive.NativeWriteStep1Activity">
+
+        <include
+            android:id="@+id/layout_native_step1_toolbar"
+            layout="@layout/diary_write_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:isNext="@{true}"
+            app:language="@{@string/language_korean}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:step="@{@string/diary_write_step_1}"
+            app:stepVisibility="@{View.VISIBLE}" />
+
+        <include
+            android:id="@+id/layout_native_step1_random_topic"
+            layout="@layout/random_topic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_native_step1_toolbar"
+            app:randomTopic="@{vm.topic}"
+            app:refreshVisibility="@{View.VISIBLE}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            app:layout_constraintBottom_toTopOf="@id/layout_native_step1_tip"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_native_step1_random_topic">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
+
+                <EditText
+                    android:id="@+id/et_native_step1_write"
+                    style="@style/Style.Smeem.Text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/diary_write_hint"
+                    android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="20dp"
+                    android:privateImeOptions="defaultInputmode==korean"
+                    android:text="@={vm.diary}"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
+                    android:textColor="?colorOnBackground" />
+
+                <requestFocus />
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_native_step1_tip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?colorSurface"
+            android:paddingVertical="14dp"
+            android:paddingStart="18dp"
+            android:paddingEnd="17dp"
+            app:layout_constraintBottom_toTopOf="@id/view_native_step1_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/tv_native_step1_tip_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TIP"
+                android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
+                android:textColor="?colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_native_step1_tip_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:text="문장을 정리하면 다음 단계에서 더욱 정확한 힌트를 받을 수 있어요!"
+                android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
+                android:textColor="#949494"
+                app:layout_constraintEnd_toStartOf="@id/iv_native_step1_tip_x"
+                app:layout_constraintStart_toEndOf="@id/tv_native_step1_tip_label" />
+
+            <ImageView
+                android:id="@+id/iv_native_step1_tip_x"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_tip_x"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view_native_step1_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/gray_200"
+            app:layout_constraintBottom_toTopOf="@id/layout_native_step1_bottom_toolbar"
+            app:layout_constraintEnd_toEndOf="@id/layout_native_step1_bottom_toolbar"
+            app:layout_constraintStart_toStartOf="@id/layout_native_step1_bottom_toolbar" />
+
+        <include
+            android:id="@+id/layout_native_step1_bottom_toolbar"
+            layout="@layout/diary_write_bottom_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:translateVisibility="@{View.GONE}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
