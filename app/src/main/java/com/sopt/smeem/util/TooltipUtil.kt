@@ -1,25 +1,33 @@
 package com.sopt.smeem.util
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LifecycleOwner
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.IconGravity
+import com.skydoves.balloon.TextForm
 import com.skydoves.balloon.showAlignTop
 import com.sopt.smeem.R
 
 object TooltipUtil {
     // 랜덤 주제 툴팁
     fun View.createTopicTooltip(context: Context, owner: LifecycleOwner?) {
+        val textForm = TextForm.Builder(context)
+            .setText("랜덤 주제를 받아 보세요!")
+            .setTextColorResource(R.color.white)
+            .setTextSize(16f)
+            .setTextTypeface(ResourcesCompat.getFont(context, R.font.pretendard_regular))
+            .build()
+
         val tooltip = Balloon.Builder(context)
             .setWidth(BalloonSizeSpec.WRAP)
             .setHeight(BalloonSizeSpec.WRAP)
-            .setText("랜덤 주제를 받아 보세요!")
-            .setTextColorResource(R.color.white)
-            .setTextSize(15f)
+            .setTextForm(textForm)
             .setMarginBottom(4)
             .setMarginRight(16)
             .setElevation(0)
@@ -50,4 +58,6 @@ object TooltipUtil {
             this.dismiss()
         }
     }
+
+
 }
