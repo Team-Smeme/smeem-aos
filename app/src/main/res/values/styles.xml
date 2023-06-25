@@ -80,6 +80,10 @@
     </style>
 
 
+    <style name="TopSheet_Background" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
     <!-- TopSheet_Dialog Animation -->
     <style name="TopSheet_DialogAnimation">
         <item name="android:windowEnterAnimation">@animator/slide_out_from_top</item>

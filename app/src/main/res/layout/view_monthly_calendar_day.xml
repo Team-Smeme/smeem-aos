@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.sopt.smeem.calendar.model.DateType"/>
+
+        <import type="com.sopt.smeem.calendar.model.DateType" />
 
         <variable
             name="day_item"
@@ -14,34 +15,34 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="7dp"
         android:background="@color/white"
-        android:paddingVertical="8dp">
+        android:paddingVertical="7dp">
 
         <ImageView
             android:id="@+id/iv_today"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:contentDescription="today"
+            android:src="@drawable/bg_monthly_calendar_today"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/bg_monthly_calendar_today"
-            tools:visibility="visible"
-            />
+            tools:visibility="visible" />
 
         <TextView
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:gravity="center"
             android:text="@{day_item.label}"
-            tools:text="28"
-            android:textSize="18sp"
             android:textColor="@color/black"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="28" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
