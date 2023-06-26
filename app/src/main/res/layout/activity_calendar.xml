@@ -9,8 +9,9 @@
         android:id="@+id/cl_calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="4dp"
-        android:translationZ="4dp">
+        android:background="@color/white"
+        android:elevation="0dp"
+        >
 
         <TextView
             android:id="@+id/tv_target_month"
@@ -114,6 +115,18 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.sopt.smeem.calendar.IntegratedCalendar
+        android:id="@+id/top_sheet_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:paddingHorizontal="12dp"
+        android:scrollbars="vertical"
+        app:behavior_hideable="false"
+        app:layout_behavior="com.sopt.smeem.calendar.TopSheetBehavior" />
 
     <!--    <com.sopt.smeem.calendar.monthly.MonthlyCalendar-->
     <!--        android:id="@+id/top_sheet_view"-->
@@ -141,17 +154,5 @@
     <!--        app:behavior_hideable="false"-->
     <!--        app:layout_behavior="com.sopt.smeem.calendar.TopSheetBehavior" />-->
 
-    <com.sopt.smeem.calendar.IntegratedCalendar
-        android:id="@+id/top_sheet_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="vertical"
-        android:paddingHorizontal="12dp"
-        android:scrollbars="vertical"
-        app:behavior_hideable="true"
-        app:layout_behavior="com.sopt.smeem.calendar.TopSheetBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

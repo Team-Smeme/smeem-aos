@@ -81,7 +81,7 @@
 
 
     <style name="TopSheet_Background" parent="Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="backgroundTint">@color/white</item>
+        <item name="backgroundTint">@android:color/transparent</item>
     </style>
 
     <!-- TopSheet_Dialog Animation -->
