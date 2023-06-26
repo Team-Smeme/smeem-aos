@@ -120,6 +120,7 @@ class NativeWriteStep1Activity :
         val intent = Intent(this, NativeWriteStep2Activity::class.java).apply {
             // TODO: 번역 로직 구현
             putExtra("nativeDiary", viewModel.diary.value)
+            putExtra("isTopicEnabled", binding.layoutNativeStep1BottomToolbar.cbRandomTopic.isChecked)
         }
         startActivity(intent)
     }
