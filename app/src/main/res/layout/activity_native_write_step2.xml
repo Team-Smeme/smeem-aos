@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.sopt.smeem.presentation.write.natiive.NativeWriteStep2ViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.write.natiive.NativeWriteStep2Activity">
+
+        <include
+            android:id="@+id/layout_native_step2_toolbar"
+            layout="@layout/diary_write_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:isNext="@{true}"
+            app:language="@{@string/language_english}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:step="@{@string/diary_write_step_2}"
+            app:stepVisibility="@{View.VISIBLE}" />
+
+        <TextView
+            android:id="@+id/tv_native_step2_native_diary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="16dp"
+            android:fadeScrollbars="false"
+            android:maxLines="4"
+            android:paddingEnd="16dp"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical"
+            android:text="@string/dummy_diary_korean"
+            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
+            android:textColor="?colorOnBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_native_step2_toolbar" />
+
+        <View
+            android:id="@+id/view_native_step2_line_top"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/gray_100"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_native_step2_native_diary" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            app:layout_constraintBottom_toTopOf="@id/view_native_step2_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_native_step2_line_top">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
+
+                <EditText
+                    android:id="@+id/et_native_step1_write"
+                    style="@style/Style.Smeem.Text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/diary_write_hint"
+                    android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="20dp"
+                    android:text="@={vm.diary}"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
+                    android:textColor="?colorOnBackground" />
+
+                <requestFocus />
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view_native_step2_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/gray_200"
+            app:layout_constraintBottom_toTopOf="@id/layout_native_step2_bottom_toolbar"
+            app:layout_constraintEnd_toEndOf="@id/layout_native_step2_bottom_toolbar"
+            app:layout_constraintStart_toStartOf="@id/layout_native_step2_bottom_toolbar" />
+
+        <include
+            android:id="@+id/layout_native_step2_bottom_toolbar"
+            layout="@layout/diary_write_bottom_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:isStep2="@{true}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:translateVisibility="@{View.VISIBLE}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
