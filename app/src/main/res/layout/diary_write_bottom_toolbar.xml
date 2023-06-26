@@ -9,6 +9,10 @@
         <variable
             name="translateVisibility"
             type="int" />
+
+        <variable
+            name="isStep2"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,7 +53,7 @@
             android:layout_height="wrap_content"
             android:text="랜덤 주제"
             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
-            android:textColor="@color/gray_500"
+            android:textColor="@{isStep2 ? @color/gray_300 : @color/gray_500, default=@color/gray_500}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
