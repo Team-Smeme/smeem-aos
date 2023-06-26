@@ -1,7 +1,6 @@
 package com.sopt.smeem.domain.model
 
-import com.sopt.smeem.Day
-
+import com.sopt.smeem.calendar.Day
 data class TrainingTime(
     val days: Set<Day>,
     val hour: Int,

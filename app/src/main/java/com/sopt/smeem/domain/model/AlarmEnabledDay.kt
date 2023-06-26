@@ -1,6 +1,6 @@
 package com.sopt.smeem.domain.model
 
-import com.sopt.smeem.Day
+import com.sopt.smeem.calendar.Day
 import com.sopt.smeem.data.model.response.MyPageResponse
 import com.sopt.smeem.util.DateUtil.asAmpm
 import com.sopt.smeem.util.DateUtil.asHour
