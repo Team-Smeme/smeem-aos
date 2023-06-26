@@ -20,7 +20,7 @@ class CalendarActivity : AppCompatActivity() {
     private fun initializePersistentBottomSheet() {
         val topSheetBehavior = TopSheetBehavior.from(binding.topSheetView)
         binding.clCalendar.bringToFront()
-        topSheetBehavior.peekHeight = 200
+        topSheetBehavior.peekHeight = 500
 
         topSheetBehavior.addTopSheetCallback(object : TopSheetBehavior.SheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -52,7 +52,7 @@ class CalendarActivity : AppCompatActivity() {
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                TODO("Not yet implemented")
+
             }
 
         })

@@ -1,7 +1,7 @@
 package com.sopt.smeem.domain.model
 
-import com.sopt.smeem.Day
 import com.sopt.smeem.TrainingGoalType
+import com.sopt.smeem.calendar.Day
 import com.sopt.smeem.data.model.request.TrainingRequest
 
 data class OnBoarding(

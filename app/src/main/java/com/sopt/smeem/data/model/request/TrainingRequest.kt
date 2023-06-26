@@ -1,7 +1,7 @@
 package com.sopt.smeem.data.model.request
 
-import com.sopt.smeem.Day
 import com.sopt.smeem.TrainingGoalType
+import com.sopt.smeem.calendar.Day
 
 data class TrainingRequest(
     val target: TrainingGoalType?,
