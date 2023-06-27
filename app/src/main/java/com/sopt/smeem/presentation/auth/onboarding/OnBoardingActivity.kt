@@ -3,6 +3,7 @@ package com.sopt.smeem.presentation.auth.onboarding
 import android.content.Intent
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sopt.smeem.R
 import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.databinding.ActivityOnBoardingBinding
@@ -77,7 +78,8 @@ class OnBoardingActivity :
                 vm.goToNext()
             } else if (vm.step == 2) {
                 vm.checkToken()
-                vm.goToNext()
+                // 다이얼로그나 바텀시트 이탈했을 때 다시 띄워지지 않는 이슈가 있어 주석처리
+//                vm.goToNext()
             }
         }
     }
@@ -165,8 +167,21 @@ class OnBoardingActivity :
                     }
                 )
             }
-            else if(vm.step == 2) {
-                bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
+            else if (vm.step == 2) {
+                // TODO: 알림 권한 다이얼로그를 확인했는지 (예나 아니요 선택) 상태값에 따라 분기처리 - 한번만 띄우기 위해서
+                MaterialAlertDialogBuilder(this)
+                    .setIcon(R.drawable.ic_notification_dialog)
+                    .setTitle("‘smeem’에서 알림을\n" +
+                            "보내도록 허용하시겠습니까?")
+                    .setNegativeButton("예") { dialog, which ->
+                        // TODO: hasAlarm 관련 livedata = true
+                        bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
+                    }
+                    .setPositiveButton("아니요") { dialog, which ->
+                        // TODO: hasAlarm 관련 livedata = false
+                        bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
+                    }
+                    .show()
             }
         }
     }

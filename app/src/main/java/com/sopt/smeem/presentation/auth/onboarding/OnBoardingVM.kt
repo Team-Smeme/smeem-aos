@@ -76,7 +76,7 @@ class OnBoardingVM @Inject constructor() : ViewModel() {
 
     fun checkToken() {
         viewModelScope.launch {
-            val a= authRepository.isAuthenticated()
+            val a = authRepository.isAuthenticated()
             _alreadyHasToken.value = authRepository.isAuthenticated()
         }
     }
@@ -138,6 +138,7 @@ class OnBoardingVM @Inject constructor() : ViewModel() {
             userRepository.registerOnBoarding(
                 OnBoarding(
                     trainingGoalType = selectedGoal.value ?: TrainingGoalType.NO_IDEA,
+                    // TODO: 알림 권한에 동의했을 때는?
                     hasAlarm = setTimeLater.value?.not() ?: false,
                     day = days,
                     hour = hour,
