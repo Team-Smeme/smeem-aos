@@ -30,6 +30,14 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="Widget.Smeem.Button.Dialog" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textAppearance">@style/TextAppearance.Smeem.Body2_semibold</item>
+    </style>
+
+    <style name="Widget.MaterialAlertDialog.Smeem.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text.CenterStacked">
+        <item name="android:textAppearance">@style/TextAppearance.Smeem.Subtitle3_medium</item>
+    </style>
+
     <style name="ShapeAppearance.Smeem.BottomSheet" parent="ShapeAppearance.Material3.LargeComponent">
         <item name="cornerFamilyTopLeft">rounded</item>
         <item name="cornerFamilyTopRight">rounded</item>

@@ -24,10 +24,18 @@
         <item name="android:timePickerStyle">@style/Widget.Smeem.TimePicker</item>
         <item name="snackbarStyle">@style/Widget.Smeem.Snackbar</item>
         <item name="snackbarTextViewStyle">@style/Widget.Smeem.Snackbar.TextView</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Smeem.MaterialAlertDialog</item>
     </style>
 
     <style name="ThemeOverlay.Smeem.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.Smeem.BottomSheetDialog</item>
+    </style>
+    
+    <style name="ThemeOverlay.Smeem.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/Widget.MaterialAlertDialog.Smeem.Title.Text</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Smeem.Button.Dialog</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Smeem.Button.Dialog</item>
     </style>
 
     <style name="Widget.Smeem.TimePicker" parent="">
