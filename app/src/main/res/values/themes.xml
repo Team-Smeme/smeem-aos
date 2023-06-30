@@ -19,6 +19,7 @@
 
         <!-- etc -->
         <item name="colorControlActivated">@color/point</item>
+        <item name="colorControlNormal">@color/point</item>
         <item name="materialButtonStyle">@style/Widget.Smeem.Button</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Smeem.BottomSheetDialog</item>
         <item name="android:timePickerStyle">@style/Widget.Smeem.TimePicker</item>
@@ -36,14 +37,6 @@
         <item name="materialAlertDialogTitleTextStyle">@style/Widget.MaterialAlertDialog.Smeem.Title.Text</item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.Smeem.Button.Dialog</item>
         <item name="buttonBarPositiveButtonStyle">@style/Widget.Smeem.Button.Dialog</item>
-    </style>
-
-    <style name="Widget.Smeem.TimePicker" parent="">
-        <item name="android:timePickerMode">spinner</item>
-        <item name="colorPrimary">@color/white</item>
-        <item name="android:textColorPrimary">@color/black</item>
-        <item name="android:textColorSecondary">@color/point</item>
-        <item name="android:textAppearanceButton">@style/TextAppearance.Smeem.Subtitle3_medium</item>
     </style>
 
 </resources>
