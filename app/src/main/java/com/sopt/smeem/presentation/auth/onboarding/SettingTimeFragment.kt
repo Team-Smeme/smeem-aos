@@ -12,6 +12,7 @@ import com.sopt.smeem.databinding.FragmentSettingTimeBinding
 import com.sopt.smeem.presentation.BindingFragment
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
+import java.sql.Time
 
 class SettingTimeFragment :
     BindingFragment<FragmentSettingTimeBinding>(R.layout.fragment_setting_time) {
@@ -21,11 +22,6 @@ class SettingTimeFragment :
         ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>) = OnBoardingVM() as T
         })[OnBoardingVM::class.java]
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setUpTimePicker()
     }
 
     override fun constructLayout() {
@@ -43,34 +39,6 @@ class SettingTimeFragment :
         days = null
         timePickerDialog = null
     }
-
-    private fun setUpTimePicker() {/*
-        val timePicker = TimePicker(context).apply {
-            setIs24HourView(false)
-        }
-
-        timePickerDialog = TimePickerDialog(
-            context,
-            R.style.Widget_Smeem_TimePicker,
-            object : TimePickerDialog.OnTimeSetListener {
-                override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-                    vm.hour = hourOfDay
-                    vm.minute = minute
-                }
-            },
-            13,
-            30,
-            false
-        )
-
-        timePickerDialog!!.setView(timePicker)*/
-
-        val dialog = AlertDialog.Builder(requireContext()).create()
-        val edialog: LayoutInflater = LayoutInflater.from(requireContext())
-        // TODO : custom timepicker layout 구성 필요
-
-    }
-
 
     private fun setUpDays() {
         days = mapOf(
@@ -105,7 +73,7 @@ class SettingTimeFragment :
 
     private fun onTouchTime() {
         binding.layoutOnBoardingTimeTime.setOnClickListener {
-            timePickerDialog?.show()
+            TimePickerFragment().show(parentFragmentManager, "timePicker")
         }
     }
 
