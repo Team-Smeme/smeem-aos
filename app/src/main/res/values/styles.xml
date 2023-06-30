@@ -38,6 +38,10 @@
         <item name="android:textAppearance">@style/TextAppearance.Smeem.Subtitle3_medium</item>
     </style>
 
+    <style name="Widget.Smeem.TimePicker" parent="android:Widget.Material.Light.TimePicker">
+        <item name="android:timePickerMode">spinner</item>
+    </style>
+
     <style name="ShapeAppearance.Smeem.BottomSheet" parent="ShapeAppearance.Material3.LargeComponent">
         <item name="cornerFamilyTopLeft">rounded</item>
         <item name="cornerFamilyTopRight">rounded</item>
