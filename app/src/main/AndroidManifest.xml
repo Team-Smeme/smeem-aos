@@ -29,10 +29,6 @@
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
         <activity
-            android:name=".presentation.write.foreign.ForeignWriteActivity"
-            android:exported="false"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
-        <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
             <intent-filter>
