@@ -62,6 +62,9 @@ class OnBoardingVM @Inject constructor() : ViewModel() {
     val alreadyHasToken: LiveData<Boolean>
         get() = _alreadyHasToken
 
+    // selected time
+    val selectedHour = MutableLiveData<Int>(22)
+    val selectedMinute = MutableLiveData<Int>(0)
 
     var step: Int = 0
     val days = mutableListOf<Day>()
@@ -84,6 +87,21 @@ class OnBoardingVM @Inject constructor() : ViewModel() {
     fun isDaySelected(content: String) = days.contains(Day.from(content))
     fun addDay(content: String) = days.add(Day.from(content))
     fun removeDay(content: String) = days.remove(Day.from(content))
+
+    fun formatHour(hour: Int): String {
+        if (hour in 13..24) {
+            return "%02d".format(hour - 12)
+        }
+        return "%02d".format(hour)
+    }
+    fun formatMinute(minute: Int): String = "%02d".format(minute)
+    fun getAmPm(hour: Int): String {
+        if (hour in 12..23) {
+            return " PM"
+        }
+        return " AM"
+    }
+
     fun upsert(target: TrainingGoalType) {
         if (selectedGoal.value == target) {
             _selectedGoal.value!!.selected = false
