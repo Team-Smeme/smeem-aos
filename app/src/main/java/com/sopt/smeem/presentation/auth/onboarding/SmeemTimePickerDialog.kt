@@ -20,6 +20,14 @@ class SmeemTimePickerDialog(
     private val minuteInterval = 30
     private val timeSetListener: OnTimeSetListener = listener
 
+    private var lastHour: Int = -1
+    private var lastMinute: Int = -1
+
+    init {
+        lastHour = hourOfDay
+        lastMinute = minute
+    }
+
     override fun updateTime(hourOfDay: Int, minuteOfHour: Int) {
         with(timePicker!!) {
             hour = hourOfDay
@@ -40,6 +48,17 @@ class SmeemTimePickerDialog(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         setMinuteInterval()
+    }
+
+    override fun onTimeChanged(view: TimePicker, hourOfDay: Int, minute: Int) {
+        super.onTimeChanged(view, hourOfDay, minute)
+        if (lastHour != hourOfDay && lastMinute != minute) {
+            view.hour = lastHour
+            lastMinute = minute
+        } else {
+            lastHour = hourOfDay
+            lastMinute = minute
+        }
     }
 
     // 30분 단위로 선택 가능하도록
