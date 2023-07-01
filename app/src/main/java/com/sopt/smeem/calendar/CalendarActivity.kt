@@ -71,6 +71,7 @@ class CalendarActivity : AppCompatActivity() {
                     val alpha = 1 - slideOffset
                     weeklyCalendar.alpha = alpha
                 }
+                weeklyCalendar.isClickable = slideOffset != fadeEndPosition
             }
 
         })
