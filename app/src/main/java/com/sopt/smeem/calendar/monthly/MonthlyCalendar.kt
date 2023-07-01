@@ -3,12 +3,15 @@ package com.sopt.smeem.calendar.monthly
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import android.view.GestureDetector
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.sopt.smeem.R
 import com.sopt.smeem.calendar.MonthlyCalendarNextMonthListener
@@ -18,9 +21,13 @@ import com.sopt.smeem.calendar.model.DAY_COLUMN_COUNT
 import com.sopt.smeem.calendar.model.DateType
 import com.sopt.smeem.calendar.model.MonthlyCalendarDay
 import com.sopt.smeem.calendar.model.TOTAL_COLUMN_COUNT
+import com.sopt.smeem.calendar.monthly.listener.OnMonthlyCalendarSwipeListener
+import com.sopt.smeem.calendar.monthly.listener.OnMonthlyDayClickListener
+import com.sopt.smeem.calendar.weekly.WeeklyCalendar
 import com.sopt.smeem.util.isWeekend
 import com.sopt.smeem.util.toPrettyDateString
 import com.sopt.smeem.util.toPrettyMonthString
+import java.time.LocalDate
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -32,8 +39,9 @@ class MonthlyCalendar @JvmOverloads constructor(
     defStyle: Int = 0
 ) : LinearLayout(context, attrs, defStyle) {
 
-    private var monthlyCalendarNextMonthListener: MonthlyCalendarNextMonthListener? = null
-    private var monthlyCalendarPrevMonthListener: MonthlyCalendarPrevMonthListener? = null
+    private lateinit var gestureDetector: GestureDetector
+    private var onMonthlyCalendarClickListener : OnMonthlyDayClickListener? = null
+    private var onMonthlyCalendarSwipeListener : OnMonthlyCalendarSwipeListener? = null
 
     private val timeZone = TimeZone.getDefault()
     private val locale = Locale.KOREA
@@ -58,24 +66,6 @@ class MonthlyCalendar @JvmOverloads constructor(
 //        setBackgroundResource(R.drawable.bg_monthly_calendar_current_month)
     }
 
-//    private val calendarHeaderLinearLayout = LinearLayout(context).apply {
-//        id = ViewCompat.generateViewId()
-//        orientation = HORIZONTAL
-//        gravity = Gravity.CENTER
-//        layoutParams = LayoutParams(
-//            LayoutParams.MATCH_PARENT,
-//            LayoutParams.WRAP_CONTENT
-//        )
-//        setPadding(0, context.dpToPx(24), 0, context.dpToPx(24))
-//
-//        addView(currentDateTextView)
-//
-//    }
-//
-//    private val calendarWeekDescriptionView = ViewCalendarWeekDescriptonBinding.inflate(
-//        LayoutInflater.from(context), this, false
-//    )
-
     private val monthRecyclerView = NoRippleRecyclerView(context).apply {
         id = ViewCompat.generateViewId()
         adapter = monthlyCalendarDayAdapter
@@ -91,6 +81,79 @@ class MonthlyCalendar @JvmOverloads constructor(
         (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         overScrollMode = OVER_SCROLL_NEVER
         setHasFixedSize(true)
+
+        gestureDetector = GestureDetector(context, object : GestureDetector.OnGestureListener {
+            override fun onDown(p0: MotionEvent): Boolean = false
+
+            override fun onShowPress(p0: MotionEvent) {
+                /** no - op **/
+                /** no - op **/
+            }
+
+            override fun onSingleTapUp(p0: MotionEvent): Boolean = false
+
+            override fun onScroll(
+                e1: MotionEvent,
+                e2: MotionEvent,
+                distanceX: Float,
+                distanceY: Float
+            ): Boolean = true
+
+            override fun onLongPress(p0: MotionEvent) {
+                /** no - op **/
+                /** no - op **/
+            }
+
+            override fun onFling(
+                e1: MotionEvent,
+                e2: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                val result = false
+                try {
+                    val diffY = e2.y - e1.y
+                    val diffX = e2.x - e1.x
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffX > 0) {
+                                calendar.add(Calendar.MONTH, -1)
+                                currentDate = calendar.toPrettyMonthString(locale = locale)
+                                initCalendarData()
+                                onMonthlyCalendarSwipeListener?.onSwipe( currentDate)
+                            } else {
+                                calendar.add(Calendar.MONTH, 1)
+                                currentDate = calendar.toPrettyMonthString(locale = locale)
+                                initCalendarData()
+                                onMonthlyCalendarSwipeListener?.onSwipe( currentDate)
+
+                            }
+                        }
+                    }
+                } catch (exception: Exception) {
+                    exception.printStackTrace()
+                }
+                return result
+            }
+        })
+
+        addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                gestureDetector.onTouchEvent(e)
+                return false
+            }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+                /** no - op **/
+                /** no - op **/
+            }
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+                /** no - op **/
+                /** no - op **/
+            }
+
+        })
     }
 
     init {
@@ -101,11 +164,64 @@ class MonthlyCalendar @JvmOverloads constructor(
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         orientation = LinearLayout.VERTICAL
 
-//        addView(calendarHeaderLinearLayout)
-//        addView(calendarWeekDescriptionView.root)
         addView(monthRecyclerView)
         initBackgroundColor()
         initializeSmeemMonthCalendar()
+
+        gestureDetector = GestureDetector(context, object : GestureDetector.OnGestureListener {
+            override fun onDown(p0: MotionEvent): Boolean = false
+
+            override fun onShowPress(p0: MotionEvent) {
+                /** no - op **/
+                /** no - op **/
+            }
+
+            override fun onSingleTapUp(p0: MotionEvent): Boolean = false
+
+            override fun onScroll(
+                e1: MotionEvent,
+                e2: MotionEvent,
+                distanceX: Float,
+                distanceY: Float
+            ): Boolean = true
+
+            override fun onLongPress(p0: MotionEvent) {
+                /** no - op **/
+                /** no - op **/
+            }
+
+            override fun onFling(
+                e1: MotionEvent,
+                e2: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                val result = false
+                try {
+                    val diffY = e2.y - e1.y
+                    val diffX = e2.x - e1.x
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffX > 0) {
+                                calendar.add(Calendar.MONTH, -1)
+                                currentDate = calendar.toPrettyMonthString(locale = locale)
+                                initCalendarData()
+                                onMonthlyCalendarSwipeListener?.onSwipe( currentDate)
+                            } else {
+                                calendar.add(Calendar.MONTH, 1)
+                                currentDate = calendar.toPrettyMonthString(locale = locale)
+                                initCalendarData()
+                                onMonthlyCalendarSwipeListener?.onSwipe( currentDate)
+
+                            }
+                        }
+                    }
+                } catch (exception: Exception) {
+                    exception.printStackTrace()
+                }
+                return result
+            }
+        })
     }
 
 
@@ -284,6 +400,11 @@ class MonthlyCalendar @JvmOverloads constructor(
 //    fun setOnMonthlyCalendarPrevMonthListener(block: (view: View, dateString: String) -> Unit) {
 //        this.monthlyCalendarPrevMonthListener = MonthlyCalendarPrevMonthListener(block)
 //    }
+
+    companion object {
+        private const val SWIPE_THRESHOLD = 100
+        private const val SWIPE_VELOCITY_THRESHOLD = 100
+    }
 
 
 }
