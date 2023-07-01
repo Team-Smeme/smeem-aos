@@ -7,6 +7,14 @@ import com.sopt.smeem.presentation.BindingActivity
 class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.activity_diary_edit) {
 
     override fun constructLayout() {
-        binding.etDiaryEditContent.requestFocus()
+        with (binding.etDiaryEditContent) {
+            requestFocus()
+            setText(intent.getStringExtra("originalContent"))
+            setSelection(binding.etDiaryEditContent.length())
+        }
+    }
+
+    override fun addListeners() {
+        
     }
 }
