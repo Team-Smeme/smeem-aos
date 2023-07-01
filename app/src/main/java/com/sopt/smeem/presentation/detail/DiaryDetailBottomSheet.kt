@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sopt.smeem.databinding.BottomSheetDiaryDetailBinding
 
 class DiaryDetailBottomSheet() : BottomSheetDialogFragment() {
@@ -32,7 +33,8 @@ class DiaryDetailBottomSheet() : BottomSheetDialogFragment() {
             dismiss()
         }
         binding.tvDelete.setOnClickListener {
-            // TODO: 삭제 다이얼로그 ㄱㄱ
+            dismiss()
+            showDeleteDialog()
         }
     }
 
@@ -42,6 +44,17 @@ class DiaryDetailBottomSheet() : BottomSheetDialogFragment() {
             putExtra("originalContent", "원본 일기 내용을 넣어주세요")
         }
         startActivity(intent)
+    }
+
+    private fun showDeleteDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("일기를 삭제할까요?")
+            .setNegativeButton("예") { dialog, which ->
+                // TODO: 삭제 api 호출
+                // TODO: 홈화면으로 돌아가는 로직
+            }
+            .setPositiveButton("아니요") { dialog, which -> }
+            .show()
     }
 
     override fun onDestroyView() {
