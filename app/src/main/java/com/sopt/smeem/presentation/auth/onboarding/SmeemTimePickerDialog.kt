@@ -32,6 +32,7 @@ class SmeemTimePickerDialog(
             BUTTON_POSITIVE -> timeSetListener.onTimeSet(
                 timePicker, timePicker!!.hour, timePicker!!.minute * minuteInterval
             )
+
             BUTTON_NEGATIVE -> cancel()
         }
     }
