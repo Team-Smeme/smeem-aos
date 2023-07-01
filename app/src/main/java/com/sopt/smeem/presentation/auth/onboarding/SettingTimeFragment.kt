@@ -1,10 +1,7 @@
 package com.sopt.smeem.presentation.auth.onboarding
 
 import android.app.TimePickerDialog
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sopt.smeem.R
@@ -12,7 +9,6 @@ import com.sopt.smeem.databinding.FragmentSettingTimeBinding
 import com.sopt.smeem.presentation.BindingFragment
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
-import java.sql.Time
 
 class SettingTimeFragment :
     BindingFragment<FragmentSettingTimeBinding>(R.layout.fragment_setting_time) {
@@ -32,6 +28,11 @@ class SettingTimeFragment :
         onTouchDays()
         onTouchTime()
         onTouchLater()
+    }
+
+    override fun addObservers() {
+        observeHour()
+        observeMinute()
     }
 
     override fun onDestroyView() {
@@ -82,4 +83,18 @@ class SettingTimeFragment :
             vm.timeLater()
         }
     }
+
+    private fun observeHour() {
+        vm.selectedHour.observe(viewLifecycleOwner) {
+            binding.tvOnBoardingTimeBodyHour.text = vm.formatHour(it)
+            binding.tvOnBoardingTimeBodyAmpm.text = vm.getAmPm(it)
+        }
+    }
+
+    private fun observeMinute() {
+        vm.selectedMinute.observe(viewLifecycleOwner) {
+            binding.tvOnBoardingTimeBodyMinute.text = vm.formatMinute(it)
+        }
+    }
+
 }

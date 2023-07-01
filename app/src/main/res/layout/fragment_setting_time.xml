@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -157,19 +159,48 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_on_boarding_time_box_body"
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_on_boarding_time_body_hour"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:layout_marginTop="4dp"
-                    android:gravity="center"
                     android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
-                    android:textColor="@color/point"
+                    android:textColor="?colorPrimary"
+                    tools:text="10" />
+
+                <TextView
+                    android:id="@+id/tv_on_boarding_time_body_colon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
+                    android:textColor="?colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_on_boarding_time_body_minute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
+                    android:textColor="?colorPrimary"
+                    tools:text="00" />
+
+                <TextView
+                    android:id="@+id/tv_on_boarding_time_body_ampm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" PM"
+                    android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
+                    android:textColor="?colorPrimary" />
+
+                <androidx.constraintlayout.helper.widget.Flow
+                    android:id="@+id/flow_on_boarding_time_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="tv_on_boarding_time_body_hour,tv_on_boarding_time_body_colon,tv_on_boarding_time_body_minute,tv_on_boarding_time_body_ampm"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_time_box_title_static"
-                    tools:text="10:00 PM" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_on_boarding_time_box_title_static" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -185,5 +216,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
