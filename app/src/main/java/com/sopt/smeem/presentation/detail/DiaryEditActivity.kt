@@ -15,6 +15,8 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
     }
 
     override fun addListeners() {
-        
+        binding.btnDiaryEditCancel.setOnClickListener {
+            finish()
+        }
     }
 }
