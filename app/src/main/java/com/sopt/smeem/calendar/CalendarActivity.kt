@@ -1,18 +1,20 @@
 package com.sopt.smeem.calendar
 
+import android.os.Binder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil.setContentView
 import com.sopt.smeem.R
 import com.sopt.smeem.calendar.util.TopSheetBehavior
 import com.sopt.smeem.calendar.util.TopSheetBehavior.TopSheetCallback
 import com.sopt.smeem.calendar.weekly.WeeklyCalendar
 import com.sopt.smeem.databinding.ActivityCalendarBinding
+import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.util.dp
 
-class CalendarActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCalendarBinding
+class CalendarActivity : BindingActivity<ActivityCalendarBinding>(R.layout.activity_calendar) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
