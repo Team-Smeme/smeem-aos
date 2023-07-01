@@ -2,7 +2,9 @@ package com.sopt.smeem.presentation.write.natiive
 
 import android.content.Intent
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.smeem.R
@@ -33,10 +35,21 @@ class NativeWriteStep1Activity :
         refreshTopic()
         hideTip()
         completeNativeDiary()
+        goBack()
     }
 
     override fun addObservers() {
         checkDiary()
+    }
+
+    private fun goBack() {
+        val toolbar = findViewById<ConstraintLayout>(R.id.layout_native_step1_toolbar)
+        val back = toolbar.findViewById<TextView>(R.id.tv_cancel)
+
+        back.setOnClickListener {
+            super.onBackPressed()
+            finish()
+        }
     }
 
     private fun showTooltip(owner: LifecycleOwner?) {

@@ -2,7 +2,9 @@ package com.sopt.smeem.presentation.write.foreign
 
 import android.graphics.Color
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.smeem.R
@@ -32,10 +34,21 @@ class ForeignWriteActivity :
         setTopicVisibility()
         refreshTopic()
         completeDiary()
+        goBack()
     }
 
     override fun addObservers() {
         checkDiary()
+    }
+
+    private fun goBack() {
+        val toolbar = findViewById<ConstraintLayout>(R.id.layout_foreign_write_toolbar)
+        val back = toolbar.findViewById<TextView>(R.id.tv_cancel)
+
+        back.setOnClickListener {
+            super.onBackPressed()
+            finish()
+        }
     }
 
     private fun showTooltip(owner: LifecycleOwner?) {

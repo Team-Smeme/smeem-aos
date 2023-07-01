@@ -28,10 +28,15 @@
             android:name=".presentation.write.natiive.NativeWriteStep1Activity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
-        <activity
-            android:name=".presentation.write.foreign.ForeignWriteActivity"
-            android:exported="false"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
+
+        <activity android:name=".presentation.home.HomeActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">

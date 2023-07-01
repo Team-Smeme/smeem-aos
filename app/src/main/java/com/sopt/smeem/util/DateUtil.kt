@@ -1,5 +1,6 @@
 package com.sopt.smeem.util
 
+import com.sopt.smeem.domain.model.Date
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.regex.Pattern
@@ -28,7 +29,7 @@ object DateUtil {
                 yyyyMMddHHmm.substring(8, 10).toInt(),
                 yyyyMMddHHmm.substring(11, 13).toInt(),
                 yyyyMMddHHmm.substring(14).toInt()
-            ).plusHours(9)
+            )
         }
 
         throw IllegalArgumentException("wrong pattern matching for date")
@@ -68,6 +69,7 @@ object DateUtil {
 
     fun gap(start: String, end: String): Int =
         asLocalDate(end).compareTo(asLocalDate(start))
+
 
     object WithServer {
         fun asStringOnlyDate(now: LocalDate): String {

@@ -9,8 +9,6 @@ import com.sopt.smeem.domain.model.DiarySummary
 import com.sopt.smeem.domain.model.Topic
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.util.DateUtil
-import java.time.MonthDay
-import java.time.Year
 
 class DiaryRepositoryImpl(
     private val diaryCommander: DiaryCommander,
@@ -55,11 +53,9 @@ class DiaryRepositoryImpl(
                         keySelector = { diary ->
                             val dateTime = DateUtil.asLocalDateTime(diary.createdAt)
                             Date(
-                                year = Year.of(dateTime.year),
-                                monthDay = MonthDay.from(dateTime),
-                                dayOfWeek = dateTime.dayOfWeek,
-                                hour = dateTime.hour,
-                                minute = dateTime.minute,
+                                year = dateTime.year,
+                                month = dateTime.monthValue,
+                                day = dateTime.dayOfMonth
                             )
                         },
                         valueTransform = { diary ->

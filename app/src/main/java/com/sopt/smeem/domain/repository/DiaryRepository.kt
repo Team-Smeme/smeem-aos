@@ -1,6 +1,5 @@
 package com.sopt.smeem.domain.repository
 
-import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.domain.model.Diary
 import com.sopt.smeem.domain.model.DiarySummaries
 import com.sopt.smeem.domain.model.Topic

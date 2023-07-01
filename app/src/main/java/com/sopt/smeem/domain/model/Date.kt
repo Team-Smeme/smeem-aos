@@ -1,19 +1,28 @@
 package com.sopt.smeem.domain.model
 
 import java.time.DayOfWeek
-import java.time.MonthDay
-import java.time.Year
+import java.time.LocalDateTime
 
 data class Date(
-    val year: Year,
-    val monthDay: MonthDay,
-    val dayOfWeek: DayOfWeek,
-    val hour: Int,
-    val minute: Int,
+    val year: Int,
+    val month: Int,
+    val day: Int,
+    val dayOfWeek: DayOfWeek? = null,
+    val hour: Int? = null,
+    val minute: Int? = null,
     val second: Int? = null,
     val mSecond: Int? = null,
     val nSecond: Int? = null
 ) {
-    val month by lazy { monthDay.month }
-    val day by lazy { monthDay.dayOfMonth }
+    companion object {
+        fun from(now: LocalDateTime) = Date(
+            year = now.year,
+            month = now.monthValue,
+            day = now.dayOfMonth,
+            dayOfWeek = now.dayOfWeek,
+            hour = now.hour,
+            minute = now.minute,
+            second = now.second,
+        )
+    }
 }
