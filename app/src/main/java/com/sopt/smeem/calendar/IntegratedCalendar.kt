@@ -6,7 +6,6 @@ import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginTop
 import com.sopt.smeem.R
 import com.sopt.smeem.calendar.monthly.MonthlyCalendar
 import com.sopt.smeem.calendar.weekly.WeeklyCalendar
@@ -33,7 +32,7 @@ class IntegratedCalendar @JvmOverloads constructor(
         val layoutParamsMonthly = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 
         // 상단에서 150dp만큼 마진 추가
-        val margin = (150 * resources.displayMetrics.density).toInt()
+        val margin = 96.dp(context)
         layoutParamsMonthly.setMargins(0, margin, 0, 0)
         monthlyCalendar.layoutParams = layoutParamsMonthly
         addView(monthlyCalendar)
@@ -70,4 +69,10 @@ class IntegratedCalendar @JvmOverloads constructor(
         }
         addView(dividerView)
     }
+
+    fun getWeeklyCalendar(): WeeklyCalendar {
+        return weeklyCalendar
+    }
+
 }
+

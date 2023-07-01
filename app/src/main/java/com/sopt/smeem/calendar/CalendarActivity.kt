@@ -4,7 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.sopt.smeem.R
+import com.sopt.smeem.calendar.util.TopSheetBehavior
+import com.sopt.smeem.calendar.util.TopSheetBehavior.TopSheetCallback
+import com.sopt.smeem.calendar.weekly.WeeklyCalendar
 import com.sopt.smeem.databinding.ActivityCalendarBinding
+import com.sopt.smeem.util.dp
 
 class CalendarActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCalendarBinding
@@ -17,12 +22,21 @@ class CalendarActivity : AppCompatActivity() {
         initializePersistentBottomSheet()
     }
 
-    private fun initializePersistentBottomSheet() {
-        val topSheetBehavior = TopSheetBehavior.from(binding.topSheetView)
-        binding.clCalendar.bringToFront()
-        topSheetBehavior.peekHeight = 500
 
-        topSheetBehavior.addTopSheetCallback(object : TopSheetBehavior.SheetCallback() {
+
+    private fun initializePersistentBottomSheet() {
+        val topSheet = binding.topSheetView
+        val topSheetBehavior = TopSheetBehavior.from(topSheet)
+        val weeklyCalendar = topSheet.getWeeklyCalendar()
+
+        binding.clCalendar.bringToFront()
+
+        topSheetBehavior.setPeekHeight(168.dp(this))
+        topSheetBehavior.setHideable(false)
+
+
+
+        topSheetBehavior.setTopSheetCallback(object : TopSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     TopSheetBehavior.STATE_HIDDEN -> {
@@ -45,16 +59,21 @@ class CalendarActivity : AppCompatActivity() {
                         Log.d("MainActivity", "state: settling")
                     }
 
-                    TopSheetBehavior.STATE_HALF_EXPANDED -> {
-                        Log.d("MainActivity", "state: half expanded")
-                    }
                 }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                binding.llCalendar.translationY = bottomSheet.height * slideOffset
 
+                val fadeStartPosition = 0.0f
+                val fadeEndPosition = 1.0f
+                if (slideOffset in fadeStartPosition..fadeEndPosition) {
+                    val alpha = 1 - slideOffset
+                    weeklyCalendar.alpha = alpha
+                }
             }
 
         })
+
     }
 }
