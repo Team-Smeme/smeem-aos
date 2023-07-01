@@ -91,6 +91,8 @@ class OnBoardingVM @Inject constructor() : ViewModel() {
     fun formatHour(hour: Int): String {
         if (hour in 13..24) {
             return "%02d".format(hour - 12)
+        } else if (hour == 0) {
+            return "12"
         }
         return "%02d".format(hour)
     }
