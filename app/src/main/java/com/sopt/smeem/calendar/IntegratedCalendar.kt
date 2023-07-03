@@ -31,7 +31,6 @@ class IntegratedCalendar @JvmOverloads constructor(
             }
         val layoutParamsMonthly = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 
-        // 상단에서 150dp만큼 마진 추가
         val margin = 96.dp(context)
         layoutParamsMonthly.setMargins(0, margin, 0, 0)
         monthlyCalendar.layoutParams = layoutParamsMonthly
