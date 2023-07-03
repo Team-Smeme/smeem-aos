@@ -123,13 +123,13 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/coordinator"
+            android:id="@+id/co_top_sheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.sopt.smeem.calendar.IntegratedCalendar
-                android:id="@+id/top_sheet_view"
+                android:id="@+id/integrated_calendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -143,48 +143,99 @@
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_calendar"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="500px"
-            android:background="@color/point">
+            app:layout_constraintBottom_toTopOf="@id/btn_home_bottom_writing">
 
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_x" />
+            <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                android:id="@+id/layout_home_bottom_content"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="0dp"-->
+            <!--                android:visibility="invisible"-->
+            <!--                app:layout_constraintTop_toTopOf="parent">-->
 
-        </LinearLayout>
+            <!--                <TextView-->
+            <!--                    android:id="@+id/tv_home_bottom_time"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="0dp"-->
+            <!--                    android:text="4 : 18 PM"-->
+            <!--                    android:textAppearance="@style/TextAppearance.Smeem.Subtitle3_medium"-->
 
-        <!--    <com.sopt.smeem.calendar.monthly.MonthlyCalendar-->
-        <!--        android:id="@+id/top_sheet_view"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="420dp"-->
-        <!--        android:layout_marginTop="80dp"-->
-        <!--        android:paddingHorizontal="24dp"-->
-        <!--        android:clickable="true"-->
-        <!--        android:focusable="true"-->
-        <!--        android:orientation="vertical"-->
-        <!--        android:scrollbars="vertical"-->
-        <!--        app:behavior_hideable="false"-->
-        <!--        app:layout_behavior="com.sopt.smeem.calendar.TopSheetBehavior"/>-->
+            <!--                    app:layout_constraintStart_toStartOf="parent"-->
+            <!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
-        <!--    <com.sopt.smeem.calendar.weekly.WeeklyCalendar-->
-        <!--        android:id="@+id/top_sheet_view"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="420dp"-->
-        <!--        android:layout_marginTop="80dp"-->
-        <!--        android:clickable="true"-->
-        <!--        android:focusable="true"-->
-        <!--        android:orientation="vertical"-->
-        <!--        android:paddingHorizontal="24dp"-->
-        <!--        android:scrollbars="vertical"-->
-        <!--        app:behavior_hideable="false"-->
-        <!--        app:layout_behavior="com.sopt.smeem.calendar.TopSheetBehavior" />-->
+            <!--                <TextView-->
+            <!--                    android:id="@+id/tv_home_bottom_see_all"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="0dp"-->
+            <!--                    android:text="전체보기 >"-->
+            <!--                    android:textAppearance="@style/TextAppearance.Smeem.Caption2_medium"-->
 
+            <!--                    android:textColor="@color/gray_400"-->
+            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/tv_home_bottom_content"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="0dp"-->
+
+            <!--                    android:layout_marginTop="19dp"-->
+            <!--                    android:text="I watched Avatar with my ... "-->
+            <!--                    android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"-->
+
+            <!--                    app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_time" />-->
+
+            <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_home_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="440dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_home_bottom_no_diary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    android:src="@drawable/ic_no_diary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_home_bottom_no_diary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:text="작성한 일기가 없어요."
+                    android:textAppearance="@style/TextAppearance.Smeem.Subtitle4_regular"
+                    android:textColor="@color/gray_300"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_home_bottom_no_diary" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <Button
+            android:id="@+id/btn_home_bottom_writing"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="16dp"
+            android:text="일기 작성하기"
+            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
