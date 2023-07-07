@@ -1,5 +1,7 @@
 package com.sopt.smeem.util
 
+import android.view.View
+import com.sopt.smeem.calendar.weekly.WeeklyCalendar
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -62,4 +64,16 @@ fun String.achievementConvertStringToDate(): Date? {
     return runCatching {
         format.parse(this)
     }.getOrNull()
+}
+
+fun WeeklyCalendar.verticalSliding(topSheetSlideOffset: Float) {
+    if (topSheetSlideOffset in 0.0f..1.0f) {
+        this.alpha = 1 - topSheetSlideOffset
+    }
+    isEnabled = topSheetSlideOffset != 1.0f
+    isClickable = topSheetSlideOffset != 1.0f
+
+    if (topSheetSlideOffset > alpha) { // down sliding
+        this.visibility = View.GONE
+    }
 }
