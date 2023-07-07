@@ -14,7 +14,7 @@ import com.sopt.smeem.util.dp
 class IntegratedCalendar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyle: Int = 0
+    defStyle: Int = 0,
 ) : LinearLayout(context, attrs, defStyle) {
     private lateinit var monthlyCalendar: MonthlyCalendar
     private lateinit var weeklyCalendar: WeeklyCalendar
@@ -27,7 +27,6 @@ class IntegratedCalendar @JvmOverloads constructor(
         // Initialize MonthlyCalendar
         monthlyCalendar =
             MonthlyCalendar(context, attrs, defStyle = R.style.TopSheet_Background).apply {
-
             }
         val layoutParamsMonthly = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 
@@ -39,7 +38,6 @@ class IntegratedCalendar @JvmOverloads constructor(
         // Initialize WeeklyCalendar
         weeklyCalendar =
             WeeklyCalendar(context, attrs, defStyle = R.style.TopSheet_Background).apply {
-
             }
         val layoutParamsWeekly = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         weeklyCalendar.layoutParams = layoutParamsWeekly
@@ -48,7 +46,7 @@ class IntegratedCalendar @JvmOverloads constructor(
         handleView = View(context).apply {
             layoutParams = LayoutParams(
                 78.dp(context),
-                4.dp(context)
+                4.dp(context),
             ).apply {
                 gravity = Gravity.CENTER_HORIZONTAL
             }
@@ -59,7 +57,7 @@ class IntegratedCalendar @JvmOverloads constructor(
         dividerView = View(context).apply {
             layoutParams = LayoutParams(
                 LayoutParams.MATCH_PARENT,
-                4.dp(context)
+                4.dp(context),
             ).apply {
                 gravity = Gravity.CENTER_HORIZONTAL
                 topMargin = 12.dp(context)
@@ -73,5 +71,7 @@ class IntegratedCalendar @JvmOverloads constructor(
         return weeklyCalendar
     }
 
+    fun getMonthlyCalendar(): MonthlyCalendar {
+        return monthlyCalendar
+    }
 }
-
