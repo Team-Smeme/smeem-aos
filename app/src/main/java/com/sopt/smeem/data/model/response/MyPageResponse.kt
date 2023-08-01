@@ -1,6 +1,6 @@
 package com.sopt.smeem.data.model.response
 
-import com.sopt.smeem.calendar.Day
+import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.BadgeType
 
 data class MyPageResponse(

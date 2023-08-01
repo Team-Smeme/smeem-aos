@@ -3,7 +3,7 @@ package com.sopt.smeem.util
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 import com.sopt.smeem.R
-import com.sopt.smeem.calendar.Day
+import com.sopt.smeem.domain.model.Day
 
 object ButtonUtil {
     public fun MaterialButton.switchOn() {
