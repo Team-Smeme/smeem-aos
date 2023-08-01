@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.Authenticated
-import com.sopt.smeem.calendar.Day
+import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.MyPage
 import com.sopt.smeem.domain.repository.UserRepository

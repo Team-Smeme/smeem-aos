@@ -8,7 +8,7 @@ import com.sopt.smeem.Authenticated
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
 import com.sopt.smeem.TrainingGoalType
-import com.sopt.smeem.calendar.Day
+import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.Authentication
 import com.sopt.smeem.domain.model.LoginResult
