@@ -14,6 +14,7 @@ abstract class BindingActivity<Binding : ViewDataBinding>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, layoutRes)
+        binding.lifecycleOwner = this
 
         constructLayout()
         addListeners()
