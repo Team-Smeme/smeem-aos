@@ -31,6 +31,7 @@ class WeeklyCalendarViewHolder(
                 tvWeeklyCalendarDate.setTextColor(android.graphics.Color.parseColor("#FFFFFF"))
             } else {
                 ivToday.visibility = View.GONE
+                tvWeeklyCalendarDate.setTextColor(android.graphics.Color.parseColor("#B8B8B8"))
             }
         }
     }

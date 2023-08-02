@@ -146,13 +146,6 @@ class WeeklyCalendar @JvmOverloads constructor(
         return null
     }
 
-    fun refresh() {
-        currentDate = LocalDate.now()
-        selectedDate = LocalDate.now()
-        weeklyAdapter.setSelectedDay(selectedDate)
-        weeklyAdapter.submitList(daysInWeek(currentDate))
-    }
-
     fun setOnWeeklyDayClickListener(onWeeklyDayClickListener: OnWeeklyDayClickListener) {
         this.onWeeklyDayClickListener = onWeeklyDayClickListener
     }
