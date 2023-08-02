@@ -1,10 +1,13 @@
 package com.sopt.smeem.presentation
 
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.sopt.smeem.util.hideKeyboard
 
 abstract class BindingActivity<Binding : ViewDataBinding>(
     @LayoutRes private val layoutRes: Int,
@@ -19,6 +22,11 @@ abstract class BindingActivity<Binding : ViewDataBinding>(
         constructLayout()
         addListeners()
         addObservers()
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        hideKeyboard(currentFocus ?: View(this))
+        return super.dispatchTouchEvent(ev)
     }
 
     open fun constructLayout() {}
