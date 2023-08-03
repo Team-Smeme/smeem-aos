@@ -80,7 +80,7 @@
         </activity>
 
         <activity
-            android:name=".presentation.calendar.HomeActivity"
+            android:name=".presentation.home.HomeActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
 

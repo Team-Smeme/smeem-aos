@@ -1,6 +1,7 @@
-package com.sopt.smeem.presentation.calendar
+package com.sopt.smeem.presentation.home
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.presentation.BindingActivity
@@ -11,6 +12,8 @@ import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
+
+    private val homeViewModel by viewModels<HomeViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -19,6 +22,10 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     }
 
     private fun setInitListener() {
+        binding.weeklyCalendar.setOnWeeklyDayClickListener { view, date ->
+            binding.tvTargetMonth.text = date.format(DateTimeFormatter.ofPattern(TARGET_MONTH_PATTERN))
+        }
+
         binding.weeklyCalendar.setOnWeeklyCalendarSwipeListener(object :
             OnWeeklyCalendarSwipeListener {
             override fun onSwipe(mondayDate: LocalDate?) {
