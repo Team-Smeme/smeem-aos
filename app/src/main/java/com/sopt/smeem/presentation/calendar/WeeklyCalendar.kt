@@ -150,9 +150,9 @@ class WeeklyCalendar @JvmOverloads constructor(
         this.onWeeklyDayClickListener = onWeeklyDayClickListener
     }
 
-//    fun setOnWeeklyDayClickListener(block: (view: View, date: LocalDate) -> Unit) {
-//        this.onWeeklyDayClickListener = OnWeeklyDayClickListener(block)
-//    }
+    fun setOnWeeklyDayClickListener(block: (view: View, date: LocalDate) -> Unit) {
+        this.onWeeklyDayClickListener = OnWeeklyDayClickListener(block)
+    }
 
     fun setOnWeeklyCalendarSwipeListener(onWeeklyCalendarSwipeListener: OnWeeklyCalendarSwipeListener) {
         this.onWeeklyCalendarSwipeListener = onWeeklyCalendarSwipeListener
