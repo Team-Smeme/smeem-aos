@@ -27,7 +27,11 @@ class WeeklyAdapter(private val onWeeklyDayClickListener: OnWeeklyDayClickListen
     }
 
     override fun onBindViewHolder(holder: WeeklyCalendarViewHolder, position: Int) {
-        holder.onBind(weeklyDays[position])
+        if (selectedDay.isEqual(weeklyDays[position])) {
+            holder.onSelectBind(weeklyDays[position])
+        } else {
+            holder.onBind(weeklyDays[position])
+        }
     }
 
     override fun getItemCount() = weeklyDays.size
