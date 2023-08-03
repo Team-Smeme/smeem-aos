@@ -3,6 +3,7 @@ package com.sopt.smeem.presentation.calendar
 import android.text.format.DateUtils
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ViewWeeklyCalendarDayBinding
 import com.sopt.smeem.presentation.calendar.listener.OnWeeklyDayClickListener
 import java.sql.Date
@@ -25,6 +26,23 @@ class WeeklyCalendarViewHolder(
         val localDate: Date = Date.valueOf(weeklyDate.toString()) as Date
         this.weeklyDate = weeklyDate
         with(binding) {
+            tvWeeklyCalendarDate.setBackgroundResource(R.drawable.bg_diary_unselected_date)
+            date = weeklyDate.dayOfMonth.toString()
+            if (DateUtils.isToday(localDate.time)) {
+                ivToday.visibility = View.VISIBLE
+                tvWeeklyCalendarDate.setTextColor(android.graphics.Color.parseColor("#FFFFFF"))
+            } else {
+                ivToday.visibility = View.GONE
+                tvWeeklyCalendarDate.setTextColor(android.graphics.Color.parseColor("#B8B8B8"))
+            }
+        }
+    }
+
+    fun onSelectBind(weeklyDate: LocalDate) {
+        val localDate: Date = Date.valueOf(weeklyDate.toString()) as Date
+
+        with(binding) {
+            tvWeeklyCalendarDate.setBackgroundResource(R.drawable.bg_diary_selected_date)
             date = weeklyDate.dayOfMonth.toString()
             if (DateUtils.isToday(localDate.time)) {
                 ivToday.visibility = View.VISIBLE

@@ -34,11 +34,8 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             binding.tvTargetMonth.text =
                 date.format(DateTimeFormatter.ofPattern(TARGET_MONTH_PATTERN))
 
-            binding.btnWriteDiary.visibility = if (LocalDate.now().isEqual(date)) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+            binding.btnWriteDiary.visibility =
+                if (LocalDate.now().isEqual(date)) View.VISIBLE else View.GONE
         }
 
         binding.weeklyCalendar.setOnWeeklyCalendarSwipeListener(object :
