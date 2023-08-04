@@ -6,6 +6,10 @@
     <data>
 
         <import type="android.view.View" />
+        <variable
+            name="vm"
+            type="com.sopt.smeem.presentation.detail.DiaryEditViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -81,7 +85,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:randomTopic="@{@string/entrance_nickname_description}"
                     app:refreshVisibility="@{View.GONE}" />
 
                 <EditText
@@ -96,7 +99,7 @@
                     android:paddingHorizontal="18dp"
                     android:paddingVertical="16dp"
                     android:privateImeOptions="defaultInputmode==english"
-                    android:text="@string/dummy_diary_english"
+                    android:text="@={vm.diary}"
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
