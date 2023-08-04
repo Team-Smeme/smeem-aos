@@ -54,7 +54,8 @@ class DiaryDetailBottomSheet() : BottomSheetDialogFragment() {
             .setTitle("일기를 삭제할까요?")
             .setNegativeButton("예") { dialog, which ->
                 // TODO: 삭제 api 호출
-                // TODO: 홈화면으로 돌아가는 로직
+                // TODO: pr #77 머지 필요
+//                    Intent(this, HomeActivity::class.java).run(::startActivity)
             }
             .setPositiveButton("아니요") { dialog, which -> }
             .show()

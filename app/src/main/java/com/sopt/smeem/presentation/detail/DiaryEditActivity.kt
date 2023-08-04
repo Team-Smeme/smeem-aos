@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.detail
 
+import android.content.Intent
 import android.view.View
 import androidx.activity.viewModels
 import com.sopt.smeem.R
@@ -23,12 +24,7 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
                 50
             )
         }
-        // 랜덤주제가 없으면 창 없애기
-        if (intent.getStringExtra("randomTopic") == "") {
-            binding.layoutDiaryEditRandomTopic.layoutSection.visibility = View.GONE
-        } else {
-            binding.layoutDiaryEditRandomTopic.randomTopic = intent.getStringExtra("randomTopic")
-        }
+        checkRandomTopic()
     }
 
     override fun addListeners() {
@@ -42,11 +38,22 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
         checkDiary()
     }
 
+    private fun checkRandomTopic() {
+        // 랜덤주제가 없으면 창 없애기
+        if (intent.getStringExtra("randomTopic") == "") {
+            binding.layoutDiaryEditRandomTopic.layoutSection.visibility = View.GONE
+        } else {
+            binding.layoutDiaryEditRandomTopic.randomTopic = intent.getStringExtra("randomTopic")
+        }
+    }
+
     private fun completeDiary() {
         binding.btnDiaryEditDone.setOnClickListener {
             when (viewModel.isValidDiary.value) {
                 true -> {
-                    // TODO: HomeActivity로 이동
+                    // TODO: 수정 api 연결
+                    // TODO: pr #77 머지 필요
+//                    Intent(this, HomeActivity::class.java).run(::startActivity)
                 }
                 else -> {
                     binding.root.showSnackbar("외국어를 포함해 일기를 작성해 주세요 :(")
