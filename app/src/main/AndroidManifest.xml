@@ -16,6 +16,13 @@
         android:theme="@style/Theme.Smeem"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <!-- Splash -->
+        <activity
+            android:name=".presentation.splash.SplashActivity"
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".presentation.detail.DiaryEditActivity"
             android:exported="false"
@@ -52,9 +59,7 @@
         <activity
             android:name=".presentation.auth.onboarding.OnBoardingActivity"
             android:exported="false" />
-        <activity
-            android:name=".presentation.auth.splash.LoginActivity"
-            android:exported="true"></activity>
+
 
         <activity
             android:name=".presentation.auth.entrance.EntranceNicknameActivity"

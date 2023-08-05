@@ -6,7 +6,7 @@
     <data>
         <variable
             name="signIn"
-            type="com.sopt.smeem.presentation.auth.splash.LoginActivity" />
+            type="com.sopt.smeem.presentation.splash.SplashActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

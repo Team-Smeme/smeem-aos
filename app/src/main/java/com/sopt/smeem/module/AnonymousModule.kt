@@ -1,10 +1,14 @@
 package com.sopt.smeem.module
 
 import com.sopt.smeem.Authenticated
+import com.sopt.smeem.data.datasource.LoginExecutor
 import com.sopt.smeem.data.datasource.TrainingManager
+import com.sopt.smeem.data.repository.LoginRepositoryImpl
 import com.sopt.smeem.data.repository.UserRepositoryImpl
+import com.sopt.smeem.data.service.LoginService
 import com.sopt.smeem.data.service.TrainingService
 import com.sopt.smeem.data.service.UserService
+import com.sopt.smeem.domain.repository.LoginRepository
 import com.sopt.smeem.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -25,6 +29,18 @@ object AnonymousModule {
             TrainingManager(
                 userService = networkModule.apiServerRetrofitForAnonymous.create(UserService::class.java),
                 trainingService = networkModule.apiServerRetrofitForAnonymous.create(TrainingService::class.java)
+            )
+        )
+
+    @Provides
+    @ViewModelScoped
+    @Authenticated(isApplied = false)
+    fun loginRepository(networkModule: NetworkModule): LoginRepository =
+        LoginRepositoryImpl(
+            LoginExecutor(
+                networkModule.apiServerRetrofitForAnonymous.create(
+                    LoginService::class.java
+                )
             )
         )
 }

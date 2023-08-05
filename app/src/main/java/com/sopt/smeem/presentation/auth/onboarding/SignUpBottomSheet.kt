@@ -12,7 +12,7 @@ import com.sopt.smeem.SocialType
 import com.sopt.smeem.databinding.BottomSheetSignUpBinding
 import com.sopt.smeem.logging
 import com.sopt.smeem.presentation.auth.LoginProcess
-import com.sopt.smeem.presentation.auth.splash.KakaoHandler
+import com.sopt.smeem.presentation.auth.KakaoHandler
 
 class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
     var _binding: BottomSheetSignUpBinding? = null

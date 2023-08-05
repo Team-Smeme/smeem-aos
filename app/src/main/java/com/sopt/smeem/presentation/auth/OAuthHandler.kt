@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.auth.splash
+package com.sopt.smeem.presentation.auth
 
 import android.content.Context
 import com.sopt.smeem.SmeemException

@@ -1,10 +1,9 @@
-package com.sopt.smeem.presentation.auth.splash
+package com.sopt.smeem.presentation.splash
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.Authenticated
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
 import com.sopt.smeem.data.ApiPool.onHttpFailure
@@ -24,7 +23,6 @@ internal class LoginVM @Inject constructor() : ViewModel() {
     lateinit var authRepository: AuthRepository
 
     @Inject
-    @Authenticated(false)
     lateinit var loginRepository: LoginRepository
 
     private val _loginResult = MutableLiveData<LoginResult>()
@@ -33,18 +31,13 @@ internal class LoginVM @Inject constructor() : ViewModel() {
 
     fun login(
         kakaoAccessToken: String,
-        kakaoRefreshToken: String,
         socialType: SocialType,
         onError: (SmeemException) -> Unit
     ) {
         viewModelScope.launch {
-            loginRepository.execute(
-                accessToken = kakaoAccessToken,
-                socialType = socialType
-            )
+            loginRepository.execute(kakaoAccessToken, socialType)
                 .onSuccess {
-                    // save on local storage
-                    authRepository.setAuthentication(
+                    authRepository.setAuthentication( // save on local storage
                         Authentication(
                             accessToken = it.apiAccessToken,
                             refreshToken = it.apiRefreshToken

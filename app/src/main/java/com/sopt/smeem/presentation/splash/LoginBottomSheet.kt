@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.auth.splash
+package com.sopt.smeem.presentation.splash
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,13 +9,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sopt.smeem.SocialType
-import com.sopt.smeem.data.datasource.LoginExecutor
 import com.sopt.smeem.databinding.BottomSheetAuthBinding
 import com.sopt.smeem.description
 import com.sopt.smeem.logging
 import com.sopt.smeem.presentation.auth.LoginProcess
+import com.sopt.smeem.presentation.auth.KakaoHandler
 
-class LoginBottomSheet: BottomSheetDialogFragment(), LoginProcess {
+class LoginBottomSheet : BottomSheetDialogFragment(), LoginProcess {
     var _binding: BottomSheetAuthBinding? = null
     private val binding: BottomSheetAuthBinding
         get() = requireNotNull(_binding)
@@ -45,7 +45,6 @@ class LoginBottomSheet: BottomSheetDialogFragment(), LoginProcess {
                     onSuccess = { kakaoAccessToken, kakaoRefreshToken ->
                         vm.login(
                             kakaoAccessToken = kakaoAccessToken,
-                            kakaoRefreshToken = kakaoRefreshToken,
                             socialType = SocialType.KAKAO,
                             onError = { exception ->
                                 exception.logging("LOGIN_FAILED")
@@ -63,7 +62,6 @@ class LoginBottomSheet: BottomSheetDialogFragment(), LoginProcess {
                     onSuccess = { kakaoAccessToken, kakaoRefreshToken ->
                         vm.login(
                             kakaoAccessToken = kakaoAccessToken,
-                            kakaoRefreshToken = kakaoRefreshToken,
                             socialType = SocialType.KAKAO,
                             onError = { exception ->
                                 exception.logging("LOGIN_FAILED")
