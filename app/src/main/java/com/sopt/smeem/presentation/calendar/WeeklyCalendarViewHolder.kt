@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.calendar
 
+import android.graphics.Color
 import android.text.format.DateUtils
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -26,15 +27,18 @@ class WeeklyCalendarViewHolder(
         val localDate: Date = Date.valueOf(weeklyDate.toString()) as Date
         this.weeklyDate = weeklyDate
         with(binding) {
-            tvWeeklyCalendarDate.setBackgroundResource(R.drawable.bg_diary_unselected_date)
             date = weeklyDate.dayOfMonth.toString()
             if (DateUtils.isToday(localDate.time)) {
                 ivToday.visibility = View.VISIBLE
-                tvWeeklyCalendarDate.setTextColor(android.graphics.Color.parseColor("#FFFFFF"))
+                tvWeeklyCalendarDate.setTextColor(Color.parseColor("#FFFFFF"))
+                return
             } else {
                 ivToday.visibility = View.GONE
-                tvWeeklyCalendarDate.setTextColor(android.graphics.Color.parseColor("#B8B8B8"))
+                tvWeeklyCalendarDate.setTextColor(Color.parseColor("#B8B8B8"))
             }
+
+            tvWeeklyCalendarDate.setBackgroundResource(R.drawable.bg_diary_unselected_date)
+            tvWeeklyCalendarDate.setTextColor(Color.parseColor("#B8B8B8"))
         }
     }
 
@@ -42,15 +46,18 @@ class WeeklyCalendarViewHolder(
         val localDate: Date = Date.valueOf(weeklyDate.toString()) as Date
 
         with(binding) {
-            tvWeeklyCalendarDate.setBackgroundResource(R.drawable.bg_diary_selected_date)
             date = weeklyDate.dayOfMonth.toString()
             if (DateUtils.isToday(localDate.time)) {
                 ivToday.visibility = View.VISIBLE
-                tvWeeklyCalendarDate.setTextColor(android.graphics.Color.parseColor("#FFFFFF"))
+                tvWeeklyCalendarDate.setTextColor(Color.parseColor("#FFFFFF"))
+                return
             } else {
                 ivToday.visibility = View.GONE
-                tvWeeklyCalendarDate.setTextColor(android.graphics.Color.parseColor("#B8B8B8"))
+                tvWeeklyCalendarDate.setTextColor(Color.parseColor("#B8B8B8"))
             }
+
+            tvWeeklyCalendarDate.setBackgroundResource(R.drawable.bg_diary_selected_date)
+            tvWeeklyCalendarDate.setTextColor(Color.parseColor("#171716"))
         }
     }
 
