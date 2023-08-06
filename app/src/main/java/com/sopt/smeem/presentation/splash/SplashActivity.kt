@@ -6,8 +6,9 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivitySplashBinding
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.presentation.BindingActivity
-import com.sopt.smeem.presentation.auth.entrance.EntranceNicknameActivity
+import com.sopt.smeem.presentation.join.JoinWithNicknameActivity
 import com.sopt.smeem.presentation.onboarding.OnBoardingActivity
+import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,7 +32,7 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
     }
 
     private fun onTouchStart() {
-        binding.btnAuthStart.setOnClickListener {
+        binding.btnAuthStart.setOnSingleClickListener {
             val toOnBoarding = Intent(this, OnBoardingActivity::class.java)
             startActivity(toOnBoarding)
 
@@ -40,7 +41,7 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
     }
 
     private fun onTouchAlreadyAuthed() {
-        binding.tvAlreadyAuthed.setOnClickListener {
+        binding.tvAlreadyAuthed.setOnSingleClickListener {
             bs.show(supportFragmentManager, LoginBottomSheet.TAG)
         }
     }
@@ -66,7 +67,7 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
     }
 
     private fun gotoJoin() {
-        startActivity(Intent(this@SplashActivity, EntranceNicknameActivity::class.java))
+        startActivity(Intent(this@SplashActivity, JoinWithNicknameActivity::class.java))
         if (!isFinishing) finish()
     }
 

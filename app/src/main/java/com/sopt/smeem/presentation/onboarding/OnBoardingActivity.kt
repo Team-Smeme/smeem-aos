@@ -9,7 +9,8 @@ import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.databinding.ActivityOnBoardingBinding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
-import com.sopt.smeem.presentation.auth.entrance.EntranceNicknameActivity
+import com.sopt.smeem.presentation.join.JoinWithNicknameActivity
+import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,7 +52,7 @@ class OnBoardingActivity :
     }
 
     private fun onTouchNext() {
-        binding.btnOnBoardingNext.setOnClickListener {
+        binding.btnOnBoardingNext.setOnSingleClickListener {
             vm.nextStep() // next step 으로 이동
         }
     }
@@ -180,7 +181,7 @@ class OnBoardingActivity :
                         onSuccess = {
                             val toEntrance = Intent(
                                 this@OnBoardingActivity,
-                                EntranceNicknameActivity::class.java
+                                JoinWithNicknameActivity::class.java
                             )
                             startActivity(toEntrance)
 
@@ -227,7 +228,7 @@ class OnBoardingActivity :
             vm.sendPlanData(
                 onSuccess = {
                     val toEntrance =
-                        Intent(this@OnBoardingActivity, EntranceNicknameActivity::class.java)
+                        Intent(this@OnBoardingActivity, JoinWithNicknameActivity::class.java)
                     startActivity(toEntrance)
                     if (!isFinishing) finish()
                 },

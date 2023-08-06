@@ -1,23 +1,26 @@
-package com.sopt.smeem.presentation.auth.entrance
+package com.sopt.smeem.presentation.join
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.google.android.material.button.MaterialButton
 import com.sopt.smeem.R
-import com.sopt.smeem.databinding.ActivityEntranceAgreementBinding
+import com.sopt.smeem.databinding.ActivityJoinAgreementBinding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
-import com.sopt.smeem.presentation.auth.entrance.EntranceConstant.NICKNAME
+import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.join.JoinConstant.NICKNAME
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
+import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class EntranceAgreementActivity :
-    BindingActivity<ActivityEntranceAgreementBinding>(R.layout.activity_entrance_agreement) {
+class JoinWithAgreementActivity :
+    BindingActivity<ActivityJoinAgreementBinding>(R.layout.activity_join_agreement) {
     private var elements: Map<EntranceSelection, MaterialButton>? = null
-    private val vm: EntranceAgreementVM by viewModels()
+    private val vm: JoinVM by viewModels()
 
     override fun constructLayout() {
         EntranceSelection.SERVICE.id = binding.btnEntranceAgreementService.id
@@ -39,7 +42,7 @@ class EntranceAgreementActivity :
     }
 
     private fun onTouchAllSelection() {
-        binding.btnEntranceAgreementAll.setOnClickListener {
+        binding.btnEntranceAgreementAll.setOnSingleClickListener {
 
             if (vm.allSelected()) { // all 이 선택되어있는 경우 (모두 선택된 상태)
                 binding.btnEntranceAgreementAll.switchOff()
@@ -81,12 +84,12 @@ class EntranceAgreementActivity :
     }
 
     private fun onTouchNext() {
-        binding.btnEntranceNext.setOnClickListener {
+        binding.btnEntranceNext.setOnSingleClickListener {
             val nickname =
                 intent.getStringExtra(NICKNAME) ?: throw IllegalStateException("알 수 없는 에러가 발생했습니다.")
             val selected = vm.getSelected()
-
             sendServer(nickname, selected)
+            afterJoinSuccess()
         }
     }
 
@@ -94,12 +97,27 @@ class EntranceAgreementActivity :
         vm.registerNicknameAndAcceptance(
             nickname,
             selected,
-            onSuccess = { Toast.makeText(this, "닉네임 변경 API 호출", Toast.LENGTH_SHORT).show() },
             onError = { e ->
-                Toast.makeText(this@EntranceAgreementActivity, e.description(), Toast.LENGTH_SHORT)
+                Toast.makeText(this@JoinWithAgreementActivity, e.description(), Toast.LENGTH_SHORT)
                     .show()
             }
         )
+    }
+
+    private fun afterJoinSuccess() {
+        vm.joinSucceed.observe(this@JoinWithAgreementActivity) {
+            when (it) {
+                true -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                }
+
+                false -> {
+                    // do nothing
+                }
+            }
+
+        }
     }
 }
 

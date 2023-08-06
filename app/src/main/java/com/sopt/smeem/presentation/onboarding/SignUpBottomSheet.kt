@@ -12,6 +12,7 @@ import com.sopt.smeem.databinding.BottomSheetSignUpBinding
 import com.sopt.smeem.logging
 import com.sopt.smeem.presentation.auth.LoginProcess
 import com.sopt.smeem.presentation.auth.KakaoHandler
+import com.sopt.smeem.util.setOnSingleClickListener
 
 class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
     var _binding: BottomSheetSignUpBinding? = null
@@ -31,7 +32,7 @@ class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
         super.onViewCreated(view, savedInstanceState)
         val context = requireContext()
 
-        binding.layoutKakaoStart.setOnClickListener {
+        binding.layoutKakaoStart.setOnSingleClickListener {
 
             if (KakaoHandler.isAppEnabled(context)) {
                 KakaoHandler.loginOnApp(context,
@@ -59,7 +60,7 @@ class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
             }
         }
 
-        binding.tvSignUpAnonymous.setOnClickListener {
+        binding.tvSignUpAnonymous.setOnSingleClickListener {
             vm.goAnonymous()
             Toast.makeText(requireContext(), "비회원 시작", Toast.LENGTH_SHORT).show()
         }

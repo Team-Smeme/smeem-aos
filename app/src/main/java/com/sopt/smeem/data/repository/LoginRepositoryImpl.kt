@@ -12,4 +12,9 @@ class LoginRepositoryImpl(
         kotlin.runCatching { loginExecutor.execute(accessToken, socialType) }.map { response ->
             LoginResult.from(response.data!!)
         }
+
+    override suspend fun checkNicknameDuplicated(nickname: String): Result<Boolean> =
+        kotlin.runCatching { loginExecutor.checkNicknameDuplicated(nickname) }
+            .map { response -> response.data!!.isExist }
+
 }

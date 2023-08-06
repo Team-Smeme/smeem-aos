@@ -8,6 +8,7 @@ import com.sopt.smeem.databinding.FragmentSettingTimeBinding
 import com.sopt.smeem.presentation.BindingFragment
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
+import com.sopt.smeem.util.setOnSingleClickListener
 
 class SettingTimeFragment :
     BindingFragment<FragmentSettingTimeBinding>(R.layout.fragment_setting_time) {
@@ -68,13 +69,13 @@ class SettingTimeFragment :
     }
 
     private fun onTouchTime() {
-        binding.layoutOnBoardingTimeTime.setOnClickListener {
+        binding.layoutOnBoardingTimeTime.setOnSingleClickListener {
             TimePickerFragment().show(parentFragmentManager, "timePicker")
         }
     }
 
     private fun onTouchLater() {
-        binding.tvOnBoardingTimeLaterStatic.setOnClickListener {
+        binding.tvOnBoardingTimeLaterStatic.setOnSingleClickListener {
             vm.timeLater()
         }
     }
