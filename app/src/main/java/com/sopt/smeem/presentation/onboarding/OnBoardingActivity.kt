@@ -218,11 +218,13 @@ class OnBoardingActivity :
                 this,
                 Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED -> {
+                vm.setNotiPermissionStatus(true)
                 // 3/3 (트레이닝 시간 설정) 에서 로그인 바텀시트 띄우기전에 이미 kakao 로그인이 된 상태인지 확인
                 checkAlreadyAuthed()
             }
             // 2. 사용자가 이전에 권한을 거부했을 때
             shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                vm.setNotiPermissionStatus(false)
                 checkAlreadyAuthed()
             }
             // 3. 알림 권한을 처음으로 받는 것일 때
@@ -239,12 +241,14 @@ class OnBoardingActivity :
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (!isGranted) {
-                Log.d("callback - denied", "Notification Permission Denied")
-                // TODO: hasAlarm 관련 livedata = false
-                checkAlreadyAuthed()
+                vm.setNotiPermissionStatus(false)
+                // dialog 바깥쪽을 눌러 나간 경우 (허용, 거부 선택하지 않은 경우)
+                // 바텀시트가 뜨지 않도록
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                    checkAlreadyAuthed()
+                }
             } else {
-                Log.d("callback - granted", "Notification Permission Granted")
-                // TODO: hasAlarm 관련 livedata = true
+                vm.setNotiPermissionStatus(true)
                 checkAlreadyAuthed()
             }
         }
