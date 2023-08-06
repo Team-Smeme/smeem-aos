@@ -108,7 +108,6 @@ class OnBoardingActivity :
 
                 4 -> { // step 4 : 알림 권한 체크 및 api token 가 local 에 있는지 (이전에 로그인했는지 check)
                     checkNotiPermission()
-//                    checkAlreadyAuthed() // 3/3 (트레이닝 시간 설정) 에서 로그인 바텀시트 띄우기전에 이미 kakao 로그인이 된 상태인지 확인
                 }
 
                 else -> {}
@@ -219,21 +218,15 @@ class OnBoardingActivity :
                 this,
                 Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED -> {
-                Log.d("checkNotiPermission - granted", "Notification Permission Granted")
+                // 3/3 (트레이닝 시간 설정) 에서 로그인 바텀시트 띄우기전에 이미 kakao 로그인이 된 상태인지 확인
                 checkAlreadyAuthed()
             }
             // 2. 사용자가 이전에 권한을 거부했을 때
-            // 앱을 사용할 때 권한이 필요하다고 사용자에게 알려줘야 함
-            // TODO: 넣을까 말까
             shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-                Log.d("checkNotiPermission - denied once", "Notification Permission Denied Once")
-                notiPermissionResultCallback.launch(
-                    Manifest.permission.POST_NOTIFICATIONS
-                )
+                checkAlreadyAuthed()
             }
             // 3. 알림 권한을 처음으로 받는 것일 때
             else -> {
-                Log.d("checkNotiPermission - initial", "First Attempt to Get Notification Permission")
                 notiPermissionResultCallback.launch(
                     Manifest.permission.POST_NOTIFICATIONS
                 )
@@ -255,26 +248,6 @@ class OnBoardingActivity :
                 checkAlreadyAuthed()
             }
         }
-
-//    private fun showNotiPermissonDialog() {
-//        Log.d("Is this function invoked??", "Yes!")
-//
-//        MaterialAlertDialogBuilder(this)
-//            .setIcon(R.drawable.ic_notification_dialog)
-//            .setTitle(
-//                "‘smeem’에서 알림을\n" +
-//                        "보내도록 허용하시겠습니까?"
-//            )
-//            .setNegativeButton("예") { dialog, which ->
-//                // TODO: hasAlarm 관련 livedata = true
-//                checkAlreadyAuthed()
-//            }
-//            .setPositiveButton("아니요") { dialog, which ->
-//                // TODO: hasAlarm 관련 livedata = false
-//                checkAlreadyAuthed()
-//            }
-//            .show()
-//    }
 
     private fun checkAlreadyAuthed() {
         if (vm.alreadyAuthed()) {
