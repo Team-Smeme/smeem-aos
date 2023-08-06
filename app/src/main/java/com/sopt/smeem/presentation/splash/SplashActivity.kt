@@ -6,6 +6,7 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivitySplashBinding
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.join.JoinWithNicknameActivity
 import com.sopt.smeem.presentation.onboarding.OnBoardingActivity
 import com.sopt.smeem.util.setOnSingleClickListener
@@ -56,7 +57,8 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
     }
 
     private fun gotoHome() {
-        // TODO : HomeActivity
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 
     private fun gotoNext(loginResult: LoginResult) {

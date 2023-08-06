@@ -16,16 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_my_page) {
     private val vm: MyPageVM by viewModels()
     private var days: Map<Int, TextView>? = null
-    private lateinit var languageAdaptor: LanguagesAdaptor
 
     override fun constructLayout() {
         getFromServer()
-        setAdaptor()
         setPush()
         setUpDays()
-    }
-
-    override fun addObservers() {
         setData()
     }
 
@@ -106,13 +101,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
             } else {
                 freezeTimeTable()
             }
-            languageAdaptor.submitList(listOf(it.language))
         }
-    }
-
-    private fun setAdaptor() {
-        languageAdaptor = LanguagesAdaptor()
-        binding.rvMyPageLanguages.adapter = languageAdaptor
     }
 
     private fun onTouchSwitchingPush() {

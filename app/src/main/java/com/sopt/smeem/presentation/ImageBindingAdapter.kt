@@ -10,11 +10,13 @@ class ImageBindingAdapter {
     companion object {
         @JvmStatic
         @BindingAdapter(value = ["imgUrl"])
-        fun load(imageView: ImageView, imageUrl: String) {
-            Glide.with(imageView.context)
-                .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .into(imageView)
+        fun load(imageView: ImageView, imageUrl: String?) {
+            imageUrl?.let {
+                Glide.with(imageView.context)
+                    .load(imageUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    .into(imageView)
+            }
         }
 
         @JvmStatic

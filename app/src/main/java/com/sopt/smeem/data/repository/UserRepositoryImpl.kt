@@ -44,7 +44,7 @@ class UserRepositoryImpl(
         }.map { response ->
             MyPage(
                 username = response.data!!.username,
-                badge = Badge.from(response.data.badges[0]),
+                badge = Badge.from(response.data.badge),
                 hasPushAlarm = response.data.hasPushAlarm,
                 goal = TrainingGoal(
                     goal = response.data.target,
@@ -53,9 +53,13 @@ class UserRepositoryImpl(
                 ),
                 language = LanguageCode.en.language,
                 trainingTime = TrainingTime(
-                    days = response.data.trainingTime!!.day.split(",")
-                        .map { Day.valueOf(it) }
-                        .toSet(),
+                    days = response.data.trainingTime!!.day?.let {
+                        if (it.isNotBlank()) {
+                            it.split(",")
+                                .map { Day.valueOf(it) }
+                                .toSet()
+                        } else emptySet()
+                    } ?: emptySet(),
                     hour = response.data.trainingTime.hour,
                     minute = response.data.trainingTime.minute
                 )

@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.Anonymous
-import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.data.ApiPool.onHttpFailure
+import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.MyPage
 import com.sopt.smeem.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,11 +13,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class MyPageVM @Inject constructor() : ViewModel() {
-
-    @Inject
-    lateinit var userRepository: UserRepository
-
+internal class MyPageVM @Inject constructor(
+    private val userRepository: UserRepository,
+) : ViewModel() {
     private val _response: MutableLiveData<MyPage> = MutableLiveData<MyPage>()
     val response: LiveData<MyPage>
         get() = _response
