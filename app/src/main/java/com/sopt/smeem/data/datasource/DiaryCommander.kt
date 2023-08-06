@@ -2,13 +2,14 @@ package com.sopt.smeem.data.datasource
 
 import com.sopt.smeem.data.model.request.DiaryRequest
 import com.sopt.smeem.data.model.response.ApiResponse
+import com.sopt.smeem.data.model.response.DiaryWritingResponse
 import com.sopt.smeem.data.service.DiaryService
 import com.sopt.smeem.domain.model.Diary
 
 class DiaryCommander(
     private val diaryService: DiaryService
 ) {
-    suspend fun writeDiary(diary: Diary): ApiResponse<Unit> = diaryService.post(
+    suspend fun writeDiary(diary: Diary): ApiResponse<DiaryWritingResponse> = diaryService.post(
         request = DiaryRequest.Writing(
             content = diary.content,
             topicId = diary.topicId
@@ -18,6 +19,7 @@ class DiaryCommander(
     suspend fun editDiary(diary: Diary): ApiResponse<Unit> = diaryService.patch(
         request = DiaryRequest.Editing(
             content = diary.content,
+            topicId = diary.topicId
         ),
         diaryId = diary.id!!
     )

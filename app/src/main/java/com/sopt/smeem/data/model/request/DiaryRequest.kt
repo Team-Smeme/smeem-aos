@@ -7,6 +7,7 @@ class DiaryRequest {
     )
 
     data class Editing(
-        val content: String
+        val content: String,
+        val topicId: Long?,
     )
 }
