@@ -9,7 +9,7 @@ import com.sopt.smeem.presentation.BindingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingEncouragingFragment :
+class DisplayGoalFragment :
     BindingFragment<FragmentSettingEncouragingBinding>(R.layout.fragment_setting_encouraging) {
     private val vm: OnBoardingVM by activityViewModels()
     override fun constructLayout() {

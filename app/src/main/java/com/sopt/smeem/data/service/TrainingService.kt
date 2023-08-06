@@ -4,12 +4,12 @@ import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.data.model.response.ApiResponse
 import com.sopt.smeem.data.model.response.TrainingGoalResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TrainingService {
-    // TODO : server api 추가 필요
-    @GET("/api/v2/training")
+    @GET("/api/v2/goals/{type}")
     suspend fun getDetail(
-        @Query("type") goal: TrainingGoalType
+        @Path("type") path: TrainingGoalType
     ): ApiResponse<TrainingGoalResponse>
 }

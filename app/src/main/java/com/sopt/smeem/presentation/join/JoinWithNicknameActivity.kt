@@ -35,6 +35,7 @@ class JoinWithNicknameActivity :
 
     private fun onNext() {
         binding.btnEntranceNext.setOnSingleClickListener {
+            vm.content = binding.etEntranceNickname.text.toString()
             checkNicknameDuplicated()
             afterCheckNicknameDuplicated()
         }

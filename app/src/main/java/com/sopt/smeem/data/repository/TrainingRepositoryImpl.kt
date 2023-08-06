@@ -21,8 +21,9 @@ class TrainingRepositoryImpl(
             )
         }
             .map {
+                val a = it
                 TrainingGoal(
-                    goal = it.data!!.goal,
+                    goal = it.data!!.name,
                     way = it.data.way,
                     detail = it.data.detail
                 )

@@ -6,7 +6,7 @@ import com.sopt.smeem.data.datasource.MyBadgeRetriever
 import com.sopt.smeem.data.datasource.MyPageRetriever
 import com.sopt.smeem.data.datasource.TrainingManager
 import com.sopt.smeem.domain.model.Badge
-import com.sopt.smeem.domain.model.Joining
+import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.model.MyPage
 import com.sopt.smeem.domain.model.OnBoarding
 import com.sopt.smeem.domain.model.Training
@@ -20,24 +20,22 @@ class UserRepositoryImpl(
     private val myPageRetriever: MyPageRetriever? = null,
     private val myBadgeRetriever: MyBadgeRetriever? = null,
 ) : UserRepository {
-    override suspend fun registerOnBoarding(onBoarding: OnBoarding): Result<Unit> =
-        kotlin.runCatching { trainingManager!!.registerOnBoarding(onBoarding) }
+    override suspend fun registerOnBoarding(
+        onBoarding: OnBoarding,
+        loginResult: LoginResult
+    ): Result<Unit> =
+        kotlin.runCatching { trainingManager!!.registerOnBoarding(onBoarding, loginResult) }
 
     override suspend fun patchNicknameAndAcceptance(
         username: String,
         marketingAcceptance: Boolean?
-    ): Result<Joining> =
+    ): Result<Boolean> =
         kotlin.runCatching {
             joinHelper!!.patch(
                 username = username,
                 marketingAcceptance = marketingAcceptance
             )
-        }.map { response ->
-            Joining(
-                username = response.data!!.username,
-                marketingAcceptance = response.data.ternAccepted
-            )
-        }
+        }.map { true }
 
     override suspend fun getMyPage(): Result<MyPage> =
         kotlin.runCatching {

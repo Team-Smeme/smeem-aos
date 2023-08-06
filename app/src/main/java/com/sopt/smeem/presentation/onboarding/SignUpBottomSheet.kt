@@ -62,7 +62,6 @@ class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
 
         binding.tvSignUpAnonymous.setOnSingleClickListener {
             vm.goAnonymous()
-            Toast.makeText(requireContext(), "비회원 시작", Toast.LENGTH_SHORT).show()
         }
     }
 

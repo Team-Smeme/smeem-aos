@@ -1,16 +1,16 @@
 package com.sopt.smeem.domain.repository
 
 import com.sopt.smeem.domain.model.Badge
-import com.sopt.smeem.domain.model.OnBoarding
-import com.sopt.smeem.domain.model.Joining
+import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.model.MyPage
+import com.sopt.smeem.domain.model.OnBoarding
 import com.sopt.smeem.domain.model.Training
 
 interface UserRepository {
     /**
-     * OnBoarding 결과 (학습 목표, 알람 여부, 알람 시간) 를 서버로 전송합니다.
+     * OnBoarding 결과 (학습 목표, 알람 여부, 알람 시간) 를 서버로 전송합니다. (사전에 로그인 없이 진입한 상태)
      */
-    suspend fun registerOnBoarding(onBoarding: OnBoarding): Result<Unit>
+    suspend fun registerOnBoarding(onBoarding: OnBoarding, loginResult: LoginResult): Result<Unit>
 
     /**
      * 닉네임 및 이용약관 정보를 서버로 전송합니다.
@@ -18,14 +18,14 @@ interface UserRepository {
     suspend fun patchNicknameAndAcceptance(
         nickname: String,
         marketingAcceptance: Boolean? = null
-    ): Result<Joining>
+    ): Result<Boolean>
 
-    suspend fun getMyPage() : Result<MyPage>
+    suspend fun getMyPage(): Result<MyPage>
 
     /**
      * 나의 뱃지 정보를 조회합니다.
      */
-    suspend fun getMyBadges() : Result<List<Badge>>
+    suspend fun getMyBadges(): Result<List<Badge>>
 
     /**
      * 트레이닝 정보를 수정합니다.

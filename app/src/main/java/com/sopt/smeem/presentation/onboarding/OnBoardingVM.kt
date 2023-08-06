@@ -13,7 +13,9 @@ import com.sopt.smeem.domain.model.Authentication
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.model.OnBoarding
+import com.sopt.smeem.domain.model.Training
 import com.sopt.smeem.domain.model.TrainingGoal
+import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.domain.repository.AuthRepository
 import com.sopt.smeem.domain.repository.LoginRepository
 import com.sopt.smeem.domain.repository.TrainingRepository
@@ -26,9 +28,10 @@ import javax.inject.Inject
 @HiltViewModel
 class OnBoardingVM @Inject constructor(
     @Authenticated(false) private val loginRepository: LoginRepository,
-    @Authenticated private val userRepository: UserRepository,
+    @Authenticated(false) private val trainingRepository: TrainingRepository,
+    @Authenticated(false) private val userRepositoryWithAnonymous: UserRepository,
+    @Authenticated private val userRepositoryWithAuth: UserRepository,
     private val authRepository: AuthRepository,
-    private val trainingRepository: TrainingRepository,
 ) : ViewModel() {
 
     private val _loginResult = MutableLiveData<LoginResult>()
@@ -150,9 +153,9 @@ class OnBoardingVM @Inject constructor(
         // TODO : Room 에 보관하기
     }
 
-    fun sendPlanData(onSuccess: (Unit) -> Unit, onError: (SmeemException) -> Unit) {
+    fun sendPlanDataOnAnonymous(onSuccess: (Unit) -> Unit, onError: (SmeemException) -> Unit) {
         viewModelScope.launch {
-            userRepository.registerOnBoarding(
+            userRepositoryWithAnonymous.registerOnBoarding(
                 OnBoarding(
                     trainingGoalType = selectedGoal.value ?: TrainingGoalType.NO_SELECTED,
                     // TODO: 알림 권한에 동의했을 때는?
@@ -160,6 +163,21 @@ class OnBoardingVM @Inject constructor(
                     day = days,
                     hour = hour,
                     minute = minute
+                ),
+                loginResult.value!!
+            )
+                .onSuccess(onSuccess)
+                .onHttpFailure { e -> onError(e) }
+        }
+    }
+
+    fun sendPlanDataWithAuth(onSuccess: (Unit) -> Unit, onError: (SmeemException) -> Unit) {
+        viewModelScope.launch {
+            userRepositoryWithAuth.editTraining(
+                Training(
+                    type = selectedGoal.value ?: TrainingGoalType.NO_SELECTED,
+                    trainingTime = TrainingTime(days = days.toSet(), hour = hour, minute = minute),
+                    hasAlarm = setTimeLater.value?.not() ?: false
                 )
             )
                 .onSuccess(onSuccess)

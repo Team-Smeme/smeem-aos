@@ -82,7 +82,7 @@ class OnBoardingActivity :
                     supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.fcv_on_boarding,
-                            SettingEncouragingFragment()
+                            DisplayGoalFragment()
                         )
                         .commit()
                 }
@@ -162,7 +162,7 @@ class OnBoardingActivity :
                     vm.saveOnBoardingData()
 
                     // TODO : remove
-                    Toast.makeText(this, "비회원 기능은 아직 정상 동작하지 않습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "비회원 기능은 아직 동작하지 않습니다.", Toast.LENGTH_SHORT).show()
                     // gotoHome()
                 }
 
@@ -177,13 +177,13 @@ class OnBoardingActivity :
             when (it.isRegistered) {
                 true -> gotoHome()
                 false -> {
-                    vm.sendPlanData(
+                    vm.sendPlanDataOnAnonymous(
                         onSuccess = {
-                            val toEntrance = Intent(
+                            val toJoin = Intent(
                                 this@OnBoardingActivity,
                                 JoinWithNicknameActivity::class.java
                             )
-                            startActivity(toEntrance)
+                            startActivity(toJoin)
 
                             if (!isFinishing) finish()
                         },
@@ -225,7 +225,7 @@ class OnBoardingActivity :
 
     private fun checkAlreadyAuthed() {
         if (vm.alreadyAuthed()) {
-            vm.sendPlanData(
+            vm.sendPlanDataWithAuth(
                 onSuccess = {
                     val toEntrance =
                         Intent(this@OnBoardingActivity, JoinWithNicknameActivity::class.java)
