@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.Authenticated
+import com.sopt.smeem.Anonymous
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
 import com.sopt.smeem.data.ApiPool.onHttpFailure
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class LoginVM @Inject constructor(
     private val authRepository: AuthRepository,
-    @Authenticated(isApplied = false) private val loginRepository: LoginRepository
+    @Anonymous private val loginRepository: LoginRepository
 ) : ViewModel() {
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult>

@@ -9,6 +9,7 @@ import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.databinding.ActivityOnBoardingBinding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.join.JoinWithNicknameActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -203,7 +204,8 @@ class OnBoardingActivity :
 
 
     private fun gotoHome() {
-        // TODO : HomeActivity 로 이동
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 
     private fun checkPushPermission() {

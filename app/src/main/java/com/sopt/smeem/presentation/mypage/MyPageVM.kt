@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.Authenticated
+import com.sopt.smeem.Anonymous
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.MyPage
@@ -17,7 +17,7 @@ import javax.inject.Inject
 internal class MyPageVM @Inject constructor() : ViewModel() {
 
     @Inject
-    @Authenticated
+    @Anonymous
     lateinit var userRepository: UserRepository
 
     private val _response: MutableLiveData<MyPage> = MutableLiveData<MyPage>()

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.Authenticated
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.data.ApiPool.onHttpFailure
@@ -17,7 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class EditTrainingVM @Inject constructor() : ViewModel() {
     @Inject
-    @Authenticated
     lateinit var userRepository: UserRepository
 
     private val _selectedGoal = MutableLiveData<TrainingGoalType>()

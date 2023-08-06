@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.Authenticated
+import com.sopt.smeem.Anonymous
 import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.repository.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class JoinNicknameVM @Inject constructor(
-    @Authenticated(false) private val loginRepository: LoginRepository,
+    @Anonymous private val loginRepository: LoginRepository,
 ) : ViewModel() {
     var content: String = ""
 

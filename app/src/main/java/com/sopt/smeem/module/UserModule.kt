@@ -1,6 +1,5 @@
 package com.sopt.smeem.module
 
-import com.sopt.smeem.Authenticated
 import com.sopt.smeem.data.datasource.JoinHelper
 import com.sopt.smeem.data.datasource.TrainingManager
 import com.sopt.smeem.data.repository.UserRepositoryImpl
@@ -18,7 +17,6 @@ import dagger.hilt.android.scopes.ViewModelScoped
 object UserModule {
     @Provides
     @ViewModelScoped
-    @Authenticated
     fun userRepository(networkModule: NetworkModule): UserRepository {
         val userService = networkModule.apiServerRetrofitForAuthentication.create(
             UserService::class.java
