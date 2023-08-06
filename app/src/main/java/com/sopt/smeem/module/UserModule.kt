@@ -2,7 +2,7 @@ package com.sopt.smeem.module
 
 import com.sopt.smeem.data.datasource.DiaryCommander
 import com.sopt.smeem.data.datasource.DiaryReader
-import com.sopt.smeem.data.datasource.JoinHelper
+import com.sopt.smeem.data.datasource.UserModifier
 import com.sopt.smeem.data.datasource.TrainingManager
 import com.sopt.smeem.data.repository.DiaryRepositoryImpl
 import com.sopt.smeem.data.repository.UserRepositoryImpl
@@ -32,7 +32,7 @@ object UserModule {
 
         return UserRepositoryImpl(
             trainingManager = TrainingManager(userService, trainingService),
-            joinHelper = JoinHelper(userService)
+            userModifier = UserModifier(userService)
         )
     }
 

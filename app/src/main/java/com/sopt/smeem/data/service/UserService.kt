@@ -1,6 +1,6 @@
 package com.sopt.smeem.data.service
 
-import com.sopt.smeem.data.model.request.JoinRequest
+import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
 import com.sopt.smeem.data.model.request.TrainingRequest
 import com.sopt.smeem.data.model.response.ApiResponse
 import retrofit2.http.Body
@@ -21,7 +21,7 @@ interface UserService {
     ): ApiResponse<Unit>
 
     @PATCH("/api/v2/members")
-    suspend fun join(
-        @Body request: JoinRequest
+    suspend fun patchUserInfo(
+        @Body request: UserInfoModifyingRequest
     ): ApiResponse<Unit>
 }

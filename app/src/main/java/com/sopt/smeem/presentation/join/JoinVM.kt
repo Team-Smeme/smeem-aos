@@ -50,7 +50,7 @@ class JoinVM @Inject constructor(
         onError: (SmeemException) -> Unit
     ) {
         viewModelScope.launch {
-            userRepository.patchNicknameAndAcceptance(nickname, selected.contains(MARKETING))
+            userRepository.modifyUserInfo(nickname, selected.contains(MARKETING))
                 .onSuccess { _joinSucceed.value = true }
                 .onHttpFailure { e -> onError(e) }
         }

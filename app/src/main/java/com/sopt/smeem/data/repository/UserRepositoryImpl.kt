@@ -1,11 +1,12 @@
 package com.sopt.smeem.data.repository
 
 import com.sopt.smeem.LanguageCode
-import com.sopt.smeem.data.datasource.JoinHelper
 import com.sopt.smeem.data.datasource.MyBadgeRetriever
 import com.sopt.smeem.data.datasource.MyPageRetriever
 import com.sopt.smeem.data.datasource.TrainingManager
+import com.sopt.smeem.data.datasource.UserModifier
 import com.sopt.smeem.domain.model.Badge
+import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.model.MyPage
 import com.sopt.smeem.domain.model.OnBoarding
@@ -16,7 +17,7 @@ import com.sopt.smeem.domain.repository.UserRepository
 
 class UserRepositoryImpl(
     private val trainingManager: TrainingManager? = null,
-    private val joinHelper: JoinHelper? = null,
+    private val userModifier: UserModifier? = null,
     private val myPageRetriever: MyPageRetriever? = null,
     private val myBadgeRetriever: MyBadgeRetriever? = null,
 ) : UserRepository {
@@ -26,12 +27,12 @@ class UserRepositoryImpl(
     ): Result<Unit> =
         kotlin.runCatching { trainingManager!!.registerOnBoarding(onBoarding, loginResult) }
 
-    override suspend fun patchNicknameAndAcceptance(
+    override suspend fun modifyUserInfo(
         username: String,
         marketingAcceptance: Boolean?
     ): Result<Boolean> =
         kotlin.runCatching {
-            joinHelper!!.patch(
+            userModifier!!.patch(
                 username = username,
                 marketingAcceptance = marketingAcceptance
             )
@@ -52,9 +53,11 @@ class UserRepositoryImpl(
                 ),
                 language = LanguageCode.en.language,
                 trainingTime = TrainingTime(
-                    days = response.data.trainingTime.day,
-                    hour = response.data.trainingTime.hour.toInt(),
-                    minute = response.data.trainingTime.minute.toInt()
+                    days = response.data.trainingTime!!.day.split(",")
+                        .map { Day.valueOf(it) }
+                        .toSet(),
+                    hour = response.data.trainingTime.hour,
+                    minute = response.data.trainingTime.minute
                 )
             )
         }

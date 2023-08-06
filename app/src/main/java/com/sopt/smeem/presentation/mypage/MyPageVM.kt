@@ -17,7 +17,6 @@ import javax.inject.Inject
 internal class MyPageVM @Inject constructor() : ViewModel() {
 
     @Inject
-    @Anonymous
     lateinit var userRepository: UserRepository
 
     private val _response: MutableLiveData<MyPage> = MutableLiveData<MyPage>()
