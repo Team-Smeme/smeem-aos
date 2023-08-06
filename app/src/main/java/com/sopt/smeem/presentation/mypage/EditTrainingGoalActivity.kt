@@ -45,7 +45,7 @@ class EditTrainingGoalActivity :
     private fun onTouchButtons() {
         buttons?.values?.forEach { button ->
             button.setOnClickListener {
-                if (TrainingGoalType.NO_IDEA != vm.selectedGoal.value) {
+                if (TrainingGoalType.NO_SELECTED != vm.selectedGoal.value) {
                     buttons!![vm.selectedGoal.value]?.switchOff() // 기존 off
                     vm.upsert(TrainingGoalType.findById(button.id))
 
@@ -75,7 +75,7 @@ class EditTrainingGoalActivity :
         vm.selectedGoal.observe(
             this@EditTrainingGoalActivity
         ) {
-            binding.btnMyPageTrainingGoal.isEnabled = (it != TrainingGoalType.NO_IDEA)
+            binding.btnMyPageTrainingGoal.isEnabled = (it != TrainingGoalType.NO_SELECTED)
         }
     }
 

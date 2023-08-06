@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.Authenticated
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
 import com.sopt.smeem.data.ApiPool.onHttpFailure
@@ -15,16 +16,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// TODO : 이후 social 로그인 많아지면 social 별 VM 분리
-
 @HiltViewModel
-internal class LoginVM @Inject constructor() : ViewModel() {
-    @Inject
-    lateinit var authRepository: AuthRepository
-
-    @Inject
-    lateinit var loginRepository: LoginRepository
-
+internal class LoginVM @Inject constructor(
+    private val authRepository: AuthRepository,
+    @Authenticated(isApplied = false) private val loginRepository: LoginRepository
+) : ViewModel() {
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult>
         get() = _loginResult

@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -14,17 +16,14 @@ import com.sopt.smeem.description
 import com.sopt.smeem.logging
 import com.sopt.smeem.presentation.auth.LoginProcess
 import com.sopt.smeem.presentation.auth.KakaoHandler
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginBottomSheet : BottomSheetDialogFragment(), LoginProcess {
     var _binding: BottomSheetAuthBinding? = null
+    private val vm: LoginVM by activityViewModels()
     private val binding: BottomSheetAuthBinding
         get() = requireNotNull(_binding)
-
-    private val vm: LoginVM by lazy {
-        ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>) = LoginVM() as T
-        })[LoginVM::class.java]
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

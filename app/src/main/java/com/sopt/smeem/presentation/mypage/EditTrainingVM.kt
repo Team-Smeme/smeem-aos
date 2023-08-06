@@ -1,6 +1,5 @@
 package com.sopt.smeem.presentation.mypage
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,7 +27,7 @@ class EditTrainingVM @Inject constructor() : ViewModel() {
     fun upsert(target: TrainingGoalType) {
         if (selectedGoal.value == target) {
             _selectedGoal.value!!.selected = false
-            _selectedGoal.value = TrainingGoalType.NO_IDEA
+            _selectedGoal.value = TrainingGoalType.NO_SELECTED
         } else {
             _selectedGoal.value = target
             _selectedGoal.value!!.selected = true
@@ -36,7 +35,7 @@ class EditTrainingVM @Inject constructor() : ViewModel() {
     }
 
     fun none() {
-        _selectedGoal.value = TrainingGoalType.NO_IDEA
+        _selectedGoal.value = TrainingGoalType.NO_SELECTED
     }
 
     fun sendServer(onError: (SmeemException) -> Unit) {

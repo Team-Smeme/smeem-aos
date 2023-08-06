@@ -7,7 +7,7 @@ enum class TrainingGoalType {
     BUSINESS, // 업무 활용
     EXAM, // 시험 고득점
     NONE, // 아직 모르겠어요
-    NO_IDEA, // 아무 값도 아님
+    NO_SELECTED, // 아무 값도 아님
     ;
 
     var id: Int = 0

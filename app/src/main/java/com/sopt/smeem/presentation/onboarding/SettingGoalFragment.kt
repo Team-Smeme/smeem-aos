@@ -1,7 +1,6 @@
-package com.sopt.smeem.presentation.auth.onboarding
+package com.sopt.smeem.presentation.onboarding
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.button.MaterialButton
 import com.sopt.smeem.R
 import com.sopt.smeem.TrainingGoalType
@@ -11,21 +10,18 @@ import com.sopt.smeem.TrainingGoalType.DEVELOP
 import com.sopt.smeem.TrainingGoalType.EXAM
 import com.sopt.smeem.TrainingGoalType.HOBBY
 import com.sopt.smeem.TrainingGoalType.NONE
-import com.sopt.smeem.TrainingGoalType.NO_IDEA
+import com.sopt.smeem.TrainingGoalType.NO_SELECTED
 import com.sopt.smeem.databinding.FragmentSettingGoalBinding
 import com.sopt.smeem.presentation.BindingFragment
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingGoalFragment :
     BindingFragment<FragmentSettingGoalBinding>(R.layout.fragment_setting_goal) {
     private var buttons: Map<TrainingGoalType, MaterialButton>? = null
-    private val vm: OnBoardingVM by lazy {
-        ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>) = OnBoardingVM() as T
-        })[OnBoardingVM::class.java]
-    }
-
+    private val vm: OnBoardingVM by activityViewModels()
     override fun constructLayout() {
         DEVELOP.id = binding.icOnBoardingGoalButton1.id
         HOBBY.id = binding.icOnBoardingGoalButton2.id
@@ -51,7 +47,7 @@ class SettingGoalFragment :
     private fun onTouchButtons() {
         buttons?.values?.forEach { button ->
             button.setOnClickListener {
-                if (NO_IDEA != vm.selectedGoal.value) {
+                if (NO_SELECTED != vm.selectedGoal.value) {
                     buttons!![vm.selectedGoal.value]?.switchOff() // 기존 off
                     vm.upsert(TrainingGoalType.findById(button.id))
 

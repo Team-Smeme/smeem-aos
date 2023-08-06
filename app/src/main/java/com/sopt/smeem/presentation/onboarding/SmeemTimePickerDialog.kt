@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.auth.onboarding
+package com.sopt.smeem.presentation.onboarding
 
 import android.app.TimePickerDialog
 import android.content.Context

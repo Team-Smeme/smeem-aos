@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.auth.onboarding
+package com.sopt.smeem.presentation.onboarding
 
 import android.app.Dialog
 import android.app.TimePickerDialog
@@ -6,19 +6,14 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 
 class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener {
     private val defaultHour = 22
     private val defaultMinute = 0
     private val is24Hour: Boolean = false
 
-    private val vm: OnBoardingVM by lazy {
-        ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>) = OnBoardingVM() as T
-        })[OnBoardingVM::class.java]
-    }
+    private val vm: OnBoardingVM by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val hour = defaultHour

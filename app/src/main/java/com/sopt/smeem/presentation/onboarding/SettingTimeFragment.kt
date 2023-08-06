@@ -1,9 +1,8 @@
-package com.sopt.smeem.presentation.auth.onboarding
+package com.sopt.smeem.presentation.onboarding
 
 import android.app.TimePickerDialog
 import android.widget.TextView
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.FragmentSettingTimeBinding
 import com.sopt.smeem.presentation.BindingFragment
@@ -14,11 +13,7 @@ class SettingTimeFragment :
     BindingFragment<FragmentSettingTimeBinding>(R.layout.fragment_setting_time) {
     private var days: Map<Int, TextView>? = null
     private var timePickerDialog: TimePickerDialog? = null
-    private val vm: OnBoardingVM by lazy {
-        ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>) = OnBoardingVM() as T
-        })[OnBoardingVM::class.java]
-    }
+    private val vm: OnBoardingVM by activityViewModels()
 
     override fun constructLayout() {
         setUpDays()

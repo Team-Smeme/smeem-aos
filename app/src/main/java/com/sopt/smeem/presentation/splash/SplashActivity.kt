@@ -7,7 +7,7 @@ import com.sopt.smeem.databinding.ActivitySplashBinding
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.auth.entrance.EntranceNicknameActivity
-import com.sopt.smeem.presentation.auth.onboarding.OnBoardingActivity
+import com.sopt.smeem.presentation.onboarding.OnBoardingActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -19,9 +19,7 @@ object UserModule {
     @Provides
     @ViewModelScoped
     @Authenticated
-    fun userRepository(
-        networkModule: NetworkModule
-    ): UserRepository {
+    fun userRepository(networkModule: NetworkModule): UserRepository {
         val userService = networkModule.apiServerRetrofitForAuthentication.create(
             UserService::class.java
         )

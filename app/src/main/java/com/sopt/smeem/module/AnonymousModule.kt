@@ -22,9 +22,7 @@ object AnonymousModule {
     @Provides
     @ViewModelScoped
     @Authenticated(isApplied = false)
-    fun anonymousMemberRepository(
-        networkModule: NetworkModule
-    ): UserRepository =
+    fun anonymousMemberRepository(networkModule: NetworkModule): UserRepository =
         UserRepositoryImpl(
             TrainingManager(
                 userService = networkModule.apiServerRetrofitForAnonymous.create(UserService::class.java),
