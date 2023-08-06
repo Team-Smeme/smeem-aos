@@ -21,7 +21,28 @@
         <activity
             android:name=".presentation.splash.SplashActivity"
             android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
+        <!-- OnBoarding-->
+        <activity
+            android:name=".presentation.onboarding.OnBoardingActivity"
+            android:exported="false" />
+
+        <!-- Join -->
+        <activity
+            android:name=".presentation.join.JoinWithNicknameActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
+
+        <activity
+            android:name=".presentation.join.JoinWithAgreementActivity"
+            android:exported="false" />
 
         <activity
             android:name=".presentation.detail.DiaryEditActivity"
@@ -56,19 +77,6 @@
                     android:scheme="kakao${KAKAO_API_KEY}" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".presentation.auth.onboarding.OnBoardingActivity"
-            android:exported="false" />
-
-
-        <activity
-            android:name=".presentation.auth.entrance.EntranceNicknameActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
-
-        <activity
-            android:name=".presentation.auth.entrance.EntranceAgreementActivity"
-            android:exported="false" />
 
         <activity
             android:name=".presentation.mypage.ChangingNicknameActivity"
