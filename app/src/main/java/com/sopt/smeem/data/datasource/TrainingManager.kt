@@ -4,6 +4,7 @@ import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.data.model.request.TrainingRequest
 import com.sopt.smeem.data.model.response.ApiResponse
 import com.sopt.smeem.data.model.response.TrainingGoalResponse
+import com.sopt.smeem.data.model.response.TrainingGoalSimpleResponse
 import com.sopt.smeem.data.service.TrainingService
 import com.sopt.smeem.data.service.UserService
 import com.sopt.smeem.domain.model.LoginResult
@@ -39,4 +40,7 @@ class TrainingManager(
 
     suspend fun getDetail(goal: TrainingGoalType): ApiResponse<TrainingGoalResponse> =
         trainingService.getDetail(goal)
+
+    suspend fun getAll(): ApiResponse<TrainingGoalSimpleResponse> =
+        trainingService.getAll()
 }
