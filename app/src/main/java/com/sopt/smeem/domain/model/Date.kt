@@ -10,9 +10,6 @@ data class Date(
     val dayOfWeek: DayOfWeek,
     val hour: Int,
     val minute: Int,
-    val second: Int? = null,
-    val mSecond: Int? = null,
-    val nSecond: Int? = null
 ) {
     val month by lazy { monthDay.month }
     val day by lazy { monthDay.dayOfMonth }

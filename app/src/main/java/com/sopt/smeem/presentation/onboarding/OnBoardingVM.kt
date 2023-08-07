@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.Authenticated
+import com.sopt.smeem.Anonymous
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
 import com.sopt.smeem.TrainingGoalType
@@ -27,10 +27,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnBoardingVM @Inject constructor(
-    @Authenticated(false) private val loginRepository: LoginRepository,
-    @Authenticated(false) private val trainingRepository: TrainingRepository,
-    @Authenticated(false) private val userRepositoryWithAnonymous: UserRepository,
-    @Authenticated private val userRepositoryWithAuth: UserRepository,
+    @Anonymous private val loginRepository: LoginRepository,
+    @Anonymous private val trainingRepository: TrainingRepository,
+    @Anonymous private val userRepositoryWithAnonymous: UserRepository,
+    private val userRepositoryWithAuth: UserRepository,
     private val authRepository: AuthRepository,
 ) : ViewModel() {
 

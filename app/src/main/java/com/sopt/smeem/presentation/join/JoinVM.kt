@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.Authenticated
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.repository.UserRepository
@@ -18,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class JoinVM @Inject constructor(
-    @Authenticated private val userRepository: UserRepository,
+    private val userRepository: UserRepository,
 ) : ViewModel() {
     private val _joinSucceed = MutableLiveData(false)
     val joinSucceed: LiveData<Boolean>
@@ -51,7 +50,7 @@ class JoinVM @Inject constructor(
         onError: (SmeemException) -> Unit
     ) {
         viewModelScope.launch {
-            userRepository.patchNicknameAndAcceptance(nickname, selected.contains(MARKETING))
+            userRepository.modifyUserInfo(nickname, selected.contains(MARKETING))
                 .onSuccess { _joinSucceed.value = true }
                 .onHttpFailure { e -> onError(e) }
         }

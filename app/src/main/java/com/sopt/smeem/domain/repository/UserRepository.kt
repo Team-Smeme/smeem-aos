@@ -15,7 +15,7 @@ interface UserRepository {
     /**
      * 닉네임 및 이용약관 정보를 서버로 전송합니다.
      */
-    suspend fun patchNicknameAndAcceptance(
+    suspend fun modifyUserInfo(
         nickname: String,
         marketingAcceptance: Boolean? = null
     ): Result<Boolean>

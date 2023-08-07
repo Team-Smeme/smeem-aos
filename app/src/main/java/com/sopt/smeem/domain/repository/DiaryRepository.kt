@@ -1,15 +1,15 @@
 package com.sopt.smeem.domain.repository
 
-import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.domain.model.Diary
 import com.sopt.smeem.domain.model.DiarySummaries
+import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.domain.model.Topic
 
 interface DiaryRepository {
     /**
      * 일기 내용을 서버로 전송합니다.
      */
-    suspend fun postDiary(diary: Diary): Result<Unit>
+    suspend fun postDiary(diary: Diary): Result<List<RetrievedBadge>>
 
     /**
      * 일기 내용을 수정합니다.

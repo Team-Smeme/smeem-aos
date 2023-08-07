@@ -6,6 +6,7 @@ import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.domain.model.Diary
 import com.sopt.smeem.domain.model.DiarySummaries
 import com.sopt.smeem.domain.model.DiarySummary
+import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.domain.model.Topic
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.util.DateUtil
@@ -16,8 +17,16 @@ class DiaryRepositoryImpl(
     private val diaryCommander: DiaryCommander,
     private val diaryReader: DiaryReader,
 ) : DiaryRepository {
-    override suspend fun postDiary(diary: Diary): Result<Unit> =
-        kotlin.runCatching { diaryCommander.writeDiary(diary) }
+    override suspend fun postDiary(diary: Diary): Result<List<RetrievedBadge>> =
+        kotlin.runCatching { diaryCommander.writeDiary(diary).data!!.badges }
+            .map { badges ->
+                badges.map { badge ->
+                    RetrievedBadge(
+                        name = badge.name,
+                        imageUrl = badge.imageUrl
+                    )
+                }
+            }
 
     override suspend fun patchDiary(diary: Diary): Result<Unit> =
         kotlin.runCatching { diaryCommander.editDiary(diary) }
@@ -34,7 +43,7 @@ class DiaryRepositoryImpl(
                     topic = response.data.topic,
                     createdAt = response.data.createdAt,
                     username = response.data.username,
-                    corrections = response.data.correctionResponses?.map {
+                    corrections = response.data.corrections?.map {
                         Diary.Correction(
                             id = it.correctionId,
                             before = it.before,

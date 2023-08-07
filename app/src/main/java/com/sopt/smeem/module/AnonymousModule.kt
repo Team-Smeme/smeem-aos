@@ -1,6 +1,6 @@
 package com.sopt.smeem.module
 
-import com.sopt.smeem.Authenticated
+import com.sopt.smeem.Anonymous
 import com.sopt.smeem.data.datasource.LoginExecutor
 import com.sopt.smeem.data.datasource.TrainingManager
 import com.sopt.smeem.data.repository.LoginRepositoryImpl
@@ -23,7 +23,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 object AnonymousModule {
     @Provides
     @ViewModelScoped
-    @Authenticated(isApplied = false)
+    @Anonymous
     fun anonymousMemberRepository(networkModule: NetworkModule): UserRepository =
         UserRepositoryImpl(
             TrainingManager(
@@ -34,7 +34,7 @@ object AnonymousModule {
 
     @Provides
     @ViewModelScoped
-    @Authenticated(isApplied = false)
+    @Anonymous
     fun loginRepository(networkModule: NetworkModule): LoginRepository =
         LoginRepositoryImpl(
             LoginExecutor(
@@ -46,7 +46,7 @@ object AnonymousModule {
 
     @Provides
     @ViewModelScoped
-    @Authenticated(isApplied = false)
+    @Anonymous
     fun trainingRepository(
         networkModule: NetworkModule
     ): TrainingRepository {

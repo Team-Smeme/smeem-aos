@@ -5,6 +5,7 @@ import com.sopt.smeem.SmeemException
 import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.data.datasource.TrainingManager
 import com.sopt.smeem.domain.model.TrainingGoal
+import com.sopt.smeem.domain.model.TrainingGoalSimple
 import com.sopt.smeem.domain.repository.TrainingRepository
 
 class TrainingRepositoryImpl(
@@ -21,11 +22,20 @@ class TrainingRepositoryImpl(
             )
         }
             .map {
-                val a = it
                 TrainingGoal(
                     goal = it.data!!.name,
                     way = it.data.way,
                     detail = it.data.detail
                 )
             }
+
+    override suspend fun getAll(): Result<TrainingGoalSimple> =
+        kotlin.runCatching {
+            trainingManager.getAll()
+        }.map {
+            TrainingGoalSimple(
+                goalType = TrainingGoalType.valueOf(it.data!!.goalType),
+                name = it.data.name
+            )
+        }
 }
