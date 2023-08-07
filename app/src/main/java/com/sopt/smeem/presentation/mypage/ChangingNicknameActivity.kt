@@ -1,15 +1,26 @@
 package com.sopt.smeem.presentation.mypage
 
+import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.Anonymous
 import com.sopt.smeem.R
+import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.databinding.ActivityChangingNicknameBinding
+import com.sopt.smeem.domain.repository.LoginRepository
+import com.sopt.smeem.domain.repository.UserRepository
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChangingNicknameActivity :
@@ -19,7 +30,7 @@ class ChangingNicknameActivity :
 
     override fun addListeners() {
         onTextWrite()
-        onCompleted()
+        onTouchCompleted()
         onTouchBack()
     }
 
@@ -46,24 +57,17 @@ class ChangingNicknameActivity :
     }
 
     private fun goBack() {
-        super.onBackPressed()
+        startActivity(Intent(this, MyPageActivity::class.java))
+        finish()
     }
 
-    private fun onCompleted() {
-        binding.btnChangeNicknameNext.setOnClickListener {
-            if (nicknameDuplicated()) {
-                binding.tvChangeNicknameDuplicated.visibility = View.VISIBLE
-                binding.btnChangeNicknameNext.isEnabled = false
-            } else {
-                vm.send(binding.etChangeNickname.text.toString())
-                goBack()
-                if (!isFinishing) finish()
-            }
+    private fun onTouchCompleted() {
+        binding.btnChangeNicknameNext.setOnSingleClickListener {
+            vm.content = binding.etChangeNickname.text.toString()
+            checkNicknameDuplicated()
+            afterCheckNicknameDuplicated()
         }
     }
-
-    private fun nicknameDuplicated() = false // TODO : nickname 중복 api call
-
 
     private fun nextButtonOff() {
         binding.btnChangeNicknameNext.setBackgroundColor(
@@ -79,15 +83,56 @@ class ChangingNicknameActivity :
         binding.btnChangeNicknameNext.setBackgroundColor(resources.getColor(R.color.point, null))
         binding.btnChangeNicknameNext.isEnabled = true
     }
-}
 
-class ChangingNicknameVM : ViewModel() {
-    fun send(name: String): Unit //  TODO : nickname 변경 api call
-    {
-        viewModelScope.launch { sendServer(name) }
+    private fun checkNicknameDuplicated() {
+        vm.callApiNicknameDuplicated(
+            onError = { t -> Toast.makeText(this, t.message, Toast.LENGTH_SHORT).show() }
+        )
     }
 
-    private suspend fun sendServer(name: String): Unit { // TODo
+    private fun afterCheckNicknameDuplicated() {
+        vm.nicknameDuplicated.observe(this@ChangingNicknameActivity) { isDuplicated ->
+            when (isDuplicated) {
+                true -> {
+                    binding.tvChangeNicknameDuplicated.visibility = View.VISIBLE
+                    binding.btnChangeNicknameNext.isEnabled = false
+                }
 
+                false -> {
+                    vm.send(binding.etChangeNickname.text.toString())
+                    goBack()
+                }
+            }
+        }
+    }
+}
+
+@HiltViewModel
+class ChangingNicknameVM @Inject constructor(
+    private val userRepository: UserRepository,
+    @Anonymous private val loginRepository: LoginRepository,
+) : ViewModel() {
+    var content: String = ""
+    private val _nicknameDuplicated = MutableLiveData<Boolean>()
+    val nicknameDuplicated: LiveData<Boolean>
+        get() = _nicknameDuplicated
+
+    fun send(name: String): Unit //  TODO : nickname 변경 api call
+    {
+        viewModelScope.launch {
+            userRepository.modifyUserInfo(
+                nickname = name
+            )
+        }
+    }
+
+    fun callApiNicknameDuplicated(onError: (Throwable) -> Unit) {
+        viewModelScope.launch {
+            loginRepository.checkNicknameDuplicated(content)
+                .onSuccess { result ->
+                    _nicknameDuplicated.value = result
+                }
+                .onHttpFailure { onError(it) }
+        }
     }
 }
