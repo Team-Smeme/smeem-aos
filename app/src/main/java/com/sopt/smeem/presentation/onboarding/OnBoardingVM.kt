@@ -64,8 +64,8 @@ class OnBoardingVM @Inject constructor(
         get() = _step
 
     // selected time
-    val selectedHour = MutableLiveData<Int>(22)
-    val selectedMinute = MutableLiveData<Int>(0)
+    val selectedHour = MutableLiveData(DEFAULT_HOUR)
+    val selectedMinute = MutableLiveData(DEFAULT_MINUTE)
 
     val days = mutableListOf<Day>()
     var hour: Int = 0
@@ -200,5 +200,10 @@ class OnBoardingVM @Inject constructor(
                 .onSuccess { _trainingGoal.value = it }
                 .onHttpFailure { e -> onError(e) }
         }
+    }
+
+    companion object {
+        const val DEFAULT_HOUR = 22
+        const val DEFAULT_MINUTE = 0
     }
 }
