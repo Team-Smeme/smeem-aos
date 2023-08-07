@@ -131,6 +131,110 @@
             app:layout_constraintStart_toStartOf="@id/ll_dates"
             app:layout_constraintTop_toBottomOf="@id/ll_dates" />
 
+        <View
+            android:id="@+id/diary_divider"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray_100"
+            app:layout_constraintTop_toBottomOf="@id/weekly_calendar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_no_diary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/btn_write_diary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/diary_divider"
+            app:layout_constraintVertical_bias="0.4">
+
+            <ImageView
+                android:id="@+id/iv_no_diary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/no_diary_image"
+                android:src="@drawable/ic_no_diary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_no_diary"
+                style="@style/TextAppearance.Smeem.Caption3_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/no_diary_notice"
+                android:textColor="@color/gray_300"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_no_diary" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_diary_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="18dp"
+            android:paddingVertical="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/diary_divider">
+
+            <TextView
+                android:id="@+id/tv_diary_writen_time"
+                style="@style/TextAppearance.Smeem.Subtitle3_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4 : 18 PM"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/ll_go_to_diary_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/see_diary_detail"
+                    android:textColor="@color/gray_400" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
+                    android:contentDescription="@string/go_to_diary_detail"
+                    android:src="@drawable/ic_chevron_right" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_diary"
+                style="@style/TextAppearance.Smeem.Body4_regular.Height_22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@string/dummy_diary_english"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_diary_writen_time" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <Button
             android:id="@+id/btn_write_diary"
             android:layout_width="0dp"
