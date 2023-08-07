@@ -20,8 +20,10 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener 
         val minute = defaultMinute
 
         val timePicker: TimePickerDialog = SmeemTimePickerDialog(activity, this, hour, minute, is24Hour)
-        timePicker.setButton(DialogInterface.BUTTON_POSITIVE, "저장", timePicker)
-
+        timePicker.apply {
+            setButton(DialogInterface.BUTTON_NEGATIVE, "취소", timePicker)
+            setButton(DialogInterface.BUTTON_POSITIVE, "저장", timePicker)
+        }
         return timePicker
     }
 
