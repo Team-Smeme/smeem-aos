@@ -13,7 +13,8 @@
         <NumberPicker
             android:id="@+id/np_time_picker_hour"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:theme="@style/NumberPickerTheme" />
 
         <TextView
             android:id="@+id/tv_time_picker_colon"
@@ -25,7 +26,8 @@
         <NumberPicker
             android:id="@+id/np_time_picker_minute"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:theme="@style/NumberPickerTheme" />
 
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flow_time_picker"
