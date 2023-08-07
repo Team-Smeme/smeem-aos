@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -7,6 +8,7 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.calendar.listener.OnWeeklyCalendarSwipeListener
+import com.sopt.smeem.presentation.mypage.MyPageActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -21,6 +23,9 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
         initView()
         setInitListener()
+        binding.ivMyPage.setOnClickListener {
+            startActivity(Intent(this, MyPageActivity::class.java))
+        }
     }
 
     private fun initView() {

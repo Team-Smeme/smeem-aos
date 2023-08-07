@@ -2,11 +2,15 @@ package com.sopt.smeem.module
 
 import com.sopt.smeem.data.datasource.DiaryCommander
 import com.sopt.smeem.data.datasource.DiaryReader
+import com.sopt.smeem.data.datasource.MyBadgeRetriever
+import com.sopt.smeem.data.datasource.MyPageRetriever
 import com.sopt.smeem.data.datasource.UserModifier
 import com.sopt.smeem.data.datasource.TrainingManager
 import com.sopt.smeem.data.repository.DiaryRepositoryImpl
 import com.sopt.smeem.data.repository.UserRepositoryImpl
 import com.sopt.smeem.data.service.DiaryService
+import com.sopt.smeem.data.service.MyBadgeService
+import com.sopt.smeem.data.service.MyPageService
 import com.sopt.smeem.data.service.TrainingService
 import com.sopt.smeem.data.service.UserService
 import com.sopt.smeem.domain.repository.DiaryRepository
@@ -29,10 +33,18 @@ object UserModule {
         val trainingService = networkModule.apiServerRetrofitForAuthentication.create(
             TrainingService::class.java
         )
+        val myPageService = networkModule.apiServerRetrofitForAuthentication.create(
+            MyPageService::class.java
+        )
+        val myBadgeRetriever = networkModule.apiServerRetrofitForAuthentication.create(
+            MyBadgeService::class.java
+        )
 
         return UserRepositoryImpl(
             trainingManager = TrainingManager(userService, trainingService),
-            userModifier = UserModifier(userService)
+            userModifier = UserModifier(userService),
+            myPageRetriever = MyPageRetriever(myPageService),
+            myBadgeRetriever = MyBadgeRetriever(myBadgeRetriever)
         )
     }
 
