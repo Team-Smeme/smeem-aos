@@ -1,6 +1,7 @@
 package com.sopt.smeem.presentation.onboarding
 
 import android.app.TimePickerDialog
+import android.util.Log
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import com.sopt.smeem.R
@@ -47,6 +48,23 @@ class SettingTimeFragment :
             binding.tvOnBoardingTimeSat.id to binding.tvOnBoardingTimeSat,
             binding.tvOnBoardingTimeSun.id to binding.tvOnBoardingTimeSun
         )
+        // 기본값 월화수목금 으로 설정
+        setInitialDays()
+    }
+    
+    private fun setInitialDays() {
+        days?.values?.forEach { day ->
+            run {
+                when(day.text.toString()) {
+                    "토" -> {}
+                    "일" -> {}
+                    else -> {
+                        day.switchOn()
+                        vm.addDay(day.text.toString())
+                    }
+                }
+            }
+        }
     }
 
     private fun onTouchDays() {
