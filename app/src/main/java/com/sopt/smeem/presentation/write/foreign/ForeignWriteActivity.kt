@@ -1,16 +1,22 @@
 package com.sopt.smeem.presentation.write.foreign
 
+import android.content.Intent
 import android.graphics.Color
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityForeignWriteBinding
+import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
 import com.sopt.smeem.util.showSnackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ForeignWriteActivity :
     BindingActivity<ActivityForeignWriteBinding>(R.layout.activity_foreign_write) {
 
@@ -53,7 +59,7 @@ class ForeignWriteActivity :
                         layoutForeignWriteBottomToolbar.tvRandomTopicLabel.setTextColor(
                             resources.getColor(R.color.point, null)
                         )
-                        // TODO: 새로운 랜덤 주제 불러오기
+                        setRandomTopic()
                         layoutForeignWriteRandomTopic.layoutSection.visibility = View.VISIBLE
                     }
 
@@ -61,6 +67,7 @@ class ForeignWriteActivity :
                         layoutForeignWriteBottomToolbar.tvRandomTopicLabel.setTextColor(
                             resources.getColor(R.color.gray_500, null)
                         )
+                        viewModel.topicId = -1
                         layoutForeignWriteRandomTopic.layoutSection.visibility = View.GONE
                     }
                 }
@@ -70,7 +77,13 @@ class ForeignWriteActivity :
 
     private fun refreshTopic() {
         binding.layoutForeignWriteRandomTopic.btnRefresh.setOnClickListener {
-            // TODO: 새로운 랜덤 주제 불러오기
+            setRandomTopic()
+        }
+    }
+
+    private fun setRandomTopic() {
+        viewModel.getRandomTopic { e ->
+            Toast.makeText(this@ForeignWriteActivity, e.description(), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -78,7 +91,14 @@ class ForeignWriteActivity :
         binding.layoutForeignWriteToolbar.tvDone.setOnClickListener {
             when (viewModel.isValidDiary.value) {
                 true -> {
-                    // TODO: 홈 뷰로 이동
+                    viewModel.uploadDiary(
+                        onSuccess = {
+                            Intent(this, HomeActivity::class.java).run(::startActivity)
+                        },
+                        onError = { e ->
+                            Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()
+                        }
+                    )
                 }
                 else -> {
                     binding.root.showSnackbar(
