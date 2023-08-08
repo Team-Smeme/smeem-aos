@@ -2,12 +2,15 @@ package com.sopt.smeem.presentation.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.sopt.smeem.R
 import com.sopt.smeem.databinding.BottomSheetDiaryDetailBinding
 
 class DiaryDetailBottomSheet() : BottomSheetDialogFragment() {
@@ -51,7 +54,7 @@ class DiaryDetailBottomSheet() : BottomSheetDialogFragment() {
 
     private fun showDeleteDialog() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("일기를 삭제할까요?")
+            .setCustomTitle(layoutInflater.inflate(R.layout.delete_dialog_title, null))
             .setNegativeButton("예") { dialog, which ->
                 // TODO: 삭제 api 호출
                 // TODO: pr #77 머지 필요
