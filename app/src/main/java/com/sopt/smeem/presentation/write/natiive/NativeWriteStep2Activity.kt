@@ -3,7 +3,6 @@ package com.sopt.smeem.presentation.write.natiive
 import android.text.method.ScrollingMovementMethod
 import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
-import com.skydoves.balloon.balloon
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityNativeWriteStep2Binding
 import com.sopt.smeem.presentation.BindingActivity
@@ -16,17 +15,17 @@ class NativeWriteStep2Activity :
     private val viewModel by viewModels<NativeWriteStep2ViewModel>()
 
     override fun constructLayout() {
-        with (binding) {
+        with(binding) {
             // databinding
             vm = viewModel
             lifecycleOwner = this@NativeWriteStep2Activity
             // ui
             etNativeStep1Write.requestFocus()
-            with (tvNativeStep2NativeDiary) {
+            with(tvNativeStep2NativeDiary) {
                 movementMethod = ScrollingMovementMethod()
                 text = intent.getStringExtra("nativeDiary")
             }
-            with (layoutNativeStep2BottomToolbar.cbRandomTopic) {
+            with(layoutNativeStep2BottomToolbar.cbRandomTopic) {
                 isChecked = intent.getBooleanExtra("isTopicEnabled", true)
                 isEnabled = false
             }
@@ -49,15 +48,15 @@ class NativeWriteStep2Activity :
         }
     }
 
-    // TODO: 번역 토글
     private fun toggleHint() {
         binding.layoutNativeStep2BottomToolbar.btnTranslate.setOnClickListener {
             when (binding.layoutNativeStep2BottomToolbar.btnTranslate.isChecked) {
                 true -> {
-
+                    binding.tvNativeStep2NativeDiary.text = intent.getStringExtra("translateResult")
                 }
-                else -> {
 
+                else -> {
+                    binding.tvNativeStep2NativeDiary.text = intent.getStringExtra("nativeDiary")
                 }
             }
         }
@@ -69,6 +68,7 @@ class NativeWriteStep2Activity :
                 true -> {
                     // TODO: 홈 뷰로 이동
                 }
+
                 else -> {
                     binding.root.showSnackbar(
                         "외국어를 포함해 일기를 작성해 주세요 :(",
