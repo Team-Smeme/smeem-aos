@@ -76,6 +76,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     private fun onEditNickname() {
         binding.ivMyPageEditNickname.setOnClickListener {
             startActivity(Intent(this, ChangingNicknameActivity::class.java))
+            finish()
         }
     }
 
