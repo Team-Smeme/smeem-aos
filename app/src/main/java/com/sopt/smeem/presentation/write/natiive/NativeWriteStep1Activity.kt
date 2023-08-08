@@ -10,7 +10,9 @@ import com.sopt.smeem.databinding.ActivityNativeWriteStep1Binding
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
 import com.sopt.smeem.util.showSnackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NativeWriteStep1Activity :
     BindingActivity<ActivityNativeWriteStep1Binding>(R.layout.activity_native_write_step1) {
 
@@ -87,6 +89,7 @@ class NativeWriteStep1Activity :
                 true -> {
                     moveToStep2()
                 }
+
                 else -> {
                     binding.root.showSnackbar(
                         "외국어를 포함해 일기를 작성해 주세요 :(",
@@ -117,12 +120,23 @@ class NativeWriteStep1Activity :
     }
 
     private fun moveToStep2() {
-        val intent = Intent(this, NativeWriteStep2Activity::class.java).apply {
-            // TODO: 번역 로직 구현
-            putExtra("nativeDiary", viewModel.diary.value)
-            putExtra("isTopicEnabled", binding.layoutNativeStep1BottomToolbar.cbRandomTopic.isChecked)
+        translate()
+
+        viewModel.translateResult.observe(this@NativeWriteStep1Activity) {
+            val intent = Intent(this, NativeWriteStep2Activity::class.java).apply {
+
+                putExtra("translateResult", it)
+                putExtra("nativeDiary", viewModel.diary.value)
+                putExtra(
+                    "isTopicEnabled",
+                    binding.layoutNativeStep1BottomToolbar.cbRandomTopic.isChecked
+                )
+            }
+            startActivity(intent)
         }
-        startActivity(intent)
     }
 
+    private fun translate() {
+        viewModel.translate()
+    }
 }
