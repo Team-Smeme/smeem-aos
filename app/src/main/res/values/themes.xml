@@ -32,7 +32,7 @@
     <style name="ThemeOverlay.Smeem.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.Smeem.BottomSheetDialog</item>
     </style>
-    
+
     <style name="ThemeOverlay.Smeem.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
         <item name="android:backgroundTint">@color/white</item>
         <item name="materialAlertDialogTitleTextStyle">@style/Widget.MaterialAlertDialog.Smeem.Title.Text</item>
@@ -47,6 +47,12 @@
         <item name="android:windowBackground">@drawable/shape_dialog</item>
     </style>
 
+    <style name="NumberPickerTheme">
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorHighlight">@color/point_opacity_30</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+    </style>
 
     <style name="B14">
         <item name="android:textSize">14sp</item>

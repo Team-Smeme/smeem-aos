@@ -70,7 +70,8 @@ class SettingTimeFragment :
 
     private fun onTouchTime() {
         binding.layoutOnBoardingTimeTime.setOnSingleClickListener {
-            TimePickerFragment().show(parentFragmentManager, "timePicker")
+//            TimePickerFragment().show(parentFragmentManager, "timePicker")
+            TempTimePickerFragment().show(parentFragmentManager, "timePicker")
         }
     }
 
