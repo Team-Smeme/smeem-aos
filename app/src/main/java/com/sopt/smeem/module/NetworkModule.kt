@@ -9,6 +9,7 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -17,7 +18,7 @@ import javax.inject.Inject
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
 ) {
     val apiServerRetrofitForAnonymous by lazy {
         Retrofit.Builder()
@@ -27,7 +28,12 @@ class NetworkModule @Inject constructor(
                     connectTimeout(10, TimeUnit.SECONDS)
                     writeTimeout(5, TimeUnit.SECONDS)
                     readTimeout(5, TimeUnit.SECONDS)
-                }.build()
+                }.addInterceptor(
+                    HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    },
+                )
+                    .build(),
             )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -48,13 +54,16 @@ class NetworkModule @Inject constructor(
                             addInterceptor(
                                 RequestInterceptor(
                                     accessToken = authRepository.getAuthentication()!!.accessToken!!,
-                                    refreshToken = authRepository.getAuthentication()!!.refreshToken
-                                )
+                                    refreshToken = authRepository.getAuthentication()!!.refreshToken,
+                                ),
                             )
                         }
                     }
-
-                }.build()
+                }.addInterceptor(
+                    HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    },
+                ).build(),
             )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -62,13 +71,13 @@ class NetworkModule @Inject constructor(
 
     class RequestInterceptor(
         val accessToken: String,
-        val refreshToken: String?
+        val refreshToken: String?,
     ) : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response = chain.proceed(
             chain.request().newBuilder().apply {
                 addHeader(API_ACCESS_TOKEN_HEADER, "Bearer $accessToken")
                 addHeader(API_REFRESH_TOKEN_HEADER, "Bearer ${refreshToken ?: ""}")
-            }.build()
+            }.build(),
         )
 
         private val API_ACCESS_TOKEN_HEADER = "Authorization"
