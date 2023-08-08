@@ -1,9 +1,13 @@
 package com.sopt.smeem.presentation.onboarding
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import androidx.core.content.ContextCompat
 import com.sopt.smeem.R
 import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.databinding.ActivityOnBoardingBinding
@@ -103,8 +107,7 @@ class OnBoardingActivity :
                 }
 
                 4 -> { // step 4 : 알림 권한 체크 및 api token 가 local 에 있는지 (이전에 로그인했는지 check)
-                    checkPushPermission()
-                    checkAlreadyAuthed() // 3/3 (트레이닝 시간 설정) 에서 로그인 바텀시트 띄우기전에 이미 kakao 로그인이 된 상태인지 확인
+                    checkNotiPermission()
                 }
 
                 else -> {}
@@ -208,22 +211,47 @@ class OnBoardingActivity :
         finish()
     }
 
-    private fun checkPushPermission() {
-        // TODO : push 권한 체크
-        MaterialAlertDialogBuilder(this)
-            .setIcon(R.drawable.ic_notification_dialog)
-            .setTitle(
-                "‘smeem’에서 알림을\n" +
-                        "보내도록 허용하시겠습니까?"
-            )
-            .setNegativeButton("예") { dialog, which ->
-                // TODO: hasAlarm 관련 livedata = true
+    private fun checkNotiPermission() {
+        when {
+            // 1. 알림 권한이 이미 허용되었을 때
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                vm.setNotiPermissionStatus(true)
+                // 3/3 (트레이닝 시간 설정) 에서 로그인 바텀시트 띄우기전에 이미 kakao 로그인이 된 상태인지 확인
+                checkAlreadyAuthed()
             }
-            .setPositiveButton("아니요") { dialog, which ->
-                // TODO: hasAlarm 관련 livedata = false
+            // 2. 사용자가 이전에 권한을 거부했을 때
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                vm.setNotiPermissionStatus(false)
+                checkAlreadyAuthed()
             }
-            .show()
+            // 3. 알림 권한을 처음으로 받는 것일 때
+            else -> {
+                notiPermissionResultCallback.launch(
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+            }
+        }
     }
+
+    private val notiPermissionResultCallback =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (!isGranted) {
+                vm.setNotiPermissionStatus(false)
+                // dialog 바깥쪽을 눌러 나간 경우 (허용, 거부 선택하지 않은 경우)
+                // 바텀시트가 뜨지 않도록
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                    checkAlreadyAuthed()
+                }
+            } else {
+                vm.setNotiPermissionStatus(true)
+                checkAlreadyAuthed()
+            }
+        }
 
     private fun checkAlreadyAuthed() {
         if (vm.alreadyAuthed()) {

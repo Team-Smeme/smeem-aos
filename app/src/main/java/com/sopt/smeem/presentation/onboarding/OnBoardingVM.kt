@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.onboarding
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -49,6 +50,10 @@ class OnBoardingVM @Inject constructor(
     private val _setTimeLater = MutableLiveData<Boolean>()
     val setTimeLater: LiveData<Boolean>
         get() = _setTimeLater
+
+    private val _isNotiGranted = MutableLiveData<Boolean>()
+    val isNotiGranted: LiveData<Boolean>
+        get() = _isNotiGranted
 
     private val _goAnonymous = MutableLiveData<Boolean>()
     val goAnonymous: LiveData<Boolean>
@@ -120,6 +125,11 @@ class OnBoardingVM @Inject constructor(
 
     fun timeLater() {
         _setTimeLater.value = true
+        setNotiPermissionStatus(false)
+    }
+
+    fun setNotiPermissionStatus(status: Boolean) {
+        _isNotiGranted.value = status
     }
 
     fun login(
@@ -158,8 +168,7 @@ class OnBoardingVM @Inject constructor(
             userRepositoryWithAnonymous.registerOnBoarding(
                 OnBoarding(
                     trainingGoalType = selectedGoal.value ?: TrainingGoalType.NO_SELECTED,
-                    // TODO: 알림 권한에 동의했을 때는?
-                    hasAlarm = setTimeLater.value?.not() ?: false,
+                    hasAlarm = isNotiGranted.value ?: false,
                     day = days,
                     hour = hour,
                     minute = minute
@@ -177,7 +186,7 @@ class OnBoardingVM @Inject constructor(
                 Training(
                     type = selectedGoal.value ?: TrainingGoalType.NO_SELECTED,
                     trainingTime = TrainingTime(days = days.toSet(), hour = hour, minute = minute),
-                    hasAlarm = setTimeLater.value?.not() ?: false
+                    hasAlarm = isNotiGranted.value ?: false,
                 )
             )
                 .onSuccess(onSuccess)
