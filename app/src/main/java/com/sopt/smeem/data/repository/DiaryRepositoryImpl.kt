@@ -2,7 +2,6 @@ package com.sopt.smeem.data.repository
 
 import com.sopt.smeem.data.datasource.DiaryCommander
 import com.sopt.smeem.data.datasource.DiaryReader
-import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.domain.model.Diary
 import com.sopt.smeem.domain.model.DiarySummaries
 import com.sopt.smeem.domain.model.DiarySummary
@@ -10,8 +9,7 @@ import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.domain.model.Topic
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.util.DateUtil
-import java.time.MonthDay
-import java.time.Year
+import java.time.format.DateTimeFormatter
 
 class DiaryRepositoryImpl(
     private val diaryCommander: DiaryCommander,
@@ -23,7 +21,7 @@ class DiaryRepositoryImpl(
                 badges.map { badge ->
                     RetrievedBadge(
                         name = badge.name,
-                        imageUrl = badge.imageUrl
+                        imageUrl = badge.imageUrl,
                     )
                 }
             }
@@ -47,15 +45,15 @@ class DiaryRepositoryImpl(
                         Diary.Correction(
                             id = it.correctionId,
                             before = it.before,
-                            after = it.after
+                            after = it.after,
                         )
-                    } ?: emptyList()
+                    } ?: emptyList(),
                 )
             }
 
     override suspend fun getDiaries(
         start: String?,
-        end: String?
+        end: String?,
     ): Result<DiarySummaries> =
         kotlin.runCatching { diaryReader.getList(start, end) }
             .map { response ->
@@ -63,24 +61,17 @@ class DiaryRepositoryImpl(
                     diaries = response.data!!.diaries.associateBy(
                         keySelector = { diary ->
                             val dateTime = DateUtil.asLocalDateTime(diary.createdAt)
-                            Date(
-                                year = Year.of(dateTime.year),
-                                monthDay = MonthDay.from(dateTime),
-                                dayOfWeek = dateTime.dayOfWeek,
-                                hour = dateTime.hour,
-                                minute = dateTime.minute,
-                            )
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd").format(dateTime)
                         },
                         valueTransform = { diary ->
                             DiarySummary(
                                 id = diary.diaryId,
                                 content = diary.content,
-                                createdAt = diary.createdAt
+                                createdAt = diary.createdAt,
                             )
-
-                        }
+                        },
                     ),
-                    has30Past = response.data.has30Past
+                    has30Past = response.data.has30Past,
                 )
             }
 
@@ -90,7 +81,7 @@ class DiaryRepositoryImpl(
         }.map { response ->
             Topic(
                 id = response.data!!.topicId,
-                content = response.data.content
+                content = response.data.content,
             )
         }
 }

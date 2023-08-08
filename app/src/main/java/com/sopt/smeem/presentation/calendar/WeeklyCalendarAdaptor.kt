@@ -14,6 +14,7 @@ class WeeklyAdapter(private val onWeeklyDayClickListener: OnWeeklyDayClickListen
 
     private val weeklyDays = mutableListOf<LocalDate>()
     private var selectedDay: LocalDate = LocalDate.now()
+    private var diaryEntries: Set<LocalDate> = setOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeeklyCalendarViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -28,9 +29,9 @@ class WeeklyAdapter(private val onWeeklyDayClickListener: OnWeeklyDayClickListen
 
     override fun onBindViewHolder(holder: WeeklyCalendarViewHolder, position: Int) {
         if (selectedDay.isEqual(weeklyDays[position])) {
-            holder.onSelectBind(weeklyDays[position])
+            holder.onSelectBind(weeklyDays[position], diaryEntries.contains(weeklyDays[position]))
         } else {
-            holder.onBind(weeklyDays[position])
+            holder.onBind(weeklyDays[position], diaryEntries.contains(weeklyDays[position]))
         }
     }
 
