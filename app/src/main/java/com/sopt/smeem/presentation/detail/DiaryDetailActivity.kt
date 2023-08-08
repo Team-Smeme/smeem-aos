@@ -31,7 +31,7 @@ class DiaryDetailActivity :
             finish()
         }
         binding.btnDiaryDetailMenu.setOnSingleClickListener {
-            DiaryDetailBottomSheet().show(supportFragmentManager, DiaryDetailBottomSheet.TAG)
+            DiaryDetailBottomSheet(viewModel).show(supportFragmentManager, DiaryDetailBottomSheet.TAG)
         }
     }
 

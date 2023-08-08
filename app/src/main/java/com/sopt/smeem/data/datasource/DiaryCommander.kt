@@ -18,8 +18,7 @@ class DiaryCommander(
 
     suspend fun editDiary(diary: Diary): ApiResponse<Unit> = diaryService.patch(
         request = DiaryRequest.Editing(
-            content = diary.content,
-            topicId = diary.topicId
+            content = diary.content
         ),
         diaryId = diary.id!!
     )

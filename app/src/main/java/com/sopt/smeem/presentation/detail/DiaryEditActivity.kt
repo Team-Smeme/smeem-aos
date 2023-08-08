@@ -2,12 +2,17 @@ package com.sopt.smeem.presentation.detail
 
 import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityDiaryEditBinding
+import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.util.showSnackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.activity_diary_edit) {
     private val viewModel by viewModels<DiaryEditViewModel>()
 
@@ -16,6 +21,7 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
         binding.vm = viewModel
         binding.lifecycleOwner = this
         // ui
+        viewModel.diaryId = intent.getLongExtra("diaryId", -1)
         with (binding.etDiaryEditContent) {
             requestFocus()
             viewModel.diary.value = intent.getStringExtra("originalContent")
@@ -31,7 +37,9 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
         binding.btnDiaryEditCancel.setOnClickListener {
             finish()
         }
-        completeDiary()
+        binding.btnDiaryEditDone.setOnClickListener {
+            completeDiary()
+        }
     }
 
     override fun addObservers() {
@@ -48,16 +56,19 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
     }
 
     private fun completeDiary() {
-        binding.btnDiaryEditDone.setOnClickListener {
-            when (viewModel.isValidDiary.value) {
-                true -> {
-                    // TODO: 수정 api 연결
-                    // TODO: pr #77 머지 필요
-//                    Intent(this, HomeActivity::class.java).run(::startActivity)
-                }
-                else -> {
-                    binding.root.showSnackbar("외국어를 포함해 일기를 작성해 주세요 :(")
-                }
+        when (viewModel.isValidDiary.value) {
+            true -> {
+                viewModel.editDiary(
+                    onSuccess = {
+                        Intent(this, HomeActivity::class.java).run(::startActivity)
+                    },
+                    onError = { e ->
+                        Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()
+                    }
+                )
+            }
+            else -> {
+                binding.root.showSnackbar("외국어를 포함해 일기를 작성해 주세요 :(")
             }
         }
     }

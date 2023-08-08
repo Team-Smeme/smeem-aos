@@ -13,10 +13,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.BottomSheetDiaryDetailBinding
 
-class DiaryDetailBottomSheet() : BottomSheetDialogFragment() {
+class DiaryDetailBottomSheet(
+    private val viewModel: DiaryDetailViewModel
+) : BottomSheetDialogFragment() {
     private var _binding: BottomSheetDiaryDetailBinding? = null
     private val binding get() = requireNotNull(_binding)
-    private val viewModel by viewModels<DiaryDetailViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +46,7 @@ class DiaryDetailBottomSheet() : BottomSheetDialogFragment() {
 
     private fun moveToEdit() {
         val intent = Intent(requireContext(), DiaryEditActivity::class.java).apply {
-            // TODO: 일기 내용, 랜덤주제 담아서 수정 뷰로 보내기
+            putExtra("diaryId", viewModel.diaryId)
             putExtra("originalContent", viewModel.diary.value)
             putExtra("randomTopic", viewModel.topic.value)
         }

@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.detail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,10 +19,12 @@ import javax.inject.Inject
 class DiaryDetailViewModel @Inject constructor(
     private val diaryRepository: DiaryRepository
 ) : ViewModel() {
+    var diaryId: Long? = -1
+
     val topic = MutableLiveData<String?>()
     val diary = MutableLiveData<String>()
     val date = MutableLiveData<String>()
-    val writer = MutableLiveData<String>()
+    val writer = MutableLiveData<String?>()
 
     val isTopicExist: LiveData<Boolean> = topic.map { it != "" }
 
@@ -30,11 +33,13 @@ class DiaryDetailViewModel @Inject constructor(
         viewModelScope.launch {
             diaryRepository.getDiaryDetail(500)
                 .onSuccess {
+                    diaryId = it.id
                     topic.value = it.topic
                     diary.value = it.content
                     date.value = it.createdAt?.toLocalDateTime()
                         ?.let { date -> DateUtil.asString(date) }
                     writer.value = it.username
+                    Log.d("diary id", "$diaryId")
                 }
                 .onHttpFailure { e -> onError(e) }
         }
