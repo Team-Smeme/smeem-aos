@@ -1,11 +1,16 @@
 package com.sopt.smeem.presentation.detail
 
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityDiaryDetailBinding
+import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.util.setOnSingleClickListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DiaryDetailActivity :
     BindingActivity<ActivityDiaryDetailBinding>(R.layout.activity_diary_detail) {
 
@@ -15,14 +20,18 @@ class DiaryDetailActivity :
         // databinding
         binding.vm = viewModel
         binding.lifecycleOwner = this
+
+        viewModel.getDiaryDetail { e->
+            Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun addListeners() {
-        binding.btnDiaryDetailBack.setOnClickListener {
+        binding.btnDiaryDetailBack.setOnSingleClickListener {
             finish()
         }
-        binding.btnDiaryDetailMenu.setOnClickListener {
-            DiaryDetailBottomSheet().show(supportFragmentManager, DiaryDetailBottomSheet.TAG)
+        binding.btnDiaryDetailMenu.setOnSingleClickListener {
+            DiaryDetailBottomSheet(viewModel).show(supportFragmentManager, DiaryDetailBottomSheet.TAG)
         }
     }
 

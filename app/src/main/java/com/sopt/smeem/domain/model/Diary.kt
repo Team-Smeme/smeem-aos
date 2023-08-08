@@ -6,8 +6,8 @@ data class Diary(
     val topicId: Long? = null,
     val topic: String? = null,
     val createdAt: String? = null,
-    val username: String,
-    val corrections: List<Correction>? = emptyList(),
+    val username: String? = null,
+    val corrections: List<Correction>? = emptyList()
 ) {
     data class Correction(
         val id: Long,
