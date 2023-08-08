@@ -93,6 +93,7 @@ class ForeignWriteActivity :
                 true -> {
                     viewModel.uploadDiary(
                         onSuccess = {
+                            finishAffinity()
                             Intent(this, HomeActivity::class.java).run(::startActivity)
                         },
                         onError = { e ->

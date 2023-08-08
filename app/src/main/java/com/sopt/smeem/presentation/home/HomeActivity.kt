@@ -7,8 +7,11 @@ import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.calendar.WritingBottomSheet
+import com.sopt.smeem.presentation.calendar.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.calendar.listener.OnWeeklyCalendarSwipeListener
 import com.sopt.smeem.presentation.mypage.MyPageActivity
+import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -18,18 +21,26 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private var todayData = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     private var weeklyData = todayData
+    lateinit var bs: WritingBottomSheet
 
     private val homeViewModel by viewModels<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        bs = WritingBottomSheet()
         initView(weeklyData)
         setInitListener()
         moveToMyPage()
         observeData()
+        onTouchWrite()
     }
 
+    private fun onTouchWrite() {
+        binding.btnWriteDiary.setOnSingleClickListener {
+            bs.show(supportFragmentManager, TAG)
+        }
+    }
     private fun moveToMyPage() {
         binding.ivMyPage.setOnClickListener {
             startActivity(Intent(this, MyPageActivity::class.java))

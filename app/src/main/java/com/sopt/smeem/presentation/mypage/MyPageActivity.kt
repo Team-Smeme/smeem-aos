@@ -30,6 +30,11 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         onTouchDays()
         onTouchBadge()
         onEditGoal()
+        onTouchBack()
+    }
+
+    private fun onTouchBack() {
+        finish()
     }
 
     private fun setUpDays() {

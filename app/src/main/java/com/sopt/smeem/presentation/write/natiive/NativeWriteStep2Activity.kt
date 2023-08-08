@@ -1,11 +1,13 @@
 package com.sopt.smeem.presentation.write.natiive
 
+import android.content.Intent
 import android.text.method.ScrollingMovementMethod
 import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityNativeWriteStep2Binding
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.util.showSnackbar
 
 
@@ -66,7 +68,9 @@ class NativeWriteStep2Activity :
         binding.layoutNativeStep2Toolbar.tvDone.setOnClickListener {
             when (viewModel.isValidDiary.value) {
                 true -> {
-                    // TODO: 홈 뷰로 이동
+                    finishAffinity()
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
                 }
 
                 else -> {
