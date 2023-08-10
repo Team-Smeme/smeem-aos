@@ -69,6 +69,7 @@ class ForeignWriteActivity :
                         )
                         viewModel.topicId = -1
                         layoutForeignWriteRandomTopic.layoutSection.visibility = View.GONE
+                        viewModel.topic.value = ""
                     }
                 }
             }
