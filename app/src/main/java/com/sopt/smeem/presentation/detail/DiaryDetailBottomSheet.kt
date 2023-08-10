@@ -1,17 +1,23 @@
 package com.sopt.smeem.presentation.detail
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.BottomSheetDiaryDetailBinding
+import com.sopt.smeem.description
+import com.sopt.smeem.presentation.home.HomeActivity
 
 class DiaryDetailBottomSheet(
     private val viewModel: DiaryDetailViewModel
@@ -57,9 +63,16 @@ class DiaryDetailBottomSheet(
         MaterialAlertDialogBuilder(requireContext())
             .setCustomTitle(layoutInflater.inflate(R.layout.delete_dialog_title, null))
             .setNegativeButton("예") { dialog, which ->
-                // TODO: 삭제 api 호출
-                // TODO: pr #77 머지 필요
-//                    Intent(this, HomeActivity::class.java).run(::startActivity)
+                viewModel.deleteDiary(
+                    onSuccess = {
+                        Log.d("delete success", "diary ${viewModel.diaryId} was deleted successfully!")
+                        viewModel.isDiaryDeleted.value = true
+                        dismiss()
+                    },
+                    onError = { e ->
+                        Toast.makeText(requireContext(), e.description(), Toast.LENGTH_SHORT).show()
+                    }
+                )
             }
             .setPositiveButton("아니요") { dialog, which -> }
             .show()

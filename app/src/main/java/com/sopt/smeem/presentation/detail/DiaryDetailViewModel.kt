@@ -44,4 +44,14 @@ class DiaryDetailViewModel @Inject constructor(
                 .onHttpFailure { e -> onError(e) }
         }
     }
+
+    fun deleteDiary(onSuccess: (Unit) -> Unit, onError: (SmeemException) -> Unit) {
+        viewModelScope.launch {
+            diaryId?.let {
+                diaryRepository.removeDiary(it)
+                    .onSuccess(onSuccess)
+                    .onHttpFailure { e -> onError(e) }
+            }
+        }
+    }
 }

@@ -29,8 +29,8 @@ class DiaryRepositoryImpl(
     override suspend fun patchDiary(diary: Diary): Result<Unit> =
         kotlin.runCatching { diaryCommander.editDiary(diary) }
 
-    override suspend fun removeDiary(diary: Diary): Result<Unit> =
-        kotlin.runCatching { diaryCommander.removeDiary(diary) }
+    override suspend fun removeDiary(diaryId: Long): Result<Unit> =
+        kotlin.runCatching { diaryCommander.removeDiary(diaryId) }
 
     override suspend fun getDiaryDetail(diaryId: Long): Result<Diary> =
         kotlin.runCatching { diaryReader.getDetail(diaryId) }
