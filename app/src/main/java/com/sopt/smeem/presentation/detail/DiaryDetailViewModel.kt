@@ -28,6 +28,8 @@ class DiaryDetailViewModel @Inject constructor(
 
     val isTopicExist: LiveData<Boolean> = topic.map { it != "" }
 
+    val isDiaryDeleted = MutableLiveData(false)
+
     fun getDiaryDetail(onError: (SmeemException) -> Unit) {
         // TODO: HomeActivity에서 diaryId 받아오기
         viewModelScope.launch {

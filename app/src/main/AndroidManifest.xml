@@ -55,7 +55,7 @@
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
         <activity
             android:name=".presentation.detail.DiaryDetailActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".presentation.write.foreign.ForeignWriteActivity"
             android:exported="false"
