@@ -9,7 +9,7 @@ class TranslateRepositoryImpl(
 ) : TranslateRepository {
     override suspend fun execute(text: String): TranslateResult =
         TranslateResult(
-            translateResult = translater.translateKo2En(text).execute()
+            translateResult = translater.translateKo2En(text)
                 .body()?.message?.result?.translatedText ?: "network error"
         )
 
