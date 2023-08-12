@@ -131,6 +131,7 @@ class OnBoardingActivity :
     }
 
     private fun observeOnStep3() {
+        observeSelectedDays()
         observeJoinOrAnonymous()
     }
 
@@ -177,6 +178,31 @@ class OnBoardingActivity :
             if (it) { // true
                 bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
             }
+        }
+    }
+
+    private fun observeSelectedDays() {
+        vm.isDaysEmpty.observe(this) {
+            if (it) {
+                nextButtonOff()
+            } else {
+                nextButtonOn()
+            }
+        }
+    }
+
+    private fun nextButtonOn() {
+        with(binding.btnOnBoardingNext) {
+            setBackgroundColor(resources.getColor(R.color.point, null))
+            isEnabled = true
+        }
+    }
+
+    private fun nextButtonOff() {
+        with(binding.btnOnBoardingNext) {
+            setBackgroundColor(resources.getColor(R.color.point_inactive, null))
+            setTextColor(resources.getColor(R.color.white, null))
+            isEnabled = false
         }
     }
 

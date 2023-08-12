@@ -70,6 +70,8 @@ class OnBoardingVM @Inject constructor(
     val selectedMinute = MutableLiveData(DEFAULT_MINUTE)
 
     val days = mutableListOf<Day>()
+    val isDaysEmpty = MutableLiveData(false)
+
     var hour: Int = 0
     var minute: Int = 0
 

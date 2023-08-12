@@ -81,9 +81,14 @@ class SettingTimeFragment :
                         day.switchOn()
                         vm.addDay(day.text.toString())
                     }
+                    checkSelectedDays()
                 }
             }
         }
+    }
+
+    private fun checkSelectedDays() {
+        vm.isDaysEmpty.value = vm.days.isEmpty()
     }
 
     private fun onTouchTime() {
