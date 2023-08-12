@@ -1,10 +1,10 @@
 package com.sopt.smeem.data.service
 
-import com.sopt.smeem.data.model.request.JoinRequest
+import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
 import com.sopt.smeem.data.model.request.TrainingRequest
 import com.sopt.smeem.data.model.response.ApiResponse
-import com.sopt.smeem.data.model.response.JoinResponse
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.PATCH
 
 interface UserService {
@@ -13,8 +13,15 @@ interface UserService {
         @Body request: TrainingRequest
     ): ApiResponse<Unit>
 
-    @PATCH("/api/v2/users")
-    suspend fun join(
-        @Body request: JoinRequest
-    ): ApiResponse<JoinResponse>
+
+    @PATCH("/api/v2/members/plan")
+    suspend fun patchPlanOnAnonymous(
+        @Body request: TrainingRequest,
+        @Header("Authorization") token: String
+    ): ApiResponse<Unit>
+
+    @PATCH("/api/v2/members")
+    suspend fun patchUserInfo(
+        @Body request: UserInfoModifyingRequest
+    ): ApiResponse<Unit>
 }

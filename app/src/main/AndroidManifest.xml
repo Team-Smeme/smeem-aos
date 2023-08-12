@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:name=".Smeem"
@@ -16,6 +17,41 @@
         android:theme="@style/Theme.Smeem"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <!-- Splash -->
+        <activity
+            android:name=".presentation.splash.SplashActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- OnBoarding-->
+        <activity
+            android:name=".presentation.onboarding.OnBoardingActivity"
+            android:exported="false" />
+
+        <!-- Join -->
+        <activity
+            android:name=".presentation.join.JoinWithNicknameActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
+
+        <activity
+            android:name=".presentation.join.JoinWithAgreementActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".presentation.detail.DiaryEditActivity"
+            android:exported="false"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
+        <activity
+            android:name=".presentation.detail.DiaryDetailActivity"
+            android:exported="false" />
         <activity
             android:name=".presentation.write.foreign.ForeignWriteActivity"
             android:exported="false"
@@ -42,21 +78,6 @@
                     android:scheme="kakao${KAKAO_API_KEY}" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".presentation.auth.onboarding.OnBoardingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.auth.splash.LoginActivity"
-            android:exported="true"></activity>
-
-        <activity
-            android:name=".presentation.auth.entrance.EntranceNicknameActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
-
-        <activity
-            android:name=".presentation.auth.entrance.EntranceAgreementActivity"
-            android:exported="false" />
 
         <activity
             android:name=".presentation.mypage.ChangingNicknameActivity"

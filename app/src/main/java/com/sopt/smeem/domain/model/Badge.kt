@@ -7,7 +7,7 @@ data class Badge(
     val title: String,
     val description: String?,
     val badgeType: BadgeType,
-    val imageUrl: String
+    val imageUrl: String?
 ) {
     companion object {
         fun from(badgeResponse: MyPageResponse.BadgeResponse) =

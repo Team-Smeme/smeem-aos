@@ -1,6 +1,6 @@
 package com.sopt.smeem.domain.model
 
 data class DiarySummaries(
-    val diaries: Map<Date, DiarySummary>,
+    val diaries: Map<String, DiarySummary>,
     val has30Past: Boolean,
 )

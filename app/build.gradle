@@ -22,6 +22,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String","KAKAO_API_KEY",properties['kakao_api_key']
         buildConfigField "String","API_SERVER_URL",properties['api_server_url']
+        buildConfigField "String","NAVER_CLIENT_ID",properties['papago_client_id']
+        buildConfigField "String","NAVER_SECRET_KEY",properties['papage_client_secret']
         manifestPlaceholders = [KAKAO_API_KEY:properties['kakao_api_key_manifest']]
     }
 

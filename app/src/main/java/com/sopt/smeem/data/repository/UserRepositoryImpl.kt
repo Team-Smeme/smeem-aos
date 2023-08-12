@@ -1,12 +1,13 @@
 package com.sopt.smeem.data.repository
 
 import com.sopt.smeem.LanguageCode
-import com.sopt.smeem.data.datasource.JoinHelper
 import com.sopt.smeem.data.datasource.MyBadgeRetriever
 import com.sopt.smeem.data.datasource.MyPageRetriever
 import com.sopt.smeem.data.datasource.TrainingManager
+import com.sopt.smeem.data.datasource.UserModifier
 import com.sopt.smeem.domain.model.Badge
-import com.sopt.smeem.domain.model.Joining
+import com.sopt.smeem.domain.model.Day
+import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.model.MyPage
 import com.sopt.smeem.domain.model.OnBoarding
 import com.sopt.smeem.domain.model.Training
@@ -16,28 +17,26 @@ import com.sopt.smeem.domain.repository.UserRepository
 
 class UserRepositoryImpl(
     private val trainingManager: TrainingManager? = null,
-    private val joinHelper: JoinHelper? = null,
+    private val userModifier: UserModifier? = null,
     private val myPageRetriever: MyPageRetriever? = null,
     private val myBadgeRetriever: MyBadgeRetriever? = null,
 ) : UserRepository {
-    override suspend fun registerOnBoarding(onBoarding: OnBoarding): Result<Unit> =
-        kotlin.runCatching { trainingManager!!.registerOnBoarding(onBoarding) }
+    override suspend fun registerOnBoarding(
+        onBoarding: OnBoarding,
+        loginResult: LoginResult
+    ): Result<Unit> =
+        kotlin.runCatching { trainingManager!!.registerOnBoarding(onBoarding, loginResult) }
 
-    override suspend fun patchNicknameAndAcceptance(
+    override suspend fun modifyUserInfo(
         username: String,
         marketingAcceptance: Boolean?
-    ): Result<Joining> =
+    ): Result<Boolean> =
         kotlin.runCatching {
-            joinHelper!!.patch(
+            userModifier!!.patch(
                 username = username,
                 marketingAcceptance = marketingAcceptance
             )
-        }.map { response ->
-            Joining(
-                username = response.data!!.username,
-                marketingAcceptance = response.data.ternAccepted
-            )
-        }
+        }.map { true }
 
     override suspend fun getMyPage(): Result<MyPage> =
         kotlin.runCatching {
@@ -45,7 +44,7 @@ class UserRepositoryImpl(
         }.map { response ->
             MyPage(
                 username = response.data!!.username,
-                badge = Badge.from(response.data.badges[0]),
+                badge = Badge.from(response.data.badge),
                 hasPushAlarm = response.data.hasPushAlarm,
                 goal = TrainingGoal(
                     goal = response.data.target,
@@ -54,9 +53,15 @@ class UserRepositoryImpl(
                 ),
                 language = LanguageCode.en.language,
                 trainingTime = TrainingTime(
-                    days = response.data.trainingTime.day,
-                    hour = response.data.trainingTime.hour.toInt(),
-                    minute = response.data.trainingTime.minute.toInt()
+                    days = response.data.trainingTime!!.day?.let {
+                        if (it.isNotBlank()) {
+                            it.split(",")
+                                .map { Day.valueOf(it) }
+                                .toSet()
+                        } else emptySet()
+                    } ?: emptySet(),
+                    hour = response.data.trainingTime.hour,
+                    minute = response.data.trainingTime.minute
                 )
             )
         }

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+        <variable
+            name="vm"
+            type="com.sopt.smeem.presentation.detail.DiaryEditViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.detail.DiaryEditActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_diary_edit_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="18dp"
+            android:paddingTop="17dp"
+            android:paddingBottom="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_diary_edit_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="수정하기"
+                android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
+                android:textColor="?colorOnBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/btn_diary_edit_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/diary_write_cancel"
+                android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                android:textColor="?colorOnBackground"
+                app:layout_constraintBottom_toBottomOf="@id/tv_diary_edit_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_diary_edit_title" />
+
+            <TextView
+                android:id="@+id/btn_diary_edit_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="완료"
+                android:textAppearance="@style/TextAppearance.Smeem.Body1_bold"
+                android:textColor="@color/gray_300"
+                app:layout_constraintBottom_toBottomOf="@id/tv_diary_edit_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_diary_edit_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_diary_edit"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_diary_edit_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include
+                    android:id="@+id/layout_diary_edit_random_topic"
+                    layout="@layout/random_topic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:refreshVisibility="@{View.GONE}" />
+
+                <EditText
+                    android:id="@+id/et_diary_edit_content"
+                    style="@style/Style.Smeem.Text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/diary_write_hint"
+                    android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+                    android:lineSpacingExtra="4dp"
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="16dp"
+                    android:privateImeOptions="defaultInputmode==english"
+                    android:text="@={vm.diary}"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_diary_edit_random_topic"
+                    tools:text="@string/dummy_diary_english" />
+
+                <requestFocus />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

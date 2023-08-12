@@ -8,41 +8,36 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <NumberPicker
-            android:id="@+id/np_ampm"
-            android:layout_width="0dp"
+            android:id="@+id/np_time_picker_hour"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:theme="@style/NumberPickerTheme" />
 
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+        <TextView
+            android:id="@+id/tv_time_picker_colon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textAppearance="@style/TextAppearance.Smeem.Subtitle3_medium" />
 
         <NumberPicker
-            android:id="@+id/np_hour"
-            android:layout_width="0dp"
+            android:id="@+id/np_time_picker_minute"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:theme="@style/NumberPickerTheme" />
 
-            android:layout_marginStart="20dp"
-            app:layout_constraintStart_toEndOf="@id/np_ampm"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-        <NumberPicker
-            android:id="@+id/np_minute"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow_time_picker"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
-            android:layout_marginStart="20dp"
-
-            app:layout_constraintStart_toEndOf="@+id/np_hour"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:constraint_referenced_ids="np_time_picker_hour,tv_time_picker_colon,np_time_picker_minute"
+            app:flow_horizontalGap="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

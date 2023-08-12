@@ -1,6 +1,5 @@
 package com.sopt.smeem.data.model.response
 
-import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.BadgeType
 
 data class MyPageResponse(
@@ -10,13 +9,13 @@ data class MyPageResponse(
     val detail: String?,
     val targetLang: String,
     val hasPushAlarm: Boolean,
-    val trainingTime: TrainingResponse,
-    val badges: List<BadgeResponse>
+    val trainingTime: TrainingResponse?,
+    val badge: BadgeResponse
 ) {
     data class TrainingResponse(
-        val day: Set<Day>,
-        val hour: String,
-        val minute: String
+        val day: String,
+        val hour: Int,
+        val minute: Int
     )
 
     data class BadgeResponse(

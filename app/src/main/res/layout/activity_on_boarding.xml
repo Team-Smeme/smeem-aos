@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="16dp"
         android:paddingHorizontal="18dp"
-        tools:context=".presentation.auth.onboarding.OnBoardingActivity">
+        tools:context=".presentation.onboarding.OnBoardingActivity">
 
         <TextView
             android:id="@+id/tv_on_boarding_header_no"

@@ -13,8 +13,8 @@ data class Training(
             return null
         }
 
-        return TrainingRequest.TrainingTime(
-            day = trainingTime.days.toList(),
+        return TrainingRequest.TrainingTime.of(
+            day = trainingTime.days,
             hour = trainingTime.hour,
             minute = trainingTime.minute
         )

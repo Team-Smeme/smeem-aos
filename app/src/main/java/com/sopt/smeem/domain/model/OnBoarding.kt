@@ -15,10 +15,10 @@ data class OnBoarding(
             return null
         }
 
-        return TrainingRequest.TrainingTime(
+        return TrainingRequest.TrainingTime.of(
             day = day,
-            hour = requireNotNull(hour),
-            minute = requireNotNull(minute)
+            hour = hour,
+            minute = minute
         )
     }
 }

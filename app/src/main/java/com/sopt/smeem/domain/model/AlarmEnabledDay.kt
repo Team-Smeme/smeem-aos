@@ -14,10 +14,10 @@ data class AlarmEnabledDay(
 
     companion object {
         fun from(trainingResponse: MyPageResponse.TrainingResponse) = AlarmEnabledDay(
-            days = trainingResponse.day,
-            hour = asHour(trainingResponse.hour.toInt()),
-            minute = trainingResponse.minute.toInt(),
-            ampm = asAmpm(trainingResponse.hour.toInt())
+            days = trainingResponse.day.split(",").map { Day.valueOf(it) }.toSet(),
+            hour = asHour(trainingResponse.hour),
+            minute = trainingResponse.minute,
+            ampm = asAmpm(trainingResponse.hour)
         )
     }
 }

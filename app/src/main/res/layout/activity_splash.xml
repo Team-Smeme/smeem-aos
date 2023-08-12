@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="signIn"
+            type="com.sopt.smeem.presentation.splash.SplashActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="18dp"
+        android:paddingTop="141dp"
+        android:paddingBottom="16dp">
+
+        <ImageView
+            android:id="@+id/iv_sign_in_header"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@mipmap/ic_smeem"/>
+
+        <TextView
+            android:id="@+id/tv_sign_in_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5.3dp"
+            android:textAppearance="@style/TextAppearance.Smeem.Urbanist_semibold"
+
+            app:layout_constraintStart_toEndOf="@id/iv_sign_in_header"
+            app:layout_constraintTop_toTopOf="@id/iv_sign_in_header"
+            app:layout_constraintBottom_toBottomOf="@id/iv_sign_in_header"
+            android:text="@string/splash_header" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sign_in_header"
+            android:text="@string/splash_body" />
+
+        <TextView
+            android:id="@+id/tv_already_authed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="22dp"
+            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+            android:textColor="@color/gray_600"
+            app:layout_constraintBottom_toTopOf="@id/btn_auth_start"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/splash_footer" />
+
+        <Button
+            android:id="@+id/btn_auth_start"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/button_start" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

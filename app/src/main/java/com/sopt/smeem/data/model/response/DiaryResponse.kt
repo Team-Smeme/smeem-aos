@@ -7,7 +7,7 @@ class DiaryResponse {
         val content: String,
         val createdAt: String,
         val username: String,
-        val correctionResponses: List<CorrectionResponse>?
+        val corrections: List<CorrectionResponse>?
     ) {
         data class CorrectionResponse(
             val correctionId: Long,

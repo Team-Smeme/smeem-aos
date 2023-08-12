@@ -48,32 +48,32 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
         )
 
         viewModel.badges.observe(this) {
-            if (it[BadgeType.WELCOME] == null) {
+            if (it[BadgeType.EVENT] == null) {
                 binding.tvMyBadgesWelcomeBadge.isInvisible = true
             } else {
                 binding.tvMyBadgesWelcomeBadge.isInvisible = false
-                welcomeAdaptor.submitList(it[BadgeType.WELCOME])
+                welcomeAdaptor.submitList(it[BadgeType.EVENT])
             }
 
-            if (it[BadgeType.ACCUMULATED] == null) {
+            if (it[BadgeType.COUNTING] == null) {
                 binding.tvMyBadgesAccumulatedDiaryCount.isInvisible = true
             } else {
                 binding.tvMyBadgesAccumulatedDiaryCount.isInvisible = false
-                accumulatedAdaptor.submitList(it[BadgeType.ACCUMULATED])
+                accumulatedAdaptor.submitList(it[BadgeType.COUNTING])
             }
 
-            if (it[BadgeType.CONTINUED] == null) {
+            if (it[BadgeType.COMBO] == null) {
                 binding.tvMyBadgesContinuedDiaryCount.isInvisible = true
             } else {
                 binding.tvMyBadgesContinuedDiaryCount.isInvisible = false
-                continuedAdaptor.submitList(it[BadgeType.CONTINUED])
+                continuedAdaptor.submitList(it[BadgeType.COMBO])
             }
 
-            if (it[BadgeType.EXTRA] == null) {
+            if (it[BadgeType.EXPLORATION] == null) {
                 binding.tvMyBadgesExtras.isInvisible = true
             } else {
                 binding.tvMyBadgesExtras.isInvisible = false
-                extraAdaptor.submitList(it[BadgeType.EXTRA])
+                extraAdaptor.submitList(it[BadgeType.EXPLORATION])
             }
 
         }
