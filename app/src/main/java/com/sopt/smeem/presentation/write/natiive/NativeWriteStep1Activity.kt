@@ -35,6 +35,7 @@ class NativeWriteStep1Activity :
     }
 
     override fun addListeners() {
+        goBackToHome()
         setTopicVisibility()
         refreshTopic()
         hideTip()
@@ -50,6 +51,12 @@ class NativeWriteStep1Activity :
         binding.layoutNativeStep1BottomToolbar.cbRandomTopic.createTopicTooltip(
             this@NativeWriteStep1Activity, owner
         )
+    }
+
+    private fun goBackToHome() {
+        binding.layoutNativeStep1Toolbar.tvCancel.setOnSingleClickListener {
+            finish()
+        }
     }
 
     private fun setTopicVisibility() {
