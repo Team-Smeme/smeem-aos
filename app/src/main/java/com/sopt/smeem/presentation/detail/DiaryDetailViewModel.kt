@@ -31,9 +31,8 @@ class DiaryDetailViewModel @Inject constructor(
     val isDiaryDeleted = MutableLiveData(false)
 
     fun getDiaryDetail(onError: (SmeemException) -> Unit) {
-        // TODO: HomeActivity에서 diaryId 받아오기
         viewModelScope.launch {
-            diaryRepository.getDiaryDetail(500)
+            diaryRepository.getDiaryDetail(diaryId!!)
                 .onSuccess {
                     diaryId = it.id
                     topic.value = it.topic

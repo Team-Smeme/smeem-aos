@@ -22,7 +22,8 @@ class DiaryDetailActivity :
         // databinding
         binding.vm = viewModel
         binding.lifecycleOwner = this
-
+        // data
+        viewModel.diaryId = intent.getLongExtra("diaryId", -1)
         viewModel.getDiaryDetail { e->
             Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()
         }

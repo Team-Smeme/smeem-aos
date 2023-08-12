@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import com.sopt.smeem.R
@@ -10,6 +11,7 @@ import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.calendar.WritingBottomSheet
 import com.sopt.smeem.presentation.calendar.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.calendar.listener.OnWeeklyCalendarSwipeListener
+import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -74,6 +76,11 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 }
             }
         })
+        binding.clDiaryList.setOnSingleClickListener {
+            Intent(this, DiaryDetailActivity::class.java).apply {
+                putExtra("diaryId", homeViewModel.responseDateDiary.value?.id)
+            }.run(::startActivity)
+        }
     }
 
     private fun setTargetMonthTitle() {
