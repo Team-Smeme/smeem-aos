@@ -55,7 +55,7 @@
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
         <activity
             android:name=".presentation.detail.DiaryDetailActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".presentation.write.foreign.ForeignWriteActivity"
             android:exported="false"
@@ -99,14 +99,14 @@
 
         <activity
             android:name=".presentation.mypage.EditTrainingGoalActivity"
-            android:exported="true">
+            android:exported="false">
 
 
         </activity>
 
         <activity
             android:name=".presentation.home.HomeActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
     </application>

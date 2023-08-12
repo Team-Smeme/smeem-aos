@@ -65,7 +65,6 @@ class DiaryDetailBottomSheet(
             .setNegativeButton("예") { dialog, which ->
                 viewModel.deleteDiary(
                     onSuccess = {
-                        Log.d("delete success", "diary ${viewModel.diaryId} was deleted successfully!")
                         viewModel.isDiaryDeleted.value = true
                         dismiss()
                     },

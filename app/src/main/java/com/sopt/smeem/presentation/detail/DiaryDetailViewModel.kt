@@ -41,7 +41,6 @@ class DiaryDetailViewModel @Inject constructor(
                     date.value = it.createdAt?.toLocalDateTime()
                         ?.let { date -> DateUtil.asString(date) }
                     writer.value = it.username
-                    Log.d("diary id", "$diaryId")
                 }
                 .onHttpFailure { e -> onError(e) }
         }
