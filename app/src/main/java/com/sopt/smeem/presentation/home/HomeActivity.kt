@@ -16,7 +16,9 @@ import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @AndroidEntryPoint
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
@@ -43,6 +45,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             bs.show(supportFragmentManager, TAG)
         }
     }
+
     private fun moveToMyPage() {
         binding.ivMyPage.setOnClickListener {
             startActivity(Intent(this, MyPageActivity::class.java))
@@ -102,16 +105,21 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
 
         homeViewModel.responseDateDiary.observe(this) {
-            with(binding) {
-                if (it == null) {
-                    clDiaryList.visibility = View.GONE
-                    clNoDiary.visibility = View.VISIBLE
-                } else {
-                    clDiaryList.visibility = View.VISIBLE
-                    clNoDiary.visibility = View.GONE
-                    tvDiaryWritenTime.text = it.createdAt
-                    tvDiary.text = it.content
-                }
+            if (it == null) {
+                binding.clDiaryList.visibility = View.GONE
+                binding.clNoDiary.visibility = View.VISIBLE
+            } else {
+                binding.clDiaryList.visibility = View.VISIBLE
+                binding.clNoDiary.visibility = View.GONE
+
+                val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                val outputFormatter = DateTimeFormatter.ofPattern("h : mm a", Locale.ENGLISH)
+
+                val createdAtDateTime = LocalDateTime.parse(it.createdAt, inputFormatter)
+                val formattedCreatedAt = createdAtDateTime.format(outputFormatter)
+
+                binding.tvDiaryWritenTime.text = formattedCreatedAt
+                binding.tvDiary.text = it.content
             }
         }
     }
