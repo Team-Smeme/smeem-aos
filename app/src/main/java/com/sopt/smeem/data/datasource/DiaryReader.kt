@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 import java.util.regex.Pattern
 
 class DiaryReader(
-    private val diaryService: DiaryService
+    private val diaryService: DiaryService,
 ) {
     suspend fun getDetail(diaryId: Long): ApiResponse<DiaryResponse.Detail> =
         diaryService.getDetail(diaryId = diaryId)
@@ -23,17 +23,17 @@ class DiaryReader(
         val now = LocalDateTime.now()
 
         try {
-            if ((start == null || end == null) || (start == end)) {
+            if (start == null || end == null) {
                 return diaryService.getList(
                     startDate = DateUtil.yyyy_mm_dd(now),
-                    endDate = DateUtil.yyyy_mm_dd(now)
+                    endDate = DateUtil.yyyy_mm_dd(now),
                 )
             }
 
             if ((DateUtil.gap(start, end) >= 50) || (DateUtil.gap(start, end) < 0)) {
                 throw SmeemException(
                     errorCode = SmeemErrorCode.CLIENT_ERROR,
-                    throwable = IllegalArgumentException("날짜에 유호하지 않은 값이 입력되었습니다.")
+                    throwable = IllegalArgumentException("날짜에 유호하지 않은 값이 입력되었습니다."),
                 )
             }
 
@@ -42,12 +42,12 @@ class DiaryReader(
         } catch (t: IllegalArgumentException) {
             throw SmeemException(
                 errorCode = SmeemErrorCode.UNKNOWN_ERROR,
-                throwable = t
+                throwable = t,
             )
         }
     }
 
-    suspend fun getTopic() : ApiResponse<DiaryResponse.Topic> = diaryService.getTopic()
+    suspend fun getTopic(): ApiResponse<DiaryResponse.Topic> = diaryService.getTopic()
     private fun patternCheck(vararg dates: String) {
         dates.forEach {
             if (!Pattern.compile(YYYY_MM_DD).matcher(it).matches()) {
