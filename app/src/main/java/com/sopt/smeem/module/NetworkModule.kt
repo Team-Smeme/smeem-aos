@@ -1,7 +1,7 @@
 package com.sopt.smeem.module
 
 import com.sopt.smeem.BuildConfig.API_SERVER_URL
-import com.sopt.smeem.domain.repository.AuthRepository
+import com.sopt.smeem.domain.repository.LocalRepository
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule @Inject constructor(
-    private val authRepository: AuthRepository,
+    private val localRepository: LocalRepository,
 ) {
     val apiServerRetrofitForAnonymous by lazy {
         Retrofit.Builder()
@@ -50,11 +50,11 @@ class NetworkModule @Inject constructor(
                     readTimeout(5, TimeUnit.SECONDS)
 
                     runBlocking { // TODO : 제거
-                        if (authRepository.isAuthenticated()) {
+                        if (localRepository.isAuthenticated()) {
                             addInterceptor(
                                 RequestInterceptor(
-                                    accessToken = authRepository.getAuthentication()!!.accessToken!!,
-                                    refreshToken = authRepository.getAuthentication()!!.refreshToken,
+                                    accessToken = localRepository.getAuthentication()!!.accessToken!!,
+                                    refreshToken = localRepository.getAuthentication()!!.refreshToken,
                                 ),
                             )
                         }

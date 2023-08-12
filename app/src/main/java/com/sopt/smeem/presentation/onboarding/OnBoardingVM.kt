@@ -1,6 +1,5 @@
 package com.sopt.smeem.presentation.onboarding
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +16,7 @@ import com.sopt.smeem.domain.model.OnBoarding
 import com.sopt.smeem.domain.model.Training
 import com.sopt.smeem.domain.model.TrainingGoal
 import com.sopt.smeem.domain.model.TrainingTime
-import com.sopt.smeem.domain.repository.AuthRepository
+import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.LoginRepository
 import com.sopt.smeem.domain.repository.TrainingRepository
 import com.sopt.smeem.domain.repository.UserRepository
@@ -32,7 +31,7 @@ class OnBoardingVM @Inject constructor(
     @Anonymous private val trainingRepository: TrainingRepository,
     @Anonymous private val userRepositoryWithAnonymous: UserRepository,
     private val userRepositoryWithAuth: UserRepository,
-    private val authRepository: AuthRepository,
+    private val localRepository: LocalRepository,
 ) : ViewModel() {
 
     private val _loginResult = MutableLiveData<LoginResult>()
@@ -86,7 +85,7 @@ class OnBoardingVM @Inject constructor(
 
     }
 
-    fun alreadyAuthed() = viewModelScope.async { authRepository.isAuthenticated() }.getCompleted()
+    fun alreadyAuthed() = viewModelScope.async { localRepository.isAuthenticated() }.getCompleted()
 
     fun isDaySelected(content: String) = days.contains(Day.from(content))
     fun addDay(content: String) = days.add(Day.from(content))
@@ -142,7 +141,7 @@ class OnBoardingVM @Inject constructor(
             loginRepository.execute(accessToken = kakaoAccessToken, socialType)
                 .onSuccess {
                     // save on local storage
-                    authRepository.setAuthentication(
+                    localRepository.setAuthentication(
                         Authentication(
                             accessToken = it.apiAccessToken,
                             refreshToken = it.apiRefreshToken
