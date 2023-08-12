@@ -3,7 +3,7 @@ package com.sopt.smeem.presentation.splash
 import android.content.Intent
 import androidx.activity.viewModels
 import com.sopt.smeem.R
-import com.sopt.smeem.databinding.ActivitySplashBinding
+import com.sopt.smeem.databinding.ActivitySplashLoginBinding
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
@@ -13,7 +13,8 @@ import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_splash) {
+class SplashLoginActivity :
+    BindingActivity<ActivitySplashLoginBinding>(R.layout.activity_splash_login) {
     lateinit var bs: LoginBottomSheet
     private val vm: LoginVM by viewModels()
 
@@ -43,12 +44,13 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
     }
 
     private fun onAutoAuthed() {
-        when(vm.isAuthed()) {
+        when (vm.isAuthed()) {
             true -> {
                 // TODO : isRegistered, hasPlan 값들도 DataStore 에 저장해 온보딩중 이탈 회원 자동으로 이동하도록 (QA fix)
-                startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+                startActivity(Intent(this@SplashLoginActivity, HomeActivity::class.java))
                 finish()
             }
+
             false -> {
                 // do nothing
             }
@@ -62,7 +64,7 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
     }
 
     private fun afterLoginSuccess() {
-        vm.loginResult.observe(this@SplashActivity) {
+        vm.loginResult.observe(this@SplashLoginActivity) {
             when (it.isRegistered) {
                 true -> gotoHome() // 회원 정보 등록까지 완료된 상태라면, Home 으로 이동
                 false -> gotoNext(it) // 회원 정보 등록이 되지 않은 상태 (학습 목표, 닉네임 세팅이 되어있는지에 따라 분기)
@@ -83,12 +85,12 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
     }
 
     private fun gotoJoin() {
-        startActivity(Intent(this@SplashActivity, JoinWithNicknameActivity::class.java))
+        startActivity(Intent(this@SplashLoginActivity, JoinWithNicknameActivity::class.java))
         if (!isFinishing) finish()
     }
 
     private fun gotoOnBoarding() {
-        startActivity(Intent(this@SplashActivity, OnBoardingActivity::class.java))
+        startActivity(Intent(this@SplashLoginActivity, OnBoardingActivity::class.java))
         if (!isFinishing) finish()
     }
 }

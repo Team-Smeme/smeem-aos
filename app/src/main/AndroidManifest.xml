@@ -20,7 +20,7 @@
 
         <!-- Splash -->
         <activity
-            android:name=".presentation.splash.SplashActivity"
+            android:name=".presentation.splash.SplashLoginActivity"
             android:exported="true">
 
             <intent-filter>
