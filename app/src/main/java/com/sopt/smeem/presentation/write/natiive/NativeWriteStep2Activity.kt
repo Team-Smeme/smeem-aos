@@ -28,7 +28,7 @@ class NativeWriteStep2Activity :
                 text = intent.getStringExtra("nativeDiary")
             }
             with(layoutNativeStep2BottomToolbar.cbRandomTopic) {
-                isChecked = intent.getBooleanExtra("isTopicEnabled", true)
+                isChecked = intent.getLongExtra("topicId", -1) != (-1).toLong()
                 isEnabled = false
             }
         }

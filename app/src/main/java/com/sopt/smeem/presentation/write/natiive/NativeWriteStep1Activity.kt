@@ -1,6 +1,7 @@
 package com.sopt.smeem.presentation.write.natiive
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -134,13 +135,9 @@ class NativeWriteStep1Activity :
 
         viewModel.translateResult.observe(this@NativeWriteStep1Activity) {
             val intent = Intent(this, NativeWriteStep2Activity::class.java).apply {
-
                 putExtra("translateResult", it)
                 putExtra("nativeDiary", viewModel.diary.value)
-                putExtra(
-                    "isTopicEnabled",
-                    binding.layoutNativeStep1BottomToolbar.cbRandomTopic.isChecked
-                )
+                putExtra("topicId", viewModel.topicId)
             }
             startActivity(intent)
         }
