@@ -14,7 +14,6 @@ import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,9 +44,5 @@ internal class LoginVM @Inject constructor(
                 }
                 .onHttpFailure { e -> onError(e) }
         }
-    }
-
-    fun isAuthed(): Boolean {
-        return runBlocking { localRepository.isAuthenticated() }
     }
 }

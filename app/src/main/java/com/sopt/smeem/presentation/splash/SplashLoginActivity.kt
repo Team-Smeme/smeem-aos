@@ -25,7 +25,6 @@ class SplashLoginActivity :
 
     override fun addListeners() {
         super.addListeners()
-        onAutoAuthed()
         onTouchAlreadyAuthed() // LoginBottomSheet
         onTouchStart() // OnBoarding 으로 이동
     }
@@ -40,20 +39,6 @@ class SplashLoginActivity :
             startActivity(toOnBoarding)
 
             if (!isFinishing) finish()
-        }
-    }
-
-    private fun onAutoAuthed() {
-        when (vm.isAuthed()) {
-            true -> {
-                // TODO : isRegistered, hasPlan 값들도 DataStore 에 저장해 온보딩중 이탈 회원 자동으로 이동하도록 (QA fix)
-                startActivity(Intent(this@SplashLoginActivity, HomeActivity::class.java))
-                finish()
-            }
-
-            false -> {
-                // do nothing
-            }
         }
     }
 
