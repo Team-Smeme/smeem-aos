@@ -12,6 +12,7 @@ import com.sopt.smeem.databinding.ActivityNativeWriteStep1Binding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
+import com.sopt.smeem.util.setOnSingleClickListener
 import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -77,7 +78,7 @@ class NativeWriteStep1Activity :
     }
 
     private fun refreshTopic() {
-        binding.layoutNativeStep1RandomTopic.btnRefresh.setOnClickListener {
+        binding.layoutNativeStep1RandomTopic.btnRefresh.setOnSingleClickListener {
             setRandomTopic()
         }
     }
@@ -89,13 +90,13 @@ class NativeWriteStep1Activity :
     }
 
     private fun hideTip() {
-        binding.layoutNativeStep1Tip.setOnClickListener {
+        binding.layoutNativeStep1Tip.setOnSingleClickListener {
             it.visibility = View.GONE
         }
     }
 
     private fun completeNativeDiary() {
-        binding.layoutNativeStep1Toolbar.tvDone.setOnClickListener {
+        binding.layoutNativeStep1Toolbar.tvDone.setOnSingleClickListener {
             when (viewModel.isValidDiary.value) {
                 true -> {
                     moveToStep2()

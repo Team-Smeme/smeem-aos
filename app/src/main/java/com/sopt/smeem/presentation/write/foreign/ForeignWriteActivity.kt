@@ -102,8 +102,8 @@ class ForeignWriteActivity :
                 true -> {
                     viewModel.uploadDiary(
                         onSuccess = {
-                            finishAffinity()
                             Intent(this, HomeActivity::class.java).run(::startActivity)
+                            finishAffinity()
                         },
                         onError = { e ->
                             Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()

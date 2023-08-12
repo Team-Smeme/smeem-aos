@@ -2,15 +2,19 @@ package com.sopt.smeem.presentation.write.natiive
 
 import android.content.Intent
 import android.text.method.ScrollingMovementMethod
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityNativeWriteStep2Binding
+import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.util.setOnSingleClickListener
 import com.sopt.smeem.util.showSnackbar
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class NativeWriteStep2Activity :
     BindingActivity<ActivityNativeWriteStep2Binding>(R.layout.activity_native_write_step2) {
 
@@ -31,6 +35,8 @@ class NativeWriteStep2Activity :
                 isChecked = intent.getLongExtra("topicId", -1) != (-1).toLong()
                 isEnabled = false
             }
+            // data
+            viewModel.topicId = intent.getLongExtra("topicId", -1)
         }
     }
 
@@ -45,13 +51,13 @@ class NativeWriteStep2Activity :
     }
 
     private fun backToStep1() {
-        binding.layoutNativeStep2Toolbar.tvCancel.setOnClickListener {
+        binding.layoutNativeStep2Toolbar.tvCancel.setOnSingleClickListener {
             finish()
         }
     }
 
     private fun toggleHint() {
-        binding.layoutNativeStep2BottomToolbar.btnTranslate.setOnClickListener {
+        binding.layoutNativeStep2BottomToolbar.btnTranslate.setOnSingleClickListener {
             when (binding.layoutNativeStep2BottomToolbar.btnTranslate.isChecked) {
                 true -> {
                     binding.tvNativeStep2NativeDiary.text = intent.getStringExtra("translateResult")
@@ -65,12 +71,18 @@ class NativeWriteStep2Activity :
     }
 
     private fun completeDiary() {
-        binding.layoutNativeStep2Toolbar.tvDone.setOnClickListener {
+        binding.layoutNativeStep2Toolbar.tvDone.setOnSingleClickListener {
             when (viewModel.isValidDiary.value) {
                 true -> {
-                    finishAffinity()
-                    startActivity(Intent(this, HomeActivity::class.java))
-                    finish()
+                    viewModel.uploadDiary(
+                        onSuccess = {
+                            Intent(this, HomeActivity::class.java).run(::startActivity)
+                            finishAffinity()
+                        },
+                        onError = { e ->
+                            Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()
+                        }
+                    )
                 }
 
                 else -> {
