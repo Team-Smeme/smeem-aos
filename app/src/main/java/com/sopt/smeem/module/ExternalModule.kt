@@ -20,7 +20,7 @@ object ExternalModule {
     fun translateRepository(networkModule: NetworkModule): TranslateRepository =
         TranslateRepositoryImpl(
             Translater(
-                papagoService = networkModule.apiServerRetrofitForAnonymous.create(PapagoService::class.java)
+                papagoService = networkModule.apiPapagoRetrofit.create(PapagoService::class.java)
             )
         )
 }
