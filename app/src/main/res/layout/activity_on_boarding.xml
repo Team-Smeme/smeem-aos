@@ -14,6 +14,20 @@
         android:paddingHorizontal="18dp"
         tools:context=".presentation.onboarding.OnBoardingActivity">
 
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_circle_on_boarding_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:indeterminate="false"
+            app:indicatorColor="@color/point"
+            app:indicatorDirectionCircular="clockwise"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
         <TextView
             android:id="@+id/tv_on_boarding_header_no"
             android:layout_width="wrap_content"
