@@ -35,7 +35,9 @@
 
     <style name="ThemeOverlay.Smeem.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
         <item name="android:backgroundTint">@color/white</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/Widget.MaterialAlertDialog.Smeem.Title.Text</item>
+        <item name="materialAlertDialogTitleTextStyle">
+            @style/Widget.MaterialAlertDialog.Smeem.Title.Text
+        </item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.Smeem.Button.Dialog</item>
         <item name="buttonBarPositiveButtonStyle">@style/Widget.Smeem.Button.Dialog</item>
     </style>
@@ -57,5 +59,11 @@
     <style name="B14">
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Theme.Smeem.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@android:color/transparent</item>
+        <item name="windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+        <item name="postSplashScreenTheme">@style/Theme.Smeem</item>
     </style>
 </resources>

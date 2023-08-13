@@ -104,6 +104,8 @@ dependencies {
     implementation 'androidx.core:core-splashscreen:1.0.0'
     // balloon tooltip
     implementation "com.github.skydoves:balloon:1.5.3"
+    // Splashscreen
+    implementation 'androidx.core:core-splashscreen:1.0.0-rc01'
 
     // external //
     // fcm

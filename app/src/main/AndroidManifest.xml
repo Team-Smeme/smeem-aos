@@ -21,7 +21,8 @@
         <!-- Splash -->
         <activity
             android:name=".presentation.splash.SplashStartActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Smeem.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
