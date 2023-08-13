@@ -144,14 +144,6 @@ class OnBoardingVM @Inject constructor(
         viewModelScope.launch {
             loginRepository.execute(accessToken = kakaoAccessToken, socialType)
                 .onSuccess {
-                    // save on local storage
-                    localRepository.setAuthentication(
-                        Authentication(
-                            accessToken = it.apiAccessToken,
-                            refreshToken = it.apiRefreshToken
-                        )
-                    )
-
                     _loginResult.value = it
                 }
                 .onHttpFailure { e -> onError(e) }

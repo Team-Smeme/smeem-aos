@@ -201,8 +201,8 @@ class OnBoardingActivity :
     }
 
     private fun observerToGoLogin() {
-        vm.loginResult.observe(this@OnBoardingActivity) {
-            when (it.isRegistered) {
+        vm.loginResult.observe(this@OnBoardingActivity) {result ->
+            when (result.isRegistered) {
                 true -> {
                     vm.loadingEnd()
                     gotoHome()
@@ -215,6 +215,8 @@ class OnBoardingActivity :
                                 this@OnBoardingActivity,
                                 JoinWithNicknameActivity::class.java
                             )
+                            toJoin.putExtra("accessToken", result.apiAccessToken)
+                            toJoin.putExtra("refreshToken", result.apiRefreshToken)
                             startActivity(toJoin)
 
                             if (!isFinishing) finish()
