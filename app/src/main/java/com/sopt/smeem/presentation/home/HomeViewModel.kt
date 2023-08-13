@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.data.model.response.DiaryWritingResponse
+import com.sopt.smeem.domain.model.Badge
 import com.sopt.smeem.domain.model.DiarySummaries
 import com.sopt.smeem.domain.model.DiarySummary
 import com.sopt.smeem.domain.repository.DiaryRepository
@@ -16,6 +18,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val diaryRepository: DiaryRepository,
 ) : ViewModel() {
+
+    val badge = MutableLiveData<DiaryWritingResponse.RetrievedBadgeResponse?>()
 
     private val _responseDiaries: MutableLiveData<DiarySummaries> = MutableLiveData()
     val responseDiaries: LiveData<DiarySummaries>

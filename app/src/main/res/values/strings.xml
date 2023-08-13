@@ -59,4 +59,5 @@
     <string name="no_diary_notice">작성한 일기가 없어요.</string>
     <string name="go_to_diary_detail">go to diary detail</string>
     <string name="see_diary_detail">전체보기</string>
+    <string name="badge_obtain_message">축하해요!\n%s 배지를 획득했어요!</string>
 </resources>

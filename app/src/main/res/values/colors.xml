@@ -13,6 +13,7 @@
     <color name="gray_500">#A6A6A6</color>
     <color name="gray_600">#8C8C8C</color>
     <color name="black">#171716</color>
+    <color name="black_opacity_30">#4D171716</color>
     <!-- etc -->
     <color name="kakao">#FEE500</color>
     <color name="snackbar">#474747</color>
