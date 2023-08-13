@@ -28,11 +28,13 @@ class UserRepositoryImpl(
         kotlin.runCatching { trainingManager!!.registerOnBoarding(onBoarding, loginResult) }
 
     override suspend fun modifyUserInfo(
+        accessToken: String?,
         username: String,
         marketingAcceptance: Boolean?
     ): Result<Boolean> =
         kotlin.runCatching {
             userModifier!!.patch(
+                accessToken = accessToken,
                 username = username,
                 marketingAcceptance = marketingAcceptance
             )

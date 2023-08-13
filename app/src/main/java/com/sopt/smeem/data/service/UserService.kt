@@ -1,7 +1,7 @@
 package com.sopt.smeem.data.service
 
-import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
 import com.sopt.smeem.data.model.request.TrainingRequest
+import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
 import com.sopt.smeem.data.model.response.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -23,5 +23,11 @@ interface UserService {
     @PATCH("/api/v2/members")
     suspend fun patchUserInfo(
         @Body request: UserInfoModifyingRequest
+    ): ApiResponse<Unit>
+
+    @PATCH("/api/v2/memebers")
+    suspend fun patchUserInfoWithTokenFixed(
+        @Header("Authorization") token: String,
+        @Body request: UserInfoModifyingRequest,
     ): ApiResponse<Unit>
 }
