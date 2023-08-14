@@ -49,8 +49,7 @@ class WeeklyCalendarViewHolder(
 
         with(binding) {
             date = weeklyDate.dayOfMonth.toString()
-            val color =
-                if (hasDiaryEntry) Color.parseColor("#171716") else Color.parseColor("#B8B8B8")
+            val color = Color.parseColor("#171716")
 
             if (DateUtils.isToday(localDate.time)) {
                 ivToday.visibility = View.VISIBLE
