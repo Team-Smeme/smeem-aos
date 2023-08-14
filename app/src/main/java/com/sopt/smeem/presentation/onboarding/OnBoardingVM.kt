@@ -62,6 +62,10 @@ class OnBoardingVM @Inject constructor(
     val step: LiveData<Int>
         get() = _step
 
+    private val _onLoading = MutableLiveData(LoadingState.NOT_STARTED)
+    val onLoading: LiveData<LoadingState>
+        get() = _onLoading
+
     // selected time
     val selectedHour = MutableLiveData(DEFAULT_HOUR)
     val selectedMinute = MutableLiveData(DEFAULT_MINUTE)
@@ -199,6 +203,14 @@ class OnBoardingVM @Inject constructor(
                 .onSuccess { _trainingGoal.value = it }
                 .onHttpFailure { e -> onError(e) }
         }
+    }
+
+    fun loadingStart() {
+        _onLoading.value = LoadingState.ACT
+    }
+
+    fun loadingEnd() {
+        _onLoading.value = LoadingState.DONE
     }
 
     companion object {
