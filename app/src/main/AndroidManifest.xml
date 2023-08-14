@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".Smeem"
@@ -20,15 +20,19 @@
 
         <!-- Splash -->
         <activity
-            android:name=".presentation.splash.SplashLoginActivity"
-            android:exported="true">
-
+            android:name=".presentation.splash.SplashStartActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Smeem.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".presentation.splash.SplashLoginActivity"
+            android:exported="false" />
 
         <!-- OnBoarding-->
         <activity
