@@ -10,7 +10,6 @@ class ImageBindingAdapter {
         @JvmStatic
         @BindingAdapter(value = ["imgUrl"])
         fun load(imageView: ImageView, imageUrl: String?) {
-//            imageUrl?.let(imageView::load)
             imageView.load(imageUrl)
         }
 
