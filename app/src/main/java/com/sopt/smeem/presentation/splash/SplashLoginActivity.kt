@@ -7,6 +7,8 @@ import com.sopt.smeem.databinding.ActivitySplashLoginBinding
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
+import com.sopt.smeem.presentation.join.JoinConstant.REFRESH_TOKEN
 import com.sopt.smeem.presentation.join.JoinWithNicknameActivity
 import com.sopt.smeem.presentation.onboarding.OnBoardingActivity
 import com.sopt.smeem.util.setOnSingleClickListener
@@ -64,18 +66,32 @@ class SplashLoginActivity :
 
     private fun gotoNext(loginResult: LoginResult) {
         when (loginResult.isPlanRegistered) {
-            true -> gotoJoin() // 학습 목표는 세팅되어있다면, Join 으로 이동 (닉네임 입력)
-            false -> gotoOnBoarding() // 학습 목표가 세팅되어있지 않다면, OnBoarding 으로 이동
+            true -> gotoJoin(
+                loginResult.apiAccessToken,
+                loginResult.apiRefreshToken
+            ) // 학습 목표는 세팅되어있다면, Join 으로 이동 (닉네임 입력)
+            false -> gotoOnBoarding(
+                loginResult.apiAccessToken,
+                loginResult.apiRefreshToken,
+            ) // 학습 목표가 세팅되어있지 않다면, OnBoarding 으로 이동
         }
     }
 
-    private fun gotoJoin() {
-        startActivity(Intent(this@SplashLoginActivity, JoinWithNicknameActivity::class.java))
+    private fun gotoJoin(accessToken: String, refreshToken: String) {
+        val toJoin = Intent(this@SplashLoginActivity, JoinWithNicknameActivity::class.java)
+        toJoin.putExtra(ACCESS_TOKEN, accessToken)
+        toJoin.putExtra(REFRESH_TOKEN, refreshToken)
+        startActivity(intent)
+
         if (!isFinishing) finish()
     }
 
-    private fun gotoOnBoarding() {
-        startActivity(Intent(this@SplashLoginActivity, OnBoardingActivity::class.java))
+    private fun gotoOnBoarding(accessToken: String, refreshToken: String) {
+        val toOnBoarding = Intent(this@SplashLoginActivity, OnBoardingActivity::class.java)
+        toOnBoarding.putExtra(ACCESS_TOKEN, accessToken)
+        toOnBoarding.putExtra(REFRESH_TOKEN, refreshToken)
+        startActivity(toOnBoarding)
+
         if (!isFinishing) finish()
     }
 }

@@ -8,7 +8,6 @@ import com.sopt.smeem.Anonymous
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
 import com.sopt.smeem.data.ApiPool.onHttpFailure
-import com.sopt.smeem.domain.model.Authentication
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.LoginRepository
@@ -33,13 +32,6 @@ internal class LoginVM @Inject constructor(
         viewModelScope.launch {
             loginRepository.execute(kakaoAccessToken, socialType)
                 .onSuccess {
-                    localRepository.setAuthentication( // save on local storage
-                        Authentication(
-                            accessToken = it.apiAccessToken,
-                            refreshToken = it.apiRefreshToken
-                        )
-                    )
-
                     _loginResult.value = it
                 }
                 .onHttpFailure { e -> onError(e) }

@@ -83,8 +83,8 @@ class UserRepositoryImpl(
             }
         }
 
-    override suspend fun editTraining(training: Training): Result<Unit> =
+    override suspend fun editTraining(accessToken: String?, training: Training): Result<Unit> =
         kotlin.runCatching {
-            trainingManager!!.patchTraining(training)
+            trainingManager!!.patchTraining(accessToken, training)
         }
 }

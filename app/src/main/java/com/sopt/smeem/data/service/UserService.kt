@@ -13,6 +13,11 @@ interface UserService {
         @Body request: TrainingRequest
     ): ApiResponse<Unit>
 
+    @PATCH("/api/v2/members/plan")
+    suspend fun patchPlanWithFixedToken(
+        @Header("Authorization") token: String,
+        @Body request: TrainingRequest,
+    ): ApiResponse<Unit>
 
     @PATCH("/api/v2/members/plan")
     suspend fun patchPlanOnAnonymous(

@@ -49,15 +49,13 @@ class NetworkModule @Inject constructor(
                     writeTimeout(5, TimeUnit.SECONDS)
                     readTimeout(5, TimeUnit.SECONDS)
 
-                    runBlocking { // TODO : 제거
-                        if (localRepository.isAuthenticated()) {
-                            addInterceptor(
-                                RequestInterceptor(
-                                    accessToken = localRepository.getAuthentication()!!.accessToken!!,
-                                    refreshToken = localRepository.getAuthentication()!!.refreshToken,
-                                ),
-                            )
-                        }
+                    runBlocking {
+                        addInterceptor(
+                            RequestInterceptor(
+                                accessToken = localRepository.getAuthentication().accessToken,
+                                refreshToken = localRepository.getAuthentication().refreshToken,
+                            ),
+                        )
                     }
                 }.addInterceptor(
                     HttpLoggingInterceptor().apply {

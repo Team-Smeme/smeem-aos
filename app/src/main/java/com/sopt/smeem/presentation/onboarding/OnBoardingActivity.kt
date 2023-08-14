@@ -13,6 +13,8 @@ import com.sopt.smeem.databinding.ActivityOnBoardingBinding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
+import com.sopt.smeem.presentation.join.JoinConstant.REFRESH_TOKEN
 import com.sopt.smeem.presentation.join.JoinWithNicknameActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -201,12 +203,13 @@ class OnBoardingActivity :
     }
 
     private fun observerToGoLogin() {
-        vm.loginResult.observe(this@OnBoardingActivity) {result ->
+        vm.loginResult.observe(this@OnBoardingActivity) { result ->
             when (result.isRegistered) {
                 true -> {
                     vm.loadingEnd()
                     gotoHome()
                 }
+
                 false -> {
                     vm.sendPlanDataOnAnonymous(
                         onSuccess = {
@@ -286,14 +289,17 @@ class OnBoardingActivity :
         }
 
     private fun checkAlreadyAuthed() {
-        if (vm.alreadyAuthed()) {
-
+        val accessTokenFromPast: String? = intent.getStringExtra(ACCESS_TOKEN)
+        if (accessTokenFromPast != null) {
             // 이미 사전에 로그인을 수행했던 경우 ( case : "이미 계정이 있어요" 를 통한 온보딩 접근 )
             // hasPlan 이 false 여서 트레이닝 설정에 들어왔고, hasPlan 이 false 이면, isRegistered 도 false. (true 인 Case 는 없다.)
             vm.sendPlanDataWithAuth(
+                token = accessTokenFromPast,
                 onSuccess = {
-                    val toEntrance = Intent(this, JoinWithNicknameActivity::class.java)
-                    startActivity(toEntrance)
+                    val toJoin = Intent(this, JoinWithNicknameActivity::class.java)
+                    toJoin.putExtra(ACCESS_TOKEN, accessTokenFromPast)
+                    toJoin.putExtra(REFRESH_TOKEN, intent.getStringExtra(REFRESH_TOKEN))
+                    startActivity(toJoin)
                     if (!isFinishing) finish()
                 },
                 onError = { e -> Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show() }
