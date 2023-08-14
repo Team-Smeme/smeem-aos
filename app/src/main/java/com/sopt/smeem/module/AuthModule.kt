@@ -1,8 +1,8 @@
 package com.sopt.smeem.module
 
 import android.content.Context
-import com.sopt.smeem.data.repository.AuthRepositoryImpl
-import com.sopt.smeem.domain.repository.AuthRepository
+import com.sopt.smeem.data.repository.LocalRepositoryImpl
+import com.sopt.smeem.domain.repository.LocalRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,5 +17,5 @@ object AuthModule {
     @Singleton
     fun authRepository(
         @ApplicationContext context: Context
-    ): AuthRepository = AuthRepositoryImpl(context)
+    ): LocalRepository = LocalRepositoryImpl(context)
 }

@@ -7,16 +7,16 @@ import com.sopt.smeem.SmeemErrorCode
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.domain.model.Authentication
-import com.sopt.smeem.domain.repository.AuthRepository
+import com.sopt.smeem.domain.repository.LocalRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor(
+class LocalRepositoryImpl @Inject constructor(
     private val context: Context
-) : AuthRepository {
+) : LocalRepository {
 
     /**
      * LocalStorage 로 부터 Authentication 추출
