@@ -16,6 +16,7 @@ interface UserRepository {
      * 닉네임 및 이용약관 정보를 서버로 전송합니다.
      */
     suspend fun modifyUserInfo(
+        accessToken: String? = null,
         nickname: String,
         marketingAcceptance: Boolean? = null
     ): Result<Boolean>
@@ -30,5 +31,5 @@ interface UserRepository {
     /**
      * 트레이닝 정보를 수정합니다.
      */
-    suspend fun editTraining(training: Training): Result<Unit>
+    suspend fun editTraining(accessToken: String? = null, training: Training): Result<Unit>
 }

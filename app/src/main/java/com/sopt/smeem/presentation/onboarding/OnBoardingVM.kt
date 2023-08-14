@@ -30,7 +30,6 @@ class OnBoardingVM @Inject constructor(
     @Anonymous private val loginRepository: LoginRepository,
     @Anonymous private val trainingRepository: TrainingRepository,
     @Anonymous private val userRepositoryWithAnonymous: UserRepository,
-    private val userRepositoryWithAuth: UserRepository,
     private val localRepository: LocalRepository,
 ) : ViewModel() {
 
@@ -89,8 +88,6 @@ class OnBoardingVM @Inject constructor(
 
     }
 
-    fun alreadyAuthed() = viewModelScope.async { localRepository.isAuthenticated() }.getCompleted()
-
     fun isDaySelected(content: String) = days.contains(Day.from(content))
     fun addDay(content: String) = days.add(Day.from(content))
     fun removeDay(content: String) = days.remove(Day.from(content))
@@ -144,14 +141,6 @@ class OnBoardingVM @Inject constructor(
         viewModelScope.launch {
             loginRepository.execute(accessToken = kakaoAccessToken, socialType)
                 .onSuccess {
-                    // save on local storage
-                    localRepository.setAuthentication(
-                        Authentication(
-                            accessToken = it.apiAccessToken,
-                            refreshToken = it.apiRefreshToken
-                        )
-                    )
-
                     _loginResult.value = it
                 }
                 .onHttpFailure { e -> onError(e) }
@@ -183,10 +172,11 @@ class OnBoardingVM @Inject constructor(
         }
     }
 
-    fun sendPlanDataWithAuth(onSuccess: (Unit) -> Unit, onError: (SmeemException) -> Unit) {
+    fun sendPlanDataWithAuth(token: String, onSuccess: (Unit) -> Unit, onError: (SmeemException) -> Unit) {
         viewModelScope.launch {
-            userRepositoryWithAuth.editTraining(
-                Training(
+            userRepositoryWithAnonymous.editTraining(
+                accessToken = token,
+                training = Training(
                     type = selectedGoal.value ?: TrainingGoalType.NO_SELECTED,
                     trainingTime = TrainingTime(days = days.toSet(), hour = hour, minute = minute),
                     hasAlarm = isNotiGranted.value ?: false,

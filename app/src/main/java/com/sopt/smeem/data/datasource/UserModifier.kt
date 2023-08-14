@@ -8,9 +8,25 @@ class UserModifier(
     private val userService: UserService
 ) {
     suspend fun patch(
+        accessToken: String?,
         username: String,
         marketingAcceptance: Boolean?
-    ): ApiResponse<Unit> = userService.patchUserInfo(
-        UserInfoModifyingRequest(username = username, termAccepted = marketingAcceptance ?: false)
-    )
+    ): ApiResponse<Unit> {
+        if (accessToken != null) {
+            return userService.patchUserInfoWithTokenFixed(
+                token = "Bearer $accessToken",
+                UserInfoModifyingRequest(
+                    username = username,
+                    termAccepted = marketingAcceptance ?: false
+                )
+            )
+        } else {
+            return userService.patchUserInfo(
+                UserInfoModifyingRequest(
+                    username = username,
+                    termAccepted = marketingAcceptance ?: false
+                )
+            )
+        }
+    }
 }

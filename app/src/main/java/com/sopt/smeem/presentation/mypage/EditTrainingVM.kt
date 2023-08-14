@@ -39,9 +39,7 @@ class EditTrainingVM @Inject constructor() : ViewModel() {
     fun sendServer(onError: (SmeemException) -> Unit) {
         viewModelScope.launch {
             userRepository.editTraining(
-                Training(
-                    type = selectedGoal.value!!,
-                )
+                training = Training(type = selectedGoal.value!!)
             ).onHttpFailure { e -> onError(e) }
         }
     }

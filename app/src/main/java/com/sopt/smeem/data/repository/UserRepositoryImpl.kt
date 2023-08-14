@@ -28,11 +28,13 @@ class UserRepositoryImpl(
         kotlin.runCatching { trainingManager!!.registerOnBoarding(onBoarding, loginResult) }
 
     override suspend fun modifyUserInfo(
+        accessToken: String?,
         username: String,
         marketingAcceptance: Boolean?
     ): Result<Boolean> =
         kotlin.runCatching {
             userModifier!!.patch(
+                accessToken = accessToken,
                 username = username,
                 marketingAcceptance = marketingAcceptance
             )
@@ -81,8 +83,8 @@ class UserRepositoryImpl(
             }
         }
 
-    override suspend fun editTraining(training: Training): Result<Unit> =
+    override suspend fun editTraining(accessToken: String?, training: Training): Result<Unit> =
         kotlin.runCatching {
-            trainingManager!!.patchTraining(training)
+            trainingManager!!.patchTraining(accessToken, training)
         }
 }
