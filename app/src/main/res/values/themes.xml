@@ -20,6 +20,7 @@
         <!-- etc -->
         <item name="colorControlActivated">@color/point</item>
         <item name="colorControlNormal">@color/point</item>
+        <item name="colorBackgroundFloating">@color/black_opacity_30</item>
         <item name="materialButtonStyle">@style/Widget.Smeem.Button</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Smeem.BottomSheetDialog</item>
         <item name="android:timePickerStyle">@style/Widget.Smeem.TimePicker</item>
