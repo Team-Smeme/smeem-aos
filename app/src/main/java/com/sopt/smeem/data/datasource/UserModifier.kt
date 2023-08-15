@@ -29,4 +29,6 @@ class UserModifier(
             )
         }
     }
+
+    suspend fun delete(): ApiResponse<Unit> = userService.delete()
 }

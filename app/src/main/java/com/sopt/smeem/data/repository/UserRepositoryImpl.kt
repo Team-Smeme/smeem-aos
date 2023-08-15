@@ -87,4 +87,9 @@ class UserRepositoryImpl(
         kotlin.runCatching {
             trainingManager.patchTraining(accessToken, training)
         }
+
+    override suspend fun deleteUser(): Result<Unit> =
+        kotlin.runCatching {
+            userModifier.delete()
+        }
 }

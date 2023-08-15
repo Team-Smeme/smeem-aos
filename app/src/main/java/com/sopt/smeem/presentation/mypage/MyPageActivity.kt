@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityMyPageBinding
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,11 +32,41 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         onTouchBadge()
         onEditGoal()
         onTouchBack()
+        onTouchMenu()
     }
 
     private fun onTouchBack() {
         binding.topbarMyPage.setNavigationOnClickListener {
+            binding.webviewMypageManual.destroy()
             finish()
+        }
+    }
+
+    private fun onTouchMenu() {
+        binding.topbarMyPage.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menual -> {
+                    Toast.makeText(this, "준비중입니다.", Toast.LENGTH_SHORT).show()
+                    true
+                }
+
+                R.id.logout -> {
+                    vm.clearLocal()
+                    startActivity(Intent(this, SplashLoginActivity::class.java))
+                    finishAffinity()
+                    true
+                }
+
+                R.id.withdrawal -> {
+                    vm.withdrawal()
+                    startActivity(Intent(this, SplashLoginActivity::class.java))
+                    finishAffinity()
+                    true
+                }
+
+                else -> false
+
+            }
         }
     }
 

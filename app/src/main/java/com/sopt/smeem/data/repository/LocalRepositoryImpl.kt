@@ -82,6 +82,14 @@ class LocalRepositoryImpl @Inject constructor(
             .firstOrNull() != null
     }
 
+    override suspend fun clear() {
+        try {
+            context.dataStore.edit { preferences -> preferences.clear() }
+        } catch (t: Throwable) {
+            throw SmeemException(errorCode = SmeemErrorCode.SYSTEM_ERROR, throwable = t)
+        }
+    }
+
     companion object {
         private val API_ACCESS_TOKEN = stringPreferencesKey("api_access_token")
         private val API_REFRESH_TOKEN = stringPreferencesKey("api_refresh_token")
