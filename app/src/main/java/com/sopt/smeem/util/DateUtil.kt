@@ -87,12 +87,15 @@ object DateUtil {
 
         fun hourMinute(createdAt: LocalDateTime): String {
             val toLocalTime = createdAt.toLocalTime()
-            val hour =
-                if (toLocalTime.hour / 10 >= 1) toLocalTime.hour.toString() else "0${toLocalTime.hour}"
-            val minutes =
-                if (toLocalTime.minute < 10) "0${toLocalTime.minute}" else toLocalTime.minute.toString()
+            val hour = when {
+                (toLocalTime.hour in 13..24) -> "%02d".format(toLocalTime.hour - 12)
+                (toLocalTime.hour == 0) -> "12"
+                else -> "%02d".format(toLocalTime.hour)
+            }
+            val minutes = "%02d".format(toLocalTime.minute)
+            val ampm = if (toLocalTime.hour in 12..23) " PM" else " AM"
 
-            return "$hour:$minutes"
+            return "$hour : $minutes $ampm"
         }
     }
 }

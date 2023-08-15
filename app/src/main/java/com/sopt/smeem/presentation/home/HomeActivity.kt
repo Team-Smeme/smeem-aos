@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import com.sopt.smeem.R
@@ -11,6 +12,8 @@ import com.sopt.smeem.presentation.calendar.WritingBottomSheet
 import com.sopt.smeem.presentation.calendar.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.calendar.listener.OnWeeklyCalendarSwipeListener
 import com.sopt.smeem.presentation.mypage.MyPageActivity
+import com.sopt.smeem.util.DateUtil
+import com.sopt.smeem.util.TextUtil.toLocalDateTime
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
@@ -95,14 +98,16 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
 
         homeViewModel.responseDateDiary.observe(this) {
-            if (it == null) {
-                binding.clDiaryList.visibility = View.GONE
-                binding.clNoDiary.visibility = View.VISIBLE
-            } else {
-                binding.clDiaryList.visibility = View.VISIBLE
-                binding.clNoDiary.visibility = View.GONE
-                binding.tvDiaryWritenTime.text = it.createdAt
-                binding.tvDiary.text = it.content
+            with(binding) {
+                if (it == null) {
+                    clDiaryList.visibility = View.GONE
+                    clNoDiary.visibility = View.VISIBLE
+                } else {
+                    clDiaryList.visibility = View.VISIBLE
+                    clNoDiary.visibility = View.GONE
+                    tvDiaryWritenTime.text = DateUtil.WithUser.hourMinute(it.createdAt.toLocalDateTime())
+                    tvDiary.text = it.content
+                }
             }
         }
     }
