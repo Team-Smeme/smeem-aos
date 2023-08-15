@@ -19,6 +19,10 @@ class JoinWithNicknameActivity :
     BindingActivity<ActivityJoinNicknameBinding>(R.layout.activity_join_nickname) {
     private val vm: JoinNicknameVM by viewModels()
 
+    override fun constructLayout() {
+        binding.etEntranceNickname.requestFocus()
+    }
+
     override fun addListeners() {
         watchButtonSwitchWithTextChanging()
         onTextWrite()

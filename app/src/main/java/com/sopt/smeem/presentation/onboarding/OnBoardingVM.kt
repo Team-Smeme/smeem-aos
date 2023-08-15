@@ -21,7 +21,6 @@ import com.sopt.smeem.domain.repository.LoginRepository
 import com.sopt.smeem.domain.repository.TrainingRepository
 import com.sopt.smeem.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -37,7 +36,7 @@ class OnBoardingVM @Inject constructor(
     val loginResult: LiveData<LoginResult>
         get() = _loginResult
 
-    private val _selectedGoal = MutableLiveData<TrainingGoalType>()
+    private val _selectedGoal = MutableLiveData(TrainingGoalType.NO_SELECTED)
     val selectedGoal: LiveData<TrainingGoalType>
         get() = _selectedGoal
 
@@ -175,7 +174,11 @@ class OnBoardingVM @Inject constructor(
         }
     }
 
-    fun sendPlanDataWithAuth(token: String, onSuccess: (Unit) -> Unit, onError: (SmeemException) -> Unit) {
+    fun sendPlanDataWithAuth(
+        token: String,
+        onSuccess: (Unit) -> Unit,
+        onError: (SmeemException) -> Unit
+    ) {
         viewModelScope.launch {
             userRepositoryWithAnonymous.editTraining(
                 accessToken = token,
@@ -204,6 +207,17 @@ class OnBoardingVM @Inject constructor(
 
     fun loadingEnd() {
         _onLoading.value = LoadingState.DONE
+    }
+
+    fun saveTokenOnLocal(accessToken: String, refreshToken: String) {
+        viewModelScope.launch {
+            localRepository.setAuthentication(
+                Authentication(
+                    accessToken = accessToken,
+                    refreshToken = refreshToken,
+                )
+            )
+        }
     }
 
     companion object {

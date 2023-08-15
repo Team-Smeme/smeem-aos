@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.mypage
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.google.android.material.button.MaterialButton
@@ -9,6 +10,7 @@ import com.sopt.smeem.databinding.ActivityEditTrainingGoalBinding
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
+import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,7 +46,7 @@ class EditTrainingGoalActivity :
 
     private fun onTouchButtons() {
         buttons?.values?.forEach { button ->
-            button.setOnClickListener {
+            button.setOnSingleClickListener {
                 if (TrainingGoalType.NO_SELECTED != vm.selectedGoal.value) {
                     buttons!![vm.selectedGoal.value]?.switchOff() // 기존 off
                     vm.upsert(TrainingGoalType.findById(button.id))
@@ -62,12 +64,13 @@ class EditTrainingGoalActivity :
             }
         }
 
-        binding.btnMyPageTrainingGoal.setOnClickListener {
+        binding.btnMyPageTrainingGoal.setOnSingleClickListener {
             vm.sendServer(
                 onError = { e ->
                     Toast.makeText(this, e.errorCode.message, Toast.LENGTH_SHORT).show()
                 }
             )
+            goBack()
         }
     }
 
@@ -81,17 +84,12 @@ class EditTrainingGoalActivity :
 
     private fun onTouchBack() {
         binding.topbarMyPageTraining.setNavigationOnClickListener {
-            /* onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-                 override fun handleOnBackPressed() {
-                     goBack()
-                 }
-             })*/
             goBack()
-            finish()
         }
     }
 
     private fun goBack() {
-        super.onBackPressed()
+        startActivity(Intent(this, MyPageActivity::class.java))
+        finish()
     }
 }

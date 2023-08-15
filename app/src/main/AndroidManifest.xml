@@ -85,7 +85,8 @@
 
         <activity
             android:name=".presentation.mypage.ChangingNicknameActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"  />
 
         <activity
             android:name=".presentation.mypage.MyPageActivity"
