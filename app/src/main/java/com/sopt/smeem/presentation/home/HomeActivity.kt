@@ -62,7 +62,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 date.format(DateTimeFormatter.ofPattern(TARGET_MONTH_PATTERN))
 
             binding.btnWriteDiary.visibility =
-                if (LocalDate.now().isEqual(date)) View.VISIBLE else View.GONE
+                if (LocalDate.now().isEqual(date)) View.VISIBLE else View.INVISIBLE
 
             homeViewModel.getDateDiary(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
         }
