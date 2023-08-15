@@ -237,6 +237,7 @@ class OnBoardingActivity :
             when (result.isRegistered) {
                 true -> {
                     vm.loadingEnd()
+                    vm.saveTokenOnLocal(result.apiAccessToken, result.apiRefreshToken)
                     gotoHome()
                 }
 
