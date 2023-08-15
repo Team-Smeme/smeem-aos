@@ -36,7 +36,7 @@ class ChangingNicknameActivity :
 
     private fun onTextWrite() {
         binding.etChangeNickname.addTextChangedListener { watcher ->
-            if (watcher!!.length <= 0 || watcher!!.length > 16) {
+            if (watcher.isNullOrBlank() || watcher.length > 10) {
                 nextButtonOff()
             } else {
                 nextButtonOn()

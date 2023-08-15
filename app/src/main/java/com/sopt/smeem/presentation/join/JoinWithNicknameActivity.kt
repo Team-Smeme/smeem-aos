@@ -27,7 +27,7 @@ class JoinWithNicknameActivity :
 
     private fun onTextWrite() {
         binding.etEntranceNickname.addTextChangedListener { watcher ->
-            if (watcher!!.isEmpty() || watcher.length > 16) {
+            if (watcher.isNullOrBlank() || watcher.length > 10) {
                 watchButtonSwitchWithTextChanging()
             } else {
                 nextButtonOn()
