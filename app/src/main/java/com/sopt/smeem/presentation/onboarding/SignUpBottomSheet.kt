@@ -32,7 +32,7 @@ class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
         super.onViewCreated(view, savedInstanceState)
         val context = requireContext()
 
-        binding.layoutKakaoStart.setOnSingleClickListener {
+        binding.btnKakao.setOnSingleClickListener {
 
             if (KakaoHandler.isAppEnabled(context)) {
                 KakaoHandler.loginOnApp(context,

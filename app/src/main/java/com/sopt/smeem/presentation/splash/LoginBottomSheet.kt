@@ -38,7 +38,7 @@ class LoginBottomSheet : BottomSheetDialogFragment(), LoginProcess {
         super.onViewCreated(view, savedInstanceState)
         val context = requireContext()
 
-        binding.tvKakao.setOnClickListener {
+        binding.btnKakao.setOnClickListener {
             if (KakaoHandler.isAppEnabled(context)) {
                 KakaoHandler.loginOnApp(context,
                     onSuccess = { kakaoAccessToken, kakaoRefreshToken ->
