@@ -62,7 +62,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 date.format(DateTimeFormatter.ofPattern(TARGET_MONTH_PATTERN))
 
             binding.btnWriteDiary.visibility =
-                if (LocalDate.now().isEqual(date)) View.VISIBLE else View.INVISIBLE
+                if (LocalDate.now().isEqual(date) && homeViewModel.responseDateDiary.value == null) View.VISIBLE else View.INVISIBLE
 
             homeViewModel.getDateDiary(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
         }
@@ -102,14 +102,16 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
 
         homeViewModel.responseDateDiary.observe(this) {
-            if (it == null) {
-                binding.clDiaryList.visibility = View.GONE
-                binding.clNoDiary.visibility = View.VISIBLE
-            } else {
-                binding.clDiaryList.visibility = View.VISIBLE
-                binding.clNoDiary.visibility = View.GONE
-                binding.tvDiaryWritenTime.text = it.createdAt
-                binding.tvDiary.text = it.content
+            with(binding) {
+                if (it == null) {
+                    clDiaryList.visibility = View.GONE
+                    clNoDiary.visibility = View.VISIBLE
+                } else {
+                    clDiaryList.visibility = View.VISIBLE
+                    clNoDiary.visibility = View.GONE
+                    tvDiaryWritenTime.text = it.createdAt
+                    tvDiary.text = it.content
+                }
             }
         }
     }
