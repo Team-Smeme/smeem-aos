@@ -8,6 +8,7 @@ import com.sopt.smeem.Anonymous
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
 import com.sopt.smeem.data.ApiPool.onHttpFailure
+import com.sopt.smeem.domain.model.Authentication
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.LoginRepository
@@ -35,6 +36,17 @@ internal class LoginVM @Inject constructor(
                     _loginResult.value = it
                 }
                 .onHttpFailure { e -> onError(e) }
+        }
+    }
+
+    fun saveTokenOnLocal(accessToken: String, refreshToken: String) {
+        viewModelScope.launch {
+            localRepository.setAuthentication(
+                Authentication(
+                    accessToken = accessToken,
+                    refreshToken = refreshToken,
+                )
+            )
         }
     }
 }
