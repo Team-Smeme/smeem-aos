@@ -8,6 +8,7 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.sopt.smeem.domain.model.DiarySummary
 import com.sopt.smeem.presentation.calendar.listener.OnWeeklyCalendarSwipeListener
 import com.sopt.smeem.presentation.calendar.listener.OnWeeklyDayClickListener
 import java.time.DayOfWeek
@@ -162,6 +163,10 @@ class WeeklyCalendar @JvmOverloads constructor(
         selectedDate = localDate
         weeklyAdapter.setSelectedDay(localDate)
         onWeeklyDayClickListener?.onWeeklyDayClick(view, localDate)
+    }
+
+    fun setDiaryEntry(list: List<DiarySummary>) {
+        weeklyAdapter.setDiaryEntries(list)
     }
 
     companion object {

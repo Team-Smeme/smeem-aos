@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
     fun getDateDiary(date: String) {
         viewModelScope.launch {
             kotlin.runCatching {
-                diaryRepository.getDiaries(date, date)
+                diaryRepository.getDiaries(start = date, end = date)
             }.fold({
                 _responseDateDiary.value = it.getOrNull()?.diaries?.values?.firstOrNull()
             }, {

@@ -74,7 +74,14 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             OnWeeklyCalendarSwipeListener {
             override fun onSwipe(mondayDate: LocalDate?) {
                 mondayDate?.let {
-                    // TODO 서버 갱신
+                    homeViewModel.getDiaries(
+                        start = binding.weeklyCalendar.mondayDate?.plusDays(-6)?.format(
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                        ) ?: "",
+                        end = binding.weeklyCalendar.mondayDate?.plusDays(6)?.format(
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                        ) ?: "",
+                    )
                     setTargetMonthTitle()
                 }
             }
@@ -93,15 +100,13 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     }
 
     private fun observeData() {
-        homeViewModel.responseDiaries.observe(this) {
-            homeViewModel.getDiaries(
-                start = binding.weeklyCalendar.mondayDate?.plusDays(-6)?.format(
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                ) ?: "",
-                end = binding.weeklyCalendar.mondayDate?.plusDays(6)?.format(
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                ) ?: "",
-            )
+        homeViewModel.responseDiaries.observe(this) { diarySummaries ->
+            diarySummaries?.diaries?.let {
+                val diaryEntry = it.map { diary ->
+                    diary.value
+                }
+                binding.weeklyCalendar.setDiaryEntry(diaryEntry)
+            }
         }
 
         homeViewModel.responseDateDiary.observe(this) {
