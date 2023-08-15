@@ -27,6 +27,9 @@ class ChangingNicknameActivity :
     BindingActivity<ActivityChangingNicknameBinding>(R.layout.activity_changing_nickname) {
     private val vm: ChangingNicknameVM by viewModels()
 
+    override fun constructLayout() {
+        binding.etChangeNickname.requestFocus()
+    }
 
     override fun addListeners() {
         onTextWrite()
