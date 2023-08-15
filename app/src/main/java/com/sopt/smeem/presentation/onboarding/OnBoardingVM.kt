@@ -171,6 +171,7 @@ class OnBoardingVM @Inject constructor(
             )
                 .onSuccess(onSuccess)
                 .onHttpFailure { e -> onError(e) }
+            loadingEnd()
         }
     }
 
