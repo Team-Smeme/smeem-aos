@@ -32,4 +32,6 @@ interface UserRepository {
      * 트레이닝 정보를 수정합니다.
      */
     suspend fun editTraining(accessToken: String? = null, training: Training): Result<Unit>
+
+    suspend fun deleteUser(): Result<Unit>
 }

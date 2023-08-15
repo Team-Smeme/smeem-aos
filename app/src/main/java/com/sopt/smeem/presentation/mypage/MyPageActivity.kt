@@ -46,7 +46,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         binding.topbarMyPage.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menual -> {
-                    binding.webviewMypageManual.loadUrl("https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e")
+                    Toast.makeText(this, "준비중입니다.", Toast.LENGTH_SHORT).show()
                     true
                 }
 
@@ -58,6 +58,9 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
                 }
 
                 R.id.withdrawal -> {
+                    vm.withdrawal()
+                    startActivity(Intent(this, SplashLoginActivity::class.java))
+                    finishAffinity()
                     true
                 }
 

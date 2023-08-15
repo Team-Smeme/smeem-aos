@@ -4,6 +4,7 @@ import com.sopt.smeem.data.model.request.TrainingRequest
 import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
 import com.sopt.smeem.data.model.response.ApiResponse
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 
@@ -35,4 +36,7 @@ interface UserService {
         @Header("Authorization") token: String,
         @Body request: UserInfoModifyingRequest,
     ): ApiResponse<Unit>
+
+    @DELETE("/api/v2/auth")
+    suspend fun delete(): ApiResponse<Unit>
 }

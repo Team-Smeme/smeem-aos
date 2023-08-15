@@ -48,4 +48,14 @@ internal class MyPageVM @Inject constructor(
             localRepository.clear()
         }
     }
+
+    fun withdrawal() {
+        viewModelScope.launch {
+            userRepository.deleteUser()
+        }
+
+        runBlocking {
+            localRepository.clear()
+        }
+    }
 }
