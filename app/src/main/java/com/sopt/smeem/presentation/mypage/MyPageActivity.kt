@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityMyPageBinding
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,11 +32,38 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         onTouchBadge()
         onEditGoal()
         onTouchBack()
+        onTouchMenu()
     }
 
     private fun onTouchBack() {
         binding.topbarMyPage.setNavigationOnClickListener {
+            binding.webviewMypageManual.destroy()
             finish()
+        }
+    }
+
+    private fun onTouchMenu() {
+        binding.topbarMyPage.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menual -> {
+                    binding.webviewMypageManual.loadUrl("https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e")
+                    true
+                }
+
+                R.id.logout -> {
+                    vm.clearLocal()
+                    startActivity(Intent(this, SplashLoginActivity::class.java))
+                    finishAffinity()
+                    true
+                }
+
+                R.id.withdrawal -> {
+                    true
+                }
+
+                else -> false
+
+            }
         }
     }
 
