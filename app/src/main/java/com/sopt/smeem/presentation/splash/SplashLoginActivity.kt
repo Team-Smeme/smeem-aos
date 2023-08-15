@@ -53,7 +53,11 @@ class SplashLoginActivity :
     private fun afterLoginSuccess() {
         vm.loginResult.observe(this@SplashLoginActivity) {
             when (it.isRegistered) {
-                true -> gotoHome() // 회원 정보 등록까지 완료된 상태라면, Home 으로 이동
+                true -> {
+                    vm.saveTokenOnLocal(it.apiAccessToken, it.apiRefreshToken)
+                    gotoHome() // 회원 정보 등록까지 완료된 상태라면, Home 으로 이동
+                }
+
                 false -> gotoNext(it) // 회원 정보 등록이 되지 않은 상태 (학습 목표, 닉네임 세팅이 되어있는지에 따라 분기)
             }
         }
