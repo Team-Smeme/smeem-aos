@@ -37,7 +37,6 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
 
     private fun onTouchBack() {
         binding.topbarMyPage.setNavigationOnClickListener {
-            binding.webviewMypageManual.destroy()
             finish()
         }
     }
