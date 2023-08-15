@@ -30,7 +30,7 @@ interface UserService {
         @Body request: UserInfoModifyingRequest
     ): ApiResponse<Unit>
 
-    @PATCH("/api/v2/memebers")
+    @PATCH("/api/v2/members")
     suspend fun patchUserInfoWithTokenFixed(
         @Header("Authorization") token: String,
         @Body request: UserInfoModifyingRequest,

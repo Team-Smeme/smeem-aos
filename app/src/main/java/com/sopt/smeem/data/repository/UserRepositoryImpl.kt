@@ -16,16 +16,16 @@ import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.domain.repository.UserRepository
 
 class UserRepositoryImpl(
-    private val trainingManager: TrainingManager? = null,
-    private val userModifier: UserModifier? = null,
-    private val myPageRetriever: MyPageRetriever? = null,
-    private val myBadgeRetriever: MyBadgeRetriever? = null,
+    private val trainingManager: TrainingManager,
+    private val userModifier: UserModifier,
+    private val myPageRetriever: MyPageRetriever,
+    private val myBadgeRetriever: MyBadgeRetriever,
 ) : UserRepository {
     override suspend fun registerOnBoarding(
         onBoarding: OnBoarding,
         loginResult: LoginResult
     ): Result<Unit> =
-        kotlin.runCatching { trainingManager!!.registerOnBoarding(onBoarding, loginResult) }
+        kotlin.runCatching { trainingManager.registerOnBoarding(onBoarding, loginResult) }
 
     override suspend fun modifyUserInfo(
         accessToken: String?,
@@ -33,7 +33,7 @@ class UserRepositoryImpl(
         marketingAcceptance: Boolean?
     ): Result<Boolean> =
         kotlin.runCatching {
-            userModifier!!.patch(
+            userModifier.patch(
                 accessToken = accessToken,
                 username = username,
                 marketingAcceptance = marketingAcceptance
@@ -42,7 +42,7 @@ class UserRepositoryImpl(
 
     override suspend fun getMyPage(): Result<MyPage> =
         kotlin.runCatching {
-            myPageRetriever!!.getResponse()
+            myPageRetriever.getResponse()
         }.map { response ->
             MyPage(
                 username = response.data!!.username,
@@ -55,7 +55,7 @@ class UserRepositoryImpl(
                 ),
                 language = LanguageCode.en.language,
                 trainingTime = TrainingTime(
-                    days = response.data.trainingTime!!.day?.let {
+                    days = response.data.trainingTime!!.day.let {
                         if (it.isNotBlank()) {
                             it.split(",")
                                 .map { Day.valueOf(it) }
@@ -70,7 +70,7 @@ class UserRepositoryImpl(
 
     override suspend fun getMyBadges(): Result<List<Badge>> =
         kotlin.runCatching {
-            myBadgeRetriever!!.getResponse()
+            myBadgeRetriever.getResponse()
         }.map { response ->
             response.data!!.badges.map { badgeResponse ->
                 Badge(
@@ -85,6 +85,6 @@ class UserRepositoryImpl(
 
     override suspend fun editTraining(accessToken: String?, training: Training): Result<Unit> =
         kotlin.runCatching {
-            trainingManager!!.patchTraining(accessToken, training)
+            trainingManager.patchTraining(accessToken, training)
         }
 }
