@@ -37,7 +37,7 @@ class OnBoardingVM @Inject constructor(
     val loginResult: LiveData<LoginResult>
         get() = _loginResult
 
-    private val _selectedGoal = MutableLiveData<TrainingGoalType>()
+    private val _selectedGoal = MutableLiveData(TrainingGoalType.NO_SELECTED)
     val selectedGoal: LiveData<TrainingGoalType>
         get() = _selectedGoal
 

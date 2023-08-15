@@ -126,7 +126,11 @@ class OnBoardingActivity :
     private fun observeOnStep1() {
         vm.selectedGoal.observe(this@OnBoardingActivity) {
             // 어떤 버튼값이라도 선택되어있으면 step2 로가는 next 를 활성화시킨다.
-            binding.btnOnBoardingNext.isEnabled = (it != TrainingGoalType.NO_SELECTED)
+            if(it != TrainingGoalType.NO_SELECTED) {
+                nextButtonOn()
+            } else {
+                nextButtonOff()
+            }
         }
     }
 
@@ -185,7 +189,7 @@ class OnBoardingActivity :
         vm.isDaysEmpty.observe(this) {
             if (it) {
                 nextButtonOff()
-            } else {
+            } else if (vm.selectedGoal.value != TrainingGoalType.NO_SELECTED) {
                 nextButtonOn()
             }
         }
