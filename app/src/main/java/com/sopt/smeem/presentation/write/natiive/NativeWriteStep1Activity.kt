@@ -1,14 +1,18 @@
 package com.sopt.smeem.presentation.write.natiive
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityNativeWriteStep1Binding
+import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
+import com.sopt.smeem.util.setOnSingleClickListener
 import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +35,7 @@ class NativeWriteStep1Activity :
     }
 
     override fun addListeners() {
+        goBackToHome()
         setTopicVisibility()
         refreshTopic()
         hideTip()
@@ -48,6 +53,12 @@ class NativeWriteStep1Activity :
         )
     }
 
+    private fun goBackToHome() {
+        binding.layoutNativeStep1Toolbar.tvCancel.setOnSingleClickListener {
+            finish()
+        }
+    }
+
     private fun setTopicVisibility() {
         with(binding) {
             layoutNativeStep1BottomToolbar.cbRandomTopic.setOnCheckedChangeListener { _, isChecked ->
@@ -56,7 +67,7 @@ class NativeWriteStep1Activity :
                         layoutNativeStep1BottomToolbar.tvRandomTopicLabel.setTextColor(
                             resources.getColor(R.color.point, null)
                         )
-                        // TODO: 새로운 랜덤 주제 불러오기
+                        setRandomTopic()
                         layoutNativeStep1RandomTopic.layoutSection.visibility = View.VISIBLE
                     }
 
@@ -64,7 +75,9 @@ class NativeWriteStep1Activity :
                         layoutNativeStep1BottomToolbar.tvRandomTopicLabel.setTextColor(
                             resources.getColor(R.color.gray_500, null)
                         )
+                        viewModel.topicId = -1
                         layoutNativeStep1RandomTopic.layoutSection.visibility = View.GONE
+                        viewModel.topic.value = ""
                     }
                 }
             }
@@ -72,19 +85,25 @@ class NativeWriteStep1Activity :
     }
 
     private fun refreshTopic() {
-        binding.layoutNativeStep1RandomTopic.btnRefresh.setOnClickListener {
-            // TODO: 새로운 랜덤 주제 불러오기
+        binding.layoutNativeStep1RandomTopic.btnRefresh.setOnSingleClickListener {
+            setRandomTopic()
+        }
+    }
+
+    private fun setRandomTopic() {
+        viewModel.getRandomTopic { e ->
+            Toast.makeText(this@NativeWriteStep1Activity, e.description(), Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun hideTip() {
-        binding.layoutNativeStep1Tip.setOnClickListener {
+        binding.layoutNativeStep1Tip.setOnSingleClickListener {
             it.visibility = View.GONE
         }
     }
 
     private fun completeNativeDiary() {
-        binding.layoutNativeStep1Toolbar.tvDone.setOnClickListener {
+        binding.layoutNativeStep1Toolbar.tvDone.setOnSingleClickListener {
             when (viewModel.isValidDiary.value) {
                 true -> {
                     moveToStep2()
@@ -124,13 +143,9 @@ class NativeWriteStep1Activity :
 
         viewModel.translateResult.observe(this@NativeWriteStep1Activity) {
             val intent = Intent(this, NativeWriteStep2Activity::class.java).apply {
-
                 putExtra("translateResult", it)
                 putExtra("nativeDiary", viewModel.diary.value)
-                putExtra(
-                    "isTopicEnabled",
-                    binding.layoutNativeStep1BottomToolbar.cbRandomTopic.isChecked
-                )
+                putExtra("topicId", viewModel.topicId)
             }
             startActivity(intent)
         }

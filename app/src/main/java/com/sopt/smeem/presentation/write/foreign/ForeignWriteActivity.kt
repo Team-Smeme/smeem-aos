@@ -13,6 +13,7 @@ import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
+import com.sopt.smeem.util.setOnSingleClickListener
 import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,6 +36,7 @@ class ForeignWriteActivity :
     }
 
     override fun addListeners() {
+        goBackToHome()
         setTopicVisibility()
         refreshTopic()
         completeDiary()
@@ -49,6 +51,12 @@ class ForeignWriteActivity :
         binding.layoutForeignWriteBottomToolbar.cbRandomTopic.createTopicTooltip(
             this@ForeignWriteActivity, owner
         )
+    }
+
+    private fun goBackToHome() {
+        binding.layoutForeignWriteToolbar.tvCancel.setOnSingleClickListener {
+            finish()
+        }
     }
 
     private fun setTopicVisibility() {
@@ -69,6 +77,7 @@ class ForeignWriteActivity :
                         )
                         viewModel.topicId = -1
                         layoutForeignWriteRandomTopic.layoutSection.visibility = View.GONE
+                        viewModel.topic.value = ""
                     }
                 }
             }
@@ -76,7 +85,7 @@ class ForeignWriteActivity :
     }
 
     private fun refreshTopic() {
-        binding.layoutForeignWriteRandomTopic.btnRefresh.setOnClickListener {
+        binding.layoutForeignWriteRandomTopic.btnRefresh.setOnSingleClickListener {
             setRandomTopic()
         }
     }
@@ -88,13 +97,13 @@ class ForeignWriteActivity :
     }
 
     private fun completeDiary() {
-        binding.layoutForeignWriteToolbar.tvDone.setOnClickListener {
+        binding.layoutForeignWriteToolbar.tvDone.setOnSingleClickListener {
             when (viewModel.isValidDiary.value) {
                 true -> {
                     viewModel.uploadDiary(
                         onSuccess = {
-                            finishAffinity()
                             Intent(this, HomeActivity::class.java).run(::startActivity)
+                            finishAffinity()
                         },
                         onError = { e ->
                             Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()
