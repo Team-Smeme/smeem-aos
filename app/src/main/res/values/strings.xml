@@ -31,7 +31,7 @@
     <string name="entrance_nickname_header">닉네임 설정</string>
     <string name="entrance_nickname_description">닉네임은 마이페이에서 수정할 수 있어요.</string>
     <string name="entrance_nickname_duplicated">이미 사용중인 닉네임입니다.</string>
-    <string name="entrance_nickname_caption">공백 포함 16자 제한</string>
+    <string name="entrance_nickname_caption">공백 포함 10자 제한</string>
     <string name="entrance_agreement_header">서비스 이용약관</string>
     <string name="entrance_agreement_description">서비스 이용을 위해 약관에 동의해주세요.</string>
     <string name="entrance_agreement_all">전체 동의하기</string>
