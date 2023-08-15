@@ -46,13 +46,7 @@ class ChangingNicknameActivity :
 
     private fun onTouchBack() {
         binding.topbarChangeNickname.setNavigationOnClickListener {
-            /* onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-                 override fun handleOnBackPressed() {
-                     goBack()
-                 }
-             })*/
             goBack()
-            finish()
         }
     }
 

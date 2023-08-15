@@ -34,7 +34,9 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     }
 
     private fun onTouchBack() {
-        finish()
+        binding.topbarMyPage.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     private fun setUpDays() {
@@ -52,6 +54,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     private fun onEditGoal() {
         binding.ivMyPageEditEncouraging.setOnClickListener {
             startActivity(Intent(this, EditTrainingGoalActivity::class.java))
+            finish()
         }
     }
 
