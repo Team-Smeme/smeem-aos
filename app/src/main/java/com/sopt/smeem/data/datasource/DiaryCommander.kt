@@ -23,8 +23,8 @@ class DiaryCommander(
         diaryId = diary.id!!
     )
 
-    suspend fun removeDiary(diary: Diary) = diaryService.delete(
-        diaryId = diary.id!!
+    suspend fun removeDiary(diaryId: Long) = diaryService.delete(
+        diaryId = diaryId
     )
 
 }

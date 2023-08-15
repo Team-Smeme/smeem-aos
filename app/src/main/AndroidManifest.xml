@@ -99,14 +99,14 @@
 
         <activity
             android:name=".presentation.mypage.EditTrainingGoalActivity"
-            android:exported="true">
+            android:exported="false">
 
 
         </activity>
 
         <activity
             android:name=".presentation.home.HomeActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
     </application>

@@ -19,7 +19,7 @@ interface DiaryRepository {
     /**
      * 일기를 제거한다.
      */
-    suspend fun removeDiary(diary: Diary): Result<Unit>
+    suspend fun removeDiary(diaryId: Long): Result<Unit>
 
     /**
      * 일기를 상세 조회한다.
