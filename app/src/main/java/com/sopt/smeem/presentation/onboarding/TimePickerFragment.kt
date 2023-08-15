@@ -1,35 +1,58 @@
 package com.sopt.smeem.presentation.onboarding
 
 import android.app.Dialog
-import android.app.TimePickerDialog
-import android.content.DialogInterface
 import android.os.Bundle
-import android.widget.TimePicker
+import android.widget.NumberPicker
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.sopt.smeem.databinding.DialogTimePickerBinding
+import com.sopt.smeem.presentation.onboarding.OnBoardingVM.Companion.DEFAULT_HOUR
+import com.sopt.smeem.presentation.onboarding.OnBoardingVM.Companion.DEFAULT_MINUTE
 
-class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener {
-    private val defaultHour = 22
-    private val defaultMinute = 0
-    private val is24Hour: Boolean = false
-
+class TimePickerFragment : DialogFragment() {
+    private val timePicker by lazy { DialogTimePickerBinding.inflate(layoutInflater) }
     private val vm: OnBoardingVM by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val hour = defaultHour
-        val minute = defaultMinute
+        val hour = vm.selectedHour?.value ?: DEFAULT_HOUR
+        val minute = vm.selectedMinute?.value ?: DEFAULT_MINUTE
 
-        val timePicker: TimePickerDialog = SmeemTimePickerDialog(activity, this, hour, minute, is24Hour)
-        timePicker.apply {
-            setButton(DialogInterface.BUTTON_NEGATIVE, "취소", timePicker)
-            setButton(DialogInterface.BUTTON_POSITIVE, "저장", timePicker)
+        val hourPicker = timePicker.npTimePickerHour
+        val minutePicker = timePicker.npTimePickerMinute
+
+        initHourPicker(hourPicker, hour)
+        initMinutePicker(minutePicker, minute)
+
+        return MaterialAlertDialogBuilder(requireContext())
+            .setView(timePicker.root)
+            .setNegativeButton("취소", null)
+            .setPositiveButton("저장") { _, _ ->
+                vm.selectedHour.value = hourPicker.value
+                vm.selectedMinute.value = minutePicker.value * MINUTE_INTERVAL
+            }
+            .create()
+    }
+
+    private fun initHourPicker(hp: NumberPicker, hour: Int) {
+        hp.apply {
+            minValue = 0
+            maxValue = 23
+            value = hour
+            displayedValues = (0..23).map { "%02d".format(it) }.toTypedArray()
         }
-        return timePicker
     }
 
-    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        vm.selectedHour.value = hourOfDay
-        vm.selectedMinute.value = minute
+    private fun initMinutePicker(mp: NumberPicker, minute: Int) {
+        mp.apply {
+            minValue = 0
+            maxValue = 1
+            value = if (minute >= MINUTE_INTERVAL) 1 else 0
+            displayedValues = arrayOf("00", "30")
+        }
     }
 
+    companion object {
+        private const val MINUTE_INTERVAL = 30
+    }
 }
