@@ -163,8 +163,8 @@ class OnBoardingVM @Inject constructor(
                     trainingGoalType = selectedGoal.value ?: TrainingGoalType.NO_SELECTED,
                     hasAlarm = isNotiGranted.value ?: false,
                     day = days,
-                    hour = hour,
-                    minute = minute
+                    hour = selectedHour.value,
+                    minute = selectedMinute.value
                 ),
                 loginResult.value!!
             )

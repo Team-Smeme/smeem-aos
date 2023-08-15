@@ -1,7 +1,6 @@
 package com.sopt.smeem.presentation.onboarding
 
 import android.app.TimePickerDialog
-import android.util.Log
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import com.sopt.smeem.R
@@ -93,8 +92,7 @@ class SettingTimeFragment :
 
     private fun onTouchTime() {
         binding.layoutOnBoardingTimeTime.setOnSingleClickListener {
-//            TimePickerFragment().show(parentFragmentManager, "timePicker")
-            TempTimePickerFragment().show(parentFragmentManager, "timePicker")
+            TimePickerFragment().show(parentFragmentManager, "timePicker")
         }
     }
 
