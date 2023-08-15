@@ -3,7 +3,6 @@ package com.sopt.smeem.presentation.onboarding
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -14,6 +13,8 @@ import com.sopt.smeem.databinding.ActivityOnBoardingBinding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
+import com.sopt.smeem.presentation.join.JoinConstant.REFRESH_TOKEN
 import com.sopt.smeem.presentation.join.JoinWithNicknameActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +29,7 @@ class OnBoardingActivity :
         super.constructLayout()
         setUpFragments()
         setUpBottomSheet()
+        setUpLoading()
     }
 
     override fun addListeners() {
@@ -39,6 +41,7 @@ class OnBoardingActivity :
         observeStepChanging()
         observeOnStep1()
         observeOnStep3()
+        observeLoading()
     }
 
     override fun onBackPressed() {
@@ -54,6 +57,11 @@ class OnBoardingActivity :
 
     private fun setUpBottomSheet() {
         bs = SignUpBottomSheet()
+    }
+
+    private fun setUpLoading() {
+        binding.progressCircleOnBoardingLoading.bringToFront()
+        binding.progressCircleOnBoardingLoading.isIndeterminate = false
     }
 
     private fun onTouchNext() {
@@ -118,12 +126,35 @@ class OnBoardingActivity :
     private fun observeOnStep1() {
         vm.selectedGoal.observe(this@OnBoardingActivity) {
             // 어떤 버튼값이라도 선택되어있으면 step2 로가는 next 를 활성화시킨다.
-            binding.btnOnBoardingNext.isEnabled = (it != TrainingGoalType.NO_SELECTED)
+            if(it != TrainingGoalType.NO_SELECTED) {
+                nextButtonOn()
+            } else {
+                nextButtonOff()
+            }
         }
     }
 
     private fun observeOnStep3() {
+        observeSelectedDays()
         observeJoinOrAnonymous()
+    }
+
+    private fun observeLoading() {
+        vm.onLoading.observe(this) {
+            when (it) {
+                LoadingState.NOT_STARTED -> {
+                    binding.progressCircleOnBoardingLoading.isIndeterminate = false
+                }
+
+                LoadingState.ACT -> {
+                    binding.progressCircleOnBoardingLoading.isIndeterminate = true
+                }
+
+                LoadingState.DONE -> {
+                    binding.progressCircleOnBoardingLoading.isIndeterminate = false
+                }
+            }
+        }
     }
 
     private fun setHeaderStepNo(no: Int) {
@@ -154,6 +185,31 @@ class OnBoardingActivity :
         }
     }
 
+    private fun observeSelectedDays() {
+        vm.isDaysEmpty.observe(this) {
+            if (it) {
+                nextButtonOff()
+            } else if (vm.selectedGoal.value != TrainingGoalType.NO_SELECTED) {
+                nextButtonOn()
+            }
+        }
+    }
+
+    private fun nextButtonOn() {
+        with(binding.btnOnBoardingNext) {
+            setBackgroundColor(resources.getColor(R.color.point, null))
+            isEnabled = true
+        }
+    }
+
+    private fun nextButtonOff() {
+        with(binding.btnOnBoardingNext) {
+            setBackgroundColor(resources.getColor(R.color.point_inactive, null))
+            setTextColor(resources.getColor(R.color.white, null))
+            isEnabled = false
+        }
+    }
+
     private fun observeJoinOrAnonymous() {
         observerToGoAnonymous()
         observerToGoLogin()
@@ -177,16 +233,24 @@ class OnBoardingActivity :
     }
 
     private fun observerToGoLogin() {
-        vm.loginResult.observe(this@OnBoardingActivity) {
-            when (it.isRegistered) {
-                true -> gotoHome()
+        vm.loginResult.observe(this@OnBoardingActivity) { result ->
+            when (result.isRegistered) {
+                true -> {
+                    vm.loadingEnd()
+                    vm.saveTokenOnLocal(result.apiAccessToken, result.apiRefreshToken)
+                    gotoHome()
+                }
+
                 false -> {
                     vm.sendPlanDataOnAnonymous(
                         onSuccess = {
+                            vm.loadingEnd()
                             val toJoin = Intent(
                                 this@OnBoardingActivity,
                                 JoinWithNicknameActivity::class.java
                             )
+                            toJoin.putExtra("accessToken", result.apiAccessToken)
+                            toJoin.putExtra("refreshToken", result.apiRefreshToken)
                             startActivity(toJoin)
 
                             if (!isFinishing) finish()
@@ -222,11 +286,13 @@ class OnBoardingActivity :
                 // 3/3 (트레이닝 시간 설정) 에서 로그인 바텀시트 띄우기전에 이미 kakao 로그인이 된 상태인지 확인
                 checkAlreadyAuthed()
             }
+
             // 2. 사용자가 이전에 권한을 거부했을 때
             shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
                 vm.setNotiPermissionStatus(false)
                 checkAlreadyAuthed()
             }
+
             // 3. 알림 권한을 처음으로 받는 것일 때
             else -> {
                 notiPermissionResultCallback.launch(
@@ -254,18 +320,20 @@ class OnBoardingActivity :
         }
 
     private fun checkAlreadyAuthed() {
-        if (vm.alreadyAuthed()) {
+        val accessTokenFromPast: String? = intent.getStringExtra(ACCESS_TOKEN)
+        if (accessTokenFromPast != null) {
+            // 이미 사전에 로그인을 수행했던 경우 ( case : "이미 계정이 있어요" 를 통한 온보딩 접근 )
+            // hasPlan 이 false 여서 트레이닝 설정에 들어왔고, hasPlan 이 false 이면, isRegistered 도 false. (true 인 Case 는 없다.)
             vm.sendPlanDataWithAuth(
+                token = accessTokenFromPast,
                 onSuccess = {
-                    val toEntrance =
-                        Intent(this@OnBoardingActivity, JoinWithNicknameActivity::class.java)
-                    startActivity(toEntrance)
+                    val toJoin = Intent(this, JoinWithNicknameActivity::class.java)
+                    toJoin.putExtra(ACCESS_TOKEN, accessTokenFromPast)
+                    toJoin.putExtra(REFRESH_TOKEN, intent.getStringExtra(REFRESH_TOKEN))
+                    startActivity(toJoin)
                     if (!isFinishing) finish()
                 },
-                onError = { e ->
-                    Toast.makeText(this@OnBoardingActivity, e.description(), Toast.LENGTH_SHORT)
-                        .show()
-                }
+                onError = { e -> Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show() }
             )
         }
         // 사전 로그인이 없었으면 login 동작하도록

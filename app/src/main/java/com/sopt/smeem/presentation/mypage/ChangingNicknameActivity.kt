@@ -27,6 +27,9 @@ class ChangingNicknameActivity :
     BindingActivity<ActivityChangingNicknameBinding>(R.layout.activity_changing_nickname) {
     private val vm: ChangingNicknameVM by viewModels()
 
+    override fun constructLayout() {
+        binding.etChangeNickname.requestFocus()
+    }
 
     override fun addListeners() {
         onTextWrite()
@@ -36,7 +39,7 @@ class ChangingNicknameActivity :
 
     private fun onTextWrite() {
         binding.etChangeNickname.addTextChangedListener { watcher ->
-            if (watcher!!.length <= 0 || watcher!!.length > 16) {
+            if (watcher.isNullOrBlank() || watcher.length > 10) {
                 nextButtonOff()
             } else {
                 nextButtonOn()
@@ -46,13 +49,7 @@ class ChangingNicknameActivity :
 
     private fun onTouchBack() {
         binding.topbarChangeNickname.setNavigationOnClickListener {
-            /* onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-                 override fun handleOnBackPressed() {
-                     goBack()
-                 }
-             })*/
             goBack()
-            finish()
         }
     }
 

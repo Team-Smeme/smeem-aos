@@ -20,6 +20,7 @@
         <!-- etc -->
         <item name="colorControlActivated">@color/point</item>
         <item name="colorControlNormal">@color/point</item>
+        <item name="colorBackgroundFloating">@color/black_opacity_30</item>
         <item name="materialButtonStyle">@style/Widget.Smeem.Button</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Smeem.BottomSheetDialog</item>
         <item name="android:timePickerStyle">@style/Widget.Smeem.TimePicker</item>
@@ -35,7 +36,9 @@
 
     <style name="ThemeOverlay.Smeem.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
         <item name="android:backgroundTint">@color/white</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/Widget.MaterialAlertDialog.Smeem.Title.Text</item>
+        <item name="materialAlertDialogTitleTextStyle">
+            @style/Widget.MaterialAlertDialog.Smeem.Title.Text
+        </item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.Smeem.Button.Dialog</item>
         <item name="buttonBarPositiveButtonStyle">@style/Widget.Smeem.Button.Dialog</item>
     </style>
@@ -57,5 +60,11 @@
     <style name="B14">
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Theme.Smeem.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@android:color/transparent</item>
+        <item name="windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+        <item name="postSplashScreenTheme">@style/Theme.Smeem</item>
     </style>
 </resources>

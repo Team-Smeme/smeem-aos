@@ -1,9 +1,10 @@
 package com.sopt.smeem.data.service
 
-import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
 import com.sopt.smeem.data.model.request.TrainingRequest
+import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
 import com.sopt.smeem.data.model.response.ApiResponse
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 
@@ -13,6 +14,11 @@ interface UserService {
         @Body request: TrainingRequest
     ): ApiResponse<Unit>
 
+    @PATCH("/api/v2/members/plan")
+    suspend fun patchPlanWithFixedToken(
+        @Header("Authorization") token: String,
+        @Body request: TrainingRequest,
+    ): ApiResponse<Unit>
 
     @PATCH("/api/v2/members/plan")
     suspend fun patchPlanOnAnonymous(
@@ -24,4 +30,13 @@ interface UserService {
     suspend fun patchUserInfo(
         @Body request: UserInfoModifyingRequest
     ): ApiResponse<Unit>
+
+    @PATCH("/api/v2/members")
+    suspend fun patchUserInfoWithTokenFixed(
+        @Header("Authorization") token: String,
+        @Body request: UserInfoModifyingRequest,
+    ): ApiResponse<Unit>
+
+    @DELETE("/api/v2/auth")
+    suspend fun delete(): ApiResponse<Unit>
 }

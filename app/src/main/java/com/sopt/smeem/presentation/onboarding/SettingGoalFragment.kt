@@ -15,12 +15,16 @@ import com.sopt.smeem.databinding.FragmentSettingGoalBinding
 import com.sopt.smeem.presentation.BindingFragment
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
+import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SettingGoalFragment :
     BindingFragment<FragmentSettingGoalBinding>(R.layout.fragment_setting_goal) {
-    private var buttons: Map<TrainingGoalType, MaterialButton>? = null
+    private var _buttons: Map<TrainingGoalType, MaterialButton>? = null
+    private val buttons: Map<TrainingGoalType, MaterialButton>
+        get() = _buttons ?: emptyMap()
+
     private val vm: OnBoardingVM by activityViewModels()
     override fun constructLayout() {
         DEVELOP.id = binding.icOnBoardingGoalButton1.id
@@ -30,7 +34,7 @@ class SettingGoalFragment :
         EXAM.id = binding.icOnBoardingGoalButton5.id
         NONE.id = binding.icOnBoardingGoalButton6.id
 
-        buttons = mapOf(
+        _buttons = mapOf(
             DEVELOP to binding.icOnBoardingGoalButton1,
             HOBBY to binding.icOnBoardingGoalButton2,
             APPLY to binding.icOnBoardingGoalButton3,
@@ -38,6 +42,8 @@ class SettingGoalFragment :
             EXAM to binding.icOnBoardingGoalButton5,
             NONE to binding.icOnBoardingGoalButton6
         )
+
+        buttonSelected()
     }
 
     override fun addListeners() {
@@ -45,10 +51,10 @@ class SettingGoalFragment :
     }
 
     private fun onTouchButtons() {
-        buttons?.values?.forEach { button ->
-            button.setOnClickListener {
+        buttons.values.forEach { button ->
+            button.setOnSingleClickListener {
                 if (NO_SELECTED != vm.selectedGoal.value) {
-                    buttons!![vm.selectedGoal.value]?.switchOff() // 기존 off
+                    buttons[vm.selectedGoal.value]?.switchOff() // 기존 off
                     vm.upsert(TrainingGoalType.findById(button.id))
 
                     if (vm.selectedGoal.value!!.selected) {
@@ -65,8 +71,14 @@ class SettingGoalFragment :
         }
     }
 
+    private fun buttonSelected() {
+        if (vm.selectedGoal.value != NO_SELECTED) {
+            buttons[vm.selectedGoal.value]?.switchOn()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        buttons = null
+        _buttons = null
     }
 }

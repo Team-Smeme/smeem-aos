@@ -34,7 +34,6 @@
             app:title="마이페이지"
             app:titleCentered="true"
             app:titleTextAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
-
             />
 
         <ScrollView
@@ -520,5 +519,4 @@
 
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

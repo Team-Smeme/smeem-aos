@@ -5,11 +5,15 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.google.android.material.button.MaterialButton
 import com.sopt.smeem.R
+import com.sopt.smeem.SmeemErrorCode
+import com.sopt.smeem.SmeemException
 import com.sopt.smeem.databinding.ActivityJoinAgreementBinding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
 import com.sopt.smeem.presentation.join.JoinConstant.NICKNAME
+import com.sopt.smeem.presentation.join.JoinConstant.REFRESH_TOKEN
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener
@@ -21,8 +25,14 @@ class JoinWithAgreementActivity :
     BindingActivity<ActivityJoinAgreementBinding>(R.layout.activity_join_agreement) {
     private var elements: Map<EntranceSelection, MaterialButton>? = null
     private val vm: JoinVM by viewModels()
+    private lateinit var accessToken: String
+    private lateinit var refreshToken: String
 
     override fun constructLayout() {
+        accessToken = intent.getStringExtra(ACCESS_TOKEN) ?: throw SmeemException(SmeemErrorCode.SYSTEM_ERROR, "토큰이 정상적으로 전달되지 않았습니다.", IllegalStateException())
+        refreshToken = intent.getStringExtra(REFRESH_TOKEN) ?: throw SmeemException(SmeemErrorCode.SYSTEM_ERROR, "토큰이 정상적으로 전달되지 않았습니다.", IllegalStateException())
+
+
         EntranceSelection.SERVICE.id = binding.btnEntranceAgreementService.id
         EntranceSelection.PERSONAL.id = binding.btnEntranceAgreementPersonal.id
         EntranceSelection.LOCATION.id = binding.btnEntranceAgreementLocation.id
@@ -88,15 +98,16 @@ class JoinWithAgreementActivity :
             val nickname =
                 intent.getStringExtra(NICKNAME) ?: throw IllegalStateException("알 수 없는 에러가 발생했습니다.")
             val selected = vm.getSelected()
-            sendServer(nickname, selected)
+            sendServer(nickname, selected, accessToken)
             afterJoinSuccess()
         }
     }
 
-    private fun sendServer(nickname: String, selected: Set<EntranceSelection>) {
+    private fun sendServer(nickname: String, selected: Set<EntranceSelection>, accessToken: String) {
         vm.registerNicknameAndAcceptance(
             nickname,
             selected,
+            accessToken,
             onError = { e ->
                 Toast.makeText(this@JoinWithAgreementActivity, e.description(), Toast.LENGTH_SHORT)
                     .show()
@@ -108,6 +119,7 @@ class JoinWithAgreementActivity :
         vm.joinSucceed.observe(this@JoinWithAgreementActivity) {
             when (it) {
                 true -> {
+                    vm.saveTokenInLocal(accessToken, refreshToken)
                     startActivity(Intent(this, HomeActivity::class.java))
                     finish()
                 }

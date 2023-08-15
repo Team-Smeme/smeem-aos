@@ -24,8 +24,6 @@ class DiaryEditViewModel @Inject constructor(
     val isValidDiary: LiveData<Boolean> = diary.map { isValidDiaryFormat(it) }
 
     fun editDiary(onSuccess: (Unit) -> Unit, onError: (SmeemException) -> Unit) {
-        Log.d("diary content", "${diary.value}")
-        Log.d("diary id", "$diaryId")
         viewModelScope.launch {
             diaryRepository.patchDiary(
                 Diary(

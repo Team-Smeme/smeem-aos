@@ -32,11 +32,13 @@ class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
         super.onViewCreated(view, savedInstanceState)
         val context = requireContext()
 
-        binding.layoutKakaoStart.setOnSingleClickListener {
+        binding.btnKakao.setOnSingleClickListener {
 
             if (KakaoHandler.isAppEnabled(context)) {
                 KakaoHandler.loginOnApp(context,
                     onSuccess = { kakaoAccessToken, kakaoRefreshToken ->
+                        vm.loadingStart()
+
                         vm.login(
                             kakaoAccessToken = kakaoAccessToken,
                             kakaoRefreshToken = kakaoRefreshToken,
@@ -49,6 +51,8 @@ class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
                 KakaoHandler.loginOnWeb(
                     context,
                     onSuccess = { kakaoAccessToken, kakaoRefreshToken ->
+                        vm.loadingStart()
+
                         vm.login(
                             kakaoAccessToken = kakaoAccessToken,
                             kakaoRefreshToken = kakaoRefreshToken,
@@ -67,6 +71,7 @@ class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
 
     override fun onDestroy() {
         super.onDestroy()
+        vm.loadingEnd()
         _binding = null
     }
 

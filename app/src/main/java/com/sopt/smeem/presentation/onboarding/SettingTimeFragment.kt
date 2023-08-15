@@ -47,6 +47,23 @@ class SettingTimeFragment :
             binding.tvOnBoardingTimeSat.id to binding.tvOnBoardingTimeSat,
             binding.tvOnBoardingTimeSun.id to binding.tvOnBoardingTimeSun
         )
+        // 기본값 월화수목금 으로 설정
+        setInitialDays()
+    }
+    
+    private fun setInitialDays() {
+        days?.values?.forEach { day ->
+            run {
+                when(day.text.toString()) {
+                    "토" -> {}
+                    "일" -> {}
+                    else -> {
+                        day.switchOn()
+                        vm.addDay(day.text.toString())
+                    }
+                }
+            }
+        }
     }
 
     private fun onTouchDays() {
@@ -63,15 +80,19 @@ class SettingTimeFragment :
                         day.switchOn()
                         vm.addDay(day.text.toString())
                     }
+                    checkSelectedDays()
                 }
             }
         }
     }
 
+    private fun checkSelectedDays() {
+        vm.isDaysEmpty.value = vm.days.isEmpty()
+    }
+
     private fun onTouchTime() {
         binding.layoutOnBoardingTimeTime.setOnSingleClickListener {
-//            TimePickerFragment().show(parentFragmentManager, "timePicker")
-            TempTimePickerFragment().show(parentFragmentManager, "timePicker")
+            TimePickerFragment().show(parentFragmentManager, "timePicker")
         }
     }
 

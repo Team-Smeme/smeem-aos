@@ -1,7 +1,7 @@
 package com.sopt.smeem.module
 
 import com.sopt.smeem.BuildConfig.API_SERVER_URL
-import com.sopt.smeem.domain.repository.AuthRepository
+import com.sopt.smeem.domain.repository.LocalRepository
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule @Inject constructor(
-    private val authRepository: AuthRepository,
+    private val localRepository: LocalRepository,
 ) {
     val apiServerRetrofitForAnonymous by lazy {
         Retrofit.Builder()
@@ -49,15 +49,13 @@ class NetworkModule @Inject constructor(
                     writeTimeout(5, TimeUnit.SECONDS)
                     readTimeout(5, TimeUnit.SECONDS)
 
-                    runBlocking { // TODO : 제거
-                        if (authRepository.isAuthenticated()) {
-                            addInterceptor(
-                                RequestInterceptor(
-                                    accessToken = authRepository.getAuthentication()!!.accessToken!!,
-                                    refreshToken = authRepository.getAuthentication()!!.refreshToken,
-                                ),
-                            )
-                        }
+                    runBlocking {
+                        addInterceptor(
+                            RequestInterceptor(
+                                accessToken = localRepository.getAuthentication().accessToken,
+                                refreshToken = localRepository.getAuthentication().refreshToken,
+                            ),
+                        )
                     }
                 }.addInterceptor(
                     HttpLoggingInterceptor().apply {
@@ -82,5 +80,24 @@ class NetworkModule @Inject constructor(
 
         private val API_ACCESS_TOKEN_HEADER = "Authorization"
         private val API_REFRESH_TOKEN_HEADER = "Refresh" // TODO
+    }
+
+    val apiPapagoRetrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://openapi.naver.com/")
+            .client(
+                OkHttpClient.Builder().apply {
+                    connectTimeout(10, TimeUnit.SECONDS)
+                    writeTimeout(5, TimeUnit.SECONDS)
+                    readTimeout(5, TimeUnit.SECONDS)
+                }.addInterceptor(
+                    HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    },
+                )
+                    .build(),
+            )
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 }

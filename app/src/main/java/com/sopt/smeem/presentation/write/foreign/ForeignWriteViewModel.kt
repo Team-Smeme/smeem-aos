@@ -37,12 +37,9 @@ class ForeignWriteViewModel @Inject constructor(
     }
 
     fun uploadDiary(onSuccess: (List<RetrievedBadge>) -> Unit, onError: (SmeemException) -> Unit) {
-        Log.d("topic id", "$topicId")
         if (topicId != (-1).toLong()) {
-            Log.d("with random topic", "with random topic")
             diaryWithTopic(onSuccess, onError)
         } else {
-            Log.d("without random topic", "without random topic")
             diaryWithoutTopic(onSuccess, onError)
         }
     }

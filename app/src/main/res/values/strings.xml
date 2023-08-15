@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">smeem</string>
     <string name="splash_header">smeem</string>
-    <string name="splash_body">일기로 시작하는 영어 아웃풋 훈련, \n스밈입니다.</string>
+    <string name="splash_body">일기로 시작하는 영어 아웃풋 트레이닝, \n스밈과 함께해요! </string>
     <string name="splash_footer">이미 계정이 있어요.</string>
     <string name="button_start">시작하기</string>
     <string name="splash_bs_header">로그인</string>
@@ -29,9 +29,9 @@
     <string name="on_boarding_kakao_start">카카오로 시작하기</string>
     <string name="on_boarding_start_with_anonymous">비회원으로 시작하기</string>
     <string name="entrance_nickname_header">닉네임 설정</string>
-    <string name="entrance_nickname_description">닉네임은 마이페이에서 수정할 수 있어요.</string>
+    <string name="entrance_nickname_description">마이페이지에서 수정할 수 있어요.</string>
     <string name="entrance_nickname_duplicated">이미 사용중인 닉네임입니다.</string>
-    <string name="entrance_nickname_caption">공백 포함 16자 제한</string>
+    <string name="entrance_nickname_caption">공백 포함 10자 제한</string>
     <string name="entrance_agreement_header">서비스 이용약관</string>
     <string name="entrance_agreement_description">서비스 이용을 위해 약관에 동의해주세요.</string>
     <string name="entrance_agreement_all">전체 동의하기</string>
@@ -59,4 +59,5 @@
     <string name="no_diary_notice">작성한 일기가 없어요.</string>
     <string name="go_to_diary_detail">go to diary detail</string>
     <string name="see_diary_detail">전체보기</string>
+    <string name="badge_obtain_message">축하해요!\n%s 배지를 획득했어요!</string>
 </resources>

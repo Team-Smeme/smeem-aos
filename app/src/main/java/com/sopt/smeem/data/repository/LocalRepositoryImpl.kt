@@ -2,28 +2,33 @@ package com.sopt.smeem.data.repository
 
 import android.content.Context
 import android.util.Log
-import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.core.MutablePreferences
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.sopt.smeem.SmeemErrorCode
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.domain.model.Authentication
-import com.sopt.smeem.domain.repository.AuthRepository
+import com.sopt.smeem.domain.repository.LocalRepository
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor(
+class LocalRepositoryImpl @Inject constructor(
     private val context: Context
-) : AuthRepository {
+) : LocalRepository {
 
     /**
      * LocalStorage 로 부터 Authentication 추출
      * 없을 경우, null 응답
      * (already cached on DataStore Layer)
      */
-    override suspend fun getAuthentication(): Authentication? {
+    override suspend fun getAuthentication(): Authentication {
         return context.dataStore.data
             .catch { e: Throwable ->
                 Log.e(
@@ -34,10 +39,18 @@ class AuthRepositoryImpl @Inject constructor(
             }
             .map { preferences: Preferences ->
                 Authentication(
-                    accessToken = preferences[API_ACCESS_TOKEN],
-                    refreshToken = preferences[API_REFRESH_TOKEN]
+                    accessToken = preferences[API_ACCESS_TOKEN] ?: throw SmeemException(
+                        SmeemErrorCode.UNAUTHORIZED,
+                        "인증이 필요합니다.",
+                        IllegalStateException()
+                    ),
+                    refreshToken = preferences[API_REFRESH_TOKEN] ?: throw SmeemException(
+                        SmeemErrorCode.UNAUTHORIZED,
+                        "인증이 필요합니다.",
+                        IllegalStateException()
+                    )
                 )
-            }.firstOrNull()
+            }.first()
     }
 
     override suspend fun setAuthentication(authentication: Authentication) {
@@ -63,7 +76,18 @@ class AuthRepositoryImpl @Inject constructor(
      * LocalStorage 에 accessToken 이 저장되었는지 확인
      */
     override suspend fun isAuthenticated(): Boolean {
-        return getAuthentication()?.isAuthenticated() ?: false
+        return context.dataStore.data
+            .catch { emit(emptyPreferences()) }
+            .map { preferences: Preferences -> preferences[API_ACCESS_TOKEN] }
+            .firstOrNull() != null
+    }
+
+    override suspend fun clear() {
+        try {
+            context.dataStore.edit { preferences -> preferences.clear() }
+        } catch (t: Throwable) {
+            throw SmeemException(errorCode = SmeemErrorCode.SYSTEM_ERROR, throwable = t)
+        }
     }
 
     companion object {

@@ -1,6 +1,5 @@
 package com.sopt.smeem.presentation.onboarding
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,12 +16,11 @@ import com.sopt.smeem.domain.model.OnBoarding
 import com.sopt.smeem.domain.model.Training
 import com.sopt.smeem.domain.model.TrainingGoal
 import com.sopt.smeem.domain.model.TrainingTime
-import com.sopt.smeem.domain.repository.AuthRepository
+import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.LoginRepository
 import com.sopt.smeem.domain.repository.TrainingRepository
 import com.sopt.smeem.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,15 +29,14 @@ class OnBoardingVM @Inject constructor(
     @Anonymous private val loginRepository: LoginRepository,
     @Anonymous private val trainingRepository: TrainingRepository,
     @Anonymous private val userRepositoryWithAnonymous: UserRepository,
-    private val userRepositoryWithAuth: UserRepository,
-    private val authRepository: AuthRepository,
+    private val localRepository: LocalRepository,
 ) : ViewModel() {
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult>
         get() = _loginResult
 
-    private val _selectedGoal = MutableLiveData<TrainingGoalType>()
+    private val _selectedGoal = MutableLiveData(TrainingGoalType.NO_SELECTED)
     val selectedGoal: LiveData<TrainingGoalType>
         get() = _selectedGoal
 
@@ -63,11 +60,17 @@ class OnBoardingVM @Inject constructor(
     val step: LiveData<Int>
         get() = _step
 
+    private val _onLoading = MutableLiveData(LoadingState.NOT_STARTED)
+    val onLoading: LiveData<LoadingState>
+        get() = _onLoading
+
     // selected time
     val selectedHour = MutableLiveData(DEFAULT_HOUR)
     val selectedMinute = MutableLiveData(DEFAULT_MINUTE)
 
     val days = mutableListOf<Day>()
+    val isDaysEmpty = MutableLiveData(false)
+
     var hour: Int = 0
     var minute: Int = 0
 
@@ -85,8 +88,6 @@ class OnBoardingVM @Inject constructor(
             } ?: 1 // null 일 경우 1로 세팅
 
     }
-
-    fun alreadyAuthed() = viewModelScope.async { authRepository.isAuthenticated() }.getCompleted()
 
     fun isDaySelected(content: String) = days.contains(Day.from(content))
     fun addDay(content: String) = days.add(Day.from(content))
@@ -141,14 +142,6 @@ class OnBoardingVM @Inject constructor(
         viewModelScope.launch {
             loginRepository.execute(accessToken = kakaoAccessToken, socialType)
                 .onSuccess {
-                    // save on local storage
-                    authRepository.setAuthentication(
-                        Authentication(
-                            accessToken = it.apiAccessToken,
-                            refreshToken = it.apiRefreshToken
-                        )
-                    )
-
                     _loginResult.value = it
                 }
                 .onHttpFailure { e -> onError(e) }
@@ -170,20 +163,26 @@ class OnBoardingVM @Inject constructor(
                     trainingGoalType = selectedGoal.value ?: TrainingGoalType.NO_SELECTED,
                     hasAlarm = isNotiGranted.value ?: false,
                     day = days,
-                    hour = hour,
-                    minute = minute
+                    hour = selectedHour.value,
+                    minute = selectedMinute.value
                 ),
                 loginResult.value!!
             )
                 .onSuccess(onSuccess)
                 .onHttpFailure { e -> onError(e) }
+            loadingEnd()
         }
     }
 
-    fun sendPlanDataWithAuth(onSuccess: (Unit) -> Unit, onError: (SmeemException) -> Unit) {
+    fun sendPlanDataWithAuth(
+        token: String,
+        onSuccess: (Unit) -> Unit,
+        onError: (SmeemException) -> Unit
+    ) {
         viewModelScope.launch {
-            userRepositoryWithAuth.editTraining(
-                Training(
+            userRepositoryWithAnonymous.editTraining(
+                accessToken = token,
+                training = Training(
                     type = selectedGoal.value ?: TrainingGoalType.NO_SELECTED,
                     trainingTime = TrainingTime(days = days.toSet(), hour = hour, minute = minute),
                     hasAlarm = isNotiGranted.value ?: false,
@@ -199,6 +198,25 @@ class OnBoardingVM @Inject constructor(
             trainingRepository.getDetail(selectedGoal.value)
                 .onSuccess { _trainingGoal.value = it }
                 .onHttpFailure { e -> onError(e) }
+        }
+    }
+
+    fun loadingStart() {
+        _onLoading.value = LoadingState.ACT
+    }
+
+    fun loadingEnd() {
+        _onLoading.value = LoadingState.DONE
+    }
+
+    fun saveTokenOnLocal(accessToken: String, refreshToken: String) {
+        viewModelScope.launch {
+            localRepository.setAuthentication(
+                Authentication(
+                    accessToken = accessToken,
+                    refreshToken = refreshToken,
+                )
+            )
         }
     }
 

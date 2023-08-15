@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.Anonymous
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.ApiPool.onHttpFailure
+import com.sopt.smeem.domain.model.Authentication
+import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.UserRepository
 import com.sopt.smeem.presentation.join.EntranceSelection.LOCATION
 import com.sopt.smeem.presentation.join.EntranceSelection.MARKETING
@@ -17,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class JoinVM @Inject constructor(
-    private val userRepository: UserRepository,
+    private val localRepository: LocalRepository,
+    @Anonymous private val userRepository: UserRepository,
 ) : ViewModel() {
     private val _joinSucceed = MutableLiveData(false)
     val joinSucceed: LiveData<Boolean>
@@ -47,12 +51,25 @@ class JoinVM @Inject constructor(
     fun registerNicknameAndAcceptance(
         nickname: String,
         selected: Set<EntranceSelection>,
+        accessToken: String,
         onError: (SmeemException) -> Unit
     ) {
         viewModelScope.launch {
-            userRepository.modifyUserInfo(nickname, selected.contains(MARKETING))
+            userRepository.modifyUserInfo(accessToken, nickname, selected.contains(MARKETING))
                 .onSuccess { _joinSucceed.value = true }
                 .onHttpFailure { e -> onError(e) }
+        }
+    }
+
+    fun saveTokenInLocal(accessToken: String, refreshToken: String) {
+        viewModelScope.launch {
+            localRepository.setAuthentication(
+                Authentication(
+                    accessToken = accessToken,
+                    refreshToken = refreshToken,
+                    isAnonymous = false,
+                )
+            )
         }
     }
 }

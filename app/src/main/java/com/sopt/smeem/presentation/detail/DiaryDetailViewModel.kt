@@ -28,10 +28,11 @@ class DiaryDetailViewModel @Inject constructor(
 
     val isTopicExist: LiveData<Boolean> = topic.map { it != "" }
 
+    val isDiaryDeleted = MutableLiveData(false)
+
     fun getDiaryDetail(onError: (SmeemException) -> Unit) {
-        // TODO: HomeActivity에서 diaryId 받아오기
         viewModelScope.launch {
-            diaryRepository.getDiaryDetail(500)
+            diaryRepository.getDiaryDetail(diaryId!!)
                 .onSuccess {
                     diaryId = it.id
                     topic.value = it.topic
@@ -39,9 +40,18 @@ class DiaryDetailViewModel @Inject constructor(
                     date.value = it.createdAt?.toLocalDateTime()
                         ?.let { date -> DateUtil.asString(date) }
                     writer.value = it.username
-                    Log.d("diary id", "$diaryId")
                 }
                 .onHttpFailure { e -> onError(e) }
+        }
+    }
+
+    fun deleteDiary(onSuccess: (Unit) -> Unit, onError: (SmeemException) -> Unit) {
+        viewModelScope.launch {
+            diaryId?.let {
+                diaryRepository.removeDiary(it)
+                    .onSuccess(onSuccess)
+                    .onHttpFailure { e -> onError(e) }
+            }
         }
     }
 }

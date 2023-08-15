@@ -29,14 +29,27 @@ class TrainingManager(
         )
     }
 
-    suspend fun patchTraining(training: Training): ApiResponse<Unit> =
-        userService!!.patchPlan(
-            request = TrainingRequest(
-                target = training.type,
-                trainingTime = training.extractTime(),
-                hasAlarm = training.hasAlarm
+    suspend fun patchTraining(accessToken: String?, training: Training): ApiResponse<Unit> {
+        if (accessToken.isNullOrBlank()) {
+            return userService!!.patchPlan(
+                request = TrainingRequest(
+                    target = training.type,
+                    trainingTime = training.extractTime(),
+                    hasAlarm = training.hasAlarm
+                )
             )
-        )
+        } else {
+            return userService!!.patchPlanWithFixedToken(
+                token = accessToken,
+                request = TrainingRequest(
+                    target = training.type,
+                    trainingTime = training.extractTime(),
+                    hasAlarm = training.hasAlarm
+                )
+            )
+        }
+    }
+
 
     suspend fun getDetail(goal: TrainingGoalType): ApiResponse<TrainingGoalResponse> =
         trainingService.getDetail(goal)

@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import com.sopt.smeem.R
@@ -10,11 +11,14 @@ import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.calendar.WritingBottomSheet
 import com.sopt.smeem.presentation.calendar.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.calendar.listener.OnWeeklyCalendarSwipeListener
+import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @AndroidEntryPoint
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
@@ -41,6 +45,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             bs.show(supportFragmentManager, TAG)
         }
     }
+
     private fun moveToMyPage() {
         binding.ivMyPage.setOnClickListener {
             startActivity(Intent(this, MyPageActivity::class.java))
@@ -60,7 +65,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 date.format(DateTimeFormatter.ofPattern(TARGET_MONTH_PATTERN))
 
             binding.btnWriteDiary.visibility =
-                if (LocalDate.now().isEqual(date)) View.VISIBLE else View.GONE
+                if (LocalDate.now().isEqual(date) && homeViewModel.responseDateDiary.value == null) View.VISIBLE else View.INVISIBLE
 
             homeViewModel.getDateDiary(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
         }
@@ -69,11 +74,23 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             OnWeeklyCalendarSwipeListener {
             override fun onSwipe(mondayDate: LocalDate?) {
                 mondayDate?.let {
-                    // TODO 서버 갱신
+                    homeViewModel.getDiaries(
+                        start = binding.weeklyCalendar.mondayDate?.plusDays(-6)?.format(
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                        ) ?: "",
+                        end = binding.weeklyCalendar.mondayDate?.plusDays(6)?.format(
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                        ) ?: "",
+                    )
                     setTargetMonthTitle()
                 }
             }
         })
+        binding.clDiaryList.setOnSingleClickListener {
+            Intent(this, DiaryDetailActivity::class.java).apply {
+                putExtra("diaryId", homeViewModel.responseDateDiary.value?.id)
+            }.run(::startActivity)
+        }
     }
 
     private fun setTargetMonthTitle() {
@@ -83,15 +100,13 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     }
 
     private fun observeData() {
-        homeViewModel.responseDiaries.observe(this) {
-            homeViewModel.getDiaries(
-                start = binding.weeklyCalendar.mondayDate?.plusDays(-6)?.format(
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                ) ?: "",
-                end = binding.weeklyCalendar.mondayDate?.plusDays(6)?.format(
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                ) ?: "",
-            )
+        homeViewModel.responseDiaries.observe(this) { diarySummaries ->
+            diarySummaries?.diaries?.let {
+                val diaryEntry = it.map { diary ->
+                    diary.value
+                }
+                binding.weeklyCalendar.setDiaryEntry(diaryEntry)
+            }
         }
 
         homeViewModel.responseDateDiary.observe(this) {
@@ -101,7 +116,14 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             } else {
                 binding.clDiaryList.visibility = View.VISIBLE
                 binding.clNoDiary.visibility = View.GONE
-                binding.tvDiaryWritenTime.text = it.createdAt
+
+                val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                val outputFormatter = DateTimeFormatter.ofPattern("h : mm a", Locale.ENGLISH)
+
+                val createdAtDateTime = LocalDateTime.parse(it.createdAt, inputFormatter)
+                val formattedCreatedAt = createdAtDateTime.format(outputFormatter)
+
+                binding.tvDiaryWritenTime.text = formattedCreatedAt
                 binding.tvDiary.text = it.content
             }
         }

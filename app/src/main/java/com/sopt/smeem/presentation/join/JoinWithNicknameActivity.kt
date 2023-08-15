@@ -8,7 +8,9 @@ import androidx.core.widget.addTextChangedListener
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityJoinNicknameBinding
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
 import com.sopt.smeem.presentation.join.JoinConstant.NICKNAME
+import com.sopt.smeem.presentation.join.JoinConstant.REFRESH_TOKEN
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,6 +18,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class JoinWithNicknameActivity :
     BindingActivity<ActivityJoinNicknameBinding>(R.layout.activity_join_nickname) {
     private val vm: JoinNicknameVM by viewModels()
+
+    override fun constructLayout() {
+        binding.etEntranceNickname.requestFocus()
+    }
 
     override fun addListeners() {
         watchButtonSwitchWithTextChanging()
@@ -25,7 +31,7 @@ class JoinWithNicknameActivity :
 
     private fun onTextWrite() {
         binding.etEntranceNickname.addTextChangedListener { watcher ->
-            if (watcher!!.isEmpty() || watcher.length > 16) {
+            if (watcher.isNullOrBlank() || watcher.length > 10) {
                 watchButtonSwitchWithTextChanging()
             } else {
                 nextButtonOn()
@@ -59,6 +65,8 @@ class JoinWithNicknameActivity :
                 false -> {
                     val toAgreement = Intent(this, JoinWithAgreementActivity::class.java)
                     toAgreement.putExtra(NICKNAME, vm.content)
+                    toAgreement.putExtra(ACCESS_TOKEN, intent.getStringExtra(ACCESS_TOKEN))
+                    toAgreement.putExtra(REFRESH_TOKEN, intent.getStringExtra(REFRESH_TOKEN))
                     startActivity(toAgreement)
                     if (!isFinishing) finish()
                 }
