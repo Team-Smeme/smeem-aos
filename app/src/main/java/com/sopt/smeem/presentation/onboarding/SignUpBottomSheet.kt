@@ -71,6 +71,7 @@ class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
 
     override fun onDestroy() {
         super.onDestroy()
+        vm.loadingEnd()
         _binding = null
     }
 
