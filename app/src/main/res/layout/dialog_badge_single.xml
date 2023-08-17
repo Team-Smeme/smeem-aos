@@ -26,7 +26,7 @@
 
             <ImageView
                 android:id="@+id/iv_badge_single"
-                imgUrl="@{vm.badge.imageUrl}"
+                imgUrl="@{vm.badgeImageUrl}"
                 android:layout_width="164dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="28dp"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="@{vm.badge.name}"
+                android:text="@{vm.badgeName}"
                 android:textAppearance="@style/TextAppearance.Smeem.Subtitle3_medium"
                 app:layout_constraintEnd_toEndOf="@id/iv_badge_single"
                 app:layout_constraintStart_toStartOf="@id/iv_badge_single"
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="33dp"
-                android:text="@{@string/badge_obtain_message(vm.badge.name)}"
+                android:text="@{@string/badge_obtain_message(vm.badgeName)}"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
                 android:textColor="@color/gray_600"
