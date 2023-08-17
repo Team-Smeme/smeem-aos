@@ -64,7 +64,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         val retrievedBadge = intent.getSerializableExtra("retrievedBadge") as List<RetrievedBadge>? ?: emptyList()
         if (retrievedBadge.isNotEmpty()) {
             val badgeList = retrievedBadge.asReversed()
-            for (badge in badgeList) {
+            badgeList.map { badge ->
                 BadgeDialogFragment
                     .newInstance(badge.name, badge.imageUrl, homeViewModel.isFirstBadge)
                     .show(supportFragmentManager, "badgeDialog")

@@ -9,45 +9,40 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.sopt.smeem.R
-import com.sopt.smeem.databinding.DialogBadgeMultipleBinding
-import com.sopt.smeem.databinding.DialogBadgeSingleBinding
+import com.sopt.smeem.databinding.DialogBadgeBinding
 import com.sopt.smeem.presentation.mypage.MyBadgesActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class BadgeDialogFragment: DialogFragment() {
-    private var _single: DialogBadgeSingleBinding? = null
-    private val single get() = requireNotNull(_single) { "value of _single is null" }
-    private var _multiple: DialogBadgeMultipleBinding? = null
-    private val multiple get() = requireNotNull(_multiple) { "value of _multiple is null" }
-
+    private val binding by lazy<DialogBadgeBinding> {
+        DataBindingUtil.inflate(requireActivity().layoutInflater, R.layout.dialog_badge, null, false)
+    }
     private val viewModel by viewModels<HomeViewModel>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        constructLayout()
+        addListeners()
+
+        return createDialog(binding.root)
+    }
+
+    private fun constructLayout() {
         val name = requireArguments().getString(BADGE_NAME) as String
         val imageUrl = requireArguments().getString(BADGE_IMAGE_URL) as String
         val isFirstBadge = requireArguments().getBoolean(IS_FIRST_BADGE)
 
-        // TODO: 로직 개선하기..
-        return if (isFirstBadge) {
-            _single = DataBindingUtil.inflate(requireActivity().layoutInflater, R.layout.dialog_badge_single, null, false)
-            with(single) {
-                vm = viewModel
-                lifecycleOwner = requireActivity()
-            }
-            addSingleBadgeListeners()
-            viewModel.setBadgeInfo(name, imageUrl)
-            createDialog(single.root)
-        } else {
-            _multiple = DataBindingUtil.inflate(requireActivity().layoutInflater, R.layout.dialog_badge_multiple, null, false)
-            with(multiple) {
-                vm = viewModel
-                lifecycleOwner = requireActivity()
-            }
-            addMultipleBadgeListeners()
-            viewModel.setBadgeInfo(name, imageUrl)
-            createDialog(multiple.root)
+        initDataBinding()
+        initBadgeData(name, imageUrl, isFirstBadge)
+    }
+
+    private fun addListeners() {
+        binding.btnBadgeExit.setOnSingleClickListener {
+            dismiss()
+        }
+        binding.btnBadgeMore.setOnSingleClickListener {
+            Intent(requireContext(), MyBadgesActivity::class.java).run(::startActivity)
         }
     }
 
@@ -57,34 +52,31 @@ class BadgeDialogFragment: DialogFragment() {
             .create()
     }
 
-    private fun addSingleBadgeListeners() {
-        single.btnBadgeSingleExit.setOnSingleClickListener {
-            dismiss()
-        }
-        single.btnBadgeSingleMore.setOnSingleClickListener {
-            Intent(requireContext(), MyBadgesActivity::class.java).run(::startActivity)
+    private fun initDataBinding() {
+        with(binding) {
+            vm = viewModel
+            lifecycleOwner = requireActivity()
         }
     }
 
-    private fun addMultipleBadgeListeners() {
-        multiple.btnBadgeMultipleExit.setOnSingleClickListener {
-            dismiss()
-        }
+    private fun initBadgeData(name: String, imageUrl: String, isFirstBadge: Boolean) {
+        viewModel.setBadgeInfo(name, imageUrl, isFirstBadge)
     }
 
     companion object {
         private const val BADGE_NAME = "badgeName"
         private const val BADGE_IMAGE_URL = "badgeImageUrl"
-        private const val IS_FIRST_BADGE = "isLastBadge"
+        private const val IS_FIRST_BADGE = "isFirstBadge"
+
         fun newInstance(name: String, imageUrl: String, isFirstBadge: Boolean) : BadgeDialogFragment {
-            val fragment = BadgeDialogFragment()
             val args = Bundle().apply {
                 putString(BADGE_NAME, name)
                 putString(BADGE_IMAGE_URL, imageUrl)
                 putBoolean(IS_FIRST_BADGE, isFirstBadge)
             }
-            fragment.arguments = args
-            return fragment
+            BadgeDialogFragment()
+                .apply { arguments = args }
+                .run { return this }
         }
     }
 }

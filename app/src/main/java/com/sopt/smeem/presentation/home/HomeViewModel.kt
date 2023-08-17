@@ -54,8 +54,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun setBadgeInfo(name: String, imageUrl: String) {
+    fun setBadgeInfo(name: String, imageUrl: String, isFirst: Boolean) {
         badgeName.value = name
         badgeImageUrl.value = imageUrl
+        isFirstBadge = isFirst
     }
 }
