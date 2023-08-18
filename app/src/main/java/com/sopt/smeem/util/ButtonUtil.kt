@@ -8,12 +8,14 @@ import com.sopt.smeem.domain.model.Day
 object ButtonUtil {
     public fun MaterialButton.switchOn() {
         this.setIconResource(R.drawable.ic_selection_active)
+        this.setTextAppearance(R.style.TextAppearance_Smeem_Body3_medium_button_on)
         this.setTextColor(resources.getColor(R.color.point, null))
         this.setStrokeColorResource(R.color.point)
     }
 
     public fun MaterialButton.switchOff() {
         this.setIconResource(R.drawable.ic_selection_inactive)
+        this.setTextAppearance(R.style.TextAppearance_Smeem_Body3_medium)
         this.setTextColor(resources.getColor(R.color.gray_600, null))
         this.setStrokeColorResource(R.color.gray_100)
     }
