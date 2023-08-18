@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
 
             android:enabled="false"
-            android:paddingVertical="16dp"
+            android:paddingVertical="20dp"
             android:text="@string/on_boarding_activity_next"
             android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
             app:layout_constraintBottom_toBottomOf="parent"

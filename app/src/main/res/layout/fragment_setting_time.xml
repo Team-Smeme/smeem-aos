@@ -139,7 +139,7 @@
                 android:id="@+id/layout_on_boarding_time_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingBottom="24dp"
+                android:paddingBottom="22dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_on_boarding_time_days">
@@ -153,7 +153,7 @@
                     android:gravity="center"
                     android:text="알림 시간"
                     android:textAppearance="@style/TextAppearance.Smeem.Caption2_medium"
-                    android:textColor="@color/point"
+                    android:textColor="?colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -207,9 +207,9 @@
             android:id="@+id/tv_on_boarding_time_later_static"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_marginTop="240dp"
             android:layout_marginBottom="10dp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="50dp"
             android:text="@string/on_boarding_time_later"
             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
             android:textColor="@color/gray_600"
