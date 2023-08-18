@@ -1,6 +1,7 @@
 package com.sopt.smeem.presentation.splash
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivitySplashLoginBinding
@@ -23,6 +24,7 @@ class SplashLoginActivity :
     override fun constructLayout() {
         super.constructLayout()
         bs = LoginBottomSheet()
+        binding.ivSignInHeader.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.point, null))
     }
 
     override fun addListeners() {
