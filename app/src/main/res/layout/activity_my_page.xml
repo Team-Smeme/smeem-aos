@@ -255,7 +255,7 @@
                         android:layout_height="0dp"
                         android:layout_marginTop="9dp"
                         android:gravity="center"
-                        android:text="@{latestBadge.description}"
+                        android:text="@{@string/badge_obtain_message_mypage(latestBadge.title)}"
                         android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
                         android:textColor="@color/gray_600"
                         app:layout_constraintTop_toBottomOf="@id/tv_my_page_latest_badge_title"
