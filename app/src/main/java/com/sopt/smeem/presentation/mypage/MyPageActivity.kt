@@ -19,6 +19,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     private var days: Map<Int, TextView>? = null
 
     override fun constructLayout() {
+        binding.ivMyPageEncouragingToEdit.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.white, null))
         getFromServer()
         setPush()
         setUpDays()
@@ -70,6 +71,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     }
 
     private fun setUpDays() {
+        setDaysHeight()
         days = mapOf(
             binding.tvMyPageTimeMon.id to binding.tvMyPageTimeMon,
             binding.tvMyPageTimeTue.id to binding.tvMyPageTimeTue,
@@ -81,8 +83,17 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         )
     }
 
+    private fun setDaysHeight() {
+        with(binding.flowMyPageTime) {
+            layoutParams.height = (getScreenWidth() - 38) / 7
+            requestLayout()
+        }
+    }
+
+    private fun getScreenWidth(): Int = resources.displayMetrics.widthPixels
+
     private fun onEditGoal() {
-        binding.ivMyPageEditEncouraging.setOnClickListener {
+        binding.layoutMyPageEncouraging.setOnClickListener {
             startActivity(Intent(this, EditTrainingGoalActivity::class.java))
             finish()
         }
