@@ -11,6 +11,7 @@ import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
+import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -123,9 +124,11 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     }
 
     private fun onEditNickname() {
-        binding.ivMyPageEditNickname.setOnClickListener {
-            startActivity(Intent(this, ChangingNicknameActivity::class.java))
-            finish()
+        binding.ivMyPageEditNickname.setOnSingleClickListener {
+            Intent(this, ChangingNicknameActivity::class.java).apply {
+                putExtra("originalNickname", binding.tvMyPageNickname.text)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }.run(::startActivity)
         }
     }
 
