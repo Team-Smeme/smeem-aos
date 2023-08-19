@@ -65,12 +65,7 @@ class EditTrainingGoalActivity :
         }
 
         binding.btnMyPageTrainingGoal.setOnSingleClickListener {
-            vm.sendServer(
-                onError = { e ->
-                    Toast.makeText(this, e.errorCode.message, Toast.LENGTH_SHORT).show()
-                }
-            )
-            goBack()
+            goToDisplay()
         }
     }
 
@@ -78,7 +73,21 @@ class EditTrainingGoalActivity :
         vm.selectedGoal.observe(
             this@EditTrainingGoalActivity
         ) {
-            binding.btnMyPageTrainingGoal.isEnabled = (it != TrainingGoalType.NO_SELECTED)
+            if (it != TrainingGoalType.NO_SELECTED) nextButtonOn() else nextButtonOff()
+        }
+    }
+
+    private fun nextButtonOff() {
+        with (binding.btnMyPageTrainingGoal) {
+            setBackgroundColor(resources.getColor(R.color.point_inactive, null))
+            isEnabled = false
+        }
+    }
+
+    private fun nextButtonOn() {
+        with (binding.btnMyPageTrainingGoal) {
+            setBackgroundColor(resources.getColor(R.color.point, null))
+            isEnabled = true
         }
     }
 
@@ -86,6 +95,12 @@ class EditTrainingGoalActivity :
         binding.topbarMyPageTraining.setNavigationOnClickListener {
             goBack()
         }
+    }
+
+    private fun goToDisplay() {
+        Intent(this, DisplayTrainingGoalActivity::class.java).apply {
+            putExtra("selectedGoal", vm.selectedGoal.value)
+        }.run(::startActivity)
     }
 
     private fun goBack() {
