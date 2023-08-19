@@ -35,13 +35,11 @@ class JoinWithAgreementActivity :
 
         EntranceSelection.SERVICE.id = binding.btnEntranceAgreementService.id
         EntranceSelection.PERSONAL.id = binding.btnEntranceAgreementPersonal.id
-        EntranceSelection.LOCATION.id = binding.btnEntranceAgreementLocation.id
         EntranceSelection.MARKETING.id = binding.btnEntranceAgreementMarketing.id
 
         elements = mapOf(
             EntranceSelection.SERVICE to binding.btnEntranceAgreementService,
             EntranceSelection.PERSONAL to binding.btnEntranceAgreementPersonal,
-            EntranceSelection.LOCATION to binding.btnEntranceAgreementLocation,
             EntranceSelection.MARKETING to binding.btnEntranceAgreementMarketing,
         )
     }
@@ -60,14 +58,14 @@ class JoinWithAgreementActivity :
                     element.switchOffWithoutContent()
                     vm.cancelAll()
                 }
-                binding.btnEntranceNext.isEnabled = false
+                nextButtonOff()
             } else {
                 binding.btnEntranceAgreementAll.switchOn()
                 vm.selectAll()
                 elements?.values?.forEach { element ->
                     element.switchOnWithoutContent()
                 }
-                binding.btnEntranceNext.isEnabled = true
+                nextButtonOn()
             }
         }
 
@@ -88,8 +86,28 @@ class JoinWithAgreementActivity :
                         binding.btnEntranceAgreementAll.switchOn()
                     }
                 }
-                binding.btnEntranceNext.isEnabled = vm.canGoNext()
+                if (vm.canGoNext()) nextButtonOn() else nextButtonOff()
+
             }
+        }
+    }
+
+    private fun nextButtonOff() {
+        with(binding.btnEntranceNext) {
+            setBackgroundColor(
+                resources.getColor(
+                    R.color.point_inactive,
+                    null
+                )
+            )
+            isEnabled = false
+        }
+    }
+
+    private fun nextButtonOn() {
+        with(binding.btnEntranceNext) {
+            setBackgroundColor(resources.getColor(R.color.point, null))
+            isEnabled = true
         }
     }
 
@@ -136,9 +154,11 @@ class JoinWithAgreementActivity :
 internal fun MaterialButton.switchOnWithoutContent() {
     this.setIconResource(R.drawable.ic_selection_active)
     this.setStrokeColorResource(R.color.point)
+    this.setTextColor(resources.getColor(R.color.black, null))
 }
 
 
 internal fun MaterialButton.switchOffWithoutContent() {
     this.setIconResource(R.drawable.ic_selection_inactive)
+    this.setTextColor(resources.getColor(R.color.gray_600, null))
 }
