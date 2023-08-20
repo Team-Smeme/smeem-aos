@@ -32,11 +32,13 @@ class WritingBottomSheet : BottomSheetDialogFragment() {
         binding.layoutHomeBottomForeign.setOnClickListener {
             val goToForeign = Intent(activity, ForeignWriteActivity::class.java)
             startActivity(goToForeign)
+            dismiss()
         }
 
         binding.layoutHomeBottomNative.setOnClickListener {
             val goToForeign = Intent(activity, NativeWriteStep1Activity::class.java)
             startActivity(goToForeign)
+            dismiss()
         }
     }
 

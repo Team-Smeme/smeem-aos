@@ -57,7 +57,7 @@ class NativeWriteStep2Activity :
     }
 
     private fun toggleHint() {
-        binding.layoutNativeStep2BottomToolbar.btnTranslate.setOnSingleClickListener {
+        binding.layoutNativeStep2BottomToolbar.btnTranslate.setOnClickListener {
             when (binding.layoutNativeStep2BottomToolbar.btnTranslate.isChecked) {
                 true -> {
                     binding.tvNativeStep2NativeDiary.text = intent.getStringExtra("translateResult")
