@@ -10,23 +10,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="16dp"
         android:paddingHorizontal="18dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="16dp"
         tools:context=".presentation.onboarding.OnBoardingActivity">
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progress_circle_on_boarding_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:indeterminate="false"
             app:indicatorColor="@color/point"
             app:indicatorDirectionCircular="clockwise"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_on_boarding_header_no"
@@ -34,34 +33,34 @@
             android:layout_height="wrap_content"
 
             android:layout_marginStart="10dp"
-
-            android:layout_marginTop="36dp"
-            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
-            android:textColor="@color/point"
+            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold.Spacing_14"
+            android:textColor="?colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
 
         <TextView
             android:id="@+id/tv_on_boarding_header_no_static"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
-            android:layout_marginStart="3dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
             android:text="@string/on_boarding_header_no_static"
             android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
             app:layout_constraintBottom_toBottomOf="@id/tv_on_boarding_header_no"
             app:layout_constraintStart_toEndOf="@id/tv_on_boarding_header_no"
-            app:layout_constraintTop_toTopOf="@id/tv_on_boarding_header_no" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_on_boarding_header_title_static"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
+            android:layout_marginStart="8dp"
             android:layout_marginTop="18dp"
             android:text="@string/on_boarding_goal_header_title"
             android:textAppearance="@style/TextAppearance.Smeem.Headline2"
-            app:layout_constraintStart_toStartOf="@id/tv_on_boarding_header_no"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_header_no" />
 
         <TextView

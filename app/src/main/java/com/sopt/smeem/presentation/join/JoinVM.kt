@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.join
 
+import android.widget.Button
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +11,6 @@ import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.Authentication
 import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.UserRepository
-import com.sopt.smeem.presentation.join.EntranceSelection.LOCATION
 import com.sopt.smeem.presentation.join.EntranceSelection.MARKETING
 import com.sopt.smeem.presentation.join.EntranceSelection.PERSONAL
 import com.sopt.smeem.presentation.join.EntranceSelection.SERVICE
@@ -46,7 +46,7 @@ class JoinVM @Inject constructor(
     }
 
     fun allSelected() = selections.size == EntranceSelection.getAll().size
-    fun canGoNext() = selections.containsAll(setOf(SERVICE, PERSONAL, LOCATION))
+    fun canGoNext() = selections.containsAll(setOf(SERVICE, PERSONAL))
     fun getSelected() = selections
     fun registerNicknameAndAcceptance(
         nickname: String,
@@ -77,7 +77,6 @@ class JoinVM @Inject constructor(
 enum class EntranceSelection {
     SERVICE,
     PERSONAL,
-    LOCATION,
     MARKETING,
     ;
 
@@ -85,7 +84,7 @@ enum class EntranceSelection {
     var selected: Boolean = false
 
     companion object {
-        fun getAll(): Set<EntranceSelection> = setOf(SERVICE, PERSONAL, LOCATION, MARKETING)
+        fun getAll(): Set<EntranceSelection> = setOf(SERVICE, PERSONAL, MARKETING)
         fun findById(id: Int) = getAll().find { it.id == id } ?: throw IllegalStateException()
     }
 }
