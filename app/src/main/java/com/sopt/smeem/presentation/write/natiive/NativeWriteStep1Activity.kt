@@ -113,7 +113,7 @@ class NativeWriteStep1Activity :
 
                 else -> {
                     binding.root.showSnackbar(
-                        "외국어를 포함해 일기를 작성해 주세요 :(",
+                        "일기를 작성해 주세요 :(",
                         R.id.layout_native_step1_bottom_toolbar,
                         Snackbar.LENGTH_SHORT
                     )
