@@ -24,11 +24,6 @@ abstract class BindingActivity<Binding : ViewDataBinding>(
         addObservers()
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        hideKeyboard(currentFocus ?: View(this))
-        return super.dispatchTouchEvent(ev)
-    }
-
     open fun constructLayout() {}
     open fun addListeners() {}
     open fun addObservers() {}
