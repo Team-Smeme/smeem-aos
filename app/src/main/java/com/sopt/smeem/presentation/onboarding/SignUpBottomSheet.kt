@@ -64,9 +64,9 @@ class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
             }
         }
 
-        binding.tvSignUpAnonymous.setOnSingleClickListener {
-            vm.goAnonymous()
-        }
+//        binding.tvSignUpAnonymous.setOnSingleClickListener {
+//            vm.goAnonymous()
+//        }
     }
 
     override fun onDestroy() {
