@@ -28,13 +28,20 @@ class ChangingNicknameActivity :
     private val vm: ChangingNicknameVM by viewModels()
 
     override fun constructLayout() {
-        binding.etChangeNickname.requestFocus()
+        setUpData()
     }
 
     override fun addListeners() {
         onTextWrite()
         onTouchCompleted()
         onTouchBack()
+    }
+
+    private fun setUpData() {
+        with (binding.etChangeNickname) {
+            setText(intent.getStringExtra("originalNickname"))
+            requestFocus()
+        }
     }
 
     private fun onTextWrite() {
@@ -51,6 +58,10 @@ class ChangingNicknameActivity :
         binding.topbarChangeNickname.setNavigationOnClickListener {
             goBack()
         }
+    }
+
+    override fun onBackPressed() {
+        goBack()
     }
 
     private fun goBack() {

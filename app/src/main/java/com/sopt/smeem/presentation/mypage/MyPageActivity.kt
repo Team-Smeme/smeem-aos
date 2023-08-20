@@ -11,6 +11,7 @@ import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
+import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +20,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     private var days: Map<Int, TextView>? = null
 
     override fun constructLayout() {
+        binding.ivMyPageEncouragingToEdit.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.white, null))
         getFromServer()
         setPush()
         setUpDays()
@@ -70,6 +72,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     }
 
     private fun setUpDays() {
+        setDaysHeight()
         days = mapOf(
             binding.tvMyPageTimeMon.id to binding.tvMyPageTimeMon,
             binding.tvMyPageTimeTue.id to binding.tvMyPageTimeTue,
@@ -81,8 +84,17 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         )
     }
 
+    private fun setDaysHeight() {
+        with(binding.flowMyPageTime) {
+            layoutParams.height = (getScreenWidth() - 38) / 7
+            requestLayout()
+        }
+    }
+
+    private fun getScreenWidth(): Int = resources.displayMetrics.widthPixels
+
     private fun onEditGoal() {
-        binding.ivMyPageEditEncouraging.setOnClickListener {
+        binding.layoutMyPageEncouraging.setOnClickListener {
             startActivity(Intent(this, EditTrainingGoalActivity::class.java))
             finish()
         }
@@ -112,9 +124,11 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     }
 
     private fun onEditNickname() {
-        binding.ivMyPageEditNickname.setOnClickListener {
-            startActivity(Intent(this, ChangingNicknameActivity::class.java))
-            finish()
+        binding.ivMyPageEditNickname.setOnSingleClickListener {
+            Intent(this, ChangingNicknameActivity::class.java).apply {
+                putExtra("originalNickname", binding.tvMyPageNickname.text)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }.run(::startActivity)
         }
     }
 
