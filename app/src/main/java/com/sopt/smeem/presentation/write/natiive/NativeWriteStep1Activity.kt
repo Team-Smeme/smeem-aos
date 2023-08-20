@@ -148,6 +148,7 @@ class NativeWriteStep1Activity :
                 putExtra("translateResult", it)
                 putExtra("nativeDiary", viewModel.diary.value)
                 putExtra("topicId", viewModel.topicId)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             }
             startActivity(intent)
         }
