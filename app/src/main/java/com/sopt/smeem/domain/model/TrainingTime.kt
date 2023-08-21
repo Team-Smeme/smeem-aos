@@ -4,7 +4,6 @@ import com.sopt.smeem.data.model.response.MyPageResponse
 import com.sopt.smeem.util.DateUtil.asAmpm
 import com.sopt.smeem.util.DateUtil.asHour
 import com.sopt.smeem.util.DateUtil.asMinute
-import kotlin.math.min
 
 data class TrainingTime(
     val days: Set<Day>,
