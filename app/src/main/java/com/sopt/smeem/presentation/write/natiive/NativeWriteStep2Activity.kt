@@ -52,12 +52,14 @@ class NativeWriteStep2Activity :
 
     private fun backToStep1() {
         binding.layoutNativeStep2Toolbar.tvCancel.setOnSingleClickListener {
-            finish()
+            Intent(this, NativeWriteStep1Activity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }.run(::startActivity)
         }
     }
 
     private fun toggleHint() {
-        binding.layoutNativeStep2BottomToolbar.btnTranslate.setOnSingleClickListener {
+        binding.layoutNativeStep2BottomToolbar.btnTranslate.setOnClickListener {
             when (binding.layoutNativeStep2BottomToolbar.btnTranslate.isChecked) {
                 true -> {
                     binding.tvNativeStep2NativeDiary.text = intent.getStringExtra("translateResult")

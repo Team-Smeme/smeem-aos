@@ -1,10 +1,11 @@
 package com.sopt.smeem.presentation.write.natiive
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.smeem.R
@@ -36,9 +37,9 @@ class NativeWriteStep1Activity :
 
     override fun addListeners() {
         goBackToHome()
+        showHint()
         setTopicVisibility()
         refreshTopic()
-        hideTip()
         completeNativeDiary()
     }
 
@@ -56,6 +57,12 @@ class NativeWriteStep1Activity :
     private fun goBackToHome() {
         binding.layoutNativeStep1Toolbar.tvCancel.setOnSingleClickListener {
             finish()
+        }
+    }
+
+    private fun showHint() {
+        binding.etNativeStep1Write.addTextChangedListener { watcher ->
+            binding.tvNativeStep1Hint.visibility = if (watcher.isNullOrEmpty()) View.VISIBLE else View.GONE
         }
     }
 
@@ -92,13 +99,8 @@ class NativeWriteStep1Activity :
 
     private fun setRandomTopic() {
         viewModel.getRandomTopic { e ->
-            Toast.makeText(this@NativeWriteStep1Activity, e.description(), Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun hideTip() {
-        binding.layoutNativeStep1Tip.setOnSingleClickListener {
-            it.visibility = View.GONE
+            Toast.makeText(this@NativeWriteStep1Activity, e.description(), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -111,7 +113,7 @@ class NativeWriteStep1Activity :
 
                 else -> {
                     binding.root.showSnackbar(
-                        "외국어를 포함해 일기를 작성해 주세요 :(",
+                        "일기를 작성해 주세요 :(",
                         R.id.layout_native_step1_bottom_toolbar,
                         Snackbar.LENGTH_SHORT
                     )
@@ -146,6 +148,7 @@ class NativeWriteStep1Activity :
                 putExtra("translateResult", it)
                 putExtra("nativeDiary", viewModel.diary.value)
                 putExtra("topicId", viewModel.topicId)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             }
             startActivity(intent)
         }

@@ -42,12 +42,24 @@
             app:randomTopic="@{vm.topic}"
             app:refreshVisibility="@{View.VISIBLE}" />
 
+        <TextView
+            android:id="@+id/tv_native_step1_hint"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingHorizontal="18dp"
+            android:paddingTop="20dp"
+            app:layout_constraintBottom_toTopOf="@id/view_native_step1_line"
+            android:text="@string/diary_native_write_hint"
+            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
+            android:textColor="@color/gray_300"
+            app:layout_constraintTop_toBottomOf="@id/layout_native_step1_random_topic" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            app:layout_constraintBottom_toTopOf="@id/layout_native_step1_tip"
+            app:layout_constraintBottom_toTopOf="@id/view_native_step1_line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_native_step1_random_topic">
@@ -63,7 +75,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:hint="@string/diary_write_hint"
                     android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
                     android:paddingHorizontal="18dp"
                     android:paddingVertical="20dp"
@@ -74,50 +85,6 @@
                 <requestFocus />
 
             </androidx.core.widget.NestedScrollView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_native_step1_tip"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="?colorSurface"
-            android:paddingVertical="14dp"
-            android:paddingStart="18dp"
-            android:paddingEnd="17dp"
-            app:layout_constraintBottom_toTopOf="@id/view_native_step1_line"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/tv_native_step1_tip_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TIP"
-                android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
-                android:textColor="?colorPrimary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_native_step1_tip_content"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:text="문장을 정리하면 다음 단계에서 더욱 정확한 힌트를 받을 수 있어요!"
-                android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
-                android:textColor="#949494"
-                app:layout_constraintEnd_toStartOf="@id/iv_native_step1_tip_x"
-                app:layout_constraintStart_toEndOf="@id/tv_native_step1_tip_label" />
-
-            <ImageView
-                android:id="@+id/iv_native_step1_tip_x"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_tip_x"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
