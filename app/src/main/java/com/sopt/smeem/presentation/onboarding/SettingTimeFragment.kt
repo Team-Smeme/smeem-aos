@@ -38,6 +38,7 @@ class SettingTimeFragment :
     }
 
     private fun setUpDays() {
+        setDaysHeight()
         days = mapOf(
             binding.tvOnBoardingTimeMon.id to binding.tvOnBoardingTimeMon,
             binding.tvOnBoardingTimeTue.id to binding.tvOnBoardingTimeTue,
@@ -50,11 +51,20 @@ class SettingTimeFragment :
         // 기본값 월화수목금 으로 설정
         setInitialDays()
     }
-    
+
+    private fun setDaysHeight() {
+        with(binding.flowOnBoardingTime) {
+            layoutParams.height = (getScreenWidth() - 36) / 7
+            requestLayout()
+        }
+    }
+
+    private fun getScreenWidth(): Int = resources.displayMetrics.widthPixels
+
     private fun setInitialDays() {
         days?.values?.forEach { day ->
             run {
-                when(day.text.toString()) {
+                when (day.text.toString()) {
                     "토" -> {}
                     "일" -> {}
                     else -> {

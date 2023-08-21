@@ -86,7 +86,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
 
     private fun setDaysHeight() {
         with(binding.flowMyPageTime) {
-            layoutParams.height = (getScreenWidth() - 38) / 7
+            layoutParams.height = (getScreenWidth() - 36) / 7
             requestLayout()
         }
     }
