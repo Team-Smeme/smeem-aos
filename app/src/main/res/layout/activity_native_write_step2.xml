@@ -43,6 +43,7 @@
             android:scrollbarAlwaysDrawVerticalTrack="true"
             android:scrollbarFadeDuration="0"
             android:scrollbarStyle="outsideOverlay"
+            android:scrollbarThumbVertical="@drawable/shape_scrollbar"
             android:scrollbars="vertical"
             android:text="@string/dummy_diary_korean"
             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
