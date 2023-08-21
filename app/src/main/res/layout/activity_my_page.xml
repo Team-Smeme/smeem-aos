@@ -14,8 +14,8 @@
             type="com.sopt.smeem.domain.model.Badge" />
 
         <variable
-            name="alarmEnabledDay"
-            type="com.sopt.smeem.domain.model.AlarmEnabledDay" />
+            name="trainingTime"
+            type="com.sopt.smeem.domain.model.TrainingTime" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -499,7 +499,7 @@
                             android:id="@+id/tv_my_page_time_box_body"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{alarmEnabledDay.asText()}"
+                            android:text="@{trainingTime.asText()}"
                             android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
                             android:textColor="?colorPrimary"
                             app:layout_constraintEnd_toEndOf="@id/tv_my_page_time_box_title_static"

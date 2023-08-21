@@ -32,7 +32,6 @@ internal class MyPageVM @Inject constructor(
                 this.onSuccess {
                     _response.value = it
                     isTimeSet = it.hasPushAlarm && it.trainingTime.isSet()
-                    days.addAll(it.trainingTime.days)
                 }
                 this.onHttpFailure { onError(it) }
             }

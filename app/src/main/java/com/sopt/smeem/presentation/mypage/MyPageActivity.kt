@@ -30,7 +30,6 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     override fun addListeners() {
         onTouchSwitchingPush()
         onEditNickname()
-        onTouchDays()
         onTouchBadge()
         onEditGoal()
         onTouchBack()
@@ -100,29 +99,6 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         }
     }
 
-    private fun onTouchDays() {
-        days?.values?.forEach { day ->
-            run {
-                day.setOnClickListener {
-                    // 요일이 선택되어있는 경우
-                    if (vm.isDaySelected(day.text.toString())) {
-                        day.switchOff()
-                        day.backgroundTintList =
-                            ColorStateList.valueOf(resources.getColor(R.color.white, null))
-                        vm.removeDay(day.text.toString())
-                    }
-                    // 요일이 선택되어져있지 않은 경우
-                    else {
-                        day.switchOn()
-                        day.backgroundTintList =
-                            ColorStateList.valueOf(resources.getColor(R.color.point, null))
-                        vm.addDay(day.text.toString())
-                    }
-                }
-            }
-        }
-    }
-
     private fun onEditNickname() {
         binding.ivMyPageEditNickname.setOnSingleClickListener {
             Intent(this, ChangingNicknameActivity::class.java).apply {
@@ -143,8 +119,11 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
             binding.tvMyPageNickname.text = it.username
             binding.trainingGoal = it.goal
             binding.latestBadge = it.badge
+            binding.trainingTime = it.trainingTime
+            vm.days.addAll(it.trainingTime.days)
 
             if (it.hasPushAlarm) {
+                binding.switchMyPageAlarm.isChecked = true
                 unFreezeTimeTable()
                 days?.values?.forEach { day ->
                     if (vm.isDaySelected(day.text.toString())) {
@@ -152,6 +131,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
                     }
                 }
             } else {
+                binding.switchMyPageAlarm.isChecked = false
                 freezeTimeTable()
             }
         }
