@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.splash
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -19,6 +20,8 @@ class SplashStartActivity() : AppCompatActivity() {
 
         setContentView(R.layout.activity_splash_start)
 
+        setStatusBarColor()
+
         constructLayout()
         addObservers()
     }
@@ -29,6 +32,11 @@ class SplashStartActivity() : AppCompatActivity() {
 
     fun addObservers() {
         observeAuthed()
+    }
+
+    private fun setStatusBarColor() {
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = getColor(R.color.point)
     }
 
     private fun observeAuthed() {
@@ -46,6 +54,4 @@ class SplashStartActivity() : AppCompatActivity() {
             }
         }
     }
-
-
 }
