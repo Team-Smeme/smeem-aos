@@ -40,7 +40,7 @@ class TrainingManager(
             )
         } else {
             return userService!!.patchPlanWithFixedToken(
-                token = accessToken,
+                token = "Bearer $accessToken",
                 request = TrainingRequest(
                     target = training.type,
                     trainingTime = training.extractTime(),

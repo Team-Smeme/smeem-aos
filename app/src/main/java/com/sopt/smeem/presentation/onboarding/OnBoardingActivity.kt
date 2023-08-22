@@ -190,7 +190,25 @@ class OnBoardingActivity :
     private fun onSetTimeLater() {
         vm.setTimeLater.observe(this) {
             if (it) { // true
-                bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
+
+                val accessTokenFromPast: String? = intent.getStringExtra(ACCESS_TOKEN)
+                if (accessTokenFromPast != null) {
+                    vm.sendPlanDataWithAuth(
+                        token = accessTokenFromPast,
+                        onSuccess = {
+                            val toJoin = Intent(this, JoinWithNicknameActivity::class.java)
+                            toJoin.putExtra(ACCESS_TOKEN, accessTokenFromPast)
+                            toJoin.putExtra(REFRESH_TOKEN, intent.getStringExtra(REFRESH_TOKEN))
+                            startActivity(toJoin)
+                            if (!isFinishing) finish()
+                        },
+                        onError = { e -> Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show() }
+                    )
+                }
+
+                else {
+                    bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
+                }
             }
         }
     }
