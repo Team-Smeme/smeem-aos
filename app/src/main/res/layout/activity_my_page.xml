@@ -362,7 +362,7 @@
                         android:maxHeight="19dp"
                         android:minHeight="19dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-
+                        android:clickable="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:thumbTint="@color/white"
