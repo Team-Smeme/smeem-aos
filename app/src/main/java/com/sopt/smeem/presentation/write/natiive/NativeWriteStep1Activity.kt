@@ -71,17 +71,11 @@ class NativeWriteStep1Activity :
             layoutNativeStep1BottomToolbar.cbRandomTopic.setOnCheckedChangeListener { _, isChecked ->
                 when (isChecked) {
                     true -> {
-                        layoutNativeStep1BottomToolbar.tvRandomTopicLabel.setTextColor(
-                            resources.getColor(R.color.point, null)
-                        )
                         setRandomTopic()
                         layoutNativeStep1RandomTopic.layoutSection.visibility = View.VISIBLE
                     }
 
                     false -> {
-                        layoutNativeStep1BottomToolbar.tvRandomTopicLabel.setTextColor(
-                            resources.getColor(R.color.gray_500, null)
-                        )
                         viewModel.topicId = -1
                         layoutNativeStep1RandomTopic.layoutSection.visibility = View.GONE
                         viewModel.topic.value = ""

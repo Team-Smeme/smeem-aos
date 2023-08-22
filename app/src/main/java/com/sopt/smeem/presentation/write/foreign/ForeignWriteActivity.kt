@@ -64,17 +64,11 @@ class ForeignWriteActivity :
             layoutForeignWriteBottomToolbar.cbRandomTopic.setOnCheckedChangeListener { _, isChecked ->
                 when (isChecked) {
                     true -> {
-                        layoutForeignWriteBottomToolbar.tvRandomTopicLabel.setTextColor(
-                            resources.getColor(R.color.point, null)
-                        )
                         setRandomTopic()
                         layoutForeignWriteRandomTopic.layoutSection.visibility = View.VISIBLE
                     }
 
                     false -> {
-                        layoutForeignWriteBottomToolbar.tvRandomTopicLabel.setTextColor(
-                            resources.getColor(R.color.gray_500, null)
-                        )
                         viewModel.topicId = -1
                         layoutForeignWriteRandomTopic.layoutSection.visibility = View.GONE
                         viewModel.topic.value = ""
