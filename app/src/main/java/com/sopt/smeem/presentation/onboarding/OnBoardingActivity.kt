@@ -100,6 +100,8 @@ class OnBoardingActivity :
                     setHeaderDescription(resources.getText(R.string.on_boarding_encouraging_header_description))
                     setButtonTextNext()
 
+                    vm.isDaysEmpty.value = false
+
                     supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.fcv_on_boarding,
