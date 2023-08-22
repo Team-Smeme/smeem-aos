@@ -13,6 +13,7 @@ import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.Serializable
 
 @AndroidEntryPoint
 class NativeWriteStep2Activity :
@@ -78,7 +79,9 @@ class NativeWriteStep2Activity :
                 true -> {
                     viewModel.uploadDiary(
                         onSuccess = {
-                            Intent(this, HomeActivity::class.java).run(::startActivity)
+                            Intent(this, HomeActivity::class.java).apply {
+                                putExtra("retrievedBadge", it as Serializable)
+                            }.run(::startActivity)
                             finishAffinity()
                         },
                         onError = { e ->

@@ -2,11 +2,11 @@ package com.sopt.smeem.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHomeBinding
+import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.calendar.WritingBottomSheet
 import com.sopt.smeem.presentation.calendar.WritingBottomSheet.Companion.TAG
@@ -57,6 +57,22 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             DateTimeFormatter.ofPattern(TARGET_MONTH_PATTERN),
         )
         homeViewModel.getDateDiary(day)
+        showBadgeDialog()
+    }
+
+    private fun showBadgeDialog() {
+        val retrievedBadge = intent.getSerializableExtra("retrievedBadge") as List<RetrievedBadge>? ?: emptyList()
+        if (retrievedBadge.isNotEmpty()) {
+            val badgeList = retrievedBadge.asReversed()
+            badgeList.map { badge ->
+                BadgeDialogFragment
+                    .newInstance(badge.name, badge.imageUrl, homeViewModel.isFirstBadge)
+                    .show(supportFragmentManager, "badgeDialog")
+                with(homeViewModel) {
+                    if (isFirstBadge) isFirstBadge = false
+                }
+            }
+        }
     }
 
     private fun setInitListener() {

@@ -9,6 +9,7 @@ import com.sopt.smeem.SmeemErrorCode
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.databinding.ActivityJoinAgreementBinding
 import com.sopt.smeem.description
+import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
@@ -18,6 +19,7 @@ import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.Serializable
 
 
 @AndroidEntryPoint
@@ -138,7 +140,14 @@ class JoinWithAgreementActivity :
             when (it) {
                 true -> {
                     vm.saveTokenInLocal(accessToken, refreshToken)
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    Intent(this, HomeActivity::class.java).apply {
+                        putExtra("retrievedBadge", listOf(
+                            RetrievedBadge(
+                                "웰컴 배지",
+                                "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7"
+                            )
+                        ) as Serializable)
+                    }.run(::startActivity)
                     finish()
                 }
 
