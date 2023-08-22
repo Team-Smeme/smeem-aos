@@ -21,8 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?colorSurface"
-        android:paddingHorizontal="18dp"
-        android:paddingVertical="20dp" >
+        android:paddingStart="18dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="12dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,6 +43,7 @@
             android:text="@{`     ` + randomTopic}"
             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="     오늘부터 딱 일주일 후! 설레는 크리스마스네요. 일주일 전부터 세워보는 나의 크리스마스 계획은?" />
@@ -49,7 +52,9 @@
             android:id="@+id/btn_refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="8dp"
             android:src="@drawable/ic_write_refresh"
             android:visibility="@{refreshVisibility}"
             app:layout_constraintEnd_toEndOf="parent"
