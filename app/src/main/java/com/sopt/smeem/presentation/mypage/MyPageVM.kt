@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kakao.sdk.user.UserApiClient
 import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.MyPage
@@ -56,6 +57,9 @@ internal class MyPageVM @Inject constructor(
 
         runBlocking {
             localRepository.clear()
+        }
+
+        UserApiClient.instance.unlink { error -> // do nothing
         }
     }
 }
