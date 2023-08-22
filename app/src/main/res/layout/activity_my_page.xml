@@ -14,8 +14,8 @@
             type="com.sopt.smeem.domain.model.Badge" />
 
         <variable
-            name="alarmEnabledDay"
-            type="com.sopt.smeem.domain.model.AlarmEnabledDay" />
+            name="trainingTime"
+            type="com.sopt.smeem.domain.model.TrainingTime" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -362,7 +362,7 @@
                         android:maxHeight="19dp"
                         android:minHeight="19dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-
+                        android:clickable="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:thumbTint="@color/white"
@@ -397,8 +397,8 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:text="월"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body2_semibold"
-                            android:textColor="@color/gray_500"
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
                             app:layout_constraintDimensionRatio="1" />
 
                         <TextView
@@ -407,8 +407,8 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:text="화"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body2_semibold"
-                            android:textColor="@color/gray_500"
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
                             app:layout_constraintDimensionRatio="1" />
 
                         <TextView
@@ -417,8 +417,8 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:text="수"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body2_semibold"
-                            android:textColor="@color/gray_500"
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
                             app:layout_constraintDimensionRatio="1" />
 
                         <TextView
@@ -427,8 +427,8 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:text="목"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body2_semibold"
-                            android:textColor="@color/gray_500"
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
                             app:layout_constraintDimensionRatio="1" />
 
                         <TextView
@@ -437,8 +437,8 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:text="금"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body2_semibold"
-                            android:textColor="@color/gray_500"
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
                             app:layout_constraintDimensionRatio="1" />
 
                         <TextView
@@ -447,8 +447,8 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:text="토"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body2_semibold"
-                            android:textColor="@color/gray_500"
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
                             app:layout_constraintDimensionRatio="1" />
 
                         <TextView
@@ -457,8 +457,8 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:text="일"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body2_semibold"
-                            android:textColor="@color/gray_500"
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
                             app:layout_constraintDimensionRatio="1" />
 
                         <androidx.constraintlayout.helper.widget.Flow
@@ -499,7 +499,7 @@
                             android:id="@+id/tv_my_page_time_box_body"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{alarmEnabledDay.asText()}"
+                            android:text="@{trainingTime.asText()}"
                             android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
                             android:textColor="?colorPrimary"
                             app:layout_constraintEnd_toEndOf="@id/tv_my_page_time_box_title_static"
