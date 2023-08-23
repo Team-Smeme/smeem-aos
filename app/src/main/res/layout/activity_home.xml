@@ -245,7 +245,7 @@
             android:paddingVertical="20dp"
             android:text="@string/write_diary"
             android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
