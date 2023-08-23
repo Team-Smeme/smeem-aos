@@ -2,20 +2,25 @@ package com.sopt.smeem.presentation.write.foreign
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityForeignWriteBinding
 import com.sopt.smeem.description
+import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
 import com.sopt.smeem.util.setOnSingleClickListener
 import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.toImmutableList
+import java.io.Serializable
 
 @AndroidEntryPoint
 class ForeignWriteActivity :
@@ -64,17 +69,11 @@ class ForeignWriteActivity :
             layoutForeignWriteBottomToolbar.cbRandomTopic.setOnCheckedChangeListener { _, isChecked ->
                 when (isChecked) {
                     true -> {
-                        layoutForeignWriteBottomToolbar.tvRandomTopicLabel.setTextColor(
-                            resources.getColor(R.color.point, null)
-                        )
                         setRandomTopic()
                         layoutForeignWriteRandomTopic.layoutSection.visibility = View.VISIBLE
                     }
 
                     false -> {
-                        layoutForeignWriteBottomToolbar.tvRandomTopicLabel.setTextColor(
-                            resources.getColor(R.color.gray_500, null)
-                        )
                         viewModel.topicId = -1
                         layoutForeignWriteRandomTopic.layoutSection.visibility = View.GONE
                         viewModel.topic.value = ""
@@ -102,7 +101,9 @@ class ForeignWriteActivity :
                 true -> {
                     viewModel.uploadDiary(
                         onSuccess = {
-                            Intent(this, HomeActivity::class.java).run(::startActivity)
+                            Intent(this, HomeActivity::class.java).apply {
+                                putExtra("retrievedBadge", it as Serializable)
+                            }.run(::startActivity)
                             finishAffinity()
                         },
                         onError = { e ->

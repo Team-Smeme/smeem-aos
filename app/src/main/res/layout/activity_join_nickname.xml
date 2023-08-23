@@ -10,15 +10,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="76dp"
-        android:layout_marginBottom="16dp"
-        android:paddingHorizontal="18dp">
+        android:paddingHorizontal="18dp"
+        android:paddingTop="76dp"
+        android:paddingBottom="10dp">
 
         <TextView
             android:id="@+id/tv_entrance_header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="8dp"
 
             android:text="@string/entrance_nickname_header"
             android:textAppearance="@style/TextAppearance.Smeem.Headline2"
@@ -30,28 +30,28 @@
             android:id="@+id/tv_entrance_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
+            android:layout_marginTop="6dp"
             android:text="@string/entrance_nickname_description"
+
+            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
             app:layout_constraintStart_toStartOf="@id/tv_entrance_header"
 
             app:layout_constraintTop_toBottomOf="@id/tv_entrance_header" />
 
         <EditText
             android:id="@+id/et_entrance_nickname"
+            style="@style/Style.Smeem.Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="28dp"
             android:background="@drawable/shape_rounded_et"
             android:paddingHorizontal="14sp"
-
-            android:paddingTop="17sp"
-            android:paddingBottom="15sp"
+            android:paddingVertical="16dp"
             android:textAppearance="@style/TextAppearance.Smeem.Headline3"
-            android:textColor="@color/point"
+            android:textColor="?colorPrimary"
+            android:textCursorDrawable="@drawable/shape_cursor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintTop_toBottomOf="@id/tv_entrance_description"
             tools:text="정요니" />
 
@@ -59,8 +59,8 @@
             android:id="@+id/tv_entrance_nickname_caption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/entrance_nickname_caption"
             android:textAppearance="@style/TextAppearance.Smeem.Caption4_regular_12"
             android:textColor="@color/gray_500"
@@ -71,14 +71,15 @@
             android:id="@+id/tv_entrance_nickname_duplicated"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
+            android:layout_marginStart="2dp"
             android:layout_marginTop="10dp"
             android:text="@string/entrance_nickname_duplicated"
             android:textAppearance="@style/TextAppearance.Smeem.Caption4_regular_12"
-            android:textColor="@color/point"
+            android:textColor="?colorPrimary"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="@id/et_entrance_nickname"
-            app:layout_constraintTop_toBottomOf="@id/et_entrance_nickname" />
+            app:layout_constraintTop_toBottomOf="@id/et_entrance_nickname"
+            tools:visibility="visible" />
 
         <Button
             android:id="@+id/btn_entrance_next"
@@ -94,5 +95,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

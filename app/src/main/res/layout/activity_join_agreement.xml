@@ -17,11 +17,9 @@
             android:id="@+id/tv_entrance_header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-
+            android:layout_marginStart="8dp"
             android:text="@string/entrance_agreement_header"
             android:textAppearance="@style/TextAppearance.Smeem.Headline2"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,10 +27,10 @@
             android:id="@+id/tv_entrance_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
+            android:layout_marginTop="6dp"
             android:text="@string/entrance_agreement_description"
+            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
             app:layout_constraintStart_toStartOf="@id/tv_entrance_header"
-
             app:layout_constraintTop_toBottomOf="@id/tv_entrance_header" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,121 +44,128 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_entrance_agreement_all"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-
-                android:backgroundTint="@color/white"
+                android:layout_height="60dp"
+                android:backgroundTint="?android:colorBackground"
                 android:gravity="start|center_vertical"
-                android:paddingVertical="20dp"
+                android:paddingStart="20dp"
                 android:text="@string/entrance_agreement_all"
-
                 android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
                 android:textColor="@color/gray_600"
                 app:cornerRadius="6dp"
                 app:icon="@drawable/ic_selection_inactive"
+                app:iconPadding="12dp"
                 app:iconSize="20dp"
                 app:iconTintMode="multiply"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintStart_toStartOf="parent"
-
-
                 app:layout_constraintTop_toTopOf="parent"
                 app:strokeColor="@color/gray_200"
-                app:strokeWidth="2dp" />
+                app:strokeWidth="1.5dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_entrance_agreement_service"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="18dp"
                 android:backgroundTint="@color/white"
                 android:gravity="start|center_vertical"
-                android:paddingVertical="20dp"
+                android:paddingVertical="15dp"
+                android:paddingStart="20dp"
                 android:text="@string/entrance_agreement_service"
                 android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
                 android:textColor="@color/gray_600"
                 app:cornerRadius="6dp"
                 app:icon="@drawable/ic_selection_inactive"
+                app:iconPadding="12dp"
                 app:iconSize="20dp"
-
                 app:iconTintMode="multiply"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_agreement_service_detail"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_entrance_agreement_all" />
+
+            <ImageView
+                android:id="@+id/btn_agreement_service_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_forward"
+                app:layout_constraintBottom_toBottomOf="@id/btn_entrance_agreement_service"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/btn_entrance_agreement_service" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_entrance_agreement_personal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/white"
                 android:gravity="start|center_vertical"
-                android:paddingVertical="20dp"
+                android:paddingVertical="15dp"
+                android:paddingStart="20dp"
                 android:text="@string/entrance_agreement_personal"
                 android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
                 android:textColor="@color/gray_600"
                 app:cornerRadius="6dp"
                 app:icon="@drawable/ic_selection_inactive"
+                app:iconPadding="12dp"
                 app:iconSize="20dp"
-
                 app:iconTintMode="multiply"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_agreement_personal_detail"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_entrance_agreement_service" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_entrance_agreement_location"
-                android:layout_width="0dp"
+            <ImageView
+                android:id="@+id/btn_agreement_personal_detail"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/white"
-                android:gravity="start|center_vertical"
-                android:paddingVertical="20dp"
-                android:text="@string/entrance_agreement_location"
-                android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
-                android:textColor="@color/gray_600"
-                app:cornerRadius="6dp"
-                app:icon="@drawable/ic_selection_inactive"
-                app:iconSize="20dp"
-
-                app:iconTintMode="multiply"
+                android:src="@drawable/ic_arrow_forward"
+                app:layout_constraintBottom_toBottomOf="@id/btn_entrance_agreement_personal"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_entrance_agreement_personal" />
+                app:layout_constraintTop_toTopOf="@id/btn_entrance_agreement_personal" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_entrance_agreement_marketing"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/white"
                 android:gravity="start|center_vertical"
-                android:paddingVertical="20dp"
+                android:paddingVertical="15dp"
+                android:paddingStart="20dp"
                 android:text="@string/entrance_agreement_marketing"
                 android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
                 android:textColor="@color/gray_600"
                 app:cornerRadius="6dp"
                 app:icon="@drawable/ic_selection_inactive"
+                app:iconPadding="12dp"
                 app:iconSize="20dp"
-
                 app:iconTintMode="multiply"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_agreement_marketing_detail"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_entrance_agreement_location" />
+                app:layout_constraintTop_toBottomOf="@id/btn_entrance_agreement_personal" />
+
+            <ImageView
+                android:id="@+id/btn_agreement_marketing_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_forward"
+                app:layout_constraintBottom_toBottomOf="@id/btn_entrance_agreement_marketing"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/btn_entrance_agreement_marketing" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/btn_entrance_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
+            android:backgroundTint="@color/point_inactive"
             android:enabled="false"
             android:paddingVertical="20dp"
             android:text="@string/on_boarding_activity_next"
             android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_agreements" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

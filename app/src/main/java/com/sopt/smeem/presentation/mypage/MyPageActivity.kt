@@ -7,10 +7,12 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityMyPageBinding
+import com.sopt.smeem.domain.model.Day
+import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.splash.SplashLoginActivity
-import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
+import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +21,8 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     private var days: Map<Int, TextView>? = null
 
     override fun constructLayout() {
+        binding.ivMyPageEncouragingToEdit.imageTintList =
+            ColorStateList.valueOf(resources.getColor(R.color.white, null))
         getFromServer()
         setPush()
         setUpDays()
@@ -28,7 +32,6 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     override fun addListeners() {
         onTouchSwitchingPush()
         onEditNickname()
-        onTouchDays()
         onTouchBadge()
         onEditGoal()
         onTouchBack()
@@ -70,6 +73,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     }
 
     private fun setUpDays() {
+        setDaysHeight()
         days = mapOf(
             binding.tvMyPageTimeMon.id to binding.tvMyPageTimeMon,
             binding.tvMyPageTimeTue.id to binding.tvMyPageTimeTue,
@@ -81,40 +85,28 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         )
     }
 
+    private fun setDaysHeight() {
+        with(binding.flowMyPageTime) {
+            layoutParams.height = (getScreenWidth() - 36) / 7
+            requestLayout()
+        }
+    }
+
+    private fun getScreenWidth(): Int = resources.displayMetrics.widthPixels
+
     private fun onEditGoal() {
-        binding.ivMyPageEditEncouraging.setOnClickListener {
+        binding.layoutMyPageEncouraging.setOnClickListener {
             startActivity(Intent(this, EditTrainingGoalActivity::class.java))
             finish()
         }
     }
 
-    private fun onTouchDays() {
-        days?.values?.forEach { day ->
-            run {
-                day.setOnClickListener {
-                    // 요일이 선택되어있는 경우
-                    if (vm.isDaySelected(day.text.toString())) {
-                        day.switchOff()
-                        day.backgroundTintList =
-                            ColorStateList.valueOf(resources.getColor(R.color.white, null))
-                        vm.removeDay(day.text.toString())
-                    }
-                    // 요일이 선택되어져있지 않은 경우
-                    else {
-                        day.switchOn()
-                        day.backgroundTintList =
-                            ColorStateList.valueOf(resources.getColor(R.color.point, null))
-                        vm.addDay(day.text.toString())
-                    }
-                }
-            }
-        }
-    }
-
     private fun onEditNickname() {
-        binding.ivMyPageEditNickname.setOnClickListener {
-            startActivity(Intent(this, ChangingNicknameActivity::class.java))
-            finish()
+        binding.ivMyPageEditNickname.setOnSingleClickListener {
+            Intent(this, ChangingNicknameActivity::class.java).apply {
+                putExtra("originalNickname", binding.tvMyPageNickname.text)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }.run(::startActivity)
         }
     }
 
@@ -126,19 +118,32 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
 
     private fun setData() {
         vm.response.observe(this) {
+            val selectedTrainingTime =
+                if (it.trainingTime.isSet()) it.trainingTime
+                else TrainingTime(
+                    setOf(Day.MON, Day.TUE, Day.WED, Day.THU, Day.FRI),
+                    22,
+                    0
+                )
+
             binding.tvMyPageNickname.text = it.username
             binding.trainingGoal = it.goal
             binding.latestBadge = it.badge
+            binding.trainingTime = selectedTrainingTime
+            vm.days.addAll(selectedTrainingTime.days)
 
             if (it.hasPushAlarm) {
+                binding.switchMyPageAlarm.isChecked = true
                 unFreezeTimeTable()
-                days?.values?.forEach { day ->
-                    if (vm.isDaySelected(day.text.toString())) {
-                        day.switchOn()
-                    }
-                }
             } else {
+                binding.switchMyPageAlarm.isChecked = false
                 freezeTimeTable()
+            }
+
+            days?.values?.forEach { day ->
+                if (vm.isDaySelected(day.text.toString())) {
+                    day.switchOn()
+                }
             }
         }
     }
@@ -166,8 +171,6 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     private fun unFreezeTimeTable() {
         binding.switchMyPageAlarm.trackTintList =
             ColorStateList.valueOf(resources.getColor(R.color.point, null))
-        binding.switchMyPageAlarm.trackDecorationTintList =
-            ColorStateList.valueOf(resources.getColor(R.color.point, null))
 
         canTouch()
         // 요일 녹이기
@@ -186,23 +189,21 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
 
     private fun freezeTimeTable() {
         binding.switchMyPageAlarm.trackTintList =
-            ColorStateList.valueOf(resources.getColor(R.color.gray_300, null))
-        binding.switchMyPageAlarm.trackDecorationTintList =
-            ColorStateList.valueOf(resources.getColor(R.color.gray_300, null))
+            ColorStateList.valueOf(resources.getColor(R.color.gray_200, null))
 
         cannotTouch()
         // 요일 얼리기
         days?.values?.forEach { day ->
             if (vm.isDaySelected(day.text.toString())) {
                 day.backgroundTintList =
-                    ColorStateList.valueOf(resources.getColor(R.color.gray_500, null))
-                day.setTextColor(resources.getColor(R.color.gray_100, null))
+                    ColorStateList.valueOf(resources.getColor(R.color.gray_200, null))
+                day.setTextColor(resources.getColor(R.color.white, null))
             }
         }
 
         // 시간 얼리기
-        binding.tvMyPageTimeBoxTitleStatic.setTextColor(resources.getColor(R.color.gray_500, null))
-        binding.tvMyPageTimeBoxBody.setTextColor(resources.getColor(R.color.gray_500, null))
+        binding.tvMyPageTimeBoxTitleStatic.setTextColor(resources.getColor(R.color.gray_200, null))
+        binding.tvMyPageTimeBoxBody.setTextColor(resources.getColor(R.color.gray_200, null))
     }
 
     private fun getPushPermission(): Boolean {

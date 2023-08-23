@@ -16,6 +16,7 @@ import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
 import com.sopt.smeem.presentation.join.JoinConstant.REFRESH_TOKEN
 import com.sopt.smeem.presentation.join.JoinWithNicknameActivity
+import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -73,6 +74,13 @@ class OnBoardingActivity :
     private fun observeStepChanging() {
         vm.step.observe(this@OnBoardingActivity) { step ->
             when (step) {
+                0 -> {
+                    Intent(this, SplashLoginActivity::class.java).run {
+                        startActivity(this)
+                        finish()
+                    }
+                }
+
                 1 -> { // step 1 fragment => 학습 목표 선택하기
                     setHeaderStepNo(1)
                     setHeaderTitle(resources.getText(R.string.on_boarding_goal_header_title))
@@ -91,6 +99,8 @@ class OnBoardingActivity :
                     setHeaderTitle(resources.getText(R.string.on_boarding_encouraging_header_title))
                     setHeaderDescription(resources.getText(R.string.on_boarding_encouraging_header_description))
                     setButtonTextNext()
+
+                    vm.isDaysEmpty.value = false
 
                     supportFragmentManager.beginTransaction()
                         .replace(
@@ -180,7 +190,25 @@ class OnBoardingActivity :
     private fun onSetTimeLater() {
         vm.setTimeLater.observe(this) {
             if (it) { // true
-                bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
+
+                val accessTokenFromPast: String? = intent.getStringExtra(ACCESS_TOKEN)
+                if (accessTokenFromPast != null) {
+                    vm.sendPlanDataWithAuth(
+                        token = accessTokenFromPast,
+                        onSuccess = {
+                            val toJoin = Intent(this, JoinWithNicknameActivity::class.java)
+                            toJoin.putExtra(ACCESS_TOKEN, accessTokenFromPast)
+                            toJoin.putExtra(REFRESH_TOKEN, intent.getStringExtra(REFRESH_TOKEN))
+                            startActivity(toJoin)
+                            if (!isFinishing) finish()
+                        },
+                        onError = { e -> Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show() }
+                    )
+                }
+
+                else {
+                    bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
+                }
             }
         }
     }

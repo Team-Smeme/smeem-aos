@@ -2,11 +2,12 @@ package com.sopt.smeem.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHomeBinding
+import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.calendar.WritingBottomSheet
 import com.sopt.smeem.presentation.calendar.WritingBottomSheet.Companion.TAG
@@ -15,6 +16,7 @@ import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -40,6 +42,34 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         onTouchWrite()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        lifecycleScope.launch {
+            homeViewModel.getDateDiary(todayData)
+
+            if (homeViewModel.responseDateDiary.value != null) {
+                binding.btnWriteDiary.visibility = View.INVISIBLE
+            }
+        }
+        getWeeklyDiary()
+        observeData()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+
+        lifecycleScope.launch {
+            homeViewModel.getDateDiary(todayData)
+
+            if (homeViewModel.responseDateDiary.value != null) {
+                binding.btnWriteDiary.visibility = View.INVISIBLE
+            }
+        }
+        getWeeklyDiary()
+        observeData()
+    }
+
     private fun onTouchWrite() {
         binding.btnWriteDiary.setOnSingleClickListener {
             bs.show(supportFragmentManager, TAG)
@@ -56,7 +86,36 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         binding.tvTargetMonth.text = LocalDate.now().format(
             DateTimeFormatter.ofPattern(TARGET_MONTH_PATTERN),
         )
-        homeViewModel.getDateDiary(day)
+
+        lifecycleScope.launch {
+            homeViewModel.getDateDiary(day)
+
+            binding.btnWriteDiary.visibility =
+                if (homeViewModel.responseDateDiary.value == null) {
+                    View.VISIBLE
+                } else {
+                    View.INVISIBLE
+                }
+        }
+
+        getWeeklyDiary()
+        showBadgeDialog()
+    }
+
+    private fun showBadgeDialog() {
+        val retrievedBadge =
+            intent.getSerializableExtra("retrievedBadge") as List<RetrievedBadge>? ?: emptyList()
+        if (retrievedBadge.isNotEmpty()) {
+            val badgeList = retrievedBadge.asReversed()
+            badgeList.map { badge ->
+                BadgeDialogFragment
+                    .newInstance(badge.name, badge.imageUrl, homeViewModel.isFirstBadge)
+                    .show(supportFragmentManager, "badgeDialog")
+                with(homeViewModel) {
+                    if (isFirstBadge) isFirstBadge = false
+                }
+            }
+        }
     }
 
     private fun setInitListener() {
@@ -64,24 +123,34 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             binding.tvTargetMonth.text =
                 date.format(DateTimeFormatter.ofPattern(TARGET_MONTH_PATTERN))
 
-            binding.btnWriteDiary.visibility =
-                if (LocalDate.now().isEqual(date) && homeViewModel.responseDateDiary.value == null) View.VISIBLE else View.INVISIBLE
+            lifecycleScope.launch {
+                homeViewModel.getDateDiary(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
 
-            homeViewModel.getDateDiary(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                binding.btnWriteDiary.visibility =
+                    if (LocalDate.now()
+                            .isEqual(date) && homeViewModel.responseDateDiary.value == null
+                    ) {
+                        View.VISIBLE
+                    } else {
+                        View.INVISIBLE
+                    }
+            }
         }
 
         binding.weeklyCalendar.setOnWeeklyCalendarSwipeListener(object :
             OnWeeklyCalendarSwipeListener {
             override fun onSwipe(mondayDate: LocalDate?) {
                 mondayDate?.let {
-                    homeViewModel.getDiaries(
-                        start = binding.weeklyCalendar.mondayDate?.plusDays(-6)?.format(
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                        ) ?: "",
-                        end = binding.weeklyCalendar.mondayDate?.plusDays(6)?.format(
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                        ) ?: "",
-                    )
+                    lifecycleScope.launch {
+                        homeViewModel.getDiaries(
+                            start = binding.weeklyCalendar.mondayDate?.plusDays(-6)?.format(
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                            ) ?: "",
+                            end = binding.weeklyCalendar.mondayDate?.plusDays(6)?.format(
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                            ) ?: "",
+                        )
+                    }
                     setTargetMonthTitle()
                 }
             }
@@ -126,6 +195,19 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 binding.tvDiaryWritenTime.text = formattedCreatedAt
                 binding.tvDiary.text = it.content
             }
+        }
+    }
+
+    private fun getWeeklyDiary() {
+        lifecycleScope.launch {
+            homeViewModel.getDiaries(
+                start = binding.weeklyCalendar.mondayDate?.plusDays(-6)?.format(
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                ) ?: "",
+                end = binding.weeklyCalendar.mondayDate?.plusDays(6)?.format(
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                ) ?: "",
+            )
         }
     }
 

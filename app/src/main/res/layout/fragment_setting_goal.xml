@@ -17,8 +17,9 @@
             android:id="@+id/ic_on_boarding_goal_button1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:paddingStart="13dp"
             android:backgroundTint="@color/white"
-
+            android:paddingVertical="18dp"
             android:gravity="start|center_vertical"
             android:text="@string/on_boarding_goal_button1"
             android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
@@ -27,14 +28,14 @@
             app:cornerRadius="6dp"
             app:icon="@drawable/ic_selection_inactive"
             app:iconSize="20dp"
+            app:iconPadding="12dp"
             app:iconTintMode="multiply"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.16"
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toTopOf="parent"
             app:strokeColor="@color/gray_100"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1.5dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/ic_on_boarding_goal_button2"
@@ -43,7 +44,10 @@
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/white"
             android:gravity="start|center_vertical"
+            android:paddingVertical="18dp"
             android:text="@string/on_boarding_goal_button2"
+            android:paddingStart="13dp"
+            app:iconPadding="12dp"
             android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
 
             android:textColor="@color/gray_600"
@@ -52,17 +56,19 @@
             app:iconSize="20dp"
             app:iconTintMode="multiply"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ic_on_boarding_goal_button1"
             app:strokeColor="@color/gray_100"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1.5dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/ic_on_boarding_goal_button3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:iconPadding="12dp"
             android:layout_marginTop="8dp"
+            android:paddingVertical="18dp"
+            android:paddingStart="13dp"
             android:backgroundTint="@color/white"
             android:gravity="start|center_vertical"
 
@@ -75,17 +81,19 @@
             app:iconSize="20dp"
             app:iconTintMode="multiply"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ic_on_boarding_goal_button2"
             app:strokeColor="@color/gray_100"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1.5dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/ic_on_boarding_goal_button4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
+            app:iconPadding="12dp"
+            android:paddingVertical="18dp"
+            android:paddingStart="13dp"
             android:backgroundTint="@color/white"
             android:gravity="start|center_vertical"
 
@@ -98,17 +106,19 @@
             app:iconSize="20dp"
             app:iconTintMode="multiply"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ic_on_boarding_goal_button3"
             app:strokeColor="@color/gray_100"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1.5dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/ic_on_boarding_goal_button5"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
+            android:paddingStart="13dp"
+            android:paddingVertical="18dp"
+            app:iconPadding="12dp"
             android:backgroundTint="@color/white"
 
             android:gravity="start|center_vertical"
@@ -121,17 +131,19 @@
             app:iconSize="20dp"
             app:iconTintMode="multiply"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ic_on_boarding_goal_button4"
             app:strokeColor="@color/gray_100"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1.5dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/ic_on_boarding_goal_button6"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
+            android:paddingVertical="18dp"
+            app:iconPadding="12dp"
+            android:paddingStart="13dp"
             android:backgroundTint="@color/white"
 
             android:gravity="start|center_vertical"
@@ -144,11 +156,10 @@
             app:iconSize="20dp"
             app:iconTintMode="multiply"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ic_on_boarding_goal_button5"
             app:strokeColor="@color/gray_100"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1.5dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

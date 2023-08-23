@@ -12,18 +12,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="18dp"
         android:paddingTop="141dp"
         android:paddingBottom="16dp">
 
         <ImageView
             android:id="@+id/iv_sign_in_header"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-
+            android:layout_width="34dp"
+            android:layout_height="0dp"
+            android:src="@drawable/logo_smeem"
+            android:layout_marginTop="7dp"
+            android:layout_marginStart="26dp"
+            app:layout_constraintDimensionRatio="34:21"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@mipmap/ic_smeem"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_sign_in_header"
@@ -31,9 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5.3dp"
             android:textAppearance="@style/TextAppearance.Smeem.Urbanist_semibold"
-
             app:layout_constraintStart_toEndOf="@id/iv_sign_in_header"
-            app:layout_constraintTop_toTopOf="@id/iv_sign_in_header"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/iv_sign_in_header"
             android:text="@string/splash_header" />
 
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/iv_sign_in_header"
             app:layout_constraintTop_toBottomOf="@id/tv_sign_in_header"
             android:text="@string/splash_body" />
 
@@ -50,14 +50,14 @@
             android:id="@+id/tv_already_authed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_marginBottom="22dp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="50dp"
+            android:layout_marginBottom="10dp"
             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
             android:textColor="@color/gray_600"
             app:layout_constraintBottom_toTopOf="@id/btn_auth_start"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/btn_auth_start"
+            app:layout_constraintStart_toStartOf="@id/btn_auth_start"
             android:text="@string/splash_footer" />
 
         <Button
@@ -65,7 +65,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingVertical="20dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_marginHorizontal="18dp"
+            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

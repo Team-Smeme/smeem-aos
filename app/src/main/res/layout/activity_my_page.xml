@@ -14,8 +14,8 @@
             type="com.sopt.smeem.domain.model.Badge" />
 
         <variable
-            name="alarmEnabledDay"
-            type="com.sopt.smeem.domain.model.AlarmEnabledDay" />
+            name="trainingTime"
+            type="com.sopt.smeem.domain.model.TrainingTime" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,16 +27,14 @@
             android:id="@+id/topbar_my_page"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/menu_my_page"
             app:navigationIcon="@drawable/ic_narrow_back"
             app:title="마이페이지"
             app:titleCentered="true"
-            app:titleTextAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
-            />
+            app:titleTextAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:overScrollMode="never"
@@ -53,7 +51,8 @@
                     android:id="@+id/tv_my_page_nickname"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="40dp"
                     android:textAppearance="@style/TextAppearance.Smeem.Headline3"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -63,8 +62,8 @@
                     android:id="@+id/iv_my_page_edit_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
+                    android:layout_marginStart="2dp"
                     android:src="@drawable/ic_edit_gray"
-
                     app:layout_constraintBottom_toBottomOf="@id/tv_my_page_nickname"
                     app:layout_constraintDimensionRatio="1"
                     app:layout_constraintStart_toEndOf="@id/tv_my_page_nickname"
@@ -82,29 +81,25 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_my_page_nickname">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_on_boarding_encouraging_box_header"
+                        android:id="@+id/cl_my_page_encouraging_box_header"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:background="@drawable/shape_encouraging_box_header"
                         android:paddingStart="20dp"
-                        android:paddingTop="9dp"
-                        android:paddingEnd="8dp"
-                        android:paddingBottom="14dp"
+                        android:paddingTop="22dp"
+                        android:paddingEnd="4dp"
+                        android:paddingBottom="8dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.3">
 
                         <ImageView
-                            android:id="@+id/iv_my_page_edit_encouraging"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/iv_my_page_encouraging_logo"
+                            android:layout_width="34dp"
                             android:layout_height="0dp"
-                            android:src="@drawable/ic_edit_white"
-
-                            app:layout_constraintDimensionRatio="1"
-
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-
-                            />
+                            android:src="@drawable/logo_smeem"
+                            app:layout_constraintDimensionRatio="34:21"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/tv_encouraging_box_header_title"
@@ -117,34 +112,44 @@
                             android:textColor="@color/white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/iv_my_page_edit_encouraging" />
+                            app:layout_constraintTop_toBottomOf="@id/iv_my_page_encouraging_logo" />
 
                         <TextView
                             android:id="@+id/tv_encouraging_box_header_body"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
+                            android:layout_marginTop="2dp"
                             android:text="@{trainingGoal.goal}"
                             android:textAppearance="@style/TextAppearance.Smeem.Headline3"
                             android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="@id/tv_encouraging_box_header_title"
+                            app:layout_constraintTop_toBottomOf="@id/tv_encouraging_box_header_title"
+                            tools:text="외국어 업무 문서 읽고 작성하기" />
+
+                        <ImageView
+                            android:id="@+id/iv_my_page_encouraging_to_edit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:src="@drawable/ic_arrow_forward"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_encouraging_box_header_body"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_encouraging_box_header_title" />
+                            app:layout_constraintTop_toTopOf="@id/tv_encouraging_box_header_body" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_on_boarding_encouraging_box_how_to"
+                        android:id="@+id/cl_my_page_encouraging_box_how_to"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginHorizontal="20dp"
                         android:layout_marginTop="20dp"
 
-                        app:layout_constraintTop_toBottomOf="@id/cl_on_boarding_encouraging_box_header"
+                        app:layout_constraintTop_toBottomOf="@id/cl_my_page_encouraging_box_header"
                         app:layout_constraintVertical_bias="0.3">
 
                         <TextView
-                            android:id="@+id/tv_on_boarding_encouraging_box_how_title"
+                            android:id="@+id/tv_my_page_encouraging_box_how_title"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:text="@string/on_boarding_encouraging_box_how_title"
@@ -154,18 +159,18 @@
                             app:layout_constraintVertical_bias="0.4" />
 
                         <TextView
-                            android:id="@+id/tv_on_boarding_encouraging_box_how_body"
+                            android:id="@+id/tv_my_page_encouraging_box_how_body"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_marginTop="5dp"
-
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="6dp"
+                            android:text="@{trainingGoal.way}"
                             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
                             android:textColor="@color/gray_600"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_encouraging_box_how_title"
+                            app:layout_constraintStart_toStartOf="@id/tv_my_page_encouraging_box_how_title"
+                            app:layout_constraintTop_toBottomOf="@id/tv_my_page_encouraging_box_how_title"
                             app:layout_constraintVertical_bias="0.6"
-
-                            tools:text="@{trainingGoal.way}" />
+                            tools:text="주 3회 이상 일기 작성하기" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -173,16 +178,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="30dp"
-                        android:paddingBottom="10dp"
-                        app:layout_constraintTop_toBottomOf="@id/cl_on_boarding_encouraging_box_how_to"
+                        android:layout_marginTop="39dp"
+                        android:paddingBottom="25dp"
+                        app:layout_constraintTop_toBottomOf="@id/cl_my_page_encouraging_box_how_to"
                         app:layout_constraintVertical_bias="0.3">
 
                         <TextView
-                            android:id="@+id/tv_on_boarding_encouraging_box_goal_title"
+                            android:id="@+id/tv_my_page_encouraging_box_goal_title"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-
                             android:text="@string/on_boarding_encouraging_box_goal_title"
                             android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
                             app:layout_constraintStart_toStartOf="parent"
@@ -190,16 +194,18 @@
                             app:layout_constraintVertical_bias="0.16" />
 
                         <TextView
-                            android:id="@+id/tv_on_boarding_encouraging_box_goal_body"
+                            android:id="@+id/tv_my_page_encouraging_box_goal_body"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_marginTop="5dp"
-
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="6dp"
+                            android:text="@{trainingGoal.detail}"
                             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
                             android:textColor="@color/gray_600"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_encouraging_box_goal_title"
-                            tools:text="@{trainingGoal.detail}" />
+                            app:layout_constraintTop_toBottomOf="@id/tv_my_page_encouraging_box_goal_title"
+                            tools:text="사전 보지 않고 일기 작성하기" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -208,7 +214,6 @@
                     android:id="@+id/tv_my_page_badges"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-
                     android:layout_marginTop="52dp"
                     android:text="@string/my_page_badges"
                     android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
@@ -219,17 +224,26 @@
                     android:id="@+id/layout_my_page_badges"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-
                     android:layout_marginTop="14dp"
                     android:background="@drawable/shape_rounded_box"
-                    android:paddingVertical="40dp"
+                    android:paddingBottom="40dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_my_page_badges">
+
+                    <ImageView
+                        android:id="@+id/iv_my_page_badges_to_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginEnd="4dp"
+                        android:src="@drawable/ic_arrow_forward"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/iv_my_page_latest_badge"
                         android:layout_width="100dp"
                         android:layout_height="0dp"
-
+                        android:layout_marginTop="40dp"
                         app:imgUrl="@{latestBadge.imageUrl}"
                         app:layout_constraintDimensionRatio="1"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -241,25 +255,25 @@
                         android:id="@+id/tv_my_page_latest_badge_title"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-
                         android:layout_marginTop="20dp"
                         android:gravity="center"
                         android:text="@{latestBadge.title}"
                         android:textAppearance="@style/TextAppearance.Smeem.Body1_bold"
                         app:layout_constraintTop_toBottomOf="@id/iv_my_page_latest_badge"
-                        tools:text="웰컴 뱃지" />
+                        tools:text="웰컴 배지" />
 
                     <TextView
                         android:id="@+id/tv_my_page_latest_badge_description"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginTop="9dp"
+                        android:layout_marginTop="5dp"
                         android:gravity="center"
-                        android:text="@{latestBadge.description}"
+                        android:text="@{@string/badge_obtain_message_mypage(latestBadge.title)}"
                         android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
                         android:textColor="@color/gray_600"
                         app:layout_constraintTop_toBottomOf="@id/tv_my_page_latest_badge_title"
-                        tools:text="한 줄 설명 설명 환영합니다" />
+                        tools:text="축하해요! 웰컴 배지를 획득했어요!" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
@@ -278,15 +292,17 @@
                     android:id="@+id/layout_my_page_language"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
                     android:background="@drawable/shape_rounded_box"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="18dp"
+                    android:paddingHorizontal="13dp"
+                    android:paddingVertical="7dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_my_page_languages">
 
                     <TextView
                         android:id="@+id/item_my_page_language"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
                         android:text="English"
                         android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -324,15 +340,15 @@
 
                     android:layout_marginTop="14dp"
                     android:background="@drawable/shape_rounded_box"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="18dp"
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="10dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_my_page_alarm">
 
                     <TextView
                         android:id="@+id/tv_my_page_alarm_push"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-
+                        android:layout_marginStart="2dp"
                         android:text="@string/my_page_push"
                         android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -346,143 +362,123 @@
                         android:maxHeight="19dp"
                         android:minHeight="19dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-
+                        android:clickable="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:thumbTint="@color/white"
-                        app:trackDecorationTint="@color/point"
-                        app:trackTint="@color/point" />
+                        app:trackDecorationTint="@android:color/transparent"
+                        app:trackTint="@color/gray_200" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_my_page_alarm_time_table"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="1dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="40dp"
-
                     android:background="@drawable/shape_rounded_box"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_my_page_alarm_control">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_my_page_time_days"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-
                         android:background="@drawable/shape_rounded_box_top"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:selectionRequired="true"
-                        app:singleSelection="false">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
                             android:id="@+id/tv_my_page_time_mon"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="0dp"
-
-                            android:paddingHorizontal="20dp"
-                            android:paddingVertical="20dp"
+                            android:gravity="center"
                             android:text="월"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
-                            android:textColor="@color/gray_500"
-
-                            app:layout_constraintEnd_toStartOf="@id/tv_my_page_time_tue"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
+                            app:layout_constraintDimensionRatio="1" />
 
                         <TextView
                             android:id="@+id/tv_my_page_time_tue"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="0dp"
-
-                            android:paddingHorizontal="20dp"
-                            android:paddingVertical="20dp"
+                            android:gravity="center"
                             android:text="화"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
-                            android:textColor="@color/gray_500"
-                            app:layout_constraintEnd_toStartOf="@id/tv_my_page_time_wed"
-                            app:layout_constraintStart_toEndOf="@id/tv_my_page_time_mon"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
+                            app:layout_constraintDimensionRatio="1" />
 
                         <TextView
                             android:id="@+id/tv_my_page_time_wed"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="0dp"
-
-                            android:paddingHorizontal="20dp"
-                            android:paddingVertical="20dp"
+                            android:gravity="center"
                             android:text="수"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
-                            android:textColor="@color/gray_500"
-                            app:layout_constraintEnd_toStartOf="@id/tv_my_page_time_thr"
-                            app:layout_constraintStart_toEndOf="@id/tv_my_page_time_tue"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
+                            app:layout_constraintDimensionRatio="1" />
 
                         <TextView
                             android:id="@+id/tv_my_page_time_thr"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="0dp"
-
-                            android:paddingHorizontal="20dp"
-                            android:paddingVertical="20dp"
+                            android:gravity="center"
                             android:text="목"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
-                            android:textColor="@color/gray_500"
-                            app:layout_constraintEnd_toStartOf="@id/tv_my_page_time_fri"
-                            app:layout_constraintStart_toEndOf="@id/tv_my_page_time_wed"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
+                            app:layout_constraintDimensionRatio="1" />
 
                         <TextView
                             android:id="@+id/tv_my_page_time_fri"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:paddingHorizontal="20dp"
-                            android:paddingVertical="20dp"
+                            android:gravity="center"
                             android:text="금"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
-                            android:textColor="@color/gray_500"
-                            app:layout_constraintEnd_toStartOf="@id/tv_my_page_time_sat"
-                            app:layout_constraintStart_toEndOf="@id/tv_my_page_time_thr"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
+                            app:layout_constraintDimensionRatio="1" />
 
                         <TextView
                             android:id="@+id/tv_my_page_time_sat"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:paddingHorizontal="20dp"
-                            android:paddingVertical="20dp"
+                            android:gravity="center"
                             android:text="토"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
-                            android:textColor="@color/gray_500"
-                            app:layout_constraintEnd_toStartOf="@id/tv_my_page_time_sun"
-                            app:layout_constraintStart_toEndOf="@id/tv_my_page_time_fri"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
+                            app:layout_constraintDimensionRatio="1" />
 
                         <TextView
                             android:id="@+id/tv_my_page_time_sun"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:paddingHorizontal="20dp"
-                            android:paddingVertical="20dp"
+                            android:gravity="center"
                             android:text="일"
-                            android:textAppearance="@style/TextAppearance.Smeem.Body3_medium"
-                            android:textColor="@color/gray_500"
+                            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                            android:textColor="@color/gray_400"
+                            app:layout_constraintDimensionRatio="1" />
+
+                        <androidx.constraintlayout.helper.widget.Flow
+                            android:id="@+id/flow_my_page_time"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:constraint_referenced_ids="tv_my_page_time_mon,tv_my_page_time_tue,tv_my_page_time_wed,tv_my_page_time_thr,tv_my_page_time_fri,tv_my_page_time_sat,tv_my_page_time_sun"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/tv_my_page_time_sat"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_my_page_time_time"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="24dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:paddingBottom="22dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/layout_my_page_time_days">
 
                         <TextView
@@ -494,29 +490,34 @@
                             android:gravity="center"
                             android:text="알림 시간"
                             android:textAppearance="@style/TextAppearance.Smeem.Caption2_medium"
-                            android:textColor="@color/point"
+                            android:textColor="?colorPrimary"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/tv_my_page_time_box_body"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
-                            android:layout_marginTop="4dp"
-                            android:gravity="center"
-                            android:text="@{alarmEnabledDay.asText()}"
+                            android:text="@{trainingTime.asText()}"
                             android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
-                            android:textColor="@color/point"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_my_page_time_box_title_static" />
+                            android:textColor="?colorPrimary"
+                            app:layout_constraintEnd_toEndOf="@id/tv_my_page_time_box_title_static"
+                            app:layout_constraintStart_toStartOf="@id/tv_my_page_time_box_title_static"
+                            app:layout_constraintTop_toBottomOf="@id/tv_my_page_time_box_title_static"
+                            tools:text="10:00 PM" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="81dp"
+                    app:layout_constraintTop_toBottomOf="@id/layout_my_page_alarm_time_table" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

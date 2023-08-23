@@ -8,7 +8,17 @@ object DateUtil {
     /**
      * 0-24 를 0-12 로 변경
      */
-    fun asHour(hour: Int) = if (hour < 13) hour else hour - 12
+    fun asHour(hour: Int) =
+        when (hour) {
+            in 13..24 -> hour - 12
+            0 -> 12
+            else -> hour
+        }
+
+    /**
+     * 0,30 을 00,30 으로 변경
+     */
+    fun asMinute(minute: Int) = "%02d".format(minute)
 
     /**
      * 0-24 를 ampm 으로 구분

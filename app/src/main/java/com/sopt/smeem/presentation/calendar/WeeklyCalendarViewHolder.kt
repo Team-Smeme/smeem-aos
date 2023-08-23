@@ -9,6 +9,7 @@ import com.sopt.smeem.databinding.ViewWeeklyCalendarDayBinding
 import com.sopt.smeem.presentation.calendar.listener.OnWeeklyDayClickListener
 import java.sql.Date
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class WeeklyCalendarViewHolder(
     private val binding: ViewWeeklyCalendarDayBinding,
@@ -16,8 +17,7 @@ class WeeklyCalendarViewHolder(
 ) :
     RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
-    private lateinit var weeklyDate: LocalDate
-
+    private var weeklyDate: LocalDate = LocalDate.now()
     init {
         binding.root.setOnClickListener(this)
         binding.root.setOnLongClickListener(this)

@@ -83,10 +83,14 @@ class OnBoardingVM @Inject constructor(
 
     fun backStep() {
         _step.value =
-            step.value?.minus(1)?.let { backedStep ->
-                if (backedStep < 1) 1 else backedStep // 1 보다 작을 수 없다.
-            } ?: 1 // null 일 경우 1로 세팅
-
+            // 회원가입 바텀시트 누른 후 뒤로가기할 때
+            if (step.value == 4) {
+                _step.value?.minus(2)
+            } else {
+                step.value?.minus(1)?.let { backedStep ->
+                    if (backedStep < 0) 0 else backedStep // 0 보다 작을 수 없다.
+                } ?: 1 // null 일 경우 1로 세팅
+            }
     }
 
     fun isDaySelected(content: String) = days.contains(Day.from(content))
