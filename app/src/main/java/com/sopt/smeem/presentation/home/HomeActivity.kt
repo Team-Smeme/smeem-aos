@@ -52,6 +52,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 binding.btnWriteDiary.visibility = View.INVISIBLE
             }
         }
+        getWeeklyDiary()
         observeData()
     }
 
@@ -65,6 +66,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 binding.btnWriteDiary.visibility = View.INVISIBLE
             }
         }
+        getWeeklyDiary()
         observeData()
     }
 
@@ -96,6 +98,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 }
         }
 
+        getWeeklyDiary()
         showBadgeDialog()
     }
 
@@ -192,6 +195,19 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 binding.tvDiaryWritenTime.text = formattedCreatedAt
                 binding.tvDiary.text = it.content
             }
+        }
+    }
+
+    private fun getWeeklyDiary() {
+        lifecycleScope.launch {
+            homeViewModel.getDiaries(
+                start = binding.weeklyCalendar.mondayDate?.plusDays(-6)?.format(
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                ) ?: "",
+                end = binding.weeklyCalendar.mondayDate?.plusDays(6)?.format(
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                ) ?: "",
+            )
         }
     }
 
