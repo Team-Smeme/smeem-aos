@@ -54,7 +54,12 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
                 welcomeAdaptor.submitList(BadgeList.event)
             } else {
                 binding.tvMyBadgesWelcomeBadge.isInvisible = false
-                welcomeAdaptor.submitList(it[BadgeType.EVENT])
+                welcomeAdaptor.submitList(
+                    it[BadgeType.EVENT]!! + BadgeList.event.subList(
+                        it[BadgeType.EVENT]!!.size,
+                        BadgeList.event.size
+                    )
+                )
             }
 
             if (it[BadgeType.COUNTING] == null) {
@@ -62,7 +67,12 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
                 accumulatedAdaptor.submitList(BadgeList.counting)
             } else {
                 binding.tvMyBadgesAccumulatedDiaryCount.isInvisible = false
-                accumulatedAdaptor.submitList(it[BadgeType.COUNTING])
+                accumulatedAdaptor.submitList(
+                    it[BadgeType.COUNTING]!! + BadgeList.counting.subList(
+                        it[BadgeType.COUNTING]!!.size,
+                        BadgeList.counting.size
+                    )
+                )
             }
 
             if (it[BadgeType.COMBO] == null) {
@@ -70,7 +80,12 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
                 continuedAdaptor.submitList(BadgeList.combo)
             } else {
                 binding.tvMyBadgesContinuedDiaryCount.isInvisible = false
-                continuedAdaptor.submitList(it[BadgeType.COMBO])
+                continuedAdaptor.submitList(
+                    it[BadgeType.COMBO]!! + BadgeList.combo.subList(
+                        it[BadgeType.COMBO]!!.size,
+                        BadgeList.combo.size
+                    )
+                )
             }
 
             if (it[BadgeType.EXPLORATION] == null) {
@@ -78,7 +93,12 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
                 extraAdaptor.submitList(BadgeList.exploration)
             } else {
                 binding.tvMyBadgesExtras.isInvisible = false
-                extraAdaptor.submitList(it[BadgeType.EXPLORATION])
+                extraAdaptor.submitList(
+                    it[BadgeType.EXPLORATION]!! + BadgeList.exploration.subList(
+                        it[BadgeType.EXPLORATION]!!.size,
+                        BadgeList.exploration.size
+                    )
+                )
             }
 
         }
