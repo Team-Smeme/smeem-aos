@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.sopt.smeem.presentation.mypage.EditTrainingTimeViewModel" />
+        <variable
+            name="trainingTime"
+            type="com.sopt.smeem.domain.model.TrainingTime" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.mypage.EditTrainingTimeActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topbar_my_page_edit_time"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_narrow_back"
+            app:title="학습 알림 설정"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_my_page_edit_time_body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_rounded_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topbar_my_page_edit_time">
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/flow_my_page_edit_time_days"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/shape_rounded_box_top"
+                app:constraint_referenced_ids="tv_my_page_edit_time_mon,tv_my_page_edit_time_tue,tv_my_page_edit_time_wed,tv_my_page_edit_time_thr,tv_my_page_edit_time_fri,tv_my_page_edit_time_sat,tv_my_page_edit_time_sun"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_my_page_edit_time_mon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="월"
+                android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                android:textColor="@color/gray_400"
+                app:layout_constraintDimensionRatio="1" />
+
+            <TextView
+                android:id="@+id/tv_my_page_edit_time_tue"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="화"
+                android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                android:textColor="@color/gray_400"
+                app:layout_constraintDimensionRatio="1" />
+
+            <TextView
+                android:id="@+id/tv_my_page_edit_time_wed"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="수"
+                android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                android:textColor="@color/gray_400"
+                app:layout_constraintDimensionRatio="1" />
+
+            <TextView
+                android:id="@+id/tv_my_page_edit_time_thr"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="목"
+                android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                android:textColor="@color/gray_400"
+                app:layout_constraintDimensionRatio="1" />
+
+            <TextView
+                android:id="@+id/tv_my_page_edit_time_fri"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="금"
+                android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                android:textColor="@color/gray_400"
+                app:layout_constraintDimensionRatio="1" />
+
+            <TextView
+                android:id="@+id/tv_my_page_edit_time_sat"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="토"
+                android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                android:textColor="@color/gray_400"
+                app:layout_constraintDimensionRatio="1" />
+
+            <TextView
+                android:id="@+id/tv_my_page_edit_time_sun"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="일"
+                android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+                android:textColor="@color/gray_400"
+                app:layout_constraintDimensionRatio="1" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_my_page_edit_time_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="22dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flow_my_page_edit_time_days">
+
+                <TextView
+                    android:id="@+id/tv_my_page_edit_time_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="알림 시간"
+                    android:textAppearance="@style/TextAppearance.Smeem.Caption2_medium"
+                    android:textColor="?colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_my_page_edit_time_hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{trainingTime.asHour()}"
+                    android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
+                    android:textColor="?colorPrimary"
+                    tools:text="10" />
+
+                <TextView
+                    android:id="@+id/tv_my_page_edit_time_colon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
+                    android:textColor="?colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_my_page_edit_time_minute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{trainingTime.asMinute()}"
+                    android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
+                    android:textColor="?colorPrimary"
+                    tools:text="00" />
+
+                <TextView
+                    android:id="@+id/tv_my_page_edit_time_ampm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{trainingTime.asAmpm()}"
+                    android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
+                    android:textColor="?colorPrimary"
+                    tools:text=" PM" />
+
+                <androidx.constraintlayout.helper.widget.Flow
+                    android:id="@+id/flow_my_page_edit_time_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="tv_my_page_edit_time_hour,tv_my_page_edit_time_colon,tv_my_page_edit_time_minute,tv_my_page_edit_time_ampm"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_edit_time_label" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_my_page_edit_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/point_inactive"
+            android:enabled="false"
+            android:paddingVertical="20dp"
+            android:text="완료"
+            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

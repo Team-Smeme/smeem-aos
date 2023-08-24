@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_my_page) {
     private val vm: MyPageVM by viewModels()
     private var days: Map<Int, TextView>? = null
+    private lateinit var selectedTrainingTime : TrainingTime
 
     override fun constructLayout() {
         binding.ivMyPageEncouragingToEdit.imageTintList =
@@ -37,6 +38,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         onEditGoal()
         onTouchBack()
         onTouchMenu()
+        onTouchTime()
     }
 
     private fun onTouchBack() {
@@ -123,7 +125,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
 
     private fun setData() {
         vm.response.observe(this) {
-            val selectedTrainingTime =
+            selectedTrainingTime =
                 if (it.trainingTime.isSet()) it.trainingTime
                 else TrainingTime(
                     setOf(Day.MON, Day.TUE, Day.WED, Day.THU, Day.FRI),
@@ -150,6 +152,14 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
                     day.switchOn()
                 }
             }
+        }
+    }
+
+    private fun onTouchTime() {
+        binding.layoutMyPageAlarmTimeTable.setOnSingleClickListener {
+            Intent(this, EditTrainingTimeActivity::class.java).apply {
+                putExtra("selectedTime", selectedTrainingTime)
+            }.run(::startActivity)
         }
     }
 
