@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isInvisible
 import com.sopt.smeem.R
+import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.databinding.ActivityMyBadgesBinding
 import com.sopt.smeem.domain.model.BadgeType
 import com.sopt.smeem.presentation.BindingActivity
@@ -49,28 +50,32 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
 
         viewModel.badges.observe(this) {
             if (it[BadgeType.EVENT] == null) {
-                binding.tvMyBadgesWelcomeBadge.isInvisible = true
+                binding.tvMyBadgesWelcomeBadge.isInvisible = false
+                welcomeAdaptor.submitList(BadgeList.event)
             } else {
                 binding.tvMyBadgesWelcomeBadge.isInvisible = false
                 welcomeAdaptor.submitList(it[BadgeType.EVENT])
             }
 
             if (it[BadgeType.COUNTING] == null) {
-                binding.tvMyBadgesAccumulatedDiaryCount.isInvisible = true
+                binding.tvMyBadgesAccumulatedDiaryCount.isInvisible = false
+                accumulatedAdaptor.submitList(BadgeList.counting)
             } else {
                 binding.tvMyBadgesAccumulatedDiaryCount.isInvisible = false
                 accumulatedAdaptor.submitList(it[BadgeType.COUNTING])
             }
 
             if (it[BadgeType.COMBO] == null) {
-                binding.tvMyBadgesContinuedDiaryCount.isInvisible = true
+                binding.tvMyBadgesContinuedDiaryCount.isInvisible = false
+                continuedAdaptor.submitList(BadgeList.combo)
             } else {
                 binding.tvMyBadgesContinuedDiaryCount.isInvisible = false
                 continuedAdaptor.submitList(it[BadgeType.COMBO])
             }
 
             if (it[BadgeType.EXPLORATION] == null) {
-                binding.tvMyBadgesExtras.isInvisible = true
+                binding.tvMyBadgesExtras.isInvisible = false
+                extraAdaptor.submitList(BadgeList.exploration)
             } else {
                 binding.tvMyBadgesExtras.isInvisible = false
                 extraAdaptor.submitList(it[BadgeType.EXPLORATION])
@@ -80,7 +85,7 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
     }
 
     private fun onTouchBack() {
-        binding.imgMyBadgesBack.setOnClickListener {
+        binding.btnMyBadgesBack.setOnClickListener {
             /* onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
                  override fun handleOnBackPressed() {
                      goBack()
