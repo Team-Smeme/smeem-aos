@@ -1,14 +1,11 @@
 package com.sopt.smeem.presentation.mypage
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.Day
-import com.sopt.smeem.domain.model.MyPage
 import com.sopt.smeem.domain.model.Training
 import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.domain.repository.UserRepository
@@ -20,12 +17,16 @@ import javax.inject.Inject
 class EditTrainingTimeViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
-    var originalTime: TrainingTime = TrainingTime(setOf(Day.MON, Day.TUE, Day.WED, Day.THU, Day.FRI), DEFAULT_HOUR, DEFAULT_MINUTE)
+    var originalTime: TrainingTime = TrainingTime(
+        setOf(Day.MON, Day.TUE, Day.WED, Day.THU, Day.FRI),
+        DEFAULT_HOUR,
+        DEFAULT_MINUTE
+    )
 
     // 서버로 보내기 위한 선택시간 저장 변수
     var days: MutableSet<Day> = mutableSetOf()
-    var hour = MutableLiveData(DEFAULT_HOUR)
-    var minute = MutableLiveData(DEFAULT_MINUTE)
+    var hour = MutableLiveData<Int>()
+    var minute = MutableLiveData<Int>()
 
     fun isDaySelected(content: String) = days.contains(Day.from(content))
     fun addDay(content: String) = days.add(Day.from(content))
