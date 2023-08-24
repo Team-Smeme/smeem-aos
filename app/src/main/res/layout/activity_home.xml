@@ -213,6 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:textAppearance="@style/TextAppearance.Smeem.Caption2_medium"
                     android:text="@string/see_diary_detail"
                     android:textColor="@color/gray_400" />
 
