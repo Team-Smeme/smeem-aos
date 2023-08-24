@@ -52,6 +52,7 @@
                 android:includeFontPadding="false"
                 android:text="S"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -63,6 +64,7 @@
                 android:includeFontPadding="false"
                 android:text="M"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -74,6 +76,7 @@
                 android:includeFontPadding="false"
                 android:text="T"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -85,6 +88,7 @@
                 android:includeFontPadding="false"
                 android:text="W"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -96,6 +100,7 @@
                 android:includeFontPadding="false"
                 android:text="T"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -107,6 +112,7 @@
                 android:includeFontPadding="false"
                 android:text="F"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -118,6 +124,7 @@
                 android:includeFontPadding="false"
                 android:text="S"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
