@@ -20,13 +20,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_my_page) {
     private val vm: MyPageVM by viewModels()
     private var days: Map<Int, TextView>? = null
-    private lateinit var selectedTrainingTime : TrainingTime
+    private lateinit var selectedTrainingTime: TrainingTime
 
     override fun constructLayout() {
         binding.ivMyPageEncouragingToEdit.imageTintList =
             ColorStateList.valueOf(resources.getColor(R.color.white, null))
         getFromServer()
-        setPush()
         setUpDays()
         setData()
     }
@@ -166,20 +165,22 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     private fun onTouchSwitchingPush() {
         binding.switchMyPageAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
+                vm.changePushAlarm(
+                    hasAlarm = true,
+                    onError = { e ->
+                        Toast.makeText(this, e.errorCode.message, Toast.LENGTH_SHORT).show()
+                    }
+                )
                 unFreezeTimeTable()
             } else {
+                vm.changePushAlarm(
+                    hasAlarm = false,
+                    onError = { e ->
+                        Toast.makeText(this, e.errorCode.message, Toast.LENGTH_SHORT).show()
+                    }
+                )
                 freezeTimeTable()
             }
-        }
-    }
-
-    private fun setPush() {
-        binding.switchMyPageAlarm.isChecked = getPushPermission()
-
-        if (getPushPermission()) {
-            unFreezeTimeTable()
-        } else {
-            freezeTimeTable()
         }
     }
 
@@ -221,24 +222,15 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         binding.tvMyPageTimeBoxBody.setTextColor(resources.getColor(R.color.gray_200, null))
     }
 
-    private fun getPushPermission(): Boolean {
-        // TODO : dataStore? or System 으로 부터 push 허용 여부 전달
-        return false
-    }
-
     fun getFromServer() {
         vm.getData { t -> Toast.makeText(this, t.cause.toString(), Toast.LENGTH_SHORT).show() }
     }
 
     private fun cannotTouch() {
-        days?.values?.forEach { day -> day.isEnabled = false }
-        binding.tvMyPageTimeBoxTitleStatic.isEnabled = false
-        binding.tvMyPageTimeBoxBody.isEnabled = false
+        binding.layoutMyPageAlarmTimeTable.isClickable = false
     }
 
     private fun canTouch() {
-        days?.values?.forEach { day -> day.isEnabled = true }
-        binding.tvMyPageTimeBoxTitleStatic.isEnabled = true
-        binding.tvMyPageTimeBoxBody.isEnabled = true
+        binding.layoutMyPageAlarmTimeTable.isClickable = true
     }
 }
