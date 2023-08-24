@@ -3,9 +3,11 @@ package com.sopt.smeem.presentation.mypage
 import android.content.Intent
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityEditTrainingTimeBinding
+import com.sopt.smeem.description
 import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.util.ButtonUtil.switchOff
@@ -35,7 +37,6 @@ class EditTrainingTimeActivity :
 
     override fun addObservers() {
         observeTime()
-        observeSelection()
     }
 
     private fun setUpDays() {
@@ -54,6 +55,7 @@ class EditTrainingTimeActivity :
     private fun initData() {
         binding.trainingTime = intent.getParcelable("selectedTime", TrainingTime::class.java)
         viewModel.originalTime = binding.trainingTime!!
+
         viewModel.hour.value = binding.trainingTime!!.hour
         viewModel.minute.value = binding.trainingTime!!.minute
         viewModel.days.addAll(binding.trainingTime!!.days)
@@ -84,6 +86,7 @@ class EditTrainingTimeActivity :
                         day.switchOn()
                         viewModel.addDay(day.text.toString())
                     }
+                    checkSelection()
                 }
             }
         }
@@ -97,8 +100,13 @@ class EditTrainingTimeActivity :
 
     private fun onTouchComplete() {
         binding.btnMyPageEditTime.setOnSingleClickListener {
-//            Log.d("is valid selection?", "${viewModel.canConfirmEdit()}")
-//            Intent(this, MyPageActivity::class.java).run(::startActivity)
+            viewModel.sendServer { e ->
+                Toast.makeText(applicationContext, e.description(), Toast.LENGTH_SHORT).show()
+            }
+            Intent(this, MyPageActivity::class.java).run {
+                startActivity(this)
+                finish()
+            }
         }
     }
 
@@ -106,20 +114,12 @@ class EditTrainingTimeActivity :
         viewModel.hour.observe(this) {
             binding.tvMyPageEditTimeHour.text = "%02d".format(DateUtil.asHour(it))
             binding.tvMyPageEditTimeAmpm.text = " ${DateUtil.asAmpm(it)}"
+            checkSelection()
         }
         viewModel.minute.observe(this) {
             binding.tvMyPageEditTimeMinute.text = DateUtil.asMinute(it)
+            checkSelection()
         }
-    }
-
-    private fun observeSelection() {
-//        viewModel.isValidEditTime.observe(this) {
-//            if (it) {
-//                completeButtonOn()
-//            } else {
-//                completeButtonOff()
-//            }
-//        }
     }
 
     private fun setDaysHeight() {
@@ -131,17 +131,21 @@ class EditTrainingTimeActivity :
 
     private fun getScreenWidth(): Int = resources.displayMetrics.widthPixels
 
+    private fun checkSelection() {
+        if (viewModel.canConfirmEdit()) completeButtonOn() else completeButtonOff()
+    }
+
     private fun completeButtonOn() {
         with(binding.btnMyPageEditTime) {
-            setBackgroundColor(resources.getColor(com.sopt.smeem.R.color.point, null))
+            setBackgroundColor(resources.getColor(R.color.point, null))
             isEnabled = true
         }
     }
 
     private fun completeButtonOff() {
         with(binding.btnMyPageEditTime) {
-            setBackgroundColor(resources.getColor(com.sopt.smeem.R.color.point_inactive, null))
-            setTextColor(resources.getColor(com.sopt.smeem.R.color.white, null))
+            setBackgroundColor(resources.getColor(R.color.point_inactive, null))
+            setTextColor(resources.getColor(R.color.white, null))
             isEnabled = false
         }
     }

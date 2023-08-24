@@ -4,7 +4,7 @@ import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.data.model.request.TrainingRequest
 
 data class Training(
-    val type: TrainingGoalType,
+    val type: TrainingGoalType? = null,
     val trainingTime: TrainingTime? = null,
     val hasAlarm: Boolean? = null
 ) {
