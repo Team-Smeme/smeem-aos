@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.mypage
 
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -96,8 +97,12 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
 
     private fun onEditGoal() {
         binding.layoutMyPageEncouraging.setOnClickListener {
-            startActivity(Intent(this, EditTrainingGoalActivity::class.java))
-            finish()
+            Intent(this, EditTrainingGoalActivity::class.java).apply {
+                putExtra("originalGoal", vm.response.value!!.goal.goal)
+            }.run {
+                startActivity(this)
+                finish()
+            }
         }
     }
 

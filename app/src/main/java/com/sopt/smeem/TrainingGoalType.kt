@@ -1,13 +1,13 @@
 package com.sopt.smeem
 
-enum class TrainingGoalType {
-    DEVELOP, // 자기 계발
-    HOBBY, // 취미
-    APPLY, // 현지 언어 적응
-    BUSINESS, // 업무 활용
-    EXAM, // 시험 고득점
-    NONE, // 아직 모르겠어요
-    NO_SELECTED, // 아무 값도 아님
+enum class TrainingGoalType(val text: String) {
+    DEVELOP("자기계발"),
+    HOBBY("취미로 즐기기"),
+    APPLY("현지 언어 체득"),
+    BUSINESS("유창한 비즈니스 영어"),
+    EXAM("어학 시험 고득점"),
+    NONE("아직 모르겠어요"),
+    NO_SELECTED(""),
     ;
 
     var id: Int = 0
@@ -17,5 +17,6 @@ enum class TrainingGoalType {
         fun getAll(): Set<TrainingGoalType> = setOf(DEVELOP, HOBBY, APPLY, EXAM, BUSINESS, NONE)
 
         fun findById(id: Int) = getAll().find { it.id == id } ?: throw IllegalStateException()
+        fun findByText(text: String) = getAll().find { it.text == text } ?: throw NoSuchElementException()
     }
 }

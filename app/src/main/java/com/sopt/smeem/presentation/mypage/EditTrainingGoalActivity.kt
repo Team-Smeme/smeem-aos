@@ -36,6 +36,13 @@ class EditTrainingGoalActivity :
             TrainingGoalType.EXAM to binding.icMyPageTrainingButton5,
             TrainingGoalType.NONE to binding.icMyPageTrainingButton6
         )
+
+        buttons?.values?.forEach { button ->
+            if (TrainingGoalType.findByText(intent.getStringExtra("originalGoal")!!).id == button.id) {
+                button.switchOn()
+                vm.upsert(TrainingGoalType.findById(button.id))
+            }
+        }
     }
 
     override fun addListeners() {
@@ -73,19 +80,21 @@ class EditTrainingGoalActivity :
         vm.selectedGoal.observe(
             this@EditTrainingGoalActivity
         ) {
-            if (it != TrainingGoalType.NO_SELECTED) nextButtonOn() else nextButtonOff()
+            if (it != TrainingGoalType.NO_SELECTED &&
+                it != TrainingGoalType.findByText(intent.getStringExtra("originalGoal")!!)
+            ) nextButtonOn() else nextButtonOff()
         }
     }
 
     private fun nextButtonOff() {
-        with (binding.btnMyPageTrainingGoal) {
+        with(binding.btnMyPageTrainingGoal) {
             setBackgroundColor(resources.getColor(R.color.point_inactive, null))
             isEnabled = false
         }
     }
 
     private fun nextButtonOn() {
-        with (binding.btnMyPageTrainingGoal) {
+        with(binding.btnMyPageTrainingGoal) {
             setBackgroundColor(resources.getColor(R.color.point, null))
             isEnabled = true
         }
