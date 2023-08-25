@@ -65,8 +65,12 @@ class ChangingNicknameActivity :
     }
 
     private fun goBack() {
-        startActivity(Intent(this, MyPageActivity::class.java))
-        finish()
+        Intent(this, MyPageActivity::class.java).apply {
+            putExtra("snackbarText", resources.getString(R.string.my_page_edit_done_message))
+        }.run {
+            startActivity(this)
+            finish()
+        }
     }
 
     private fun onTouchCompleted() {

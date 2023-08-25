@@ -103,7 +103,9 @@ class EditTrainingTimeActivity :
             viewModel.sendServer { e ->
                 Toast.makeText(applicationContext, e.description(), Toast.LENGTH_SHORT).show()
             }
-            Intent(this, MyPageActivity::class.java).run {
+            Intent(this, MyPageActivity::class.java).apply {
+                putExtra("snackbarText", resources.getString(R.string.my_page_edit_done_message))
+            }.run {
                 startActivity(this)
                 finish()
             }

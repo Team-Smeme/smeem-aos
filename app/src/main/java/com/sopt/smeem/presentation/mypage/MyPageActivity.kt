@@ -14,6 +14,7 @@ import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener
+import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -151,6 +152,14 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
                     day.switchOn()
                 }
             }
+        }
+        showEditCompleted()
+    }
+
+    private fun showEditCompleted() {
+        val msg = intent.getStringExtra("snackbarText")
+        if (msg != null) {
+            binding.root.showSnackbar(msg)
         }
     }
 
