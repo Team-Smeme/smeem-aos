@@ -81,6 +81,7 @@ class NativeWriteStep2Activity :
                         onSuccess = {
                             Intent(this, HomeActivity::class.java).apply {
                                 putExtra("retrievedBadge", it as Serializable)
+                                putExtra("snackbarText", resources.getString(R.string.diary_write_done_message))
                             }.run(::startActivity)
                             finishAffinity()
                         },

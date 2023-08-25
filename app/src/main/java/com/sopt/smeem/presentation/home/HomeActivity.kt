@@ -15,6 +15,7 @@ import com.sopt.smeem.presentation.calendar.listener.OnWeeklyCalendarSwipeListen
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.util.setOnSingleClickListener
+import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -99,7 +100,15 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
 
         getWeeklyDiary()
+        showDiaryCompleted()
         showBadgeDialog()
+    }
+
+    private fun showDiaryCompleted() {
+        val msg = intent.getStringExtra("snackbarText")
+        if (msg != null) {
+            binding.root.showSnackbar(msg)
+        }
     }
 
     private fun showBadgeDialog() {
