@@ -16,7 +16,7 @@
             style="@style/TextAppearance.Smeem.Body4_regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingVertical="16dp"
+            android:paddingVertical="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -26,9 +26,9 @@
             android:id="@+id/iv_my_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="14dp"
+            android:layout_marginEnd="18dp"
             android:contentDescription="@string/my_page"
-            android:padding="12dp"
+            android:padding="8dp"
             android:src="@drawable/ic_my_page"
             app:layout_constraintBottom_toBottomOf="@id/tv_target_month"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:paddingTop="16dp"
+            android:paddingTop="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_target_month">
@@ -52,6 +52,7 @@
                 android:includeFontPadding="false"
                 android:text="S"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -63,6 +64,7 @@
                 android:includeFontPadding="false"
                 android:text="M"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -74,6 +76,7 @@
                 android:includeFontPadding="false"
                 android:text="T"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -85,6 +88,7 @@
                 android:includeFontPadding="false"
                 android:text="W"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -96,6 +100,7 @@
                 android:includeFontPadding="false"
                 android:text="T"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -107,6 +112,7 @@
                 android:includeFontPadding="false"
                 android:text="F"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -118,6 +124,7 @@
                 android:includeFontPadding="false"
                 android:text="S"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -206,6 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:textAppearance="@style/TextAppearance.Smeem.Caption2_medium"
                     android:text="@string/see_diary_detail"
                     android:textColor="@color/gray_400" />
 
