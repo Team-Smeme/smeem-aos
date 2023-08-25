@@ -5,6 +5,7 @@ import android.text.method.ScrollingMovementMethod
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
+import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityNativeWriteStep2Binding
 import com.sopt.smeem.description
@@ -92,11 +93,11 @@ class NativeWriteStep2Activity :
                 }
 
                 else -> {
-                    binding.root.showSnackbar(
-                        "외국어를 포함해 일기를 작성해 주세요 :(",
-                        R.id.layout_native_step2_bottom_toolbar,
-                        Snackbar.LENGTH_SHORT
-                    )
+                    DefaultSnackBar.makeOnTopOf(
+                        binding.root,
+                        R.id.layout_foreign_write_bottom_toolbar,
+                        "외국어를 포함해 일기를 작성해 주세요 :("
+                    ).show()
                 }
             }
         }

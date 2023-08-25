@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityDiaryEditBinding
 import com.sopt.smeem.description
@@ -68,7 +69,7 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
                 )
             }
             else -> {
-                binding.root.showSnackbar("외국어를 포함해 일기를 작성해 주세요 :(")
+                DefaultSnackBar.make(binding.root, "외국어를 포함해 일기를 작성해 주세요 :(").show()
             }
         }
     }

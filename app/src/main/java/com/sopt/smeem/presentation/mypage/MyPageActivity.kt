@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityMyPageBinding
 import com.sopt.smeem.domain.model.Day
@@ -159,7 +160,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     private fun showEditCompleted() {
         val msg = intent.getStringExtra("snackbarText")
         if (msg != null) {
-            binding.root.showSnackbar(msg)
+            DefaultSnackBar.make(binding.root, msg).show()
         }
     }
 

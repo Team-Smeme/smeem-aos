@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.domain.model.RetrievedBadge
@@ -107,7 +108,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     private fun showDiaryCompleted() {
         val msg = intent.getStringExtra("snackbarText")
         if (msg != null) {
-            binding.root.showSnackbar(msg)
+            DefaultSnackBar.make(binding.root, msg).show()
         }
     }
 
