@@ -21,6 +21,9 @@
             android:name=".presentation.mypage.MyPageMoreActivity"
             android:exported="false" />
         <activity
+            android:name=".presentation.agreement.AgreementViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.mypage.EditTrainingTimeActivity"
             android:exported="false" />
         <activity
