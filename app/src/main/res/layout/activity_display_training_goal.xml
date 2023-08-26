@@ -150,6 +150,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="8dp"
                     android:lineSpacingExtra="6dp"
+                    android:minLines="2"
                     android:text="@{training.detail}"
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
                     android:textColor="@color/gray_600"
@@ -165,14 +166,14 @@
             android:id="@+id/btn_my_page_display_training"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="완료"
-            android:paddingVertical="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginHorizontal="18dp"
+            android:layout_marginBottom="16dp"
+            android:paddingVertical="20dp"
+            android:text="완료"
             android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
