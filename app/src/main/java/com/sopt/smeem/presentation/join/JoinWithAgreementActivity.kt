@@ -126,6 +126,11 @@ class JoinWithAgreementActivity :
                 putExtra("agreement", resources.getString(R.string.personal_info_agreement))
             }.run(::startActivity)
         }
+        binding.btnAgreementMarketingDetail.setOnSingleClickListener {
+            Intent(this, AgreementViewActivity::class.java).apply {
+                putExtra("agreement", resources.getString(R.string.personal_info_agreement))
+            }.run(::startActivity)
+        }
     }
 
     private fun onTouchNext() {
