@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.domain.model.RetrievedBadge
@@ -15,6 +16,7 @@ import com.sopt.smeem.presentation.calendar.listener.OnWeeklyCalendarSwipeListen
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.util.setOnSingleClickListener
+import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -99,7 +101,15 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
 
         getWeeklyDiary()
+        showDiaryCompleted()
         showBadgeDialog()
+    }
+
+    private fun showDiaryCompleted() {
+        val msg = intent.getStringExtra("snackbarText")
+        if (msg != null) {
+            DefaultSnackBar.make(binding.root, msg).show()
+        }
     }
 
     private fun showBadgeDialog() {

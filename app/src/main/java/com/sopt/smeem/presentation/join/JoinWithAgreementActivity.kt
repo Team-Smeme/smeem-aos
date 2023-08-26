@@ -11,6 +11,7 @@ import com.sopt.smeem.databinding.ActivityJoinAgreementBinding
 import com.sopt.smeem.description
 import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.agreement.AgreementViewActivity
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
 import com.sopt.smeem.presentation.join.JoinConstant.NICKNAME
@@ -48,6 +49,7 @@ class JoinWithAgreementActivity :
 
     override fun addListeners() {
         onTouchAllSelection()
+        onTouchDetail()
         onTouchNext()
     }
 
@@ -110,6 +112,24 @@ class JoinWithAgreementActivity :
         with(binding.btnEntranceNext) {
             setBackgroundColor(resources.getColor(R.color.point, null))
             isEnabled = true
+        }
+    }
+
+    private fun onTouchDetail() {
+        binding.btnAgreementServiceDetail.setOnSingleClickListener {
+            Intent(this, AgreementViewActivity::class.java).apply {
+                putExtra("agreement", resources.getString(R.string.service_agreement))
+            }.run(::startActivity)
+        }
+        binding.btnAgreementPersonalDetail.setOnSingleClickListener {
+            Intent(this, AgreementViewActivity::class.java).apply {
+                putExtra("agreement", resources.getString(R.string.personal_info_agreement))
+            }.run(::startActivity)
+        }
+        binding.btnAgreementMarketingDetail.setOnSingleClickListener {
+            Intent(this, AgreementViewActivity::class.java).apply {
+                putExtra("agreement", resources.getString(R.string.personal_info_agreement))
+            }.run(::startActivity)
         }
     }
 

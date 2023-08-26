@@ -10,8 +10,8 @@ object DateUtil {
      */
     fun asHour(hour: Int) =
         when (hour) {
-            in 13..24 -> hour - 12
-            0 -> 12
+            in 13..23 -> hour - 12
+            24 -> 12
             else -> hour
         }
 
@@ -23,7 +23,7 @@ object DateUtil {
     /**
      * 0-24 를 ampm 으로 구분
      */
-    fun asAmpm(hour: Int) = if (hour < 13) "AM" else "PM"
+    fun asAmpm(hour: Int) = if (hour in 13..23) "PM" else "AM"
 
     private const val YYYY_MM_DD_HH_MM =
         "\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01]) (0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]|60])"

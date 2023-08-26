@@ -18,12 +18,25 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.mypage.MyPageMoreActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.agreement.AgreementViewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.mypage.EditTrainingTimeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".presentation.mypage.DisplayTrainingGoalActivity"
-            android:exported="false" />
-        <!-- Splash -->
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- Splash -->
         <activity
             android:name=".presentation.splash.SplashStartActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Smeem.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,48 +44,51 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".presentation.splash.SplashLoginActivity"
-            android:exported="false" />
-
-        <!-- OnBoarding-->
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- OnBoarding -->
         <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
-            android:exported="false" />
-
-        <!-- Join -->
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- Join -->
         <activity
             android:name=".presentation.join.JoinWithNicknameActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
-
         <activity
             android:name=".presentation.join.JoinWithAgreementActivity"
-            android:exported="false" />
-
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.detail.DiaryEditActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
         <activity
             android:name=".presentation.detail.DiaryDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.write.foreign.ForeignWriteActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
         <activity
             android:name=".presentation.write.natiive.NativeWriteStep2Activity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
         <activity
             android:name=".presentation.write.natiive.NativeWriteStep1Activity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -84,34 +100,27 @@
                     android:scheme="kakao${KAKAO_API_KEY}" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".presentation.mypage.ChangingNicknameActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"  />
-
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
         <activity
             android:name=".presentation.mypage.MyPageActivity"
-            android:exported="false" />
-
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.mypage.MyBadgesActivity"
-            android:exported="false">
-
-        </activity>
-
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.mypage.EditTrainingGoalActivity"
-            android:exported="false">
-
-
-        </activity>
-
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.home.HomeActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
     </application>
 
 </manifest>

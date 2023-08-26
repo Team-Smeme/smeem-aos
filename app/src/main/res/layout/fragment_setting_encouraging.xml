@@ -132,6 +132,7 @@
                     android:id="@+id/tv_on_boarding_encouraging_box_goal_body"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:minLines="2"
                     android:layout_marginTop="12dp"
                     android:lineSpacingExtra="6dp"
                     android:text="@{trainingGoal.detail}"

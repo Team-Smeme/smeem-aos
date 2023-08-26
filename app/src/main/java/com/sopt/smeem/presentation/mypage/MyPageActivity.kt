@@ -5,26 +5,27 @@ import android.content.res.ColorStateList
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityMyPageBinding
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.presentation.BindingActivity
-import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener
+import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_my_page) {
     private val vm: MyPageVM by viewModels()
     private var days: Map<Int, TextView>? = null
+    private lateinit var selectedTrainingTime: TrainingTime
 
     override fun constructLayout() {
         binding.ivMyPageEncouragingToEdit.imageTintList =
             ColorStateList.valueOf(resources.getColor(R.color.white, null))
         getFromServer()
-        setPush()
         setUpDays()
         setData()
     }
@@ -36,40 +37,20 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         onEditGoal()
         onTouchBack()
         onTouchMenu()
+        onTouchTime()
     }
 
     private fun onTouchBack() {
-        binding.topbarMyPage.setNavigationOnClickListener {
+        binding.btnMyPageBack.setOnSingleClickListener {
             finish()
         }
     }
 
     private fun onTouchMenu() {
-        binding.topbarMyPage.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.menual -> {
-                    Toast.makeText(this, "준비중입니다.", Toast.LENGTH_SHORT).show()
-                    true
-                }
-
-                R.id.logout -> {
-                    vm.clearLocal()
-                    startActivity(Intent(this, SplashLoginActivity::class.java))
-                    finishAffinity()
-                    true
-                }
-
-                R.id.withdrawal -> {
-                    vm.withdrawal()
-                    startActivity(Intent(this, SplashLoginActivity::class.java))
-                    finishAffinity()
-                    true
-                }
-
-                else -> false
-
-            }
+        binding.btnMyPageMenu.setOnSingleClickListener {
+            startActivity(Intent(this, MyPageMoreActivity::class.java))
         }
+
     }
 
     private fun setUpDays() {
@@ -96,8 +77,12 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
 
     private fun onEditGoal() {
         binding.layoutMyPageEncouraging.setOnClickListener {
-            startActivity(Intent(this, EditTrainingGoalActivity::class.java))
-            finish()
+            Intent(this, EditTrainingGoalActivity::class.java).apply {
+                putExtra("originalGoal", vm.response.value!!.goal.goal)
+            }.run {
+                startActivity(this)
+                finish()
+            }
         }
     }
 
@@ -118,7 +103,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
 
     private fun setData() {
         vm.response.observe(this) {
-            val selectedTrainingTime =
+            selectedTrainingTime =
                 if (it.trainingTime.isSet()) it.trainingTime
                 else TrainingTime(
                     setOf(Day.MON, Day.TUE, Day.WED, Day.THU, Day.FRI),
@@ -146,25 +131,43 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
                 }
             }
         }
+        showEditCompleted()
+    }
+
+    private fun showEditCompleted() {
+        val msg = intent.getStringExtra("snackbarText")
+        if (msg != null) {
+            DefaultSnackBar.make(binding.root, msg).show()
+        }
+    }
+
+    private fun onTouchTime() {
+        binding.layoutMyPageAlarmTimeTable.setOnSingleClickListener {
+            Intent(this, EditTrainingTimeActivity::class.java).apply {
+                putExtra("selectedTime", selectedTrainingTime)
+            }.run(::startActivity)
+        }
     }
 
     private fun onTouchSwitchingPush() {
         binding.switchMyPageAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
+                vm.changePushAlarm(
+                    hasAlarm = true,
+                    onError = { e ->
+                        Toast.makeText(this, e.errorCode.message, Toast.LENGTH_SHORT).show()
+                    }
+                )
                 unFreezeTimeTable()
             } else {
+                vm.changePushAlarm(
+                    hasAlarm = false,
+                    onError = { e ->
+                        Toast.makeText(this, e.errorCode.message, Toast.LENGTH_SHORT).show()
+                    }
+                )
                 freezeTimeTable()
             }
-        }
-    }
-
-    private fun setPush() {
-        binding.switchMyPageAlarm.isChecked = getPushPermission()
-
-        if (getPushPermission()) {
-            unFreezeTimeTable()
-        } else {
-            freezeTimeTable()
         }
     }
 
@@ -206,24 +209,15 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         binding.tvMyPageTimeBoxBody.setTextColor(resources.getColor(R.color.gray_200, null))
     }
 
-    private fun getPushPermission(): Boolean {
-        // TODO : dataStore? or System 으로 부터 push 허용 여부 전달
-        return false
-    }
-
     fun getFromServer() {
         vm.getData { t -> Toast.makeText(this, t.cause.toString(), Toast.LENGTH_SHORT).show() }
     }
 
     private fun cannotTouch() {
-        days?.values?.forEach { day -> day.isEnabled = false }
-        binding.tvMyPageTimeBoxTitleStatic.isEnabled = false
-        binding.tvMyPageTimeBoxBody.isEnabled = false
+        binding.layoutMyPageAlarmTimeTable.isClickable = false
     }
 
     private fun canTouch() {
-        days?.values?.forEach { day -> day.isEnabled = true }
-        binding.tvMyPageTimeBoxTitleStatic.isEnabled = true
-        binding.tvMyPageTimeBoxBody.isEnabled = true
+        binding.layoutMyPageAlarmTimeTable.isClickable = true
     }
 }

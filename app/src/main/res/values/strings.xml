@@ -43,8 +43,10 @@
     <string name="my_page_languages">학습 언어</string>
     <string name="my_page_alarm">학습 알림</string>
     <string name="my_page_push">트레이닝 푸시알림</string>
+    <string name="my_page_edit_done_message">변경 완료</string>
     <string name="diary_write_next">다음</string>
     <string name="diary_write_done">완료</string>
+    <string name="diary_write_done_message">작성 완료</string>
     <string name="diary_write_cancel">취소</string>
     <string name="diary_write_step_1">STEP 1</string>
     <string name="diary_write_step_2">STEP 2</string>
@@ -62,4 +64,7 @@
     <string name="see_diary_detail">전체보기</string>
     <string name="badge_obtain_message">축하해요!\n%s 배지를 획득했어요!</string>
     <string name="badge_obtain_message_mypage">축하해요! %s 배지를 획득했어요!</string>
+    <string name="service_agreement">http://smeem.notion.site/7132b91df0eb4838b435b53ad7cbb588?pvs=4</string>
+    <string name="personal_info_agreement">http://smeem.notion.site/2c0af4a3f8a340fcbb8eefe4beb24856?pvs=4</string>
+    <string name="manual_url">https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4</string>
 </resources>

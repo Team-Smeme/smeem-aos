@@ -10,6 +10,7 @@ import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.model.MyPage
 import com.sopt.smeem.domain.model.OnBoarding
+import com.sopt.smeem.domain.model.PushAlarm
 import com.sopt.smeem.domain.model.Training
 import com.sopt.smeem.domain.model.TrainingGoal
 import com.sopt.smeem.domain.model.TrainingTime
@@ -86,6 +87,11 @@ class UserRepositoryImpl(
     override suspend fun editTraining(accessToken: String?, training: Training): Result<Unit> =
         kotlin.runCatching {
             trainingManager.patchTraining(accessToken, training)
+        }
+
+    override suspend fun editPushAlarm(accessToken: String?, push: PushAlarm): Result<Unit> =
+        kotlin.runCatching {
+            trainingManager.patchPushAlarm(accessToken, push)
         }
 
     override suspend fun deleteUser(): Result<Unit> =

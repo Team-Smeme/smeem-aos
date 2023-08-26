@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.MyPage
+import com.sopt.smeem.domain.model.PushAlarm
 import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,23 +40,13 @@ internal class MyPageVM @Inject constructor(
         }
     }
 
-    fun isDaySelected(content: String) = days.contains(Day.from(content))
-    fun addDay(content: String) = days.add(Day.from(content))
-    fun removeDay(content: String) = days.remove(Day.from(content))
-
-    fun clearLocal() {
-        runBlocking {
-            localRepository.clear()
-        }
-    }
-
-    fun withdrawal() {
+    fun changePushAlarm(hasAlarm: Boolean, onError: (SmeemException) -> Unit) {
         viewModelScope.launch {
-            userRepository.deleteUser()
-        }
-
-        runBlocking {
-            localRepository.clear()
+            userRepository.editPushAlarm(
+                push = PushAlarm(hasAlarm = hasAlarm)
+            ).onHttpFailure { e -> onError(e) }
         }
     }
+
+    fun isDaySelected(content: String) = days.contains(Day.from(content))
 }

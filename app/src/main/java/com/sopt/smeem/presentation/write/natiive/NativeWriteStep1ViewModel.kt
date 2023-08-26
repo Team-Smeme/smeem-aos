@@ -6,18 +6,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.Anonymous
+import com.sopt.smeem.LocalStatus
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.repository.DiaryRepository
+import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.TranslateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
 class NativeWriteStep1ViewModel @Inject constructor(
     @Anonymous private val translateRepository: TranslateRepository,
-    private val diaryRepository: DiaryRepository
+    private val diaryRepository: DiaryRepository,
+    private val localRepository: LocalRepository,
 ) : ViewModel() {
     var topicId: Long = -1
 
@@ -50,6 +54,16 @@ class NativeWriteStep1ViewModel @Inject constructor(
     fun translate() {
         viewModelScope.launch {
             _translateResult.value = translateRepository.execute(diary.value ?: "").translateResult
+        }
+    }
+
+    fun getNeverClickedRandomToolTip(): Boolean = runBlocking {
+        return@runBlocking localRepository.checkStatus(LocalStatus.RANDOM_TOPIC_TOOL_TIP)
+    }
+
+    fun randomTopicTooltipOff() {
+        viewModelScope.launch {
+            localRepository.saveStatus(LocalStatus.RANDOM_TOPIC_TOOL_TIP)
         }
     }
 }

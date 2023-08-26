@@ -51,6 +51,7 @@ class DisplayTrainingGoalActivity : BindingActivity<ActivityDisplayTrainingGoalB
                 }
             )
             Intent(this, MyPageActivity::class.java).apply {
+                putExtra("snackbarText", resources.getString(R.string.my_page_edit_done_message))
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }.run(::startActivity)
         }

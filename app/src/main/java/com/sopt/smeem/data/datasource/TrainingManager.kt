@@ -1,6 +1,7 @@
 package com.sopt.smeem.data.datasource
 
 import com.sopt.smeem.TrainingGoalType
+import com.sopt.smeem.data.model.request.PushRequest
 import com.sopt.smeem.data.model.request.TrainingRequest
 import com.sopt.smeem.data.model.response.ApiResponse
 import com.sopt.smeem.data.model.response.TrainingGoalResponse
@@ -9,6 +10,7 @@ import com.sopt.smeem.data.service.TrainingService
 import com.sopt.smeem.data.service.UserService
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.model.OnBoarding
+import com.sopt.smeem.domain.model.PushAlarm
 import com.sopt.smeem.domain.model.Training
 
 class TrainingManager(
@@ -46,6 +48,19 @@ class TrainingManager(
                     trainingTime = training.extractTime(),
                     hasAlarm = training.hasAlarm
                 )
+            )
+        }
+    }
+
+    suspend fun patchPushAlarm(accessToken: String?, push: PushAlarm): ApiResponse<Unit> {
+        if (accessToken.isNullOrBlank()) {
+            return userService!!.patchPush(
+                request = PushRequest(push.hasAlarm)
+            )
+        } else {
+            return userService!!.patchPushWithFixedToken(
+                token = "Bearer $accessToken",
+                request = PushRequest(push.hasAlarm)
             )
         }
     }

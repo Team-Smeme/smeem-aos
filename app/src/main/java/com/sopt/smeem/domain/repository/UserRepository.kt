@@ -4,6 +4,7 @@ import com.sopt.smeem.domain.model.Badge
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.model.MyPage
 import com.sopt.smeem.domain.model.OnBoarding
+import com.sopt.smeem.domain.model.PushAlarm
 import com.sopt.smeem.domain.model.Training
 
 interface UserRepository {
@@ -32,6 +33,8 @@ interface UserRepository {
      * 트레이닝 정보를 수정합니다.
      */
     suspend fun editTraining(accessToken: String? = null, training: Training): Result<Unit>
+
+    suspend fun editPushAlarm(accessToken: String? = null, push: PushAlarm): Result<Unit>
 
     suspend fun deleteUser(): Result<Unit>
 }

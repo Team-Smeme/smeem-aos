@@ -92,4 +92,10 @@
         <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
 
+    <style name="TextAppearance.Smeem.Week_light_14">
+        <item name="android:fontFamily">@font/pretendard_light</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">-0.04</item>
+    </style>
+
 </resources>
