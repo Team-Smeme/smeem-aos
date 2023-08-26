@@ -1,25 +1,19 @@
 package com.sopt.smeem.presentation.write.foreign
 
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LifecycleOwner
-import com.google.android.material.snackbar.Snackbar
+import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityForeignWriteBinding
 import com.sopt.smeem.description
-import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
 import com.sopt.smeem.util.setOnSingleClickListener
-import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.internal.toImmutableList
 import java.io.Serializable
 
 @AndroidEntryPoint
@@ -103,6 +97,10 @@ class ForeignWriteActivity :
                         onSuccess = {
                             Intent(this, HomeActivity::class.java).apply {
                                 putExtra("retrievedBadge", it as Serializable)
+                                putExtra(
+                                    "snackbarText",
+                                    resources.getString(R.string.diary_write_done_message)
+                                )
                             }.run(::startActivity)
                             finishAffinity()
                         },
@@ -111,12 +109,13 @@ class ForeignWriteActivity :
                         }
                     )
                 }
+
                 else -> {
-                    binding.root.showSnackbar(
-                        "외국어를 포함해 일기를 작성해 주세요 :(",
+                    DefaultSnackBar.makeOnTopOf(
+                        binding.root,
                         R.id.layout_foreign_write_bottom_toolbar,
-                        Snackbar.LENGTH_SHORT
-                    )
+                        "외국어를 포함해 일기를 작성해 주세요 :("
+                    ).show()
                 }
             }
         }
@@ -130,6 +129,7 @@ class ForeignWriteActivity :
                         resources.getColor(R.color.point, null)
                     )
                 }
+
                 false -> {
                     binding.layoutForeignWriteToolbar.tvDone.setTextColor(
                         resources.getColor(R.color.gray_300, null)

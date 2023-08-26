@@ -43,8 +43,10 @@
     <string name="my_page_languages">학습 언어</string>
     <string name="my_page_alarm">학습 알림</string>
     <string name="my_page_push">트레이닝 푸시알림</string>
+    <string name="my_page_edit_done_message">변경 완료</string>
     <string name="diary_write_next">다음</string>
     <string name="diary_write_done">완료</string>
+    <string name="diary_write_done_message">작성 완료</string>
     <string name="diary_write_cancel">취소</string>
     <string name="diary_write_step_1">STEP 1</string>
     <string name="diary_write_step_2">STEP 2</string>

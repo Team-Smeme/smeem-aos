@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityMyPageBinding
 import com.sopt.smeem.domain.model.Day
@@ -14,6 +15,7 @@ import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener
+import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -151,6 +153,14 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
                     day.switchOn()
                 }
             }
+        }
+        showEditCompleted()
+    }
+
+    private fun showEditCompleted() {
+        val msg = intent.getStringExtra("snackbarText")
+        if (msg != null) {
+            DefaultSnackBar.make(binding.root, msg).show()
         }
     }
 
