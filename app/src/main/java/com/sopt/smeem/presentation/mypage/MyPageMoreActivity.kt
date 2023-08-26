@@ -17,6 +17,9 @@ class MyPageMoreActivity :
     private val viewModel by viewModels<MyPageMoreViewModel>()
 
     override fun addListeners() {
+        binding.btnMyPageMoreBack.setOnSingleClickListener {
+            finish()
+        }
         binding.tvMyPageMoreManual.setOnSingleClickListener {
             // TODO
         }
