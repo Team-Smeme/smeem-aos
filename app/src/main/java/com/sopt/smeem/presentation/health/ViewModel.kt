@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class ViewModel @Inject constructor() : androidx.lifecycle.ViewModel() {
+internal open class ViewModel @Inject constructor() : androidx.lifecycle.ViewModel() {
 
     @Inject
     lateinit var healthRepository: HealthRepository
