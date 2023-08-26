@@ -49,20 +49,4 @@ internal class MyPageVM @Inject constructor(
     }
 
     fun isDaySelected(content: String) = days.contains(Day.from(content))
-
-    fun clearLocal() {
-        runBlocking {
-            localRepository.clear()
-        }
-    }
-
-    fun withdrawal() {
-        viewModelScope.launch {
-            userRepository.deleteUser()
-        }
-
-        runBlocking {
-            localRepository.clear()
-        }
-    }
 }

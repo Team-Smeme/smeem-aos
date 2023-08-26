@@ -2,7 +2,6 @@ package com.sopt.smeem.presentation.mypage
 
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -12,7 +11,6 @@ import com.sopt.smeem.databinding.ActivityMyPageBinding
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.presentation.BindingActivity
-import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener
 import com.sopt.smeem.util.showSnackbar
@@ -43,37 +41,16 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     }
 
     private fun onTouchBack() {
-        binding.topbarMyPage.setNavigationOnClickListener {
+        binding.btnMyPageBack.setOnSingleClickListener {
             finish()
         }
     }
 
     private fun onTouchMenu() {
-        binding.topbarMyPage.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.menual -> {
-                    Toast.makeText(this, "준비중입니다.", Toast.LENGTH_SHORT).show()
-                    true
-                }
-
-                R.id.logout -> {
-                    vm.clearLocal()
-                    startActivity(Intent(this, SplashLoginActivity::class.java))
-                    finishAffinity()
-                    true
-                }
-
-                R.id.withdrawal -> {
-                    vm.withdrawal()
-                    startActivity(Intent(this, SplashLoginActivity::class.java))
-                    finishAffinity()
-                    true
-                }
-
-                else -> false
-
-            }
+        binding.btnMyPageMenu.setOnSingleClickListener {
+            startActivity(Intent(this, MyPageMoreActivity::class.java))
         }
+
     }
 
     private fun setUpDays() {

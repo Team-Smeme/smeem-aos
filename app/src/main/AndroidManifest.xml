@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.mypage.MyPageMoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.mypage.EditTrainingTimeActivity"
             android:exported="false" />
         <activity
@@ -88,10 +91,10 @@
             android:exported="false" />
         <activity
             android:name=".presentation.mypage.MyBadgesActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".presentation.mypage.EditTrainingGoalActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".presentation.home.HomeActivity"
             android:exported="false"
