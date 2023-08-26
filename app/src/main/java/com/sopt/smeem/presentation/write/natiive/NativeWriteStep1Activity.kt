@@ -11,6 +11,7 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityNativeWriteStep1Binding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.write.Constant.tooltipHasNeverChecked
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +23,8 @@ class NativeWriteStep1Activity :
     private val viewModel by viewModels<NativeWriteStep1ViewModel>()
 
     override fun constructLayout() {
+        getToolTipNeverCheckedFromLocal()
+
         with(binding) {
             // databinding
             vm = viewModel
@@ -45,8 +48,12 @@ class NativeWriteStep1Activity :
         checkDiary()
     }
 
+    private fun getToolTipNeverCheckedFromLocal() {
+        tooltipHasNeverChecked = viewModel.getNeverClickedRandomToolTip()
+    }
+
     private fun showTooltip(owner: LifecycleOwner?) {
-        if (viewModel.neverClickedRandomToolTip()) {
+        if (tooltipHasNeverChecked) {
             binding.layoutNativeStep1BottomToolbar.cbRandomTopic.createTopicTooltip(
                 this@NativeWriteStep1Activity, owner
             )
@@ -55,6 +62,7 @@ class NativeWriteStep1Activity :
 
     private fun goBackToHome() {
         binding.layoutNativeStep1Toolbar.tvCancel.setOnSingleClickListener {
+            saveToolTipStatus()
             finish()
         }
     }
@@ -136,6 +144,7 @@ class NativeWriteStep1Activity :
 
     private fun moveToStep2() {
         translate()
+        saveToolTipStatus()
 
         viewModel.translateResult.observe(this@NativeWriteStep1Activity) {
             val intent = Intent(this, NativeWriteStep2Activity::class.java).apply {
@@ -150,5 +159,11 @@ class NativeWriteStep1Activity :
 
     private fun translate() {
         viewModel.translate()
+    }
+
+    private fun saveToolTipStatus() {
+        if (!tooltipHasNeverChecked) {
+            viewModel.randomTopicTooltipOff()
+        }
     }
 }

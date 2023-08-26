@@ -8,7 +8,7 @@ interface LocalRepository {
     suspend fun setAuthentication(authentication: Authentication)
     suspend fun isAuthenticated(): Boolean
 
-    suspend fun saveStatus(localStatus: LocalStatus)
+    suspend fun saveStatus(localStatus: LocalStatus, value: Any? = null)
 
     suspend fun checkStatus(localStatus: LocalStatus): Boolean
     suspend fun clear()

@@ -57,7 +57,13 @@ class NativeWriteStep1ViewModel @Inject constructor(
         }
     }
 
-    fun neverClickedRandomToolTip(): Boolean = runBlocking {
-        return@runBlocking localRepository.checkStatus(LocalStatus.RANDOM_OBJECT_TOOL_TIP)
+    fun getNeverClickedRandomToolTip(): Boolean = runBlocking {
+        return@runBlocking localRepository.checkStatus(LocalStatus.RANDOM_TOPIC_TOOL_TIP)
+    }
+
+    fun randomTopicTooltipOff() {
+        viewModelScope.launch {
+            localRepository.saveStatus(LocalStatus.RANDOM_TOPIC_TOOL_TIP)
+        }
     }
 }

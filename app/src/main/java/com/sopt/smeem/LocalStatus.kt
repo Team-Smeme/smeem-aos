@@ -1,5 +1,5 @@
 package com.sopt.smeem
 
 enum class LocalStatus {
-    RANDOM_OBJECT_TOOL_TIP
+    RANDOM_TOPIC_TOOL_TIP
 }

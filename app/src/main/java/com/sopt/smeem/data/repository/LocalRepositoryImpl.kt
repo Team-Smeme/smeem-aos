@@ -84,21 +84,28 @@ class LocalRepositoryImpl @Inject constructor(
             .firstOrNull() != null
     }
 
-    override suspend fun saveStatus(localStatus: LocalStatus) {
+    override suspend fun saveStatus(localStatus: LocalStatus, value: Any?) {
         try {
-            context.dataStore.edit { mutablePreferences: MutablePreferences ->
-                mutablePreferences[RANDOM_OBJECT_TOOL_TIP_SWITCH] = true
+            when (localStatus) {
+                LocalStatus.RANDOM_TOPIC_TOOL_TIP -> {
+                    context.dataStore.edit { mutablePreferences: MutablePreferences ->
+                        mutablePreferences[RANDOM_TOPIC_TOOL_TIP_SWITCH] = false // make it off
+                    }
+                }
             }
         } catch (t: Throwable) {
-            throw SmeemException(errorCode = SmeemErrorCode.SYSTEM_ERROR, throwable = e)
+            throw SmeemException(errorCode = SmeemErrorCode.SYSTEM_ERROR, throwable = t)
         }
     }
 
     override suspend fun checkStatus(localStatus: LocalStatus): Boolean = context.dataStore.data
         .catch { emit(emptyPreferences()) }
-        .map { preferences: Preferences -> preferences[RANDOM_OBJECT_TOOL_TIP_SWITCH] }
-        .firstOrNull() ?: false
-    
+        .map { preferences: Preferences ->
+            when (localStatus) {
+                LocalStatus.RANDOM_TOPIC_TOOL_TIP -> preferences[RANDOM_TOPIC_TOOL_TIP_SWITCH] ?: true // 최초에는 킨 상태
+            }
+        }
+        .first()
 
     override suspend fun clear() {
         try {
@@ -111,7 +118,7 @@ class LocalRepositoryImpl @Inject constructor(
     companion object {
         private val API_ACCESS_TOKEN = stringPreferencesKey("api_access_token")
         private val API_REFRESH_TOKEN = stringPreferencesKey("api_refresh_token")
-        private val RANDOM_OBJECT_TOOL_TIP_SWITCH =
-            booleanPreferencesKey(LocalStatus.RANDOM_OBJECT_TOOL_TIP.name)
+        private val RANDOM_TOPIC_TOOL_TIP_SWITCH =
+            booleanPreferencesKey(LocalStatus.RANDOM_TOPIC_TOOL_TIP.name)
     }
 }

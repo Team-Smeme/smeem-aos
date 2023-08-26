@@ -11,6 +11,7 @@ import com.sopt.smeem.databinding.ActivityForeignWriteBinding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.write.Constant.tooltipHasNeverChecked
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,7 @@ class ForeignWriteActivity :
     private val viewModel by viewModels<ForeignWriteViewModel>()
 
     override fun constructLayout() {
+        getTooltipChecked()
         with(binding) {
             // databinding
             vm = viewModel
@@ -46,7 +48,7 @@ class ForeignWriteActivity :
     }
 
     private fun showTooltip(owner: LifecycleOwner?) {
-        if (viewModel.neverClickedRandomToolTip()) {
+        if (tooltipHasNeverChecked) {
             binding.layoutForeignWriteBottomToolbar.cbRandomTopic.createTopicTooltip(
                 this@ForeignWriteActivity, owner
             )
@@ -55,6 +57,7 @@ class ForeignWriteActivity :
 
     private fun goBackToHome() {
         binding.layoutForeignWriteToolbar.tvCancel.setOnSingleClickListener {
+            saveToolTipStatus()
             finish()
         }
     }
@@ -92,6 +95,7 @@ class ForeignWriteActivity :
 
     private fun completeDiary() {
         binding.layoutForeignWriteToolbar.tvDone.setOnSingleClickListener {
+            saveToolTipStatus()
             when (viewModel.isValidDiary.value) {
                 true -> {
                     viewModel.uploadDiary(
@@ -140,4 +144,13 @@ class ForeignWriteActivity :
         }
     }
 
+    private fun getTooltipChecked() {
+        tooltipHasNeverChecked = viewModel.neverClickedRandomToolTip()
+    }
+
+    private fun saveToolTipStatus() {
+        if (!tooltipHasNeverChecked) {
+            viewModel.randomTopicTooltipOff()
+        }
+    }
 }
