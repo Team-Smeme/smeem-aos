@@ -6,6 +6,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityMyPageMoreBinding
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.agreement.AgreementViewActivity
 import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +22,9 @@ class MyPageMoreActivity :
             finish()
         }
         binding.tvMyPageMoreManual.setOnSingleClickListener {
-            // TODO
+            Intent(this, AgreementViewActivity::class.java).apply {
+                putExtra("agreement", resources.getString(R.string.manual_url))
+            }.run(::startActivity)
         }
         binding.tvMyPageMoreLogout.setOnSingleClickListener {
             showLogoutDialog()
