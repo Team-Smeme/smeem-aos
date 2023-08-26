@@ -41,37 +41,37 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     }
 
     private fun onTouchBack() {
-        binding.topbarMyPage.setNavigationOnClickListener {
+        binding.btnMyPageBack.setOnSingleClickListener {
             finish()
         }
     }
 
     private fun onTouchMenu() {
-        binding.topbarMyPage.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.menual -> {
-                    Toast.makeText(this, "준비중입니다.", Toast.LENGTH_SHORT).show()
-                    true
-                }
-
-                R.id.logout -> {
-                    vm.clearLocal()
-                    startActivity(Intent(this, SplashLoginActivity::class.java))
-                    finishAffinity()
-                    true
-                }
-
-                R.id.withdrawal -> {
-                    vm.withdrawal()
-                    startActivity(Intent(this, SplashLoginActivity::class.java))
-                    finishAffinity()
-                    true
-                }
-
-                else -> false
-
-            }
-        }
+//        binding.topbarMyPage.setOnMenuItemClickListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.menual -> {
+//                    Toast.makeText(this, "준비중입니다.", Toast.LENGTH_SHORT).show()
+//                    true
+//                }
+//
+//                R.id.logout -> {
+//                    vm.clearLocal()
+//                    startActivity(Intent(this, SplashLoginActivity::class.java))
+//                    finishAffinity()
+//                    true
+//                }
+//
+//                R.id.withdrawal -> {
+//                    vm.withdrawal()
+//                    startActivity(Intent(this, SplashLoginActivity::class.java))
+//                    finishAffinity()
+//                    true
+//                }
+//
+//                else -> false
+//
+//            }
+//        }
     }
 
     private fun setUpDays() {
