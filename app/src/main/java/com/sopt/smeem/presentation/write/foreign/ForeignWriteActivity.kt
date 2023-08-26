@@ -46,10 +46,11 @@ class ForeignWriteActivity :
     }
 
     private fun showTooltip(owner: LifecycleOwner?) {
-        // TODO: 최초 실행 여부 조건문
-        binding.layoutForeignWriteBottomToolbar.cbRandomTopic.createTopicTooltip(
-            this@ForeignWriteActivity, owner
-        )
+        if (viewModel.neverClickedRandomToolTip()) {
+            binding.layoutForeignWriteBottomToolbar.cbRandomTopic.createTopicTooltip(
+                this@ForeignWriteActivity, owner
+            )
+        }
     }
 
     private fun goBackToHome() {

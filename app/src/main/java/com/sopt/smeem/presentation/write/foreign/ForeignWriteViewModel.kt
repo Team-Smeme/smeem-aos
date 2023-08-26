@@ -1,23 +1,26 @@
 package com.sopt.smeem.presentation.write.foreign
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.LocalStatus
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.Diary
 import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.domain.repository.DiaryRepository
+import com.sopt.smeem.domain.repository.LocalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
 class ForeignWriteViewModel @Inject constructor(
-    private val diaryRepository: DiaryRepository
+    private val diaryRepository: DiaryRepository,
+    private val localRepository: LocalRepository,
 ) : ViewModel() {
     var topicId: Long = -1
 
@@ -44,7 +47,14 @@ class ForeignWriteViewModel @Inject constructor(
         }
     }
 
-    private fun diaryWithTopic(onSuccess: (List<RetrievedBadge>) -> Unit, onError: (SmeemException) -> Unit) {
+    fun neverClickedRandomToolTip(): Boolean = runBlocking {
+        return@runBlocking localRepository.checkStatus(LocalStatus.RANDOM_OBJECT_TOOL_TIP)
+    }
+
+    private fun diaryWithTopic(
+        onSuccess: (List<RetrievedBadge>) -> Unit,
+        onError: (SmeemException) -> Unit
+    ) {
         viewModelScope.launch {
             diaryRepository.postDiary(
                 Diary(
@@ -57,7 +67,10 @@ class ForeignWriteViewModel @Inject constructor(
         }
     }
 
-    private fun diaryWithoutTopic(onSuccess: (List<RetrievedBadge>) -> Unit, onError: (SmeemException) -> Unit) {
+    private fun diaryWithoutTopic(
+        onSuccess: (List<RetrievedBadge>) -> Unit,
+        onError: (SmeemException) -> Unit
+    ) {
         viewModelScope.launch {
             diaryRepository.postDiary(
                 Diary(
