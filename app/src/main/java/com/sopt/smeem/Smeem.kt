@@ -1,6 +1,7 @@
 package com.sopt.smeem
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.kakao.sdk.common.KakaoSdk
 import com.sopt.smeem.BuildConfig.KAKAO_API_KEY
 import dagger.hilt.android.HiltAndroidApp
@@ -13,5 +14,6 @@ class Smeem : Application() {
 
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
         KakaoSdk.init(this, KAKAO_API_KEY)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 }
