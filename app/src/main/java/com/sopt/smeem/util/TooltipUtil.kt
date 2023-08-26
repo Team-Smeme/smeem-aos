@@ -1,7 +1,6 @@
 package com.sopt.smeem.util
 
 import android.content.Context
-import android.graphics.Typeface
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LifecycleOwner
@@ -13,6 +12,7 @@ import com.skydoves.balloon.IconGravity
 import com.skydoves.balloon.TextForm
 import com.skydoves.balloon.showAlignTop
 import com.sopt.smeem.R
+import com.sopt.smeem.presentation.write.Constant.tooltipHasNeverChecked
 
 object TooltipUtil {
     // 랜덤 주제 툴팁
@@ -53,11 +53,10 @@ object TooltipUtil {
     private fun Balloon.dismissTooltip(view: View) {
         this.setOnBalloonClickListener {
             this.dismiss()
+            tooltipHasNeverChecked = false
         }
-        view.setOnClickListener {
+        view.setOnSingleClickListener {
             this.dismiss()
         }
     }
-
-
 }

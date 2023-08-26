@@ -2,20 +2,18 @@ package com.sopt.smeem.presentation.write.natiive
 
 import android.content.Intent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.LifecycleOwner
-import com.google.android.material.snackbar.Snackbar
 import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityNativeWriteStep1Binding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.write.Constant.tooltipHasNeverChecked
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
 import com.sopt.smeem.util.setOnSingleClickListener
-import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,6 +23,8 @@ class NativeWriteStep1Activity :
     private val viewModel by viewModels<NativeWriteStep1ViewModel>()
 
     override fun constructLayout() {
+        getToolTipNeverCheckedFromLocal()
+
         with(binding) {
             // databinding
             vm = viewModel
@@ -48,22 +48,29 @@ class NativeWriteStep1Activity :
         checkDiary()
     }
 
+    private fun getToolTipNeverCheckedFromLocal() {
+        tooltipHasNeverChecked = viewModel.getNeverClickedRandomToolTip()
+    }
+
     private fun showTooltip(owner: LifecycleOwner?) {
-        // TODO: 최초 실행 여부 조건문
-        binding.layoutNativeStep1BottomToolbar.cbRandomTopic.createTopicTooltip(
-            this@NativeWriteStep1Activity, owner
-        )
+        if (tooltipHasNeverChecked) {
+            binding.layoutNativeStep1BottomToolbar.cbRandomTopic.createTopicTooltip(
+                this@NativeWriteStep1Activity, owner
+            )
+        }
     }
 
     private fun goBackToHome() {
         binding.layoutNativeStep1Toolbar.tvCancel.setOnSingleClickListener {
+            saveToolTipStatus()
             finish()
         }
     }
 
     private fun showHint() {
         binding.etNativeStep1Write.addTextChangedListener { watcher ->
-            binding.tvNativeStep1Hint.visibility = if (watcher.isNullOrEmpty()) View.VISIBLE else View.GONE
+            binding.tvNativeStep1Hint.visibility =
+                if (watcher.isNullOrEmpty()) View.VISIBLE else View.GONE
         }
     }
 
@@ -137,6 +144,7 @@ class NativeWriteStep1Activity :
 
     private fun moveToStep2() {
         translate()
+        saveToolTipStatus()
 
         viewModel.translateResult.observe(this@NativeWriteStep1Activity) {
             val intent = Intent(this, NativeWriteStep2Activity::class.java).apply {
@@ -151,5 +159,11 @@ class NativeWriteStep1Activity :
 
     private fun translate() {
         viewModel.translate()
+    }
+
+    private fun saveToolTipStatus() {
+        if (!tooltipHasNeverChecked) {
+            viewModel.randomTopicTooltipOff()
+        }
     }
 }

@@ -4,9 +4,11 @@ import android.content.Context
 import android.util.Log
 import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.sopt.smeem.LocalStatus
 import com.sopt.smeem.SmeemErrorCode
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.SmeemDataStore.dataStore
@@ -82,6 +84,29 @@ class LocalRepositoryImpl @Inject constructor(
             .firstOrNull() != null
     }
 
+    override suspend fun saveStatus(localStatus: LocalStatus, value: Any?) {
+        try {
+            when (localStatus) {
+                LocalStatus.RANDOM_TOPIC_TOOL_TIP -> {
+                    context.dataStore.edit { mutablePreferences: MutablePreferences ->
+                        mutablePreferences[RANDOM_TOPIC_TOOL_TIP_SWITCH] = false // make it off
+                    }
+                }
+            }
+        } catch (t: Throwable) {
+            throw SmeemException(errorCode = SmeemErrorCode.SYSTEM_ERROR, throwable = t)
+        }
+    }
+
+    override suspend fun checkStatus(localStatus: LocalStatus): Boolean = context.dataStore.data
+        .catch { emit(emptyPreferences()) }
+        .map { preferences: Preferences ->
+            when (localStatus) {
+                LocalStatus.RANDOM_TOPIC_TOOL_TIP -> preferences[RANDOM_TOPIC_TOOL_TIP_SWITCH] ?: true // 최초에는 킨 상태
+            }
+        }
+        .first()
+
     override suspend fun clear() {
         try {
             context.dataStore.edit { preferences -> preferences.clear() }
@@ -93,5 +118,7 @@ class LocalRepositoryImpl @Inject constructor(
     companion object {
         private val API_ACCESS_TOKEN = stringPreferencesKey("api_access_token")
         private val API_REFRESH_TOKEN = stringPreferencesKey("api_refresh_token")
+        private val RANDOM_TOPIC_TOOL_TIP_SWITCH =
+            booleanPreferencesKey(LocalStatus.RANDOM_TOPIC_TOOL_TIP.name)
     }
 }
