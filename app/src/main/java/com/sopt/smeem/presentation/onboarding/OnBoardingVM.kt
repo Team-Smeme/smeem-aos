@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.messaging.FirebaseMessaging
 import com.sopt.smeem.Anonymous
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.SocialType
@@ -83,7 +84,7 @@ class OnBoardingVM @Inject constructor(
 
     fun backStep() {
         _step.value =
-            // 회원가입 바텀시트 누른 후 뒤로가기할 때
+                // 회원가입 바텀시트 누른 후 뒤로가기할 때
             if (step.value == 4) {
                 _step.value?.minus(2)
             } else {
@@ -143,12 +144,16 @@ class OnBoardingVM @Inject constructor(
         socialType: SocialType,
         onError: (SmeemException) -> Unit
     ) {
-        viewModelScope.launch {
-            loginRepository.execute(accessToken = kakaoAccessToken, socialType)
-                .onSuccess {
-                    _loginResult.value = it
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (it.isSuccessful) {
+                viewModelScope.launch {
+                    loginRepository.execute(accessToken = kakaoAccessToken, socialType, it.result)
+                        .onSuccess {
+                            _loginResult.value = it
+                        }
+                        .onHttpFailure { e -> onError(e) }
                 }
-                .onHttpFailure { e -> onError(e) }
+            }
         }
     }
 
