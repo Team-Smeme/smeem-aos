@@ -17,8 +17,8 @@ android {
         applicationId "com.sopt.smeem"
         minSdk 28
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 20230829
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String","KAKAO_API_KEY",properties['kakao_api_key']
