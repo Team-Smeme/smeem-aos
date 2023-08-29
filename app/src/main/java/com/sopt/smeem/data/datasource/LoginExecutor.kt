@@ -12,9 +12,10 @@ class LoginExecutor(
 ) {
     suspend fun execute(
         accessToken: String,
-        socialType: SocialType
+        socialType: SocialType,
+        fcmToken: String,
     ): ApiResponse<LoginResponse> =
-        loginService.login(accessToken = "Bearer $accessToken", LoginRequest(socialType))
+        loginService.login(accessToken = "Bearer $accessToken", LoginRequest(socialType, fcmToken))
 
     suspend fun checkNicknameDuplicated(
         nickname: String

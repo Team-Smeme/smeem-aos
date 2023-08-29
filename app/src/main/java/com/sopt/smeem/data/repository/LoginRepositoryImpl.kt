@@ -8,8 +8,8 @@ import com.sopt.smeem.domain.repository.LoginRepository
 class LoginRepositoryImpl(
     private val loginExecutor: LoginExecutor
 ) : LoginRepository {
-    override suspend fun execute(accessToken: String, socialType: SocialType): Result<LoginResult> =
-        kotlin.runCatching { loginExecutor.execute(accessToken, socialType) }.map { response ->
+    override suspend fun execute(accessToken: String, socialType: SocialType, fcmToken: String): Result<LoginResult> =
+        kotlin.runCatching { loginExecutor.execute(accessToken, socialType, fcmToken) }.map { response ->
             LoginResult.from(response.data!!)
         }
 
