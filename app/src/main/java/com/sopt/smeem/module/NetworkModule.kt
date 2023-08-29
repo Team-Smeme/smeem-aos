@@ -1,5 +1,6 @@
 package com.sopt.smeem.module
 
+import com.sopt.smeem.BuildConfig
 import com.sopt.smeem.BuildConfig.API_SERVER_URL
 import com.sopt.smeem.domain.repository.LocalRepository
 import dagger.Module
@@ -28,11 +29,14 @@ class NetworkModule @Inject constructor(
                     connectTimeout(10, TimeUnit.SECONDS)
                     writeTimeout(5, TimeUnit.SECONDS)
                     readTimeout(5, TimeUnit.SECONDS)
-                }.addInterceptor(
-                    HttpLoggingInterceptor().apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-                    },
-                )
+
+                    addInterceptor(VersionInterceptor())
+                    addInterceptor(
+                        HttpLoggingInterceptor().apply {
+                            level = HttpLoggingInterceptor.Level.BODY
+                        },
+                    )
+                }
                     .build(),
             )
             .addConverterFactory(GsonConverterFactory.create())
@@ -49,6 +53,7 @@ class NetworkModule @Inject constructor(
                     writeTimeout(5, TimeUnit.SECONDS)
                     readTimeout(5, TimeUnit.SECONDS)
 
+                    addInterceptor(VersionInterceptor())
                     runBlocking {
                         addInterceptor(
                             RequestInterceptor(
@@ -80,6 +85,15 @@ class NetworkModule @Inject constructor(
 
         private val API_ACCESS_TOKEN_HEADER = "Authorization"
         private val API_REFRESH_TOKEN_HEADER = "Refresh" // TODO
+    }
+
+    class VersionInterceptor() : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response = chain.proceed(
+            chain.request().newBuilder().apply {
+                addHeader("app-version", BuildConfig.VERSION_NAME)
+                addHeader("platform", "Android")
+            }.build(),
+        )
     }
 
     val apiPapagoRetrofit by lazy {
