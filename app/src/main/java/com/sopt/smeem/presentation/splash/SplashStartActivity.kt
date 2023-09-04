@@ -49,25 +49,22 @@ class SplashStartActivity() : AppCompatActivity() {
             setConfigSettingsAsync(configSettings)
             setDefaultsAsync(R.xml.remote_config_defaults)
             fetch().addOnCompleteListener(this@SplashStartActivity) { task ->
-                val installedVersion = BuildConfig.VERSION_NAME.replace(".", "@")
+                val installedVersion = BuildConfig.VERSION_NAME
                 val firebaseVersion =
-                    getString("app_version").takeIf { it.isNotEmpty() }?.replace(".", "@")
+                    getString("app_version").takeIf { it.isNotEmpty() }
                 val isNewVersion = when {
                     firebaseVersion.isNullOrEmpty() -> false
                     else -> {
-                        val installedVersionParts = installedVersion.split("@").map { it.toInt() }
-                        val firebaseVersionParts = firebaseVersion.split("@").map { it.toInt() }
-                        installedVersionParts.zip(firebaseVersionParts)
-                            .all { (installed, firebase) ->
-                                installed >= firebase
-                            }
+                        val installedVersionX = installedVersion.split(".").first().toInt()
+                        val firebaseVersionX = firebaseVersion.split(".").first().toInt()
+                        installedVersionX >= firebaseVersionX
                     }
                 }
 
                 if (task.isSuccessful) {
                     activate()
                     if (isNewVersion) {
-                        Timber.tag("smeem is updated to a new version")
+                        Timber.tag("smeem doesn't need to be updated")
                             .d("%s | %s", installedVersion, firebaseVersion)
                         observeAuthed()
                     } else {
@@ -86,11 +83,9 @@ class SplashStartActivity() : AppCompatActivity() {
         MaterialAlertDialogBuilder(this)
             .setCustomTitle(layoutInflater.inflate(R.layout.update_dialog_content, null))
             .setNegativeButton("나가기") { dialog, which ->
-                Timber.d("아니요를 눌렀습니다")
                 finishSmeem()
             }
             .setPositiveButton("업데이트") { dialog, which ->
-                Timber.d("예를 눌렀습니다")
                 // TODO: 스토어로 이동 - 스토어 등록 후 링크 가져오기
                 observeAuthed()
             }
