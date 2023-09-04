@@ -84,8 +84,7 @@ class SplashStartActivity() : AppCompatActivity() {
 
     private fun showUpdateDialog() {
         MaterialAlertDialogBuilder(this)
-            .setTitle("업데이트 알림")
-            .setMessage("보다 나아진 스밈의 최신 버전을 준비했어요! 새로운 버전으로 업데이트 후 이용해주세요.")
+            .setCustomTitle(layoutInflater.inflate(R.layout.update_dialog_content, null))
             .setNegativeButton("나가기") { dialog, which ->
                 Timber.d("아니요를 눌렀습니다")
                 finishSmeem()
