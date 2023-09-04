@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.sopt.smeem.BuildConfig
@@ -27,19 +26,13 @@ class SplashStartActivity() : AppCompatActivity() {
 
         setContentView(R.layout.activity_splash_start)
 
-        setStatusBarColor()
-
         constructLayout()
-        addObservers()
     }
 
     fun constructLayout() {
+        setStatusBarColor()
         checkVersion()
         vm.checkAuthed()
-    }
-
-    fun addObservers() {
-        observeAuthed()
     }
 
     private fun setStatusBarColor() {
@@ -76,15 +69,39 @@ class SplashStartActivity() : AppCompatActivity() {
                     if (isNewVersion) {
                         Timber.tag("smeem is updated to a new version")
                             .d("%s | %s", installedVersion, firebaseVersion)
+                        observeAuthed()
                     } else {
                         Timber.tag("smeem needs to be updated!")
                             .d("%s | %s", installedVersion, firebaseVersion)
+                        showUpdateDialog()
                     }
                 } else {
                     Timber.e("remote config failed")
                 }
             }
         }
+    }
+
+    private fun showUpdateDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("업데이트 알림")
+            .setMessage("보다 나아진 스밈의 최신 버전을 준비했어요! 새로운 버전으로 업데이트 후 이용해주세요.")
+            .setNegativeButton("나가기") { dialog, which ->
+                Timber.d("아니요를 눌렀습니다")
+                finishSmeem()
+            }
+            .setPositiveButton("업데이트") { dialog, which ->
+                Timber.d("예를 눌렀습니다")
+                // TODO: 스토어로 이동 - 스토어 등록 후 링크 가져오기
+                observeAuthed()
+            }
+            .show()
+    }
+
+    private fun finishSmeem() {
+        moveTaskToBack(true)
+        finishAndRemoveTask()
+        System.exit(0)
     }
 
     private fun observeAuthed() {
