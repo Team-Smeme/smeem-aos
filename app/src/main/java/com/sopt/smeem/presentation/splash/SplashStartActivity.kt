@@ -6,9 +6,15 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import com.sopt.smeem.BuildConfig
 import com.sopt.smeem.R
 import com.sopt.smeem.presentation.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SplashStartActivity() : AppCompatActivity() {
@@ -20,23 +26,76 @@ class SplashStartActivity() : AppCompatActivity() {
 
         setContentView(R.layout.activity_splash_start)
 
-        setStatusBarColor()
-
         constructLayout()
-        addObservers()
     }
 
     fun constructLayout() {
+        setStatusBarColor()
+        checkVersion()
         vm.checkAuthed()
-    }
-
-    fun addObservers() {
-        observeAuthed()
     }
 
     private fun setStatusBarColor() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = getColor(R.color.point)
+    }
+
+    private fun checkVersion() {
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 3600
+        }.toBuilder().build()
+
+        Firebase.remoteConfig.apply {
+            setConfigSettingsAsync(configSettings)
+            setDefaultsAsync(R.xml.remote_config_defaults)
+            fetch().addOnCompleteListener(this@SplashStartActivity) { task ->
+                val installedVersion = BuildConfig.VERSION_NAME
+                val firebaseVersion =
+                    getString("app_version").takeIf { it.isNotEmpty() }
+                val isNewVersion = when {
+                    firebaseVersion.isNullOrEmpty() -> false
+                    else -> {
+                        val installedVersionX = installedVersion.split(".").first().toInt()
+                        val firebaseVersionX = firebaseVersion.split(".").first().toInt()
+                        installedVersionX >= firebaseVersionX
+                    }
+                }
+
+                if (task.isSuccessful) {
+                    activate()
+                    if (isNewVersion) {
+                        Timber.tag("smeem doesn't need to be updated")
+                            .d("%s | %s", installedVersion, firebaseVersion)
+                        observeAuthed()
+                    } else {
+                        Timber.tag("smeem needs to be updated!")
+                            .d("%s | %s", installedVersion, firebaseVersion)
+                        showUpdateDialog()
+                    }
+                } else {
+                    Timber.e("remote config failed")
+                }
+            }
+        }
+    }
+
+    private fun showUpdateDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setCustomTitle(layoutInflater.inflate(R.layout.update_dialog_content, null))
+            .setNegativeButton("나가기") { dialog, which ->
+                finishSmeem()
+            }
+            .setPositiveButton("업데이트") { dialog, which ->
+                // TODO: 스토어로 이동 - 스토어 등록 후 링크 가져오기
+                observeAuthed()
+            }
+            .show()
+    }
+
+    private fun finishSmeem() {
+        moveTaskToBack(true)
+        finishAndRemoveTask()
+        System.exit(0)
     }
 
     private fun observeAuthed() {
