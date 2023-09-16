@@ -66,5 +66,6 @@
     <string name="badge_obtain_message_mypage">축하해요! %s 배지를 획득했어요!</string>
     <string name="service_agreement">http://smeem.notion.site/7132b91df0eb4838b435b53ad7cbb588?pvs=4</string>
     <string name="personal_info_agreement">http://smeem.notion.site/2c0af4a3f8a340fcbb8eefe4beb24856?pvs=4</string>
+    <string name="marketing_info_agreement">https://smeem.notion.site/793bae40ccd14654828b68ee41ac51b6?pvs=4</string>
     <string name="manual_url">https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4</string>
 </resources>
