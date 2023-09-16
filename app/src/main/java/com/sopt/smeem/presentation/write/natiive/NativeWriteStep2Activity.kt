@@ -2,17 +2,17 @@ package com.sopt.smeem.presentation.write.natiive
 
 import android.content.Intent
 import android.text.method.ScrollingMovementMethod
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.google.android.material.snackbar.Snackbar
 import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityNativeWriteStep2Binding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.util.hideKeyboard
 import com.sopt.smeem.util.setOnSingleClickListener
-import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.Serializable
 
@@ -78,6 +78,7 @@ class NativeWriteStep2Activity :
         binding.layoutNativeStep2Toolbar.tvDone.setOnSingleClickListener {
             when (viewModel.isValidDiary.value) {
                 true -> {
+                    hideKeyboard(currentFocus ?: View(this))
                     viewModel.uploadDiary(
                         onSuccess = {
                             Intent(this, HomeActivity::class.java).apply {
