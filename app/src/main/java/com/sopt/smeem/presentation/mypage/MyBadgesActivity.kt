@@ -106,17 +106,7 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
 
     private fun onTouchBack() {
         binding.btnMyBadgesBack.setOnClickListener {
-            /* onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-                 override fun handleOnBackPressed() {
-                     goBack()
-                 }
-             })*/
-            goBack()
             finish()
         }
-    }
-
-    private fun goBack() {
-        super.onBackPressed()
     }
 }

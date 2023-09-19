@@ -105,10 +105,8 @@ class EditTrainingTimeActivity :
             }
             Intent(this, MyPageActivity::class.java).apply {
                 putExtra("snackbarText", resources.getString(R.string.my_page_edit_done_message))
-            }.run {
-                startActivity(this)
-                finish()
-            }
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }.run(::startActivity)
         }
     }
 

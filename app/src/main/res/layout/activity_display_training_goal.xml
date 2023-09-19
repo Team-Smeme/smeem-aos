@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@drawable/shape_encouraging_box_header"
-                android:paddingBottom="8dp"
+                android:paddingBottom="14dp"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
@@ -80,17 +80,6 @@
                     app:layout_constraintStart_toStartOf="@id/tv_my_page_display_training_goal_title"
                     app:layout_constraintTop_toBottomOf="@id/tv_my_page_display_training_goal_title"
                     tools:text="외국어 업무 문서 읽고 작성하기" />
-
-                <ImageView
-                    android:id="@+id/iv_my_page_display_training_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="4dp"
-                    android:src="@drawable/ic_arrow_forward"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_my_page_display_training_goal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tv_my_page_display_training_goal" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -102,18 +102,14 @@ class EditTrainingGoalActivity :
 
     private fun onTouchBack() {
         binding.topbarMyPageTraining.setNavigationOnClickListener {
-            goBack()
+            finish()
         }
     }
 
     private fun goToDisplay() {
         Intent(this, DisplayTrainingGoalActivity::class.java).apply {
             putExtra("selectedGoal", vm.selectedGoal.value)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }.run(::startActivity)
-    }
-
-    private fun goBack() {
-        startActivity(Intent(this, MyPageActivity::class.java))
-        finish()
     }
 }
