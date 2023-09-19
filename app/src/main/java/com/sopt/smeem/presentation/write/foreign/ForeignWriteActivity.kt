@@ -104,9 +104,12 @@ class ForeignWriteActivity :
                         onSuccess = {
                             Intent(this, HomeActivity::class.java).apply {
                                 putExtra("retrievedBadge", it as Serializable)
-                                putExtra("snackbarText", resources.getString(R.string.diary_write_done_message))
+                                putExtra(
+                                    "snackbarText",
+                                    resources.getString(R.string.diary_write_done_message)
+                                )
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                             }.run(::startActivity)
-                            finishAffinity()
                         },
                         onError = { e ->
                             Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()

@@ -116,7 +116,7 @@ class NativeWriteStep1Activity :
                 else -> {
                     DefaultSnackBar.makeOnTopOf(
                         binding.root,
-                        R.id.layout_foreign_write_bottom_toolbar,
+                        R.id.layout_native_step1_bottom_toolbar,
                         "일기를 작성해 주세요 :("
                     ).show()
                 }
@@ -147,13 +147,12 @@ class NativeWriteStep1Activity :
         saveToolTipStatus()
 
         viewModel.translateResult.observe(this@NativeWriteStep1Activity) {
-            val intent = Intent(this, NativeWriteStep2Activity::class.java).apply {
+            Intent(this, NativeWriteStep2Activity::class.java).apply {
                 putExtra("translateResult", it)
                 putExtra("nativeDiary", viewModel.diary.value)
                 putExtra("topicId", viewModel.topicId)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            }
-            startActivity(intent)
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            }.run(::startActivity)
         }
     }
 
