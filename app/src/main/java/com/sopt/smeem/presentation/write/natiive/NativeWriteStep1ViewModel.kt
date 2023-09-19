@@ -29,9 +29,7 @@ class NativeWriteStep1ViewModel @Inject constructor(
     val diary = MutableLiveData("")
     val isValidDiary: LiveData<Boolean> = diary.map { isValidDiaryFormat(it) }
 
-    private val _translateResult = MutableLiveData<String>()
-    val translateResult: LiveData<String>
-        get() = _translateResult
+    val translateResult = MutableLiveData<String>()
 
     fun getRandomTopic(onError: (SmeemException) -> Unit) {
         viewModelScope.launch {
@@ -53,7 +51,7 @@ class NativeWriteStep1ViewModel @Inject constructor(
 
     fun translate() {
         viewModelScope.launch {
-            _translateResult.value = translateRepository.execute(diary.value ?: "").translateResult
+            translateResult.value = translateRepository.execute(diary.value ?: "").translateResult
         }
     }
 

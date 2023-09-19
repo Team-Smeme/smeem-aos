@@ -22,6 +22,11 @@ class NativeWriteStep1Activity :
 
     private val viewModel by viewModels<NativeWriteStep1ViewModel>()
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.translateResult.value = ""
+    }
+
     override fun constructLayout() {
         getToolTipNeverCheckedFromLocal()
 
@@ -147,12 +152,14 @@ class NativeWriteStep1Activity :
         saveToolTipStatus()
 
         viewModel.translateResult.observe(this@NativeWriteStep1Activity) {
-            Intent(this, NativeWriteStep2Activity::class.java).apply {
-                putExtra("translateResult", it)
-                putExtra("nativeDiary", viewModel.diary.value)
-                putExtra("topicId", viewModel.topicId)
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            }.run(::startActivity)
+            if (it != "") {
+                Intent(this, NativeWriteStep2Activity::class.java).apply {
+                    putExtra("translateResult", it)
+                    putExtra("nativeDiary", viewModel.diary.value)
+                    putExtra("topicId", viewModel.topicId)
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                }.run(::startActivity)
+            }
         }
     }
 

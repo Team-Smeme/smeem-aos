@@ -94,7 +94,7 @@ class NativeWriteStep2Activity :
                 else -> {
                     DefaultSnackBar.makeOnTopOf(
                         binding.root,
-                        R.id.layout_foreign_write_bottom_toolbar,
+                        R.id.layout_native_step2_bottom_toolbar,
                         "외국어를 포함해 일기를 작성해 주세요 :("
                     ).show()
                 }
