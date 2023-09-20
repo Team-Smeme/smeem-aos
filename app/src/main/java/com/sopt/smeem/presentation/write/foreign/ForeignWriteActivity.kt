@@ -13,6 +13,7 @@ import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.write.Constant.tooltipHasNeverChecked
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
+import com.sopt.smeem.util.hideKeyboard
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.Serializable
@@ -98,14 +99,12 @@ class ForeignWriteActivity :
             saveToolTipStatus()
             when (viewModel.isValidDiary.value) {
                 true -> {
+                    hideKeyboard(currentFocus ?: View(this))
                     viewModel.uploadDiary(
                         onSuccess = {
                             Intent(this, HomeActivity::class.java).apply {
                                 putExtra("retrievedBadge", it as Serializable)
-                                putExtra(
-                                    "snackbarText",
-                                    resources.getString(R.string.diary_write_done_message)
-                                )
+                                putExtra("snackbarText", resources.getString(R.string.diary_write_done_message))
                             }.run(::startActivity)
                             finishAffinity()
                         },
@@ -114,7 +113,6 @@ class ForeignWriteActivity :
                         }
                     )
                 }
-
                 else -> {
                     DefaultSnackBar.makeOnTopOf(
                         binding.root,

@@ -15,14 +15,31 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="11dp"
-        android:paddingVertical="12dp">
+        android:paddingStart="11dp"
+        android:paddingBottom="12dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/shape_dialog"
+            android:backgroundTint="@color/gray_dialog"
+            android:visibility="@{vm.isFirstBadge ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/cl_badge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/cl_badge"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_badge"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@{vm.isFirstBadge ? @drawable/shape_dialog : @drawable/shape_badge_multiple_dialog}"
-            android:paddingBottom="10dp">
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="11dp"
+            android:background="@drawable/shape_dialog"
+            android:paddingBottom="10dp"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_badge"
@@ -77,14 +94,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="배지 모두보기"
+                android:textAppearance="@style/TextAppearance.Smeem.Caption2_medium"
                 android:visibility="@{vm.isFirstBadge ? View.VISIBLE : View.GONE}"
-                tools:visibility="visible"
-                android:textAppearance="@style/TextAppearance.Smeem.Caption2_medium" />
+                tools:visibility="visible" />
 
             <androidx.constraintlayout.helper.widget.Flow
                 android:id="@+id/flow_badge_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="38dp"
                 app:constraint_referenced_ids="btn_badge_exit,btn_badge_more"
                 app:flow_horizontalGap="8dp"

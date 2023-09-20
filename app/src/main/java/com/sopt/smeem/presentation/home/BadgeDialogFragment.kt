@@ -43,6 +43,7 @@ class BadgeDialogFragment: DialogFragment() {
         }
         binding.btnBadgeMore.setOnSingleClickListener {
             Intent(requireContext(), MyBadgesActivity::class.java).run(::startActivity)
+            dismiss()
         }
     }
 
