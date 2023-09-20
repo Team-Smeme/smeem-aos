@@ -45,13 +45,15 @@ class ChangingNicknameActivity :
     }
 
     private fun onTextWrite() {
-        binding.etChangeNickname.addTextChangedListener { watcher ->
-            if (watcher.isNullOrBlank() || watcher.length > 10) {
-                nextButtonOff()
-            } else {
-                nextButtonOn()
+        binding.etChangeNickname.addTextChangedListener(
+            onTextChanged = { name, _, _, _ ->
+                if (name.isNullOrBlank() || name.length > 10 || name.toString() == intent.getStringExtra("originalNickname")) {
+                    nextButtonOff()
+                } else {
+                    nextButtonOn()
+                }
             }
-        }
+        )
     }
 
     private fun onTouchBack() {
