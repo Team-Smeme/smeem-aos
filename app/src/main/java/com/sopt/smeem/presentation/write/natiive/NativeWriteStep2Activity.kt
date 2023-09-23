@@ -54,9 +54,7 @@ class NativeWriteStep2Activity :
 
     private fun backToStep1() {
         binding.layoutNativeStep2Toolbar.tvCancel.setOnSingleClickListener {
-            Intent(this, NativeWriteStep1Activity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            }.run(::startActivity)
+            finish()
         }
     }
 
@@ -84,8 +82,8 @@ class NativeWriteStep2Activity :
                             Intent(this, HomeActivity::class.java).apply {
                                 putExtra("retrievedBadge", it as Serializable)
                                 putExtra("snackbarText", resources.getString(R.string.diary_write_done_message))
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             }.run(::startActivity)
-                            finishAffinity()
                         },
                         onError = { e ->
                             Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()
@@ -96,7 +94,7 @@ class NativeWriteStep2Activity :
                 else -> {
                     DefaultSnackBar.makeOnTopOf(
                         binding.root,
-                        R.id.layout_foreign_write_bottom_toolbar,
+                        R.id.layout_native_step2_bottom_toolbar,
                         "외국어를 포함해 일기를 작성해 주세요 :("
                     ).show()
                 }

@@ -79,10 +79,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         binding.layoutMyPageEncouraging.setOnClickListener {
             Intent(this, EditTrainingGoalActivity::class.java).apply {
                 putExtra("originalGoal", vm.response.value!!.goal.goal)
-            }.run {
-                startActivity(this)
-                finish()
-            }
+            }.run(::startActivity)
         }
     }
 
@@ -90,7 +87,6 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         binding.ivMyPageEditNickname.setOnSingleClickListener {
             Intent(this, ChangingNicknameActivity::class.java).apply {
                 putExtra("originalNickname", binding.tvMyPageNickname.text)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }.run(::startActivity)
         }
     }

@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.calendar
+package com.sopt.smeem.presentation.home
 
 import android.content.Intent
 import android.os.Bundle

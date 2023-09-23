@@ -1,6 +1,7 @@
 package com.sopt.smeem.presentation.mypage
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -52,7 +53,7 @@ class DisplayTrainingGoalActivity : BindingActivity<ActivityDisplayTrainingGoalB
             )
             Intent(this, MyPageActivity::class.java).apply {
                 putExtra("snackbarText", resources.getString(R.string.my_page_edit_done_message))
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             }.run(::startActivity)
         }
     }
