@@ -73,7 +73,6 @@ class WeeklyAdapter(private val onWeeklyDayClickListener: OnWeeklyDayClickListen
     fun setDiaryEntries(entries: List<DiarySummary>) {
         diaryEntries.clear()
         diaryEntries.addAll(entries)
-        notifyDataSetChanged()
     }
 
     companion object {
