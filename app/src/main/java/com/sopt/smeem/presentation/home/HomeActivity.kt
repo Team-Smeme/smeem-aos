@@ -201,7 +201,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 start = binding.weeklyCalendar.mondayDate?.plusDays(-6)?.format(
                     DateTimeFormatter.ofPattern("yyyy-MM-dd"),
                 ) ?: "",
-                end = binding.weeklyCalendar.mondayDate?.plusDays(6)?.format(
+                end = binding.weeklyCalendar.mondayDate?.plusDays(13)?.format(
                     DateTimeFormatter.ofPattern("yyyy-MM-dd"),
                 ) ?: "",
             )
