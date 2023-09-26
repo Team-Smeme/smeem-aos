@@ -10,13 +10,11 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.presentation.BindingActivity
-import com.sopt.smeem.presentation.calendar.WritingBottomSheet
-import com.sopt.smeem.presentation.calendar.WritingBottomSheet.Companion.TAG
+import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.calendar.listener.OnWeeklyCalendarSwipeListener
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.util.setOnSingleClickListener
-import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -150,19 +148,8 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         binding.weeklyCalendar.setOnWeeklyCalendarSwipeListener(object :
             OnWeeklyCalendarSwipeListener {
             override fun onSwipe(mondayDate: LocalDate?) {
-                mondayDate?.let {
-                    lifecycleScope.launch {
-                        homeViewModel.getDiaries(
-                            start = binding.weeklyCalendar.mondayDate?.plusDays(-6)?.format(
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                            ) ?: "",
-                            end = binding.weeklyCalendar.mondayDate?.plusDays(6)?.format(
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                            ) ?: "",
-                        )
-                    }
-                    setTargetMonthTitle()
-                }
+                getWeeklyDiary()
+                setTargetMonthTitle()
             }
         })
         binding.clDiaryList.setOnSingleClickListener {
@@ -214,7 +201,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 start = binding.weeklyCalendar.mondayDate?.plusDays(-6)?.format(
                     DateTimeFormatter.ofPattern("yyyy-MM-dd"),
                 ) ?: "",
-                end = binding.weeklyCalendar.mondayDate?.plusDays(6)?.format(
+                end = binding.weeklyCalendar.mondayDate?.plusDays(13)?.format(
                     DateTimeFormatter.ofPattern("yyyy-MM-dd"),
                 ) ?: "",
             )

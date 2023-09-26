@@ -41,8 +41,8 @@ class DiaryDetailBottomSheet(
 
     fun addListeners() {
         binding.tvEdit.setOnClickListener {
-            moveToEdit()
             dismiss()
+            moveToEdit()
         }
         binding.tvDelete.setOnClickListener {
             dismiss()
@@ -51,18 +51,18 @@ class DiaryDetailBottomSheet(
     }
 
     private fun moveToEdit() {
-        val intent = Intent(requireContext(), DiaryEditActivity::class.java).apply {
+        Intent(requireContext(), DiaryEditActivity::class.java).apply {
             putExtra("diaryId", viewModel.diaryId)
             putExtra("originalContent", viewModel.diary.value)
             putExtra("randomTopic", viewModel.topic.value)
-        }
-        startActivity(intent)
+        }.run(::startActivity)
     }
 
     private fun showDeleteDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setCustomTitle(layoutInflater.inflate(R.layout.delete_dialog_title, null))
-            .setNegativeButton("예") { dialog, which ->
+            .setNegativeButton("아니요") { dialog, which -> }
+            .setPositiveButton("예") { dialog, which ->
                 viewModel.deleteDiary(
                     onSuccess = {
                         viewModel.isDiaryDeleted.value = true
@@ -73,7 +73,6 @@ class DiaryDetailBottomSheet(
                     }
                 )
             }
-            .setPositiveButton("아니요") { dialog, which -> }
             .show()
     }
 

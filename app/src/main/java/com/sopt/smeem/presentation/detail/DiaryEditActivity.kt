@@ -61,7 +61,10 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
             true -> {
                 viewModel.editDiary(
                     onSuccess = {
-                        Intent(this, HomeActivity::class.java).run(::startActivity)
+                        Intent(this, HomeActivity::class.java).apply {
+                            putExtra("snackbarText", resources.getString(R.string.diary_edit_done_message))
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        }.run(::startActivity)
                     },
                     onError = { e ->
                         Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()

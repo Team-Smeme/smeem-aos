@@ -77,27 +77,27 @@ object BadgeList {
     )
 
     val exploration = listOf<Badge>(
-        Badge(
-            badgeId = 10,
-            title = "첫 번째 첨삭",
-            badgeType = BadgeType.EXPLORATION,
-            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/74162198/f18268ad-4c2b-4792-b1f8-ed56086f952a",
-            description = null
-        ),
-        Badge(
-            badgeId = 11,
-            title = "3개 이상 첨삭",
-            badgeType = BadgeType.EXPLORATION,
-            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/74162198/434e1eca-d1ab-4d3b-8f2f-ecf2ffa59ebc",
-            description = null
-        ),
-        Badge(
-            badgeId = 12,
-            title = "5개 이상 첨삭",
-            badgeType = BadgeType.EXPLORATION,
-            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/74162198/513cbb2d-19c1-404d-ad97-693783913649",
-            description = null
-        ),
+//        Badge(
+//            badgeId = 10,
+//            title = "첫 번째 첨삭",
+//            badgeType = BadgeType.EXPLORATION,
+//            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/74162198/f18268ad-4c2b-4792-b1f8-ed56086f952a",
+//            description = null
+//        ),
+//        Badge(
+//            badgeId = 11,
+//            title = "3개 이상 첨삭",
+//            badgeType = BadgeType.EXPLORATION,
+//            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/74162198/434e1eca-d1ab-4d3b-8f2f-ecf2ffa59ebc",
+//            description = null
+//        ),
+//        Badge(
+//            badgeId = 12,
+//            title = "5개 이상 첨삭",
+//            badgeType = BadgeType.EXPLORATION,
+//            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/74162198/513cbb2d-19c1-404d-ad97-693783913649",
+//            description = null
+//        ),
         Badge(
             badgeId = 13,
             title = "학습 목표 수정",

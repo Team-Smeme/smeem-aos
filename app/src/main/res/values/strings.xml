@@ -52,6 +52,7 @@
     <string name="diary_write_step_2">STEP 2</string>
     <string name="diary_write_hint">일기를 작성해주세요 :)</string>
     <string name="diary_native_write_hint">완전한 문장으로 한국어 일기를 작성하면, 더욱 정확한 힌트를 받을 수 있어요.</string>
+    <string name="diary_edit_done_message">수정 완료</string>
     <string name="language_english">English</string>
     <string name="language_korean">한국어</string>
     <string name="dummy_diary_korean">오늘은 OPR을 공개한 날이었다. 안 떨릴 줄 알았는데 겁나 떨렸당. 사실 카페가 추웠어서 추워서 떠는 건지 긴장 돼서 떠는 건지 구분이 잘 안 갔다. 근데 사실 나는 다리 떠는 것도 습관이라 다리를 떨어서 몸이 떨린 걸 수도 있다. 오늘은 OPR을 공개한 날이었다. 안 떨릴 줄 알았는데 겁나 떨렸당. 사실 카페가 추웠어서 추워서 떠는 건지 긴장 돼서 떠는 건지 구분이 잘 안 갔다. 근데 사실 나는 다리 떠는 것도 습관이라 다리를 떨어서 몸이 떨린 걸 수도 있다.</string>
@@ -66,5 +67,6 @@
     <string name="badge_obtain_message_mypage">축하해요! %s 배지를 획득했어요!</string>
     <string name="service_agreement">http://smeem.notion.site/7132b91df0eb4838b435b53ad7cbb588?pvs=4</string>
     <string name="personal_info_agreement">http://smeem.notion.site/2c0af4a3f8a340fcbb8eefe4beb24856?pvs=4</string>
+    <string name="marketing_info_agreement">https://smeem.notion.site/793bae40ccd14654828b68ee41ac51b6?pvs=4</string>
     <string name="manual_url">https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4</string>
 </resources>

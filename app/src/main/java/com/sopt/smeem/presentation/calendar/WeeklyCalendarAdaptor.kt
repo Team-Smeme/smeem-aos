@@ -68,12 +68,10 @@ class WeeklyAdapter(private val onWeeklyDayClickListener: OnWeeklyDayClickListen
             notifyItemChanged(currentPosition)
         }
     }
-
-    @SuppressLint("NotifyDataSetChanged")
+    
     fun setDiaryEntries(entries: List<DiarySummary>) {
         diaryEntries.clear()
         diaryEntries.addAll(entries)
-        notifyDataSetChanged()
     }
 
     companion object {

@@ -128,7 +128,7 @@ class JoinWithAgreementActivity :
         }
         binding.btnAgreementMarketingDetail.setOnSingleClickListener {
             Intent(this, AgreementViewActivity::class.java).apply {
-                putExtra("agreement", resources.getString(R.string.personal_info_agreement))
+                putExtra("agreement", resources.getString(R.string.marketing_info_agreement))
             }.run(::startActivity)
         }
     }

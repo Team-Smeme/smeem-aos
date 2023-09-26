@@ -45,32 +45,28 @@ class ChangingNicknameActivity :
     }
 
     private fun onTextWrite() {
-        binding.etChangeNickname.addTextChangedListener { watcher ->
-            if (watcher.isNullOrBlank() || watcher.length > 10) {
-                nextButtonOff()
-            } else {
-                nextButtonOn()
+        binding.etChangeNickname.addTextChangedListener(
+            onTextChanged = { name, _, _, _ ->
+                if (name.isNullOrBlank() || name.length > 10 || name.toString() == intent.getStringExtra("originalNickname")) {
+                    nextButtonOff()
+                } else {
+                    nextButtonOn()
+                }
             }
-        }
+        )
     }
 
     private fun onTouchBack() {
         binding.topbarChangeNickname.setNavigationOnClickListener {
-            goBack()
-        }
-    }
-
-    override fun onBackPressed() {
-        goBack()
-    }
-
-    private fun goBack() {
-        Intent(this, MyPageActivity::class.java).apply {
-            putExtra("snackbarText", resources.getString(R.string.my_page_edit_done_message))
-        }.run {
-            startActivity(this)
             finish()
         }
+    }
+
+    private fun goBackToMyPage() {
+        Intent(this, MyPageActivity::class.java).apply {
+            putExtra("snackbarText", resources.getString(R.string.my_page_edit_done_message))
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }.run(::startActivity)
     }
 
     private fun onTouchCompleted() {
@@ -112,7 +108,7 @@ class ChangingNicknameActivity :
 
                 false -> {
                     vm.send(binding.etChangeNickname.text.toString())
-                    goBack()
+                    goBackToMyPage()
                 }
             }
         }

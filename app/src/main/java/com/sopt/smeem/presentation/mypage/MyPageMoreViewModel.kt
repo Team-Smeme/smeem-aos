@@ -1,6 +1,7 @@
 package com.sopt.smeem.presentation.mypage
 
 import androidx.lifecycle.viewModelScope
+import com.kakao.sdk.user.UserApiClient
 import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.UserRepository
 import com.sopt.smeem.presentation.health.ViewModel
@@ -24,6 +25,7 @@ internal class MyPageMoreViewModel @Inject constructor(
     fun withdrawal() {
         viewModelScope.launch {
             userRepository.deleteUser()
+            UserApiClient.instance.unlink {}
         }
 
         runBlocking {

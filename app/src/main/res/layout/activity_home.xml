@@ -34,109 +34,94 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_target_month" />
 
-        <LinearLayout
-            android:id="@+id/ll_dates"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow_dates"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             android:paddingTop="18dp"
+            app:constraint_referenced_ids="tv_date_sun,tv_date_mon,tv_date_tue,tv_date_wed,tv_date_thu,tv_date_fri,tv_date_sat"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_target_month">
+            app:layout_constraintTop_toBottomOf="@id/tv_target_month" />
 
-            <TextView
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_weight="1"
-                android:includeFontPadding="false"
-                android:text="S"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tv_date_sun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="5dp"
+            android:text="S"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
 
-            <TextView
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_weight="1"
-                android:includeFontPadding="false"
-                android:text="M"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tv_date_mon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="5dp"
+            android:text="M"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
 
-            <TextView
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_weight="1"
-                android:includeFontPadding="false"
-                android:text="T"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tv_date_tue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="5dp"
+            android:text="T"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
 
-            <TextView
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_weight="1"
-                android:includeFontPadding="false"
-                android:text="W"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tv_date_wed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="5dp"
+            android:text="W"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
 
-            <TextView
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_weight="1"
-                android:includeFontPadding="false"
-                android:text="T"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tv_date_thu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="5dp"
+            android:text="T"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
 
-            <TextView
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_weight="1"
-                android:includeFontPadding="false"
-                android:text="F"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tv_date_fri"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="5dp"
+            android:text="F"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
 
-            <TextView
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_weight="1"
-                android:includeFontPadding="false"
-                android:text="S"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.Smeem.Week_light_14"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_date_sat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="5dp"
+            android:text="S"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
 
         <com.sopt.smeem.presentation.calendar.WeeklyCalendar
             android:id="@+id/weekly_calendar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/ll_dates"
-            app:layout_constraintStart_toStartOf="@id/ll_dates"
-            app:layout_constraintTop_toBottomOf="@id/ll_dates" />
+            app:layout_constraintEnd_toEndOf="@id/flow_dates"
+            app:layout_constraintStart_toStartOf="@id/flow_dates"
+            app:layout_constraintTop_toBottomOf="@id/flow_dates" />
 
         <View
             android:id="@+id/diary_divider"
@@ -150,12 +135,13 @@
             android:id="@+id/cl_no_diary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@id/btn_write_diary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/diary_divider"
-            app:layout_constraintVertical_bias="0.4">
+            app:layout_constraintVertical_bias="0.4"
+            tools:visibility="gone">
 
             <ImageView
                 android:id="@+id/iv_no_diary"
@@ -188,19 +174,21 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="18dp"
             android:paddingVertical="20dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/diary_divider">
+            app:layout_constraintTop_toBottomOf="@id/diary_divider"
+            tools:visibility="visible">
 
             <TextView
                 android:id="@+id/tv_diary_writen_time"
                 style="@style/TextAppearance.Smeem.Subtitle3_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4 : 18 PM"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="4 : 18 PM" />
 
             <LinearLayout
                 android:id="@+id/ll_go_to_diary_detail"
@@ -213,8 +201,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:textAppearance="@style/TextAppearance.Smeem.Caption2_medium"
                     android:text="@string/see_diary_detail"
+                    android:textAppearance="@style/TextAppearance.Smeem.Caption2_medium"
                     android:textColor="@color/gray_400" />
 
                 <ImageView
@@ -235,10 +223,10 @@
                 android:layout_marginTop="14dp"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:text="@string/dummy_diary_english"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_diary_writen_time" />
+                app:layout_constraintTop_toBottomOf="@id/tv_diary_writen_time"
+                tools:text="@string/dummy_diary_english" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
