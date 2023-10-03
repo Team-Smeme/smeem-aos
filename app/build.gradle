@@ -17,7 +17,7 @@ android {
         applicationId "com.sopt.smeem"
         minSdk 28
         targetSdk 33
-        versionCode 20230926
+        versionCode 20231003
         /*
         x.y.z
         x: ui, 주요기능의 큰 변화
