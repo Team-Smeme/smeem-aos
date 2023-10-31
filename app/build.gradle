@@ -24,7 +24,7 @@ android {
         y: 기능 추가, 가시적인 변화
         z: 오류 수정, 긴급 업데이트 사항
         */
-        versionName "1.0.0"
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String","KAKAO_API_KEY",properties['kakao_api_key']
