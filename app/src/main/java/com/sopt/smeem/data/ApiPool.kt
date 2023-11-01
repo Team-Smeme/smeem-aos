@@ -13,22 +13,22 @@ object ApiPool {
                         when (exception.code()) {
                             400 -> throw SmeemException(
                                 errorCode = SmeemErrorCode.SYSTEM_ERROR,
-                                throwable = exception
+                                throwable = exception,
                             )
 
                             401 -> throw SmeemException(
                                 errorCode = SmeemErrorCode.UNAUTHORIZED,
-                                throwable = exception
+                                throwable = exception,
                             )
 
                             403 -> throw SmeemException(
                                 errorCode = SmeemErrorCode.FORBIDDEN,
-                                throwable = exception
+                                throwable = exception,
                             )
 
                             else -> throw SmeemException(
                                 errorCode = SmeemErrorCode.UNKNOWN_ERROR,
-                                throwable = exception
+                                throwable = exception,
                             )
                         }
                     } catch (e: SmeemException) {
@@ -40,12 +40,10 @@ object ApiPool {
                     SmeemException(
                         errorCode = SmeemErrorCode.NETWORK_ERROR,
                         throwable = exception,
-                        logMessage = "서버 통신에 실패했습니다."
-                    )
+                        logMessage = "서버 통신에 실패했습니다.",
+                    ),
                 )
             }
         }
-
     }
 }
-
