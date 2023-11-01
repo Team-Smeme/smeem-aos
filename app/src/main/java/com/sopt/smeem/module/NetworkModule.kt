@@ -1,7 +1,8 @@
 package com.sopt.smeem.module
 
 import com.sopt.smeem.BuildConfig
-import com.sopt.smeem.BuildConfig.API_SERVER_URL
+import com.sopt.smeem.BuildConfig.DEV_API_SERVER_URL
+import com.sopt.smeem.BuildConfig.PROD_API_SERVER_URL
 import com.sopt.smeem.domain.repository.LocalRepository
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,9 +22,11 @@ import javax.inject.Inject
 class NetworkModule @Inject constructor(
     private val localRepository: LocalRepository,
 ) {
-    val apiServerRetrofitForAnonymous by lazy {
+    private val apiServer = if (BuildConfig.IS_DEBUG) DEV_API_SERVER_URL else PROD_API_SERVER_URL
+
+    val apiServerRetrofitForAnonymous: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(API_SERVER_URL)
+            .baseUrl(apiServer)
             .client(
                 OkHttpClient.Builder().apply {
                     connectTimeout(10, TimeUnit.SECONDS)
@@ -44,9 +47,9 @@ class NetworkModule @Inject constructor(
     }
 
     // 인증 후 api Retrofit
-    val apiServerRetrofitForAuthentication by lazy {
+    val apiServerRetrofitForAuthentication: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(API_SERVER_URL)
+            .baseUrl(apiServer)
             .client(
                 OkHttpClient.Builder().apply {
                     connectTimeout(10, TimeUnit.SECONDS)
@@ -96,7 +99,7 @@ class NetworkModule @Inject constructor(
         )
     }
 
-    val apiPapagoRetrofit by lazy {
+    val apiPapagoRetrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl("https://openapi.naver.com/")
             .client(
