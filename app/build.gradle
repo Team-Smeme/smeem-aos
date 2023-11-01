@@ -37,9 +37,11 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            defaultConfig "boolean", "IS_DEBUG", "true"
         }
         release {
             minifyEnabled false
+            defaultConfig "boolean", "IS_DEBUG", "false"
         }
     }
     compileOptions {
