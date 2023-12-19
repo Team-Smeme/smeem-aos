@@ -11,13 +11,13 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 
 android {
     namespace 'com.sopt.smeem'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.sopt.smeem"
         minSdk 28
-        targetSdk 33
-        versionCode 20231219
+        targetSdk 34
+        versionCode 20231101
         /*
         x.y.z
         x: ui, 주요기능의 큰 변화
