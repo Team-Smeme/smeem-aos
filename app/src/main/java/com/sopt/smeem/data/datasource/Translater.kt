@@ -3,11 +3,9 @@ package com.sopt.smeem.data.datasource
 import com.sopt.smeem.BuildConfig.DEEPL_API_KEY
 import com.sopt.smeem.data.model.response.DeepLApiResponse
 import com.sopt.smeem.data.service.DeepLApiService
-import com.sopt.smeem.data.service.PapagoService
 import retrofit2.Response
 
 class Translater(
-    private val papagoService: PapagoService,
     private val deepLApiService: DeepLApiService,
 ) {
     suspend fun translateKo2En(text: String): Response<DeepLApiResponse> {

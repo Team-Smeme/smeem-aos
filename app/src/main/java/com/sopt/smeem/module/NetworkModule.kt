@@ -99,25 +99,6 @@ class NetworkModule @Inject constructor(
         )
     }
 
-    val apiPapagoRetrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://openapi.naver.com/")
-            .client(
-                OkHttpClient.Builder().apply {
-                    connectTimeout(10, TimeUnit.SECONDS)
-                    writeTimeout(5, TimeUnit.SECONDS)
-                    readTimeout(5, TimeUnit.SECONDS)
-                }.addInterceptor(
-                    HttpLoggingInterceptor().apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-                    },
-                )
-                    .build(),
-            )
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
     val apiDeepLAPIRetrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl("https://api-free.deepl.com/")
