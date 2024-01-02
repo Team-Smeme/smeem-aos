@@ -1,22 +1,21 @@
 package com.sopt.smeem.data.datasource
 
-import com.sopt.smeem.BuildConfig.NAVER_CLIENT_ID
-import com.sopt.smeem.BuildConfig.NAVER_SECRET_KEY
-import com.sopt.smeem.data.model.response.NaverPapagoResponse
+import com.sopt.smeem.BuildConfig.DEEPL_API_KEY
+import com.sopt.smeem.data.model.response.DeepLApiResponse
+import com.sopt.smeem.data.service.DeepLApiService
 import com.sopt.smeem.data.service.PapagoService
-import retrofit2.Call
 import retrofit2.Response
 
 class Translater(
-    private val papagoService: PapagoService
+    private val papagoService: PapagoService,
+    private val deepLApiService: DeepLApiService,
 ) {
-    suspend fun translateKo2En(text: String): Response<NaverPapagoResponse> {
-        return papagoService.translate(
-            clientId = NAVER_CLIENT_ID,
-            secretKey = NAVER_SECRET_KEY,
+    suspend fun translateKo2En(text: String): Response<DeepLApiResponse> {
+        return deepLApiService.translate(
             source = "ko",
             target = "en",
-            text = text
+            text = text,
+            apiKey = DEEPL_API_KEY
         )
     }
 }

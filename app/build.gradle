@@ -32,6 +32,7 @@ android {
         buildConfigField "String", "DEV_API_SERVER_URL", properties['dev_api_server_url']
         buildConfigField "String", "NAVER_CLIENT_ID", properties['papago_client_id']
         buildConfigField "String", "NAVER_SECRET_KEY", properties['papage_client_secret']
+        buildConfigField "String", "DEEPL_API_KEY", properties['deepl_api_key']
         manifestPlaceholders = [KAKAO_API_KEY: properties['kakao_api_key_manifest']]
     }
 

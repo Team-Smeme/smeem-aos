@@ -117,4 +117,38 @@ class NetworkModule @Inject constructor(
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
+    val apiDeepLAPIRetrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://api-free.deepl.com/")
+            .client(
+                OkHttpClient.Builder().apply {
+                    connectTimeout(10, TimeUnit.SECONDS)
+                    writeTimeout(5, TimeUnit.SECONDS)
+                    readTimeout(5, TimeUnit.SECONDS)
+                }.addInterceptor(
+                    HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    },
+                )
+                    .build(),
+            )
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    class DeepLInterceptor(
+        val accessToken: String,
+        val refreshToken: String?,
+    ) : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response = chain.proceed(
+            chain.request().newBuilder().apply {
+                addHeader(API_ACCESS_TOKEN_HEADER, "Bearer $accessToken")
+                addHeader(API_REFRESH_TOKEN_HEADER, "Bearer ${refreshToken ?: ""}")
+            }.build(),
+        )
+
+        private val API_ACCESS_TOKEN_HEADER = "Authorization"
+        private val API_REFRESH_TOKEN_HEADER = "Refresh" // TODO
+    }
 }
