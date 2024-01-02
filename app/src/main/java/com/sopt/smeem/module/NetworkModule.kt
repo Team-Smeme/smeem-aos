@@ -99,9 +99,9 @@ class NetworkModule @Inject constructor(
         )
     }
 
-    val apiPapagoRetrofit: Retrofit by lazy {
+    val apiDeepLAPIRetrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://openapi.naver.com/")
+            .baseUrl("https://api-free.deepl.com/")
             .client(
                 OkHttpClient.Builder().apply {
                     connectTimeout(10, TimeUnit.SECONDS)
@@ -116,5 +116,20 @@ class NetworkModule @Inject constructor(
             )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+
+    class DeepLInterceptor(
+        val accessToken: String,
+        val refreshToken: String?,
+    ) : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response = chain.proceed(
+            chain.request().newBuilder().apply {
+                addHeader(API_ACCESS_TOKEN_HEADER, "Bearer $accessToken")
+                addHeader(API_REFRESH_TOKEN_HEADER, "Bearer ${refreshToken ?: ""}")
+            }.build(),
+        )
+
+        private val API_ACCESS_TOKEN_HEADER = "Authorization"
+        private val API_REFRESH_TOKEN_HEADER = "Refresh" // TODO
     }
 }
