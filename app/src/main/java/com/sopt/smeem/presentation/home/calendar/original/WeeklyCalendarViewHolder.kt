@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.home.calendar
+package com.sopt.smeem.presentation.home.calendar.original
 
 import android.graphics.Color
 import android.text.format.DateUtils
@@ -6,10 +6,9 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ViewWeeklyCalendarDayBinding
-import com.sopt.smeem.presentation.home.calendar.listener.OnWeeklyDayClickListener
+import com.sopt.smeem.presentation.home.calendar.original.listener.OnWeeklyDayClickListener
 import java.sql.Date
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class WeeklyCalendarViewHolder(
     private val binding: ViewWeeklyCalendarDayBinding,

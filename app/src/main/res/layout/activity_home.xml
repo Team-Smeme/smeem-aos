@@ -115,7 +115,7 @@
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
 
-        <com.sopt.smeem.presentation.home.calendar.WeeklyCalendar
+        <com.sopt.smeem.presentation.home.calendar.original.WeeklyCalendar
             android:id="@+id/weekly_calendar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
