@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.calendar
+package com.sopt.smeem.presentation.home.calendar
 
 import android.content.Context
 import android.util.AttributeSet
@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.sopt.smeem.domain.model.DiarySummary
-import com.sopt.smeem.presentation.calendar.listener.OnWeeklyCalendarSwipeListener
-import com.sopt.smeem.presentation.calendar.listener.OnWeeklyDayClickListener
+import com.sopt.smeem.presentation.home.calendar.listener.OnWeeklyCalendarSwipeListener
+import com.sopt.smeem.presentation.home.calendar.listener.OnWeeklyDayClickListener
 import java.time.DayOfWeek
 import java.time.LocalDate
 

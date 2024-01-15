@@ -11,7 +11,7 @@ import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
-import com.sopt.smeem.presentation.calendar.listener.OnWeeklyCalendarSwipeListener
+import com.sopt.smeem.presentation.home.calendar.listener.OnWeeklyCalendarSwipeListener
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.util.setOnSingleClickListener
