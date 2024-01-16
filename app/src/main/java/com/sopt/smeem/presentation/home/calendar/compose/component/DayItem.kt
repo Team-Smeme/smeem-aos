@@ -81,7 +81,7 @@ fun DayItem(
                     style = MaterialTheme.typography.titleSmall.copy(letterSpacing = (-0.72).sp),
                     color = when {
                         isToday -> MaterialTheme.colorScheme.onPrimary
-                        isDiaryWritten -> MaterialTheme.colorScheme.onBackground
+                        isSelected || isDiaryWritten -> MaterialTheme.colorScheme.onBackground
                         else -> gray400
                     }
                 )
