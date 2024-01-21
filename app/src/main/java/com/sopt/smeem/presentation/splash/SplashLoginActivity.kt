@@ -4,8 +4,10 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import androidx.activity.viewModels
 import com.sopt.smeem.R
+import com.sopt.smeem.Smeem.Companion.amplitude
 import com.sopt.smeem.databinding.ActivitySplashLoginBinding
 import com.sopt.smeem.domain.model.LoginResult
+import com.sopt.smeem.event.EventTypeName.FIRST_VIEW
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
@@ -25,6 +27,8 @@ class SplashLoginActivity :
         super.constructLayout()
         bs = LoginBottomSheet()
         binding.ivSignInHeader.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.point, null))
+
+        amplitude.track(FIRST_VIEW)
     }
 
     override fun addListeners() {
