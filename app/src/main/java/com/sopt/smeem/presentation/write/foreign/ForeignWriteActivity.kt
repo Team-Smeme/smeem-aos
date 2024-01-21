@@ -9,7 +9,9 @@ import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityForeignWriteBinding
 import com.sopt.smeem.description
+import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.write.Constant.tooltipHasNeverChecked
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
@@ -23,6 +25,7 @@ class ForeignWriteActivity :
     BindingActivity<ActivityForeignWriteBinding>(R.layout.activity_foreign_write) {
 
     private val viewModel by viewModels<ForeignWriteViewModel>()
+    private val eventVm: EventVM by viewModels()
 
     override fun constructLayout() {
         getTooltipChecked()
@@ -108,14 +111,17 @@ class ForeignWriteActivity :
                                     "snackbarText",
                                     resources.getString(R.string.diary_write_done_message)
                                 )
-                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                             }.run(::startActivity)
                         },
                         onError = { e ->
                             Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()
                         }
                     )
+                    eventVm.sendEvent(AmplitudeEventType.DIARY_COMPLETE)
                 }
+
                 else -> {
                     DefaultSnackBar.makeOnTopOf(
                         binding.root,

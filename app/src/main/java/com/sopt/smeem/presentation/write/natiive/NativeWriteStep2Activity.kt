@@ -9,7 +9,9 @@ import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityNativeWriteStep2Binding
 import com.sopt.smeem.description
+import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.util.hideKeyboard
 import com.sopt.smeem.util.setOnSingleClickListener
@@ -21,6 +23,7 @@ class NativeWriteStep2Activity :
     BindingActivity<ActivityNativeWriteStep2Binding>(R.layout.activity_native_write_step2) {
 
     private val viewModel by viewModels<NativeWriteStep2ViewModel>()
+    private val eventVm: EventVM by viewModels()
 
     override fun constructLayout() {
         with(binding) {
@@ -89,6 +92,7 @@ class NativeWriteStep2Activity :
                             Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()
                         }
                     )
+                    eventVm.sendEvent(AmplitudeEventType.SECOND_STEP_COMPLETE)
                 }
 
                 else -> {

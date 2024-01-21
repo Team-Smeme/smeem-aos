@@ -17,10 +17,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.BottomSheetDiaryDetailBinding
 import com.sopt.smeem.description
+import com.sopt.smeem.event.AmplitudeEventType
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.home.HomeActivity
 
 class DiaryDetailBottomSheet(
-    private val viewModel: DiaryDetailViewModel
+    private val viewModel: DiaryDetailViewModel,
+    private val eventViewModel: EventVM
 ) : BottomSheetDialogFragment() {
     private var _binding: BottomSheetDiaryDetailBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -56,6 +59,7 @@ class DiaryDetailBottomSheet(
             putExtra("originalContent", viewModel.diary.value)
             putExtra("randomTopic", viewModel.topic.value)
         }.run(::startActivity)
+        eventViewModel.sendEvent(AmplitudeEventType.MY_DIARY_EDIT)
     }
 
     private fun showDeleteDialog() {

@@ -8,6 +8,7 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityDiaryDetailBinding
 import com.sopt.smeem.description
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +18,7 @@ class DiaryDetailActivity :
     BindingActivity<ActivityDiaryDetailBinding>(R.layout.activity_diary_detail) {
 
     private val viewModel by viewModels<DiaryDetailViewModel>()
+    private val eventVm: EventVM by viewModels()
 
     override fun constructLayout() {
         // databinding
@@ -34,7 +36,7 @@ class DiaryDetailActivity :
             finish()
         }
         binding.btnDiaryDetailMenu.setOnSingleClickListener {
-            DiaryDetailBottomSheet(viewModel).show(supportFragmentManager, DiaryDetailBottomSheet.TAG)
+            DiaryDetailBottomSheet(viewModel, eventVm).show(supportFragmentManager, DiaryDetailBottomSheet.TAG)
         }
     }
 

@@ -10,7 +10,9 @@ import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityNativeWriteStep1Binding
 import com.sopt.smeem.description
+import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.write.Constant.tooltipHasNeverChecked
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
 import com.sopt.smeem.util.setOnSingleClickListener
@@ -21,6 +23,7 @@ class NativeWriteStep1Activity :
     BindingActivity<ActivityNativeWriteStep1Binding>(R.layout.activity_native_write_step1) {
 
     private val viewModel by viewModels<NativeWriteStep1ViewModel>()
+    private val eventVm: EventVM by viewModels()
 
     override fun onResume() {
         super.onResume()
@@ -76,6 +79,7 @@ class NativeWriteStep1Activity :
         binding.etNativeStep1Write.addTextChangedListener { watcher ->
             binding.tvNativeStep1Hint.visibility =
                 if (watcher.isNullOrEmpty()) View.VISIBLE else View.GONE
+            eventVm.sendEvent(AmplitudeEventType.HINT_CLICK)
         }
     }
 
@@ -116,6 +120,7 @@ class NativeWriteStep1Activity :
             when (viewModel.isValidDiary.value) {
                 true -> {
                     moveToStep2()
+                    eventVm.sendEvent(AmplitudeEventType.FIRST_STEP_COMPLETE)
                 }
 
                 else -> {
