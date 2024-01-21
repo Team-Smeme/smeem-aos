@@ -29,7 +29,7 @@ class Smeem : Application() {
 
     companion object {
         private lateinit var _amplitude: Amplitude
-        val amplitude: Amplitude
+        val AMPLITUDE: Amplitude
             get() = _amplitude
     }
 }

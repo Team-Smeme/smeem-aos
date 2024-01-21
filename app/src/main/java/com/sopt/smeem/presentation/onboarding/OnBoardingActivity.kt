@@ -8,10 +8,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.sopt.smeem.R
+import com.sopt.smeem.Smeem.Companion.AMPLITUDE
 import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.databinding.ActivityOnBoardingBinding
 import com.sopt.smeem.description
+import com.sopt.smeem.event.AmplitudeEventType
+import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_ALARM_VIEW
+import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_GOAL_VIEW
+import com.sopt.smeem.event.AmplitudeEventType.SIGN_UP_SUCCESS
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
 import com.sopt.smeem.presentation.join.JoinConstant.REFRESH_TOKEN
@@ -25,6 +31,7 @@ class OnBoardingActivity :
     BindingActivity<ActivityOnBoardingBinding>(R.layout.activity_on_boarding) {
     private val vm: OnBoardingVM by viewModels()
     lateinit var bs: SignUpBottomSheet
+    private val eventVm: EventVM by viewModels()
 
     override fun constructLayout() {
         super.constructLayout()
@@ -92,6 +99,8 @@ class OnBoardingActivity :
                             SettingGoalFragment()
                         )
                         .commit()
+
+                    eventVm.sendEvent(ON_BOARDING_GOAL_VIEW)
                 }
 
                 2 -> { // step 2 fragment => 선택한 학습 목표 보여주기
@@ -122,6 +131,8 @@ class OnBoardingActivity :
                             SettingTimeFragment()
                         )
                         .commit()
+
+                    eventVm.sendEvent(ON_BOARDING_ALARM_VIEW)
                 }
 
                 4 -> { // step 4 : 알림 권한 체크 및 api token 가 local 에 있는지 (이전에 로그인했는지 check)
@@ -291,6 +302,7 @@ class OnBoardingActivity :
                             ).show()
                         }
                     )
+                    eventVm.sendEvent(SIGN_UP_SUCCESS)
 
                 }
             }

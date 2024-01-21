@@ -5,7 +5,9 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.FragmentSettingTimeBinding
+import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_LATER_CLICK
 import com.sopt.smeem.presentation.BindingFragment
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener
@@ -15,6 +17,7 @@ class SettingTimeFragment :
     private var days: Map<Int, TextView>? = null
     private var timePickerDialog: TimePickerDialog? = null
     private val vm: OnBoardingVM by activityViewModels()
+    private val eventVm: EventVM by activityViewModels()
 
     override fun constructLayout() {
         setUpDays()
@@ -109,6 +112,8 @@ class SettingTimeFragment :
     private fun onTouchLater() {
         binding.tvOnBoardingTimeLaterStatic.setOnSingleClickListener {
             vm.timeLater()
+
+            eventVm.sendEvent(ON_BOARDING_LATER_CLICK)
         }
     }
 
