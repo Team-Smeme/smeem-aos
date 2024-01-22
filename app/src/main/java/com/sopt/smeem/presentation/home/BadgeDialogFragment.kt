@@ -5,11 +5,14 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.DialogBadgeBinding
+import com.sopt.smeem.event.AmplitudeEventType
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.mypage.MyBadgesActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +23,7 @@ class BadgeDialogFragment: DialogFragment() {
         DataBindingUtil.inflate(requireActivity().layoutInflater, R.layout.dialog_badge, null, false)
     }
     private val viewModel by viewModels<HomeViewModel>()
+    private val eventVm: EventVM by viewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         constructLayout()
@@ -40,10 +44,19 @@ class BadgeDialogFragment: DialogFragment() {
     private fun addListeners() {
         binding.btnBadgeExit.setOnSingleClickListener {
             dismiss()
+
+            if(viewModel.nowBadge == "첫 번째 일기") {
+                eventVm.sendEvent(AmplitudeEventType.WELCOME_QUIT_CLICK)
+            }
         }
         binding.btnBadgeMore.setOnSingleClickListener {
             Intent(requireContext(), MyBadgesActivity::class.java).run(::startActivity)
             dismiss()
+            eventVm.sendEvent(AmplitudeEventType.BADGE_MORE_CLICK)
+
+            if(viewModel.nowBadge == "첫 번째 일기") {
+                eventVm.sendEvent(AmplitudeEventType.WELCOME_MORE_CLICK)
+            }
         }
     }
 

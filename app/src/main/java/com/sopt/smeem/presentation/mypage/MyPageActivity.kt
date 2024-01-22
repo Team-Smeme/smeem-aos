@@ -10,7 +10,9 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityMyPageBinding
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.TrainingTime
+import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener
 import com.sopt.smeem.util.showSnackbar
@@ -21,6 +23,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
     private val vm: MyPageVM by viewModels()
     private var days: Map<Int, TextView>? = null
     private lateinit var selectedTrainingTime: TrainingTime
+    private val eventVm: EventVM by viewModels()
 
     override fun constructLayout() {
         binding.ivMyPageEncouragingToEdit.imageTintList =
@@ -28,6 +31,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
         getFromServer()
         setUpDays()
         setData()
+        eventVm.sendEvent(AmplitudeEventType.MY_PAGE_VIEW)
     }
 
     override fun addListeners() {
