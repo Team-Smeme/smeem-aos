@@ -111,7 +111,7 @@ class NetworkModule @Inject constructor(
                     HttpLoggingInterceptor().apply {
                         level = HttpLoggingInterceptor.Level.BODY
                     },
-                )
+                ).addInterceptor(DeepLInterceptor(BuildConfig.DEEPL_API_KEY))
                     .build(),
             )
             .addConverterFactory(GsonConverterFactory.create())
@@ -119,17 +119,14 @@ class NetworkModule @Inject constructor(
     }
 
     class DeepLInterceptor(
-        val accessToken: String,
-        val refreshToken: String?,
+        val token: String,
     ) : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response = chain.proceed(
             chain.request().newBuilder().apply {
-                addHeader(API_ACCESS_TOKEN_HEADER, "Bearer $accessToken")
-                addHeader(API_REFRESH_TOKEN_HEADER, "Bearer ${refreshToken ?: ""}")
+                addHeader(API_ACCESS_TOKEN_HEADER, "DeepL-Auth-Key $token")
             }.build(),
         )
 
         private val API_ACCESS_TOKEN_HEADER = "Authorization"
-        private val API_REFRESH_TOKEN_HEADER = "Refresh" // TODO
     }
 }
