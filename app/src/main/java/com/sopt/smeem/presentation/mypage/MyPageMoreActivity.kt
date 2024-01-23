@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MyPageMoreActivity :
     BindingActivity<ActivityMyPageMoreBinding>(R.layout.activity_my_page_more) {
 
-    private val viewModel by viewModels<MyPageMoreViewModel>()
+    private val viewModel by viewModels<MyPageVM>()
 
     override fun addListeners() {
         binding.btnMyPageMoreBack.setOnSingleClickListener {
