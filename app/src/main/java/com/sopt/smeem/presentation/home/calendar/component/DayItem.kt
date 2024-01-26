@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.home.calendar.compose.component
+package com.sopt.smeem.presentation.home.calendar.component
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,8 +21,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sopt.smeem.presentation.home.calendar.compose.ui.theme.SmeemTheme
-import com.sopt.smeem.presentation.home.calendar.compose.ui.theme.gray400
+import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
+import com.sopt.smeem.presentation.home.calendar.ui.theme.gray400
 import java.time.LocalDate
 
 @Composable

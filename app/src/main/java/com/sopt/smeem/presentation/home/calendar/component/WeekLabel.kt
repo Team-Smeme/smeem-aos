@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.home.calendar.compose.component
+package com.sopt.smeem.presentation.home.calendar.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sopt.smeem.presentation.home.calendar.compose.ui.theme.SmeemTheme
+import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
 import java.time.DayOfWeek
 
 @Composable

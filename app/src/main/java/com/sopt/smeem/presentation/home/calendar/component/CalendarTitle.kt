@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.home.calendar.compose.component
+package com.sopt.smeem.presentation.home.calendar.component
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -8,12 +8,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sopt.smeem.presentation.home.calendar.compose.ui.theme.SmeemTheme
+import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun MonthTitle(
+fun CalendarTitle(
     selectedMonth: YearMonth,
     modifier: Modifier = Modifier
 ) {
@@ -27,9 +27,9 @@ fun MonthTitle(
 
 @Preview(showBackground = true, widthDp = 400)
 @Composable
-fun MonthTitlePreview() {
+fun CalendarTitlePreview() {
     SmeemTheme {
-        MonthTitle(
+        CalendarTitle(
             selectedMonth = YearMonth.now(),
             modifier = Modifier.padding(vertical = 18.dp)
         )

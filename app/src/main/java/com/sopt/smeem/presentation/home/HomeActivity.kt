@@ -4,6 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.lifecycleScope
 import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
@@ -11,9 +24,9 @@ import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
-import com.sopt.smeem.presentation.home.calendar.original.listener.OnWeeklyCalendarSwipeListener
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
-import com.sopt.smeem.presentation.mypage.MyPageActivity
+import com.sopt.smeem.presentation.home.calendar.SmeemCalendarImpl
+import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -34,10 +47,25 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val calendar = binding.composeCalendar
+        calendar.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                SmeemTheme {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        SmeemCalendar()
+                    }
+                }
+            }
+        }
+
         bs = WritingBottomSheet()
         initView(weeklyData)
         setInitListener()
-        moveToMyPage()
+//        moveToMyPage()
         observeData()
         onTouchWrite()
     }
@@ -52,8 +80,6 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 binding.btnWriteDiary.visibility = View.INVISIBLE
             }
         }
-        getWeeklyDiary()
-        observeData()
     }
 
     override fun onRestart() {
@@ -66,8 +92,18 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 binding.btnWriteDiary.visibility = View.INVISIBLE
             }
         }
-        getWeeklyDiary()
-        observeData()
+    }
+
+    @Composable
+    fun SmeemCalendar() {
+        var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+        val scrollState = rememberScrollState()
+
+        Column(Modifier.verticalScroll(scrollState)) {
+            SmeemCalendarImpl(
+                onDayClick = { selectedDate = it }
+            )
+        }
     }
 
     private fun onTouchWrite() {
@@ -76,17 +112,13 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
     }
 
-    private fun moveToMyPage() {
-        binding.ivMyPage.setOnClickListener {
-            startActivity(Intent(this, MyPageActivity::class.java))
-        }
-    }
+//    private fun moveToMyPage() {
+//        binding.ivMyPage.setOnClickListener {
+//            startActivity(Intent(this, MyPageActivity::class.java))
+//        }
+//    }
 
     private fun initView(day: String) {
-        binding.tvTargetMonth.text = LocalDate.now().format(
-            DateTimeFormatter.ofPattern(TARGET_MONTH_PATTERN),
-        )
-
         lifecycleScope.launch {
             homeViewModel.getDateDiary(day)
 
@@ -97,8 +129,6 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                     View.INVISIBLE
                 }
         }
-
-        getWeeklyDiary()
         showDiaryCompleted()
         showBadgeDialog()
     }
@@ -127,31 +157,6 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     }
 
     private fun setInitListener() {
-        binding.weeklyCalendar.setOnWeeklyDayClickListener { view, date ->
-            binding.tvTargetMonth.text =
-                date.format(DateTimeFormatter.ofPattern(TARGET_MONTH_PATTERN))
-
-            lifecycleScope.launch {
-                homeViewModel.getDateDiary(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-
-                binding.btnWriteDiary.visibility =
-                    if (LocalDate.now()
-                            .isEqual(date) && homeViewModel.responseDateDiary.value == null
-                    ) {
-                        View.VISIBLE
-                    } else {
-                        View.INVISIBLE
-                    }
-            }
-        }
-
-        binding.weeklyCalendar.setOnWeeklyCalendarSwipeListener(object :
-            OnWeeklyCalendarSwipeListener {
-            override fun onSwipe(mondayDate: LocalDate?) {
-                getWeeklyDiary()
-                setTargetMonthTitle()
-            }
-        })
         binding.clDiaryList.setOnSingleClickListener {
             Intent(this, DiaryDetailActivity::class.java).apply {
                 putExtra("diaryId", homeViewModel.responseDateDiary.value?.id)
@@ -159,22 +164,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
     }
 
-    private fun setTargetMonthTitle() {
-        binding.tvTargetMonth.text = binding.weeklyCalendar.mondayDate?.format(
-            DateTimeFormatter.ofPattern(TARGET_MONTH_PATTERN),
-        )
-    }
-
     private fun observeData() {
-        homeViewModel.responseDiaries.observe(this) { diarySummaries ->
-            diarySummaries?.diaries?.let {
-                val diaryEntry = it.map { diary ->
-                    diary.value
-                }
-                binding.weeklyCalendar.setDiaryEntry(diaryEntry)
-            }
-        }
-
         homeViewModel.responseDateDiary.observe(this) {
             if (it == null) {
                 binding.clDiaryList.visibility = View.GONE
@@ -192,19 +182,6 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 binding.tvDiaryWritenTime.text = formattedCreatedAt
                 binding.tvDiary.text = it.content
             }
-        }
-    }
-
-    private fun getWeeklyDiary() {
-        lifecycleScope.launch {
-            homeViewModel.getDiaries(
-                start = binding.weeklyCalendar.mondayDate?.plusDays(-6)?.format(
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                ) ?: "",
-                end = binding.weeklyCalendar.mondayDate?.plusDays(13)?.format(
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                ) ?: "",
-            )
         }
     }
 

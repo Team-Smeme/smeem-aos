@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.home.calendar.compose.component
+package com.sopt.smeem.presentation.home.calendar.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

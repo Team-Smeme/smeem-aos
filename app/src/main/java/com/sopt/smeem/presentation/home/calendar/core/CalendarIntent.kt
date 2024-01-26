@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.home.calendar.compose.core
+package com.sopt.smeem.presentation.home.calendar.core
 
 import java.time.LocalDate
 
