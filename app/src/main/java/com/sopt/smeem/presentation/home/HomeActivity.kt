@@ -27,6 +27,7 @@ import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.home.calendar.SmeemCalendarImpl
 import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
+import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -65,7 +66,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         bs = WritingBottomSheet()
         initView(weeklyData)
         setInitListener()
-//        moveToMyPage()
+        moveToMyPage()
         observeData()
         onTouchWrite()
     }
@@ -112,11 +113,11 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
     }
 
-//    private fun moveToMyPage() {
-//        binding.ivMyPage.setOnClickListener {
-//            startActivity(Intent(this, MyPageActivity::class.java))
-//        }
-//    }
+    private fun moveToMyPage() {
+        binding.ivMyPage.setOnClickListener {
+            startActivity(Intent(this, MyPageActivity::class.java))
+        }
+    }
 
     private fun initView(day: String) {
         lifecycleScope.launch {
