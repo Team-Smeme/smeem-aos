@@ -1,12 +1,18 @@
 package com.sopt.smeem.presentation.home.calendar
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.smeem.domain.model.Date
@@ -18,6 +24,7 @@ import com.sopt.smeem.presentation.home.calendar.component.WeekLabel
 import com.sopt.smeem.presentation.home.calendar.component.WeeklyCalendar
 import com.sopt.smeem.presentation.home.calendar.core.CalendarIntent
 import com.sopt.smeem.presentation.home.calendar.core.Period
+import com.sopt.smeem.presentation.home.calendar.ui.theme.gray100
 import com.sopt.smeem.util.getWeekStartDate
 import java.time.LocalDate
 import java.time.YearMonth
@@ -40,7 +47,6 @@ fun SmeemCalendarImpl(
         isCalendarExpanded = isCalendarExpanded.value,
         onDayClick = onDayClick
     )
-//    Log.d("calendar date", dateList.toString())
 }
 
 @Composable
@@ -54,7 +60,18 @@ private fun SmeemCalendarImpl(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.animateContentSize()
+        modifier = Modifier
+            .animateContentSize()
+            .pointerInput(Unit) {
+                detectDragGestures { change, dragAmount ->
+                    change.consume()
+                    if (dragAmount.y < 0) {
+                        onIntent(CalendarIntent.CollapseCalendar)
+                    } else if (dragAmount.y > 0) {
+                        onIntent(CalendarIntent.ExpandCalendar)
+                    }
+                }
+            }
     ) {
         CalendarTitle(
             selectedMonth = currentMonth,
@@ -91,10 +108,19 @@ private fun SmeemCalendarImpl(
                 }
             )
         }
-        CalendarToggleArea(
-            isExpanded = isCalendarExpanded,
-            expand = { onIntent(CalendarIntent.ExpandCalendar) },
-            collapse = { onIntent(CalendarIntent.CollapseCalendar) }
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(
+                    min = when {
+                        isCalendarExpanded -> 42.dp
+                        else -> 20.dp
+                    }
+                )
+        )
+        Divider(
+            color = gray100,
+            thickness = 4.dp
         )
     }
 }
