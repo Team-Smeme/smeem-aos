@@ -1,5 +1,7 @@
 package com.sopt.smeem.domain.model
 
+import java.time.LocalTime
+
 data class Diary(
     val id: Long? = null,
     val content: String,
@@ -15,9 +17,3 @@ data class Diary(
         val after: String,
     )
 }
-
-data class DiarySummary(
-    val id: Long,
-    val content: String,
-    val createdAt: String,
-)

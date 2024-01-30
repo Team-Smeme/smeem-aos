@@ -34,6 +34,7 @@ interface DiaryService {
         @Path("diaryId") diaryId: Long
     ): ApiResponse<DiaryResponse.Detail>
 
+    // calendar related
     @GET("/api/v2/diaries")
     suspend fun getList(
         @Query("start") startDate: String, // yyyy-mm-dd

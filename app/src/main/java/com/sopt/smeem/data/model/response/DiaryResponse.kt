@@ -16,12 +16,14 @@ class DiaryResponse {
         )
     }
 
+    // calendar related
     data class Summary(
         val diaryId: Long,
         val content: String,
         val createdAt: String,
     )
 
+    // calendar related
     data class Diaries(
         val diaries: List<Summary> = emptyList(),
         val has30Past: Boolean
