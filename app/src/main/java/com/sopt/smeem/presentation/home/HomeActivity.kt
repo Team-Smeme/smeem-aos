@@ -23,8 +23,8 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.presentation.BindingActivity
-import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
+import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.home.calendar.SmeemCalendarImpl
 import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
 import com.sopt.smeem.presentation.mypage.MyPageActivity
@@ -32,7 +32,6 @@ import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -77,7 +76,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         lifecycleScope.launch {
             homeViewModel.getDateDiary(todayData)
 
-            if (homeViewModel.responseDateDiary.value != null) {
+            if (homeViewModel.diaryList.value != null) {
                 binding.btnWriteDiary.visibility = View.INVISIBLE
             }
         }
@@ -89,7 +88,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         lifecycleScope.launch {
             homeViewModel.getDateDiary(todayData)
 
-            if (homeViewModel.responseDateDiary.value != null) {
+            if (homeViewModel.diaryList.value != null) {
                 binding.btnWriteDiary.visibility = View.INVISIBLE
             }
         }
@@ -124,7 +123,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             homeViewModel.getDateDiary(day)
 
             binding.btnWriteDiary.visibility =
-                if (homeViewModel.responseDateDiary.value == null) {
+                if (homeViewModel.diaryList.value == null) {
                     View.VISIBLE
                 } else {
                     View.INVISIBLE
@@ -160,13 +159,13 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     private fun setInitListener() {
         binding.clDiaryList.setOnSingleClickListener {
             Intent(this, DiaryDetailActivity::class.java).apply {
-                putExtra("diaryId", homeViewModel.responseDateDiary.value?.id)
+                putExtra("diaryId", homeViewModel.diaryList.value?.id)
             }.run(::startActivity)
         }
     }
 
     private fun observeData() {
-        homeViewModel.responseDateDiary.observe(this) {
+        homeViewModel.diaryList.observe(this) {
             if (it == null) {
                 binding.clDiaryList.visibility = View.GONE
                 binding.clNoDiary.visibility = View.VISIBLE
@@ -174,13 +173,9 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 binding.clDiaryList.visibility = View.VISIBLE
                 binding.clNoDiary.visibility = View.GONE
 
-                val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                val outputFormatter = DateTimeFormatter.ofPattern("h : mm a", Locale.ENGLISH)
+                val timeFormatter = DateTimeFormatter.ofPattern("h : mm a", Locale.ENGLISH)
 
-                val createdAtDateTime = LocalDateTime.parse(it.createdAt, inputFormatter)
-                val formattedCreatedAt = createdAtDateTime.format(outputFormatter)
-
-                binding.tvDiaryWritenTime.text = formattedCreatedAt
+                binding.tvDiaryWritenTime.text = it.createdAt.format(timeFormatter)
                 binding.tvDiary.text = it.content
             }
         }
