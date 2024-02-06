@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.data.datasource.DummyDate
 import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.domain.model.DiarySummary
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.presentation.home.calendar.core.CalendarIntent
 import com.sopt.smeem.presentation.home.calendar.core.Period
+import com.sopt.smeem.util.DateUtil
 import com.sopt.smeem.util.getNextDates
 import com.sopt.smeem.util.getRemainingDatesInMonth
 import com.sopt.smeem.util.getRemainingDatesInWeek
@@ -42,15 +42,15 @@ class HomeViewModel @Inject constructor(
     val badgeImageUrl = MutableLiveData<String>()
 
     // diary
-    private val _diaryDateList: MutableLiveData<List<LocalDate>> = MutableLiveData()
+    private val _diaryDateList: MutableLiveData<List<LocalDate>> = MutableLiveData(emptyList())
     val diaryDateList: LiveData<List<LocalDate>>
         get() = _diaryDateList
 
-    private val _diaryList: MutableLiveData<DiarySummary> = MutableLiveData()
-    val diaryList: LiveData<DiarySummary>
+    private val _diaryList: MutableLiveData<DiarySummary?> = MutableLiveData()
+    val diaryList: LiveData<DiarySummary?>
         get() = _diaryList
 
-    val isCorrectionAvailable = MutableLiveData<Boolean>()
+//    val isCorrectionAvailable = MutableLiveData<Boolean>()
 
     // calendar
     private val _visibleDates =
@@ -80,33 +80,41 @@ class HomeViewModel @Inject constructor(
     /***** functions *****/
 
     // diary
-    suspend fun getDates(start: LocalDate, period: Period) {
+    suspend fun getDates(startDate: LocalDate, period: Period): List<LocalDate> {
+        var diaryDates: List<LocalDate> = emptyList()
+        val start = when(period) {
+            Period.WEEK -> startDate.plusWeeks(1)
+            Period.MONTH -> startDate.plusMonths(1)
+        }
         val end = when(period) {
-            Period.WEEK -> start.plusDays(6).toString()
+            Period.WEEK -> start.plusDays(6)
             Period.MONTH -> start.plusMonths(1).minusDays(1)
         }
-        Timber.tag("start date").d(start.toString())
-        Timber.tag("end date").d(end.toString())
+        val startAsString = DateUtil.WithServer.asStringOnlyDate(start)
+        val endAsString = DateUtil.WithServer.asStringOnlyDate(end)
 
         kotlin.runCatching {
-            diaryRepository.getDiaries(start.toString(), end.toString())
+            Timber.tag("server called!")
+            diaryRepository.getDiaries(startAsString, endAsString)
         }.fold({
-            _diaryDateList.value = it.getOrNull()?.diaries?.keys?.toList()
-            Timber.d(diaryDateList.value.toString())
+            diaryDates = it.getOrNull()?.diaries?.keys?.toList() ?: emptyList()
         }, {
             Timber.e(it.message.toString())
         })
+        return diaryDates
     }
 
-    suspend fun getDateDiary(date: String) {
+    suspend fun getDateDiary(date: LocalDate): DiarySummary? {
+        var diaries: DiarySummary? = null
+        val dateAsString = DateUtil.WithServer.asStringOnlyDate(date)
         kotlin.runCatching {
-            diaryRepository.getDiaries(start = date, end = date)
+            diaryRepository.getDiaries(start = dateAsString, end = dateAsString)
         }.fold({
-            _diaryList.value = it.getOrNull()?.diaries?.values?.firstOrNull()
-            Timber.d(diaryList.value.toString())
+            diaries = it.getOrNull()?.diaries?.values?.firstOrNull()
         }, {
             Timber.e(it.message.toString())
         })
+        return diaries
     }
 
     fun setBadgeInfo(name: String, imageUrl: String, isFirst: Boolean) {
@@ -117,6 +125,7 @@ class HomeViewModel @Inject constructor(
 
     // calendar
     fun onIntent(intent: CalendarIntent) {
+        Timber.tag("what intent?").d(intent.toString())
         when (intent) {
             CalendarIntent.ExpandCalendar -> {
                 calculateCalendarDates(
@@ -142,6 +151,8 @@ class HomeViewModel @Inject constructor(
 
             is CalendarIntent.SelectDate -> {
                 viewModelScope.launch {
+                    Timber.d(intent.date.toString())
+                    _diaryList.postValue(getDateDiary(intent.date))
                     _selectedDate.emit(intent.date)
                 }
             }
@@ -152,11 +163,30 @@ class HomeViewModel @Inject constructor(
         startDate: LocalDate,
         period: Period = Period.WEEK
     ) {
+        Timber.d("calculateCalendarDates invoked!")
         viewModelScope.launch(Dispatchers.IO) {
+            _diaryDateList.postValue(
+                when (period) {
+                    Period.WEEK -> {
+                        Timber.d("getDates(week)")
+                        getDates(startDate, Period.WEEK)
+                    }
+                    Period.MONTH -> {
+                        Timber.d("getDates(month)")
+                        getDates(startDate, Period.MONTH)
+                    }
+                }
+            )
             _visibleDates.emit(
                 when (period) {
-                    Period.WEEK -> calculateWeeklyCalendarDays(startDate)
-                    Period.MONTH -> calculateMonthlyCalendarDays(startDate)
+                    Period.WEEK -> {
+                        Timber.d("calculateWeeklyCalendarDays invoked!")
+                        calculateWeeklyCalendarDays(startDate)
+                    }
+                    Period.MONTH -> {
+                        Timber.d("calculateMonthlyCalendarDays invoked!")
+                        calculateMonthlyCalendarDays(startDate)
+                    }
                 }
             )
         }
@@ -172,6 +202,7 @@ class HomeViewModel @Inject constructor(
 
     private fun calculateWeeklyCalendarDays(startDate: LocalDate): Array<List<Date>> {
         val dateList = mutableListOf<Date>()
+
         startDate.getNextDates(21).map {
             dateList.add(Date(it, true, diaryDateList.value?.contains(it) == true ))
         }
