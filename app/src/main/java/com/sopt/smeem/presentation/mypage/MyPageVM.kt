@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kakao.sdk.user.UserApiClient
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.Day
@@ -49,4 +50,18 @@ internal class MyPageVM @Inject constructor(
     }
 
     fun isDaySelected(content: String) = days.contains(Day.from(content))
+
+    fun clearLocal() {
+        viewModelScope.launch {
+            localRepository.clear()
+        }
+    }
+
+    fun withdrawal() {
+        viewModelScope.launch {
+            userRepository.deleteUser()
+            UserApiClient.instance.unlink {}
+            localRepository.clear()
+        }
+    }
 }
