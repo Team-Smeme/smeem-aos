@@ -4,9 +4,16 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import androidx.activity.viewModels
 import com.sopt.smeem.R
+import com.sopt.smeem.Smeem.Companion.AMPLITUDE
 import com.sopt.smeem.databinding.ActivitySplashLoginBinding
 import com.sopt.smeem.domain.model.LoginResult
+import com.sopt.smeem.event.AmplitudeEventType.BADGE_MORE_CLICK
+import com.sopt.smeem.event.AmplitudeEventType.FIRST_VIEW
+import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_ALARM_VIEW
+import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_GOAL_VIEW
+import com.sopt.smeem.event.AmplitudeEventType.SIGN_UP_SUCCESS
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
 import com.sopt.smeem.presentation.join.JoinConstant.REFRESH_TOKEN
@@ -20,11 +27,14 @@ class SplashLoginActivity :
     BindingActivity<ActivitySplashLoginBinding>(R.layout.activity_splash_login) {
     lateinit var bs: LoginBottomSheet
     private val vm: LoginVM by viewModels()
+    private val eventVm: EventVM by viewModels()
 
     override fun constructLayout() {
         super.constructLayout()
         bs = LoginBottomSheet()
         binding.ivSignInHeader.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.point, null))
+
+        eventVm.sendEvent(FIRST_VIEW)
     }
 
     override fun addListeners() {
@@ -60,7 +70,10 @@ class SplashLoginActivity :
                     gotoHome() // 회원 정보 등록까지 완료된 상태라면, Home 으로 이동
                 }
 
-                false -> gotoNext(it) // 회원 정보 등록이 되지 않은 상태 (학습 목표, 닉네임 세팅이 되어있는지에 따라 분기)
+                false -> {
+                    eventVm.sendEvent(SIGN_UP_SUCCESS)
+                    gotoNext(it) // 회원 정보 등록이 되지 않은 상태 (학습 목표, 닉네임 세팅이 되어있는지에 따라 분기)}
+                }
             }
         }
     }

@@ -14,6 +14,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val diaryRepository: DiaryRepository,
 ) : ViewModel() {
+    lateinit var nowBadge: String
 
     var isFirstBadge: Boolean = true
     val badgeName = MutableLiveData<String>()
@@ -51,5 +52,7 @@ class HomeViewModel @Inject constructor(
         badgeName.value = name
         badgeImageUrl.value = imageUrl
         isFirstBadge = isFirst
+
+        nowBadge = name
     }
 }
