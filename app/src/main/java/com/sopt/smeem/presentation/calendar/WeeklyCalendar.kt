@@ -46,7 +46,7 @@ class WeeklyCalendar @JvmOverloads constructor(
                 override fun onSingleTapUp(p0: MotionEvent): Boolean = false
 
                 override fun onScroll(
-                    e1: MotionEvent,
+                    e1: MotionEvent?,
                     e2: MotionEvent,
                     distanceX: Float,
                     distanceY: Float,
@@ -58,15 +58,15 @@ class WeeklyCalendar @JvmOverloads constructor(
                 }
 
                 override fun onFling(
-                    e1: MotionEvent,
+                    e1: MotionEvent?,
                     e2: MotionEvent,
                     velocityX: Float,
                     velocityY: Float,
                 ): Boolean {
                     val result = false
                     try {
-                        val diffY = e2.y - e1.y
-                        val diffX = e2.x - e1.x
+                        val diffY = e2.y - e1!!.y
+                        val diffX = e2.x - e1!!.x
                         if (Math.abs(diffX) > Math.abs(diffY)) {
                             if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                                 if (diffX > 0) {
