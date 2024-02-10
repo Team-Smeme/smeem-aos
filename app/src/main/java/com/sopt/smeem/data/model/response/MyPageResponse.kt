@@ -10,7 +10,7 @@ data class MyPageResponse(
     val targetLang: String,
     val hasPushAlarm: Boolean,
     val trainingTime: TrainingResponse?,
-    val badge: BadgeResponse
+    val badge: MyPageBadgeResponse
 ) {
     data class TrainingResponse(
         val day: String,
@@ -18,7 +18,7 @@ data class MyPageResponse(
         val minute: Int
     )
 
-    data class BadgeResponse(
+    data class MyPageBadgeResponse(
         val id: Long,
         val name: String,
         val type: BadgeType,

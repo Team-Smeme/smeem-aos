@@ -11,7 +11,7 @@
 
         <variable
             name="latestBadge"
-            type="com.sopt.smeem.domain.model.Badge" />
+            type="com.sopt.smeem.domain.model.MyPageBadge" />
 
         <variable
             name="trainingTime"

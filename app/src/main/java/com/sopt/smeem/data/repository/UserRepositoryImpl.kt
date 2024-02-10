@@ -9,6 +9,7 @@ import com.sopt.smeem.domain.model.Badge
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.LoginResult
 import com.sopt.smeem.domain.model.MyPage
+import com.sopt.smeem.domain.model.MyPageBadge
 import com.sopt.smeem.domain.model.OnBoarding
 import com.sopt.smeem.domain.model.PushAlarm
 import com.sopt.smeem.domain.model.Training
@@ -47,7 +48,7 @@ class UserRepositoryImpl(
         }.map { response ->
             MyPage(
                 username = response.data!!.username,
-                badge = Badge.from(response.data.badge),
+                myPageBadge = MyPageBadge.from(response.data.badge),
                 hasPushAlarm = response.data.hasPushAlarm,
                 goal = TrainingGoal(
                     goal = response.data.target,
@@ -73,15 +74,16 @@ class UserRepositoryImpl(
         kotlin.runCatching {
             myBadgeRetriever.getResponse()
         }.map { response ->
-            response.data!!.badges.map { badgeResponse ->
-                Badge(
-                    badgeId = badgeResponse.id,
-                    title = badgeResponse.name,
-                    description = badgeResponse.description,
-                    imageUrl = badgeResponse.imageUrl,
-                    badgeType = badgeResponse.type
-                )
-            }
+            response.data?.badgeTypes
+                ?.flatMap { it.badges }
+                ?.map { badgeResponse ->
+                    Badge(
+                        name = badgeResponse.name,
+                        imageUrl = badgeResponse.imageUrl,
+                        type = badgeResponse.type,
+                    )
+                }
+                ?: throw IllegalArgumentException("내부 로직 구현 오류")
         }
 
     override suspend fun editTraining(accessToken: String?, training: Training): Result<Unit> =
