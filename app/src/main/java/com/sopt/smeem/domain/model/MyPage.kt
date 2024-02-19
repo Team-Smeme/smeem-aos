@@ -2,7 +2,7 @@ package com.sopt.smeem.domain.model
 
 data class MyPage(
     val username: String,
-    val badge: Badge,
+    val myPageBadge: MyPageBadge,
     val hasPushAlarm: Boolean,
     val goal: TrainingGoal,
     val language: Language,

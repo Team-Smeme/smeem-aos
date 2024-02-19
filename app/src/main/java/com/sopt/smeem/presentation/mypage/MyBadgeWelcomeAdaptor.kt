@@ -40,7 +40,7 @@ class MyBadgeWelcomeAdaptor :
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<Badge>() {
             override fun areItemsTheSame(oldItem: Badge, newItem: Badge): Boolean =
-                oldItem.badgeId == newItem.badgeId
+                oldItem.name == newItem.name
 
             override fun areContentsTheSame(oldItem: Badge, newItem: Badge): Boolean =
                 oldItem == newItem

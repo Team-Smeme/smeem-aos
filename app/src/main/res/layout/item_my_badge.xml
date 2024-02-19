@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:text="@{badge.title}"
+            android:text="@{badge.name}"
             android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

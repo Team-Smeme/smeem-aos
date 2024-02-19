@@ -28,7 +28,7 @@ class BadgeViewModel @Inject constructor(
         viewModelScope.launch {
             userRepository.getMyBadges()
                 .onSuccess {
-                    _badges.value = it.groupBy(keySelector = Badge::badgeType)
+                    _badges.value = it.groupBy(keySelector = Badge::type)
                 }
                 .onHttpFailure { e -> onError(e) }
         }

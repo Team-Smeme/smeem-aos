@@ -15,7 +15,6 @@ import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener
-import com.sopt.smeem.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -113,7 +112,7 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
 
             binding.tvMyPageNickname.text = it.username
             binding.trainingGoal = it.goal
-            binding.latestBadge = it.badge
+            binding.latestBadge = it.myPageBadge
             binding.trainingTime = selectedTrainingTime
             vm.days.addAll(selectedTrainingTime.days)
 
