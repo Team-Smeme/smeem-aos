@@ -69,4 +69,5 @@
     <string name="personal_info_agreement">http://smeem.notion.site/2c0af4a3f8a340fcbb8eefe4beb24856?pvs=4</string>
     <string name="marketing_info_agreement">https://smeem.notion.site/793bae40ccd14654828b68ee41ac51b6?pvs=4</string>
     <string name="manual_url">https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4</string>
+    <string name="title_activity_smeem_calendar">SmeemCalendar</string>
 </resources>
