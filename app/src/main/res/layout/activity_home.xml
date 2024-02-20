@@ -11,125 +11,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_target_month"
-            style="@style/TextAppearance.Smeem.Body4_regular"
-            android:layout_width="wrap_content"
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/compose_calendar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingVertical="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2023년 3월" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_my_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="18dp"
             android:contentDescription="@string/my_page"
             android:padding="8dp"
             android:src="@drawable/ic_my_page"
-            app:layout_constraintBottom_toBottomOf="@id/tv_target_month"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_target_month" />
-
-        <androidx.constraintlayout.helper.widget.Flow
-            android:id="@+id/flow_dates"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:paddingTop="18dp"
-            app:constraint_referenced_ids="tv_date_sun,tv_date_mon,tv_date_tue,tv_date_wed,tv_date_thu,tv_date_fri,tv_date_sat"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_target_month" />
-
-        <TextView
-            android:id="@+id/tv_date_sun"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:paddingHorizontal="5dp"
-            android:text="S"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
-
-        <TextView
-            android:id="@+id/tv_date_mon"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:paddingHorizontal="5dp"
-            android:text="M"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
-
-        <TextView
-            android:id="@+id/tv_date_tue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:paddingHorizontal="5dp"
-            android:text="T"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
-
-        <TextView
-            android:id="@+id/tv_date_wed"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:paddingHorizontal="5dp"
-            android:text="W"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
-
-        <TextView
-            android:id="@+id/tv_date_thu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:paddingHorizontal="5dp"
-            android:text="T"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
-
-        <TextView
-            android:id="@+id/tv_date_fri"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:paddingHorizontal="5dp"
-            android:text="F"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
-
-        <TextView
-            android:id="@+id/tv_date_sat"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:paddingHorizontal="5dp"
-            android:text="S"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Smeem.Week_light_14" />
-
-        <com.sopt.smeem.presentation.calendar.WeeklyCalendar
-            android:id="@+id/weekly_calendar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/flow_dates"
-            app:layout_constraintStart_toStartOf="@id/flow_dates"
-            app:layout_constraintTop_toBottomOf="@id/flow_dates" />
-
-        <View
-            android:id="@+id/diary_divider"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/gray_100"
-            app:layout_constraintTop_toBottomOf="@id/weekly_calendar" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_no_diary"
@@ -139,7 +39,7 @@
             app:layout_constraintBottom_toTopOf="@id/btn_write_diary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/diary_divider"
+            app:layout_constraintTop_toBottomOf="@id/compose_calendar"
             app:layout_constraintVertical_bias="0.4"
             tools:visibility="gone">
 
@@ -177,7 +77,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/diary_divider"
+            app:layout_constraintTop_toBottomOf="@id/compose_calendar"
             tools:visibility="visible">
 
             <TextView
