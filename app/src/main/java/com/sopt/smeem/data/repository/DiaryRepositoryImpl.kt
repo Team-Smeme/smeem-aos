@@ -9,7 +9,6 @@ import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.domain.model.Topic
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.util.DateUtil
-import java.time.format.DateTimeFormatter
 
 class DiaryRepositoryImpl(
     private val diaryCommander: DiaryCommander,
@@ -51,25 +50,25 @@ class DiaryRepositoryImpl(
                 )
             }
 
+    // calendar related
     override suspend fun getDiaries(
         start: String?,
-        end: String?,
+        end: String?
     ): Result<DiarySummaries> =
         kotlin.runCatching { diaryReader.getList(start, end) }
             .map { response ->
                 DiarySummaries(
                     diaries = response.data!!.diaries.associateBy(
                         keySelector = { diary ->
-                            val dateTime = DateUtil.asLocalDateTime(diary.createdAt)
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd").format(dateTime)
+                            DateUtil.asLocalDateTime(diary.createdAt).toLocalDate()
                         },
                         valueTransform = { diary ->
                             DiarySummary(
                                 id = diary.diaryId,
                                 content = diary.content,
-                                createdAt = diary.createdAt,
+                                createdAt = DateUtil.asLocalDateTime(diary.createdAt).toLocalTime()
                             )
-                        },
+                        }
                     ),
                     has30Past = response.data.has30Past,
                 )

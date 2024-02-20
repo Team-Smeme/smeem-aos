@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -23,24 +23,24 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.presentation.BindingActivity
-import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
+import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.home.calendar.SmeemCalendarImpl
 import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
 import com.sopt.smeem.presentation.mypage.MyPageActivity
+import com.sopt.smeem.util.DateUtil
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @AndroidEntryPoint
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
-    private var todayData = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-    private var weeklyData = todayData
+    private var todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    private var weeklyDate = todayDate
     lateinit var bs: WritingBottomSheet
 
     private val homeViewModel by viewModels<HomeViewModel>()
@@ -49,12 +49,15 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         super.onCreate(savedInstanceState)
 
         val calendar = binding.composeCalendar
+        bs = WritingBottomSheet()
+        initView(weeklyDate)
+        setInitListener()
         calendar.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 SmeemTheme {
                     Surface(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxWidth(),
                         color = MaterialTheme.colorScheme.background
                     ) {
                         SmeemCalendar()
@@ -63,9 +66,6 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             }
         }
 
-        bs = WritingBottomSheet()
-        initView(weeklyData)
-        setInitListener()
         moveToMyPage()
         observeData()
         onTouchWrite()
@@ -75,9 +75,9 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         super.onResume()
 
         lifecycleScope.launch {
-            homeViewModel.getDateDiary(todayData)
+            homeViewModel.getDateDiary(DateUtil.asLocalDate(todayDate))
 
-            if (homeViewModel.responseDateDiary.value != null) {
+            if (homeViewModel.diaryList.value != null) {
                 binding.btnWriteDiary.visibility = View.INVISIBLE
             }
         }
@@ -87,9 +87,9 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         super.onRestart()
 
         lifecycleScope.launch {
-            homeViewModel.getDateDiary(todayData)
+            homeViewModel.getDateDiary(DateUtil.asLocalDate(todayDate))
 
-            if (homeViewModel.responseDateDiary.value != null) {
+            if (homeViewModel.diaryList.value != null) {
                 binding.btnWriteDiary.visibility = View.INVISIBLE
             }
         }
@@ -121,10 +121,9 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private fun initView(day: String) {
         lifecycleScope.launch {
-            homeViewModel.getDateDiary(day)
-
+            homeViewModel.getDateDiary(DateUtil.asLocalDate(day))
             binding.btnWriteDiary.visibility =
-                if (homeViewModel.responseDateDiary.value == null) {
+                if (homeViewModel.diaryList.value == null) {
                     View.VISIBLE
                 } else {
                     View.INVISIBLE
@@ -160,13 +159,24 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     private fun setInitListener() {
         binding.clDiaryList.setOnSingleClickListener {
             Intent(this, DiaryDetailActivity::class.java).apply {
-                putExtra("diaryId", homeViewModel.responseDateDiary.value?.id)
+                putExtra("diaryId", homeViewModel.diaryList.value?.id)
             }.run(::startActivity)
         }
     }
 
     private fun observeData() {
-        homeViewModel.responseDateDiary.observe(this) {
+        lifecycleScope.launch {
+            homeViewModel.selectedDate.collect {
+                when {
+                    homeViewModel.diaryList.value != null -> binding.btnWriteDiary.visibility =
+                        View.INVISIBLE
+
+                    it == LocalDate.now() -> binding.btnWriteDiary.visibility = View.VISIBLE
+                    else -> binding.btnWriteDiary.visibility = View.INVISIBLE
+                }
+            }
+        }
+        homeViewModel.diaryList.observe(this) {
             if (it == null) {
                 binding.clDiaryList.visibility = View.GONE
                 binding.clNoDiary.visibility = View.VISIBLE
@@ -174,13 +184,9 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 binding.clDiaryList.visibility = View.VISIBLE
                 binding.clNoDiary.visibility = View.GONE
 
-                val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                val outputFormatter = DateTimeFormatter.ofPattern("h : mm a", Locale.ENGLISH)
+                val timeFormatter = DateTimeFormatter.ofPattern("h : mm a", Locale.ENGLISH)
 
-                val createdAtDateTime = LocalDateTime.parse(it.createdAt, inputFormatter)
-                val formattedCreatedAt = createdAtDateTime.format(outputFormatter)
-
-                binding.tvDiaryWritenTime.text = formattedCreatedAt
+                binding.tvDiaryWritenTime.text = it.createdAt.format(timeFormatter)
                 binding.tvDiary.text = it.content
             }
         }

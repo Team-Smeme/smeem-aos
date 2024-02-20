@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.presentation.home.HomeViewModel
-import com.sopt.smeem.presentation.home.calendar.component.CalendarToggleArea
 import com.sopt.smeem.presentation.home.calendar.component.CalendarTitle
 import com.sopt.smeem.presentation.home.calendar.component.MonthlyCalendar
 import com.sopt.smeem.presentation.home.calendar.component.WeekLabel
@@ -101,7 +100,15 @@ private fun SmeemCalendarImpl(
                 dateList = dateList,
                 selectedDate = selectedDate,
                 loadNextWeek = { nextWeekDate -> onIntent(CalendarIntent.LoadNextDates(nextWeekDate)) },
-                loadPrevWeek = { endWeekDate -> onIntent(CalendarIntent.LoadNextDates(endWeekDate.minusDays(1).getWeekStartDate())) },
+                loadPrevWeek = { endWeekDate ->
+                    onIntent(
+                        CalendarIntent.LoadNextDates(
+                            endWeekDate.minusDays(
+                                1
+                            ).getWeekStartDate()
+                        )
+                    )
+                },
                 onDayClick = {
                     onIntent(CalendarIntent.SelectDate(it))
                     onDayClick(it)

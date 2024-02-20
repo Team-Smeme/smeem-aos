@@ -20,7 +20,6 @@ internal fun CalendarPager(
     beyondBoundsPageCount: Int = 1,
     content: @Composable (currentPage: Int) -> Unit,
 ) {
-    val isInitialized = remember { mutableStateOf(false) }
     val pagerState = rememberPagerState(
         initialPage = 1,
         initialPageOffsetFraction = 0f
@@ -30,12 +29,11 @@ internal fun CalendarPager(
             loadNextDates(dateList[1][0].day)
             pagerState.scrollToPage(1)
         }
-        if (pagerState.settledPage == 0 && isInitialized.value) {
+        if (pagerState.settledPage == 0) {
             loadPrevDates(dateList[0][0].day)
             pagerState.scrollToPage(1)
         }
     }
-    LaunchedEffect(Unit) { isInitialized.value = true }
     HorizontalPager(
         state = pagerState,
         beyondBoundsPageCount = beyondBoundsPageCount,

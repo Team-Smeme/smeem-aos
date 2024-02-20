@@ -26,6 +26,7 @@ interface DiaryRepository {
      */
     suspend fun getDiaryDetail(diaryId: Long): Result<Diary>
 
+    // calendar related
     /**
      * 일기 목록을 조회한다.
      * - 각 파라미터는 nullable 하다.

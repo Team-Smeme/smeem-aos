@@ -16,6 +16,7 @@ class DiaryReader(
     suspend fun getDetail(diaryId: Long): ApiResponse<DiaryResponse.Detail> =
         diaryService.getDetail(diaryId = diaryId)
 
+    // calendar related
     suspend fun getList(
         start: String?,
         end: String?,
