@@ -1,7 +1,9 @@
 package com.sopt.smeem.presentation.home.calendar.component
 
-import androidx.compose.foundation.border
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -9,11 +11,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ripple.LocalRippleTheme
+import androidx.compose.material.ripple.RippleAlpha
+import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -37,57 +44,72 @@ fun DayItem(
     isSixWeeks: Boolean = false,
 ) {
     val isToday = date == LocalDate.now()
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .padding(horizontal = 5.dp)
-            .padding(
-                top = when {
-                    isFirstWeek -> 0.dp
-                    isSixWeeks -> 13.6.dp
-                    else -> 28.dp
-                }
-            )
+    CompositionLocalProvider(
+        LocalRippleTheme provides NoRippleTheme,
     ) {
-        Card(
-            shape = RoundedCornerShape(6.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = when {
-                    isToday -> MaterialTheme.colorScheme.primary
-                    else -> MaterialTheme.colorScheme.background
-                },
-            ),
-            modifier = modifier
-                .border(
-                    width = 1.dp,
-                    color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
-                    shape = RoundedCornerShape(6.dp)
-                )
-                .aspectRatio(1f)
-                .alpha(if (!isCurrentMonth) 0f else 1f)
-                .clickable(
-                    enabled = isCurrentMonth,
-                    onClick = { onDayClick(date) }
-                )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .padding(horizontal = 5.dp)
+                .padding(
+                    top = when {
+                        isFirstWeek -> 0.dp
+                        isSixWeeks -> 13.6.dp
+                        else -> 28.dp
+                    },
+                ),
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxSize()
+            Card(
+                shape = RoundedCornerShape(6.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = when {
+                        isToday -> MaterialTheme.colorScheme.primary
+                        else -> MaterialTheme.colorScheme.background
+                    },
+                ),
+                border = BorderStroke(
+                    1.dp,
+                    if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
+                ),
+                modifier = modifier
+                    .aspectRatio(1f)
+                    .alpha(if (!isCurrentMonth) 0f else 1f)
+                    .clickable(
+                        enabled = isCurrentMonth,
+                        onClick = { onDayClick(date) },
+                    )
+                    .indication(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ),
             ) {
-                Text(
-                    text = date.dayOfMonth.toString(),
-                    style = MaterialTheme.typography.titleSmall.copy(letterSpacing = (-0.72).sp),
-                    color = when {
-                        isToday -> MaterialTheme.colorScheme.onPrimary
-                        isSelected || isDiaryWritten -> MaterialTheme.colorScheme.onBackground
-                        else -> gray400
-                    }
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    Text(
+                        text = date.dayOfMonth.toString(),
+                        style = MaterialTheme.typography.titleSmall.copy(letterSpacing = (-0.72).sp),
+                        color = when {
+                            isToday -> MaterialTheme.colorScheme.onPrimary
+                            isSelected || isDiaryWritten -> MaterialTheme.colorScheme.onBackground
+                            else -> gray400
+                        },
+                    )
+                }
             }
         }
     }
+}
+
+private object NoRippleTheme : RippleTheme {
+    @Composable
+    override fun defaultColor() = Color.Unspecified
+
+    @Composable
+    override fun rippleAlpha() = RippleAlpha(0.0f, 0.0f, 0.0f, 0.0f)
 }
 
 @Preview
@@ -101,7 +123,7 @@ fun DayItemPreview() {
             isCurrentMonth = true,
             isDiaryWritten = false,
             isFirstWeek = true,
-            modifier = Modifier.widthIn(max = 36.dp)
+            modifier = Modifier.widthIn(max = 36.dp),
         )
     }
 }

@@ -41,7 +41,7 @@ internal fun MonthlyCalendar(
                 Box(
                     modifier = Modifier
                         .width(itemWidth),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     DayItem(
                         date = date.day,
