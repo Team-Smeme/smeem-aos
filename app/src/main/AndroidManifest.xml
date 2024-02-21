@@ -20,16 +20,11 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="${appIcon}"
         android:label="${appName}"
-        android:roundIcon="${@mipmap/ic_smeem_dev_round}"
         android:supportsRtl="true"
         android:theme="@style/Theme.Smeem"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".presentation.home.calendar.compose.SmeemCalendar"-->
-<!--            android:exported="false"-->
-<!--            android:label="@string/title_activity_smeem_calendar"-->
-<!--            android:theme="@style/Theme.Smeem" />-->
+
         <activity
             android:name=".presentation.mypage.MyPageMoreActivity"
             android:exported="false"
