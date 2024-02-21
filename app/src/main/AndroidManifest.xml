@@ -13,22 +13,23 @@
         android:value="false" />
 
     <application
+        tools:replace="icon, label"
         android:name=".Smeem"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_smeem"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_smeem_round"
+        android:icon="${appIcon}"
+        android:label="${appName}"
+        android:roundIcon="${@mipmap/ic_smeem_dev_round}"
         android:supportsRtl="true"
         android:theme="@style/Theme.Smeem"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".presentation.home.calendar.compose.SmeemCalendar"
-            android:exported="false"
-            android:label="@string/title_activity_smeem_calendar"
-            android:theme="@style/Theme.Smeem" />
+<!--        <activity-->
+<!--            android:name=".presentation.home.calendar.compose.SmeemCalendar"-->
+<!--            android:exported="false"-->
+<!--            android:label="@string/title_activity_smeem_calendar"-->
+<!--            android:theme="@style/Theme.Smeem" />-->
         <activity
             android:name=".presentation.mypage.MyPageMoreActivity"
             android:exported="false"
