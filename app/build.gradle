@@ -41,14 +41,25 @@ android {
 
     buildTypes {
         debug {
+            applicationIdSuffix ".dev"
+
             minifyEnabled false
             buildConfigField("boolean", "IS_DEBUG", "true")
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders = [
+                    appName: "@string/dev_app_name",
+                    appIcon: "@drawble/ic_smeem_dev"
+            ]
         }
         release {
             minifyEnabled true
             buildConfigField("boolean", "IS_DEBUG", "false")
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders = [
+                    appName: "@string/app_name",
+                    appIcon: "@mipmap/ic_smeem"
+            ]
         }
     }
     compileOptions {
