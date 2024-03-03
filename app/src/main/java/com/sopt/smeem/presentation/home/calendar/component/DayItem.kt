@@ -32,7 +32,7 @@ fun DayItem(
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     isCurrentMonth: Boolean = true,
-    isDiaryWritten: Boolean = true,
+    isDiaryWritten: Boolean = false,
     isFirstWeek: Boolean = true,
     isSixWeeks: Boolean = false,
 ) {

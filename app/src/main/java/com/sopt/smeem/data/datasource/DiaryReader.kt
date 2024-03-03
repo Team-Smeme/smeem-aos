@@ -38,7 +38,6 @@ class DiaryReader(
                 )
             }
 
-            patternCheck(start, end)
             return diaryService.getList(startDate = start, endDate = end)
         } catch (t: IllegalArgumentException) {
             throw SmeemException(

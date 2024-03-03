@@ -38,22 +38,15 @@ object DateUtil {
                 yyyyMMddHHmm.substring(8, 10).toInt(),
                 yyyyMMddHHmm.substring(11, 13).toInt(),
                 yyyyMMddHHmm.substring(14).toInt()
-            ).plusHours(9)
+            )
         }
 
         throw IllegalArgumentException("wrong pattern matching for date")
     }
 
     fun asLocalDate(yyyyMMdd: String): LocalDate {
-        if (Pattern.compile(YYYY_MM_DD).matcher(yyyyMMdd).matches()) {
-            return LocalDate.of(
-                yyyyMMdd.substring(0, 4).toInt(),
-                yyyyMMdd.substring(5, 7).toInt(),
-                yyyyMMdd.substring(8, 10).toInt()
-            )
-        }
-
-        throw IllegalArgumentException("wrong pattern matching for date")
+        val temp = yyyyMMdd.split("-").map { it.toInt() }
+        return LocalDate.of(temp[0], temp[1], temp[2])
     }
 
     fun asString(date: LocalDateTime): String {
@@ -83,7 +76,8 @@ object DateUtil {
         fun asStringOnlyDate(now: LocalDate): String {
             val monthValue =
                 if (now.monthValue < 10) "0${now.monthValue}" else now.monthValue.toString()
-            return "${now.year}-${monthValue}-${now.dayOfMonth}"
+            val dayValue = if(now.dayOfMonth < 10) "0${now.dayOfMonth}" else now.dayOfMonth.toString()
+            return "${now.year}-${monthValue}-${dayValue}"
         }
 
     }
