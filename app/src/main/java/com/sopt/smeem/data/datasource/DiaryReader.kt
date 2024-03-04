@@ -38,7 +38,6 @@ class DiaryReader(
                 )
             }
 
-            patternCheck(start, end)
             return diaryService.getList(startDate = start, endDate = end)
         } catch (t: IllegalArgumentException) {
             throw SmeemException(
@@ -49,11 +48,4 @@ class DiaryReader(
     }
 
     suspend fun getTopic(): ApiResponse<DiaryResponse.Topic> = diaryService.getTopic()
-    private fun patternCheck(vararg dates: String) {
-        dates.forEach {
-            if (!Pattern.compile(YYYY_MM_DD).matcher(it).matches()) {
-                throw IllegalArgumentException("날짜 형식이 유효하지 않습니다.")
-            }
-        }
-    }
 }
