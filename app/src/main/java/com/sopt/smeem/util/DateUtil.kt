@@ -45,8 +45,8 @@ object DateUtil {
     }
 
     fun asLocalDate(yyyyMMdd: String): LocalDate {
-        val temp = yyyyMMdd.split("-").map { it.toInt() }
-        return LocalDate.of(temp[0], temp[1], temp[2])
+        val dateAsInt = yyyyMMdd.split("-").map { it.toInt() }
+        return LocalDate.of(dateAsInt[0], dateAsInt[1], dateAsInt[2])
     }
 
     fun asString(date: LocalDateTime): String {
