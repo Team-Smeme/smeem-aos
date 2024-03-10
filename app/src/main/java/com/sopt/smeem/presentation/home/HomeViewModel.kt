@@ -90,7 +90,6 @@ class HomeViewModel @Inject constructor(
         val endAsString = DateUtil.WithServer.asStringOnlyDate(endDate)
 
         kotlin.runCatching {
-            Timber.tag("server called!")
             diaryRepository.getDiaries(startAsString, endAsString)
         }.fold({
             diaryDates = it.getOrNull()?.diaries?.keys?.toList() ?: emptyList()
@@ -121,7 +120,6 @@ class HomeViewModel @Inject constructor(
 
     // calendar
     fun onIntent(intent: CalendarIntent) {
-        Timber.tag("what intent?").d(intent.toString())
         when (intent) {
             CalendarIntent.ExpandCalendar -> {
                 calculateCalendarDates(
@@ -147,7 +145,6 @@ class HomeViewModel @Inject constructor(
 
             is CalendarIntent.SelectDate -> {
                 viewModelScope.launch {
-                    Timber.d(intent.date.toString())
                     _diaryList.postValue(getDateDiary(intent.date))
                     _selectedDate.emit(intent.date)
                 }
@@ -159,32 +156,19 @@ class HomeViewModel @Inject constructor(
         startDate: LocalDate,
         period: Period = Period.WEEK
     ) {
-        Timber.d("calculateCalendarDates invoked!")
         viewModelScope.launch(Dispatchers.IO) {
             _diaryDateList.postValue(
                 when (period) {
-                    Period.WEEK -> {
-                        Timber.d("getDates(week)")
-                        getDates(startDate, Period.WEEK)
-                    }
+                    Period.WEEK -> getDates(startDate, Period.WEEK)
 
-                    Period.MONTH -> {
-                        Timber.d("getDates(month)")
-                        getDates(startDate, Period.MONTH)
-                    }
+                    Period.MONTH -> getDates(startDate, Period.MONTH)
                 }
             )
             _visibleDates.emit(
                 when (period) {
-                    Period.WEEK -> {
-                        Timber.d("calculateWeeklyCalendarDays invoked!")
-                        calculateWeeklyCalendarDays(startDate)
-                    }
+                    Period.WEEK -> calculateWeeklyCalendarDays(startDate)
 
-                    Period.MONTH -> {
-                        Timber.d("calculateMonthlyCalendarDays invoked!")
-                        calculateMonthlyCalendarDays(startDate)
-                    }
+                    Period.MONTH -> calculateMonthlyCalendarDays(startDate)
                 }
             )
         }
