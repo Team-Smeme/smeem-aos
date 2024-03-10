@@ -82,16 +82,12 @@ class HomeViewModel @Inject constructor(
     // diary
     suspend fun getDates(startDate: LocalDate, period: Period): List<LocalDate> {
         var diaryDates: List<LocalDate> = emptyList()
-        val start = when(period) {
-            Period.WEEK -> startDate.plusWeeks(1)
-            Period.MONTH -> startDate.plusMonths(1)
+        val endDate = when (period) {
+            Period.WEEK -> startDate.plusDays(20)
+            Period.MONTH -> startDate.plusMonths(3).minusDays(1)
         }
-        val end = when(period) {
-            Period.WEEK -> start.plusDays(6)
-            Period.MONTH -> start.plusMonths(1).minusDays(1)
-        }
-        val startAsString = DateUtil.WithServer.asStringOnlyDate(start)
-        val endAsString = DateUtil.WithServer.asStringOnlyDate(end)
+        val startAsString = DateUtil.WithServer.asStringOnlyDate(startDate)
+        val endAsString = DateUtil.WithServer.asStringOnlyDate(endDate)
 
         kotlin.runCatching {
             Timber.tag("server called!")
@@ -171,6 +167,7 @@ class HomeViewModel @Inject constructor(
                         Timber.d("getDates(week)")
                         getDates(startDate, Period.WEEK)
                     }
+
                     Period.MONTH -> {
                         Timber.d("getDates(month)")
                         getDates(startDate, Period.MONTH)
@@ -183,6 +180,7 @@ class HomeViewModel @Inject constructor(
                         Timber.d("calculateWeeklyCalendarDays invoked!")
                         calculateWeeklyCalendarDays(startDate)
                     }
+
                     Period.MONTH -> {
                         Timber.d("calculateMonthlyCalendarDays invoked!")
                         calculateMonthlyCalendarDays(startDate)
@@ -204,7 +202,7 @@ class HomeViewModel @Inject constructor(
         val dateList = mutableListOf<Date>()
 
         startDate.getNextDates(21).map {
-            dateList.add(Date(it, true, diaryDateList.value?.contains(it) == true ))
+            dateList.add(Date(it, true, diaryDateList.value?.contains(it) == true))
         }
         return Array(3) {
             dateList.slice(it * 7 until (it + 1) * 7)
@@ -226,10 +224,10 @@ class HomeViewModel @Inject constructor(
                 } +
                         monthFirstDate.getNextDates(monthFirstDate.month.length(monthFirstDate.isLeapYear))
                             .map {
-                                Date(it, true, diaryDateList.value?.contains(it) == true )
+                                Date(it, true, diaryDateList.value?.contains(it) == true)
                             } +
                         monthLastDate.getRemainingDatesInWeek().map {
-                            Date(it, false, diaryDateList.value?.contains(it) == true )
+                            Date(it, false, diaryDateList.value?.contains(it) == true)
                         }
             }
         }
