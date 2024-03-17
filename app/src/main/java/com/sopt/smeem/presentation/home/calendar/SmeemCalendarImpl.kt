@@ -121,8 +121,8 @@ private fun SmeemCalendarImpl(
                 .fillMaxWidth()
                 .heightIn(
                     min = when {
-                        isCalendarExpanded -> 42.dp
-                        else -> 20.dp
+                        isCalendarExpanded -> 24.dp
+                        else -> 4.dp
                     }
                 )
         )
