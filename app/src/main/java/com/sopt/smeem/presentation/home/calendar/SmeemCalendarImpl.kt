@@ -18,6 +18,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.presentation.home.HomeViewModel
 import com.sopt.smeem.presentation.home.calendar.component.CalendarTitle
+import com.sopt.smeem.presentation.home.calendar.component.CalendarToggleSlider
 import com.sopt.smeem.presentation.home.calendar.component.MonthlyCalendar
 import com.sopt.smeem.presentation.home.calendar.component.WeekLabel
 import com.sopt.smeem.presentation.home.calendar.component.WeeklyCalendar
@@ -124,6 +125,9 @@ private fun SmeemCalendarImpl(
                         else -> 20.dp
                     }
                 )
+        )
+        CalendarToggleSlider(
+            modifier = Modifier.padding(vertical = 12.dp)
         )
         Divider(
             color = gray100,
