@@ -14,6 +14,7 @@ import com.sopt.smeem.databinding.DialogBadgeBinding
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.mypage.MyBadgesActivity
+import com.sopt.smeem.presentation.mypage.MyBadgesActivity.Companion.ENTER_MY_BADGES_FROM
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,7 +51,12 @@ class BadgeDialogFragment: DialogFragment() {
             }
         }
         binding.btnBadgeMore.setOnSingleClickListener {
-            Intent(requireContext(), MyBadgesActivity::class.java).run(::startActivity)
+            Intent(requireContext(), MyBadgesActivity::class.java)
+                .apply {
+                    putExtra(ENTER_MY_BADGES_FROM, FROM_BADGE_DIALOG)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
+                .run(::startActivity)
             dismiss()
             eventVm.sendEvent(AmplitudeEventType.BADGE_MORE_CLICK)
 
@@ -81,6 +87,7 @@ class BadgeDialogFragment: DialogFragment() {
         private const val BADGE_NAME = "badgeName"
         private const val BADGE_IMAGE_URL = "badgeImageUrl"
         private const val IS_FIRST_BADGE = "isFirstBadge"
+        const val FROM_BADGE_DIALOG = "fromBadgeDialog"
 
         fun newInstance(name: String, imageUrl: String, isFirstBadge: Boolean) : BadgeDialogFragment {
             val args = Bundle().apply {
