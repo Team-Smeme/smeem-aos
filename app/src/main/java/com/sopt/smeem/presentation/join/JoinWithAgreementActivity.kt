@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.join
 
 import android.content.Intent
 import android.widget.Toast
+import android.window.OnBackInvokedDispatcher
 import androidx.activity.viewModels
 import com.google.android.material.button.MaterialButton
 import com.sopt.smeem.R
@@ -51,6 +52,11 @@ class JoinWithAgreementActivity :
         onTouchAllSelection()
         onTouchDetail()
         onTouchNext()
+    }
+
+    // 뒤로가기 아예 막아버림.
+    override fun onBackPressed() {
+        // super.onBackPressed()
     }
 
     private fun onTouchAllSelection() {
