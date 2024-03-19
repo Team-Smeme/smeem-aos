@@ -26,9 +26,11 @@ import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.home.calendar.SmeemCalendarImpl
+import com.sopt.smeem.presentation.home.calendar.core.CalendarIntent
+import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
 import com.sopt.smeem.presentation.mypage.MyPageActivity
-import com.sopt.smeem.util.DateUtil
+import com.sopt.smeem.util.getWeekStartDate
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -39,8 +41,6 @@ import java.util.Locale
 @AndroidEntryPoint
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
-    private var todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-    private var weeklyDate = todayDate
     lateinit var bs: WritingBottomSheet
 
     private val homeViewModel by viewModels<HomeViewModel>()
@@ -50,7 +50,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
         val calendar = binding.composeCalendar
         bs = WritingBottomSheet()
-        initView(weeklyDate)
+        initView(LocalDate.now())
         setInitListener()
         calendar.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
@@ -73,26 +73,12 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     override fun onResume() {
         super.onResume()
-
-        lifecycleScope.launch {
-            homeViewModel.getDateDiary(DateUtil.asLocalDate(todayDate))
-
-            if (homeViewModel.diaryList.value != null) {
-                binding.btnWriteDiary.visibility = View.INVISIBLE
-            }
-        }
+        initView(LocalDate.now())
     }
 
     override fun onRestart() {
         super.onRestart()
-
-        lifecycleScope.launch {
-            homeViewModel.getDateDiary(DateUtil.asLocalDate(todayDate))
-
-            if (homeViewModel.diaryList.value != null) {
-                binding.btnWriteDiary.visibility = View.INVISIBLE
-            }
-        }
+        initView(LocalDate.now())
     }
 
     @Composable
@@ -119,9 +105,17 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
     }
 
-    private fun initView(day: String) {
+    private fun initView(day: LocalDate) {
         lifecycleScope.launch {
-            homeViewModel.getDateDiary(DateUtil.asLocalDate(day))
+            with(homeViewModel) {
+                onIntent(
+                    CalendarIntent.LoadNextDates(
+                        startDate = day.minusWeeks(1).getWeekStartDate(),
+                        period = Period.WEEK
+                    )
+                )
+                onIntent(CalendarIntent.SelectDate(date = day))
+            }
             binding.btnWriteDiary.visibility =
                 if (homeViewModel.diaryList.value == null) {
                     View.VISIBLE
@@ -176,18 +170,20 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 }
             }
         }
+        // 홈에 일기 띄우는 로직
         homeViewModel.diaryList.observe(this) {
-            if (it == null) {
-                binding.clDiaryList.visibility = View.GONE
-                binding.clNoDiary.visibility = View.VISIBLE
-            } else {
-                binding.clDiaryList.visibility = View.VISIBLE
-                binding.clNoDiary.visibility = View.GONE
+            val timeFormatter = DateTimeFormatter.ofPattern("h : mm a", Locale.ENGLISH)
 
-                val timeFormatter = DateTimeFormatter.ofPattern("h : mm a", Locale.ENGLISH)
-
-                binding.tvDiaryWritenTime.text = it.createdAt.format(timeFormatter)
-                binding.tvDiary.text = it.content
+            with(homeViewModel.diaryList.value) {
+                if (this == null) {
+                    binding.clDiaryList.visibility = View.GONE
+                    binding.clNoDiary.visibility = View.VISIBLE
+                } else {
+                    binding.clDiaryList.visibility = View.VISIBLE
+                    binding.clNoDiary.visibility = View.GONE
+                    binding.tvDiaryWritenTime.text = this.createdAt.format(timeFormatter)
+                    binding.tvDiary.text = this.content
+                }
             }
         }
     }
