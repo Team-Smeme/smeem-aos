@@ -99,17 +99,17 @@ class HomeViewModel @Inject constructor(
         return diaryDates
     }
 
-    suspend fun getDateDiary(date: LocalDate): DiarySummary? {
-        var diaries: DiarySummary? = null
+    suspend fun getDateDiary(date: LocalDate) {
         val dateAsString = DateUtil.WithServer.asStringOnlyDate(date)
         kotlin.runCatching {
             diaryRepository.getDiaries(start = dateAsString, end = dateAsString)
         }.fold({
-            diaries = it.getOrNull()?.diaries?.values?.firstOrNull()
+            _diaryList.postValue(
+                it.getOrNull()?.diaries?.values?.firstOrNull()
+            )
         }, {
             Timber.e(it.message.toString())
         })
-        return diaries
     }
 
     fun setBadgeInfo(name: String, imageUrl: String, isFirst: Boolean) {
@@ -145,7 +145,7 @@ class HomeViewModel @Inject constructor(
 
             is CalendarIntent.SelectDate -> {
                 viewModelScope.launch {
-                    _diaryList.postValue(getDateDiary(intent.date))
+                    getDateDiary(intent.date)
                     _selectedDate.emit(intent.date)
                 }
             }
@@ -160,14 +160,12 @@ class HomeViewModel @Inject constructor(
             _diaryDateList.postValue(
                 when (period) {
                     Period.WEEK -> getDates(startDate, Period.WEEK)
-
                     Period.MONTH -> getDates(startDate, Period.MONTH)
                 }
             )
             _visibleDates.emit(
                 when (period) {
                     Period.WEEK -> calculateWeeklyCalendarDays(startDate)
-
                     Period.MONTH -> calculateMonthlyCalendarDays(startDate)
                 }
             )
