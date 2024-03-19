@@ -20,6 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
@@ -42,9 +43,8 @@ class HomeViewModel @Inject constructor(
     val badgeImageUrl = MutableLiveData<String>()
 
     // diary
-    private val _diaryDateList: MutableLiveData<List<LocalDate>> = MutableLiveData(emptyList())
-    val diaryDateList: LiveData<List<LocalDate>>
-        get() = _diaryDateList
+    private val _diaryDateList: MutableStateFlow<List<LocalDate>> = MutableStateFlow(emptyList())
+    val diaryDateList: StateFlow<List<LocalDate>> = _diaryDateList.asStateFlow()
 
     private val _diaryList: MutableLiveData<DiarySummary?> = MutableLiveData()
     val diaryList: LiveData<DiarySummary?>
@@ -56,13 +56,16 @@ class HomeViewModel @Inject constructor(
     private val _visibleDates =
         MutableStateFlow(
             calculateWeeklyCalendarDays(
-                startDate = LocalDate.now().getWeekStartDate().minusWeeks(1)
-            )
+                startDate = LocalDate.now().getWeekStartDate().minusWeeks(1),
+            ),
         )
     val visibleDates: StateFlow<Array<List<Date>>> = _visibleDates
 
     private val _selectedDate = MutableStateFlow(LocalDate.now())
     val selectedDate: StateFlow<LocalDate> = _selectedDate
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
     val currentMonth: StateFlow<YearMonth>
         get() = isCalendarExpanded.zip(visibleDates) { isExpanded, dates ->
@@ -76,11 +79,10 @@ class HomeViewModel @Inject constructor(
     private val _isCalendarExpanded = MutableStateFlow(false)
     val isCalendarExpanded: StateFlow<Boolean> = _isCalendarExpanded
 
-
     /***** functions *****/
 
     // diary
-    suspend fun getDates(startDate: LocalDate, period: Period): List<LocalDate> {
+    private suspend fun getDates(startDate: LocalDate, period: Period): List<LocalDate> {
         var diaryDates: List<LocalDate> = emptyList()
         val endDate = when (period) {
             Period.WEEK -> startDate.plusDays(END_DATE_AFTER_THREE_WEEKS)
@@ -124,7 +126,7 @@ class HomeViewModel @Inject constructor(
             CalendarIntent.ExpandCalendar -> {
                 calculateCalendarDates(
                     startDate = currentMonth.value.minusMonths(1).atDay(FIRST),
-                    period = Period.MONTH
+                    period = Period.MONTH,
                 )
                 _isCalendarExpanded.value = true
             }
@@ -134,7 +136,7 @@ class HomeViewModel @Inject constructor(
                     startDate = calculateWeeklyCalendarVisibleStartDay()
                         .getWeekStartDate()
                         .minusWeeks(1),
-                    period = Period.WEEK
+                    period = Period.WEEK,
                 )
                 _isCalendarExpanded.value = false
             }
@@ -154,30 +156,37 @@ class HomeViewModel @Inject constructor(
 
     private fun calculateCalendarDates(
         startDate: LocalDate,
-        period: Period = Period.WEEK
+        period: Period = Period.WEEK,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            _diaryDateList.postValue(
-                when (period) {
-                    Period.WEEK -> getDates(startDate, Period.WEEK)
-                    Period.MONTH -> getDates(startDate, Period.MONTH)
-                }
-            )
             _visibleDates.emit(
                 when (period) {
                     Period.WEEK -> calculateWeeklyCalendarDays(startDate)
                     Period.MONTH -> calculateMonthlyCalendarDays(startDate)
-                }
+                },
             )
+
+            _isLoading.emit(true)
+
+            _diaryDateList.emit(
+                when (period) {
+                    Period.WEEK -> getDates(startDate, Period.WEEK)
+
+                    Period.MONTH -> getDates(startDate, Period.MONTH)
+                },
+            )
+            _isLoading.emit(false)
         }
     }
 
     private fun calculateWeeklyCalendarVisibleStartDay(): LocalDate {
         val halfOfMonth = visibleDates.value[PRESENT][visibleDates.value[PRESENT].size / 2]
         val visibleMonth = YearMonth.of(halfOfMonth.day.year, halfOfMonth.day.month)
-        return if (selectedDate.value.month == visibleMonth.month && selectedDate.value.year == visibleMonth.year)
+        return if (selectedDate.value.month == visibleMonth.month && selectedDate.value.year == visibleMonth.year) {
             selectedDate.value
-        else visibleMonth.atDay(FIRST)
+        } else {
+            visibleMonth.atDay(FIRST)
+        }
     }
 
     private fun calculateWeeklyCalendarDays(startDate: LocalDate): Array<List<Date>> {
@@ -204,13 +213,13 @@ class HomeViewModel @Inject constructor(
                 } else {
                     listOf()
                 } +
-                        monthFirstDate.getNextDates(monthFirstDate.month.length(monthFirstDate.isLeapYear))
-                            .map {
-                                Date(it, true, diaryDateList.value?.contains(it) == true)
-                            } +
-                        monthLastDate.getRemainingDatesInWeek().map {
-                            Date(it, false, diaryDateList.value?.contains(it) == true)
-                        }
+                    monthFirstDate.getNextDates(monthFirstDate.month.length(monthFirstDate.isLeapYear))
+                        .map {
+                            Date(it, true, diaryDateList.value?.contains(it) == true)
+                        } +
+                    monthLastDate.getRemainingDatesInWeek().map {
+                        Date(it, false, diaryDateList.value?.contains(it) == true)
+                    }
             }
         }
     }
