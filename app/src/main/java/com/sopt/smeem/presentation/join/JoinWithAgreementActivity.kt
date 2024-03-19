@@ -54,11 +54,6 @@ class JoinWithAgreementActivity :
         onTouchNext()
     }
 
-    // 뒤로가기 아예 막아버림.
-    override fun onBackPressed() {
-        // super.onBackPressed()
-    }
-
     private fun onTouchAllSelection() {
         binding.btnEntranceAgreementAll.setOnSingleClickListener {
 
@@ -174,7 +169,7 @@ class JoinWithAgreementActivity :
                             )
                         ) as Serializable)
                     }.run(::startActivity)
-                    finish()
+                    finishAffinity()
                 }
 
                 false -> {
