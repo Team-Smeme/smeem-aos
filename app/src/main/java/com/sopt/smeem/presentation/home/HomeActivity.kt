@@ -22,7 +22,9 @@ import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.domain.model.RetrievedBadge
+import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.home.calendar.SmeemCalendarImpl
@@ -44,6 +46,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     lateinit var bs: WritingBottomSheet
 
     private val homeViewModel by viewModels<HomeViewModel>()
+    private val eventVm: EventVM by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +72,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         moveToMyPage()
         observeData()
         onTouchWrite()
+        eventVm.sendEvent(AmplitudeEventType.HOME_VIEW)
     }
 
     override fun onResume() {

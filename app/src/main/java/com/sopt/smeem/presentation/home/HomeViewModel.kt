@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.Smeem
 import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.domain.model.DiarySummary
 import com.sopt.smeem.domain.repository.DiaryRepository
+import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.home.calendar.core.CalendarIntent
 import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.util.DateUtil
@@ -129,6 +131,7 @@ class HomeViewModel @Inject constructor(
                     period = Period.MONTH,
                 )
                 _isCalendarExpanded.value = true
+                sendEvent(AmplitudeEventType.FULL_CALENDAR_APPEAR)
             }
 
             CalendarIntent.CollapseCalendar -> {
@@ -221,6 +224,17 @@ class HomeViewModel @Inject constructor(
                         Date(it, false, diaryDateList.value?.contains(it) == true)
                     }
             }
+        }
+    }
+
+    private fun sendEvent(event: AmplitudeEventType) {
+        try {
+            viewModelScope.launch {
+                Smeem.AMPLITUDE.track(event.eventName)
+            }
+        } catch (t: Throwable) {
+            // 이벤트 발송이 기존 로직에 영향은 없도록
+            Timber.tag("AMPLITUDE").e("amplitude send error!")
         }
     }
 
