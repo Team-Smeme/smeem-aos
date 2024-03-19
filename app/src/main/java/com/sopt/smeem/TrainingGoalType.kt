@@ -17,6 +17,5 @@ enum class TrainingGoalType(val text: String) {
         fun getAll(): Set<TrainingGoalType> = setOf(DEVELOP, HOBBY, APPLY, EXAM, BUSINESS, NONE)
 
         fun findById(id: Int) = getAll().find { it.id == id } ?: throw IllegalStateException()
-        fun findByText(text: String) = getAll().find { it.text == text } ?: throw NoSuchElementException()
     }
 }

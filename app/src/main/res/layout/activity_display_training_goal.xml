@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="@{training.goal}"
+                    android:text="@{training.title}"
                     android:textAppearance="@style/TextAppearance.Smeem.Headline3"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="@id/tv_my_page_display_training_goal_title"

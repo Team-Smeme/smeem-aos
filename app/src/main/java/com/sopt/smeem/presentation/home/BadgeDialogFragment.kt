@@ -46,7 +46,7 @@ class BadgeDialogFragment: DialogFragment() {
         binding.btnBadgeExit.setOnSingleClickListener {
             dismiss()
 
-            if(viewModel.nowBadge == "첫 번째 일기") {
+            if(arguments?.getBoolean(IS_FIRST_BADGE) == true) {
                 eventVm.sendEvent(AmplitudeEventType.WELCOME_QUIT_CLICK)
             }
         }
@@ -60,7 +60,7 @@ class BadgeDialogFragment: DialogFragment() {
             dismiss()
             eventVm.sendEvent(AmplitudeEventType.BADGE_MORE_CLICK)
 
-            if(viewModel.nowBadge == "첫 번째 일기") {
+            if(arguments?.getBoolean(IS_FIRST_BADGE) == true) {
                 eventVm.sendEvent(AmplitudeEventType.WELCOME_MORE_CLICK)
             }
         }

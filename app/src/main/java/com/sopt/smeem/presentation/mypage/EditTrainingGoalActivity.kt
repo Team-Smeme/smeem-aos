@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class EditTrainingGoalActivity :
     BindingActivity<ActivityEditTrainingGoalBinding>(R.layout.activity_edit_training_goal) {
 
-    private var buttons: Map<TrainingGoalType, MaterialButton>? = null
+    private lateinit var buttons: Map<TrainingGoalType, MaterialButton>
     private val vm: EditTrainingVM by viewModels()
 
     override fun constructLayout() {
@@ -37,10 +37,12 @@ class EditTrainingGoalActivity :
             TrainingGoalType.NONE to binding.icMyPageTrainingButton6
         )
 
-        buttons?.values?.forEach { button ->
-            if (TrainingGoalType.findByText(intent.getStringExtra("originalGoal")!!).id == button.id) {
-                button.switchOn()
-                vm.upsert(TrainingGoalType.findById(button.id))
+        intent.getStringExtra("originalGoal")?.let { goal ->
+            buttons.values.forEach { button ->
+                if (TrainingGoalType.valueOf(goal).id == button.id) {
+                    button.switchOn()
+                    vm.upsert(TrainingGoalType.findById(button.id))
+                }
             }
         }
     }
@@ -52,10 +54,10 @@ class EditTrainingGoalActivity :
     }
 
     private fun onTouchButtons() {
-        buttons?.values?.forEach { button ->
+        buttons.values.forEach { button ->
             button.setOnSingleClickListener {
                 if (TrainingGoalType.NO_SELECTED != vm.selectedGoal.value) {
-                    buttons!![vm.selectedGoal.value]?.switchOff() // 기존 off
+                    buttons[vm.selectedGoal.value]?.switchOff() // 기존 off
                     vm.upsert(TrainingGoalType.findById(button.id))
 
                     if (vm.selectedGoal.value!!.selected) {
@@ -81,7 +83,7 @@ class EditTrainingGoalActivity :
             this@EditTrainingGoalActivity
         ) {
             if (it != TrainingGoalType.NO_SELECTED &&
-                it != TrainingGoalType.findByText(intent.getStringExtra("originalGoal")!!)
+                it != TrainingGoalType.valueOf(intent.getStringExtra("originalGoal")!!)
             ) nextButtonOn() else nextButtonOff()
         }
     }

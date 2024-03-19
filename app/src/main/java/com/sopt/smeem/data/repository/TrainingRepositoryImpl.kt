@@ -23,7 +23,8 @@ class TrainingRepositoryImpl(
         }
             .map {
                 TrainingGoal(
-                    goal = it.data!!.name,
+                    title = it.data!!.title,
+                    goal = it.data.name,
                     way = it.data.way,
                     detail = it.data.detail
                 )

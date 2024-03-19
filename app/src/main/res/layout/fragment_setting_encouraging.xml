@@ -62,7 +62,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="@{trainingGoal.goal}"
+                    android:text="@{trainingGoal.title}"
                     android:textAppearance="@style/TextAppearance.Smeem.Headline3"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
