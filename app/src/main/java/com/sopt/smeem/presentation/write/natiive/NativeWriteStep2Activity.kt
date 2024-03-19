@@ -5,8 +5,12 @@ import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.lifecycleScope
 import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
+import com.sopt.smeem.data.SmeemDataStore
+import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.databinding.ActivityNativeWriteStep2Binding
 import com.sopt.smeem.description
 import com.sopt.smeem.event.AmplitudeEventType
@@ -16,7 +20,10 @@ import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.util.hideKeyboard
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.io.Serializable
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class NativeWriteStep2Activity :
@@ -82,10 +89,22 @@ class NativeWriteStep2Activity :
                     hideKeyboard(currentFocus ?: View(this))
                     viewModel.uploadDiary(
                         onSuccess = {
+                            // recent_diary_date 값 변경
+                            lifecycleScope.launch {
+                                dataStore.edit { storage ->
+                                    storage[SmeemDataStore.RECENT_DIARY_DATE] =
+                                        LocalDate.now()
+                                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                                }
+                            }
                             Intent(this, HomeActivity::class.java).apply {
                                 putExtra("retrievedBadge", it as Serializable)
-                                putExtra("snackbarText", resources.getString(R.string.diary_write_done_message))
-                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                putExtra(
+                                    "snackbarText",
+                                    resources.getString(R.string.diary_write_done_message)
+                                )
+                                flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             }.run(::startActivity)
                         },
                         onError = { e ->

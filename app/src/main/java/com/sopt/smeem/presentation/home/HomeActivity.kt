@@ -20,6 +20,8 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.lifecycleScope
 import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
+import com.sopt.smeem.data.SmeemDataStore.RECENT_DIARY_DATE
+import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.event.AmplitudeEventType
@@ -32,9 +34,12 @@ import com.sopt.smeem.presentation.home.calendar.core.CalendarIntent
 import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
 import com.sopt.smeem.presentation.mypage.MyPageActivity
+import com.sopt.smeem.util.DateUtil
 import com.sopt.smeem.util.getWeekStartDate
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -120,11 +125,21 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 )
                 onIntent(CalendarIntent.SelectDate(date = day))
             }
+            // recent_diary_date 값 불러오기
+            lateinit var recentDiaryDate: LocalDate
+            val recentDiaryDateFlow: Flow<String> = dataStore.data
+                .map { storage ->
+                    storage[RECENT_DIARY_DATE] ?: "2023-01-14"
+                }
+            recentDiaryDateFlow.map { date ->
+                recentDiaryDate = DateUtil.asLocalDate(date)
+            }
+            // 일기작성 버튼 노출 로직
             binding.btnWriteDiary.visibility =
-                if (homeViewModel.diaryList.value == null) {
-                    View.VISIBLE
-                } else {
+                if (recentDiaryDate == LocalDate.now()) {
                     View.INVISIBLE
+                } else {
+                    View.VISIBLE
                 }
         }
         showDiaryCompleted()

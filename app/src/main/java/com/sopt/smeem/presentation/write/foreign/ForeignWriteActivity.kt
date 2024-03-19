@@ -4,9 +4,13 @@ import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
+import com.sopt.smeem.data.SmeemDataStore.RECENT_DIARY_DATE
+import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.databinding.ActivityForeignWriteBinding
 import com.sopt.smeem.description
 import com.sopt.smeem.event.AmplitudeEventType
@@ -18,7 +22,10 @@ import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
 import com.sopt.smeem.util.hideKeyboard
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.io.Serializable
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class ForeignWriteActivity :
@@ -105,6 +112,14 @@ class ForeignWriteActivity :
                     hideKeyboard(currentFocus ?: View(this))
                     viewModel.uploadDiary(
                         onSuccess = {
+                            // recent_diary_date 값 변경
+                            lifecycleScope.launch {
+                                dataStore.edit { storage ->
+                                    storage[RECENT_DIARY_DATE] =
+                                        LocalDate.now()
+                                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                                }
+                            }
                             Intent(this, HomeActivity::class.java).apply {
                                 putExtra("retrievedBadge", it as Serializable)
                                 putExtra(
