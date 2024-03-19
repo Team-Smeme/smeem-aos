@@ -29,6 +29,11 @@ class JoinWithNicknameActivity :
         onNext()
     }
 
+    // 뒤로가기 아예 막아버림.
+    override fun onBackPressed() {
+        // super.onBackPressed()
+    }
+
     private fun onTextWrite() {
         binding.etEntranceNickname.addTextChangedListener { watcher ->
             if (watcher.isNullOrBlank() || watcher.length > 10) {
@@ -68,7 +73,6 @@ class JoinWithNicknameActivity :
                     toAgreement.putExtra(ACCESS_TOKEN, intent.getStringExtra(ACCESS_TOKEN))
                     toAgreement.putExtra(REFRESH_TOKEN, intent.getStringExtra(REFRESH_TOKEN))
                     startActivity(toAgreement)
-                    if (!isFinishing) finish()
                 }
             }
         }
