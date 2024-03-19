@@ -64,7 +64,7 @@ class HomeViewModel @Inject constructor(
     val visibleDates: StateFlow<Array<List<Date>>> = _visibleDates
 
     private val _selectedDate = MutableStateFlow(LocalDate.now())
-    val selectedDate: StateFlow<LocalDate> = _selectedDate
+    val selectedDate: StateFlow<LocalDate> = _selectedDate.asStateFlow()
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
@@ -109,7 +109,7 @@ class HomeViewModel @Inject constructor(
             diaryRepository.getDiaries(start = dateAsString, end = dateAsString)
         }.fold({
             _diaryList.postValue(
-                it.getOrNull()?.diaries?.values?.firstOrNull()
+                it.getOrNull()?.diaries?.values?.firstOrNull(),
             )
         }, {
             Timber.e(it.message.toString())

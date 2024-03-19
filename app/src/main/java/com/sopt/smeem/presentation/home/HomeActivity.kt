@@ -39,6 +39,7 @@ import com.sopt.smeem.util.getWeekStartDate
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -67,7 +68,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 SmeemTheme {
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
-                        color = MaterialTheme.colorScheme.background
+                        color = MaterialTheme.colorScheme.background,
                     ) {
                         SmeemCalendar()
                     }
@@ -98,7 +99,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
         Column(Modifier.verticalScroll(scrollState)) {
             SmeemCalendarImpl(
-                onDayClick = { selectedDate = it }
+                onDayClick = { selectedDate = it },
             )
         }
     }
@@ -121,8 +122,8 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 onIntent(
                     CalendarIntent.LoadNextDates(
                         startDate = day.minusWeeks(1).getWeekStartDate(),
-                        period = Period.WEEK
-                    )
+                        period = Period.WEEK,
+                    ),
                 )
                 onIntent(CalendarIntent.SelectDate(date = day))
                 updateWriteDiaryButtonVisibility()
@@ -160,14 +161,16 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             .map { storage ->
                 storage[RECENT_DIARY_DATE] ?: "2023-01-14"
             }
+
         recentDiaryDateFlow.collect { date ->
             val recent = DateUtil.asLocalDate(date)
             val isTodaySelected = homeViewModel.selectedDate.value == LocalDate.now()
             val isTodayDiaryWritten = recent == LocalDate.now()
-            binding.btnWriteDiary.visibility = when {
-                !isTodaySelected -> View.VISIBLE
-                !isTodayDiaryWritten -> View.VISIBLE
-                else -> View.INVISIBLE
+
+            binding.btnWriteDiary.visibility = if (isTodaySelected && !isTodayDiaryWritten) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
             }
         }
     }
@@ -182,7 +185,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private fun observeData() {
         lifecycleScope.launch {
-            homeViewModel.selectedDate.collect {
+            homeViewModel.selectedDate.collectLatest {
                 updateWriteDiaryButtonVisibility()
             }
         }
