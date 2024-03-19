@@ -67,9 +67,9 @@ class HomeViewModel @Inject constructor(
     val currentMonth: StateFlow<YearMonth>
         get() = isCalendarExpanded.zip(visibleDates) { isExpanded, dates ->
             when {
-                isExpanded -> dates[1][dates[1].size / 2].day.toYearMonth()
-                dates[1].count { it.day.month == dates[1][0].day.month } > 3 -> dates[1][0].day.toYearMonth()
-                else -> dates[1][dates[1].size - 1].day.toYearMonth()
+                isExpanded -> dates[PRESENT][dates[PRESENT].size / 2].day.toYearMonth()
+                dates[PRESENT].count { it.day.month == dates[PRESENT][FIRST_IN_ARRAY].day.month } > 3 -> dates[PRESENT][FIRST_IN_ARRAY].day.toYearMonth()
+                else -> dates[PRESENT][dates[PRESENT].size - 1].day.toYearMonth()
             }
         }.stateIn(viewModelScope, SharingStarted.Eagerly, LocalDate.now().toYearMonth())
 
@@ -82,19 +82,14 @@ class HomeViewModel @Inject constructor(
     // diary
     suspend fun getDates(startDate: LocalDate, period: Period): List<LocalDate> {
         var diaryDates: List<LocalDate> = emptyList()
-        val start = when(period) {
-            Period.WEEK -> startDate.plusWeeks(1)
-            Period.MONTH -> startDate.plusMonths(1)
+        val endDate = when (period) {
+            Period.WEEK -> startDate.plusDays(END_DATE_AFTER_THREE_WEEKS)
+            Period.MONTH -> startDate.plusMonths(START_DATE_AFTER_THREE_MONTHS).minusDays(1)
         }
-        val end = when(period) {
-            Period.WEEK -> start.plusDays(6)
-            Period.MONTH -> start.plusMonths(1).minusDays(1)
-        }
-        val startAsString = DateUtil.WithServer.asStringOnlyDate(start)
-        val endAsString = DateUtil.WithServer.asStringOnlyDate(end)
+        val startAsString = DateUtil.WithServer.asStringOnlyDate(startDate)
+        val endAsString = DateUtil.WithServer.asStringOnlyDate(endDate)
 
         kotlin.runCatching {
-            Timber.tag("server called!")
             diaryRepository.getDiaries(startAsString, endAsString)
         }.fold({
             diaryDates = it.getOrNull()?.diaries?.keys?.toList() ?: emptyList()
@@ -125,11 +120,10 @@ class HomeViewModel @Inject constructor(
 
     // calendar
     fun onIntent(intent: CalendarIntent) {
-        Timber.tag("what intent?").d(intent.toString())
         when (intent) {
             CalendarIntent.ExpandCalendar -> {
                 calculateCalendarDates(
-                    startDate = currentMonth.value.minusMonths(1).atDay(1),
+                    startDate = currentMonth.value.minusMonths(1).atDay(FIRST),
                     period = Period.MONTH
                 )
                 _isCalendarExpanded.value = true
@@ -151,7 +145,6 @@ class HomeViewModel @Inject constructor(
 
             is CalendarIntent.SelectDate -> {
                 viewModelScope.launch {
-                    Timber.d(intent.date.toString())
                     _diaryList.postValue(getDateDiary(intent.date))
                     _selectedDate.emit(intent.date)
                 }
@@ -163,56 +156,45 @@ class HomeViewModel @Inject constructor(
         startDate: LocalDate,
         period: Period = Period.WEEK
     ) {
-        Timber.d("calculateCalendarDates invoked!")
         viewModelScope.launch(Dispatchers.IO) {
             _diaryDateList.postValue(
                 when (period) {
-                    Period.WEEK -> {
-                        Timber.d("getDates(week)")
-                        getDates(startDate, Period.WEEK)
-                    }
-                    Period.MONTH -> {
-                        Timber.d("getDates(month)")
-                        getDates(startDate, Period.MONTH)
-                    }
+                    Period.WEEK -> getDates(startDate, Period.WEEK)
+
+                    Period.MONTH -> getDates(startDate, Period.MONTH)
                 }
             )
             _visibleDates.emit(
                 when (period) {
-                    Period.WEEK -> {
-                        Timber.d("calculateWeeklyCalendarDays invoked!")
-                        calculateWeeklyCalendarDays(startDate)
-                    }
-                    Period.MONTH -> {
-                        Timber.d("calculateMonthlyCalendarDays invoked!")
-                        calculateMonthlyCalendarDays(startDate)
-                    }
+                    Period.WEEK -> calculateWeeklyCalendarDays(startDate)
+
+                    Period.MONTH -> calculateMonthlyCalendarDays(startDate)
                 }
             )
         }
     }
 
     private fun calculateWeeklyCalendarVisibleStartDay(): LocalDate {
-        val halfOfMonth = visibleDates.value[1][visibleDates.value[1].size / 2]
+        val halfOfMonth = visibleDates.value[PRESENT][visibleDates.value[PRESENT].size / 2]
         val visibleMonth = YearMonth.of(halfOfMonth.day.year, halfOfMonth.day.month)
         return if (selectedDate.value.month == visibleMonth.month && selectedDate.value.year == visibleMonth.year)
             selectedDate.value
-        else visibleMonth.atDay(1)
+        else visibleMonth.atDay(FIRST)
     }
 
     private fun calculateWeeklyCalendarDays(startDate: LocalDate): Array<List<Date>> {
         val dateList = mutableListOf<Date>()
 
-        startDate.getNextDates(21).map {
-            dateList.add(Date(it, true, diaryDateList.value?.contains(it) == true ))
+        startDate.getNextDates(THREE_WEEKS).map {
+            dateList.add(Date(it, true, diaryDateList.value?.contains(it) == true))
         }
-        return Array(3) {
+        return Array(DATELIST_SIZE) {
             dateList.slice(it * 7 until (it + 1) * 7)
         }
     }
 
     private fun calculateMonthlyCalendarDays(startDate: LocalDate): Array<List<Date>> {
-        return Array(3) { monthIndex ->
+        return Array(DATELIST_SIZE) { monthIndex ->
             val monthFirstDate = startDate.plusMonths(monthIndex.toLong())
             val monthLastDate = monthFirstDate.plusMonths(1).minusDays(1)
 
@@ -226,12 +208,22 @@ class HomeViewModel @Inject constructor(
                 } +
                         monthFirstDate.getNextDates(monthFirstDate.month.length(monthFirstDate.isLeapYear))
                             .map {
-                                Date(it, true, diaryDateList.value?.contains(it) == true )
+                                Date(it, true, diaryDateList.value?.contains(it) == true)
                             } +
                         monthLastDate.getRemainingDatesInWeek().map {
-                            Date(it, false, diaryDateList.value?.contains(it) == true )
+                            Date(it, false, diaryDateList.value?.contains(it) == true)
                         }
             }
         }
+    }
+
+    companion object {
+        const val PRESENT = 1
+        const val FIRST_IN_ARRAY = 0
+        const val FIRST = 1
+        const val END_DATE_AFTER_THREE_WEEKS: Long = 20
+        const val START_DATE_AFTER_THREE_MONTHS: Long = 3
+        const val THREE_WEEKS = 21
+        const val DATELIST_SIZE = 3
     }
 }
