@@ -5,10 +5,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.domain.model.Date
@@ -20,34 +23,44 @@ internal fun WeeklyCalendar(
     selectedDate: LocalDate,
     loadNextWeek: (nextWeekDate: LocalDate) -> Unit,
     loadPrevWeek: (endWeekDate: LocalDate) -> Unit,
-    onDayClick: (LocalDate) -> Unit
+    onDayClick: (LocalDate) -> Unit,
+    isLoading: Boolean,
 ) {
     val itemWidth = (LocalConfiguration.current.screenWidthDp.dp - 38.dp) / 7
-    CalendarPager(
-        dateList = dateList,
-        loadNextDates = loadNextWeek,
-        loadPrevDates = loadPrevWeek
-    ) { currentPage ->
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 18.dp, end = 18.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            dateList[currentPage].forEach { date ->
-                Box(
-                    modifier = Modifier
-                        .width(itemWidth),
-                    contentAlignment = Alignment.Center
-                ) {
-                    DayItem(
-                        date = date.day,
-                        onDayClick = onDayClick,
-                        isSelected = selectedDate == date.day,
-                        isDiaryWritten = date.isDiaryWritten
-                    )
+
+    Box { // 전체를 감싸는 Box 추가
+        CalendarPager(
+            dateList = dateList,
+            loadNextDates = loadNextWeek,
+            loadPrevDates = loadPrevWeek,
+        ) { currentPage ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 18.dp, end = 18.dp),
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                dateList[currentPage].forEach { date ->
+                    Box(
+                        modifier = Modifier
+                            .width(itemWidth),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        DayItem(
+                            date = date.day,
+                            onDayClick = onDayClick,
+                            isSelected = selectedDate == date.day,
+                            isDiaryWritten = date.isDiaryWritten,
+                        )
+                    }
                 }
             }
+        }
+        if (isLoading) { // 로딩 상태일 때 인디케이터 표시
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center).size(1.dp),
+                color = Color.Transparent,
+            )
         }
     }
 }

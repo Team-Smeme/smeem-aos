@@ -31,13 +31,14 @@ import java.time.YearMonth
 
 @Composable
 fun SmeemCalendarImpl(
-    onDayClick: (LocalDate) -> Unit
+    onDayClick: (LocalDate) -> Unit,
 ) {
     val viewModel: HomeViewModel = viewModel()
     val dateList = viewModel.visibleDates.collectAsState()
     val selectedDate = viewModel.selectedDate.collectAsState()
     val isCalendarExpanded = viewModel.isCalendarExpanded.collectAsState()
     val currentMonth = viewModel.currentMonth.collectAsState()
+    val isLoading = viewModel.isLoading.collectAsState()
 
     SmeemCalendarImpl(
         dateList = dateList.value,
@@ -45,7 +46,8 @@ fun SmeemCalendarImpl(
         currentMonth = currentMonth.value,
         onIntent = viewModel::onIntent,
         isCalendarExpanded = isCalendarExpanded.value,
-        onDayClick = onDayClick
+        onDayClick = onDayClick,
+        isLoading = isLoading.value,
     )
 }
 
@@ -56,7 +58,8 @@ private fun SmeemCalendarImpl(
     currentMonth: YearMonth,
     onIntent: (CalendarIntent) -> Unit,
     isCalendarExpanded: Boolean,
-    onDayClick: (LocalDate) -> Unit
+    onDayClick: (LocalDate) -> Unit,
+    isLoading: Boolean,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -71,11 +74,11 @@ private fun SmeemCalendarImpl(
                         onIntent(CalendarIntent.ExpandCalendar)
                     }
                 }
-            }
+            },
     ) {
         CalendarTitle(
             selectedMonth = currentMonth,
-            modifier = Modifier.padding(vertical = 18.dp)
+            modifier = Modifier.padding(vertical = 18.dp),
         )
         WeekLabel()
         if (isCalendarExpanded) {
@@ -87,33 +90,43 @@ private fun SmeemCalendarImpl(
                     onIntent(
                         CalendarIntent.LoadNextDates(
                             startDate = yearMonth.atDay(1),
-                            period = Period.MONTH
-                        )
+                            period = Period.MONTH,
+                        ),
                     )
                 },
                 onDayClick = {
                     onIntent(CalendarIntent.SelectDate(it))
                     onDayClick(it)
-                }
+                },
+                isLoading = isLoading,
             )
         } else {
             WeeklyCalendar(
                 dateList = dateList,
                 selectedDate = selectedDate,
-                loadNextWeek = { nextWeekDate -> onIntent(CalendarIntent.LoadNextDates(nextWeekDate)) },
+                loadNextWeek = { nextWeekDate ->
+                    onIntent(
+                        CalendarIntent.LoadNextDates(
+                            startDate = nextWeekDate,
+                            period = Period.WEEK,
+                        ),
+                    )
+                },
                 loadPrevWeek = { endWeekDate ->
                     onIntent(
                         CalendarIntent.LoadNextDates(
-                            endWeekDate.minusDays(
-                                1
-                            ).getWeekStartDate()
-                        )
+                            startDate = endWeekDate.minusDays(
+                                1,
+                            ).getWeekStartDate(),
+                            period = Period.WEEK,
+                        ),
                     )
                 },
                 onDayClick = {
                     onIntent(CalendarIntent.SelectDate(it))
                     onDayClick(it)
-                }
+                },
+                isLoading = isLoading,
             )
         }
         Spacer(
@@ -123,15 +136,15 @@ private fun SmeemCalendarImpl(
                     min = when {
                         isCalendarExpanded -> 24.dp
                         else -> 4.dp
-                    }
-                )
+                    },
+                ),
         )
         CalendarToggleSlider(
-            modifier = Modifier.padding(vertical = 12.dp)
+            modifier = Modifier.padding(vertical = 12.dp),
         )
         Divider(
             color = gray100,
-            thickness = 4.dp
+            thickness = 4.dp,
         )
     }
 }
