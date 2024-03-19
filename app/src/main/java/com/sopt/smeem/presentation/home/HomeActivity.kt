@@ -49,6 +49,7 @@ import java.util.Locale
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     lateinit var bs: WritingBottomSheet
+    lateinit var recentDiaryDate: LocalDate
 
     private val homeViewModel by viewModels<HomeViewModel>()
     private val eventVm: EventVM by viewModels()
@@ -124,23 +125,8 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                     )
                 )
                 onIntent(CalendarIntent.SelectDate(date = day))
+                updateWriteDiaryButtonVisibility()
             }
-            // recent_diary_date 값 불러오기
-            lateinit var recentDiaryDate: LocalDate
-            val recentDiaryDateFlow: Flow<String> = dataStore.data
-                .map { storage ->
-                    storage[RECENT_DIARY_DATE] ?: "2023-01-14"
-                }
-            recentDiaryDateFlow.map { date ->
-                recentDiaryDate = DateUtil.asLocalDate(date)
-            }
-            // 일기작성 버튼 노출 로직
-            binding.btnWriteDiary.visibility =
-                if (recentDiaryDate == LocalDate.now()) {
-                    View.INVISIBLE
-                } else {
-                    View.VISIBLE
-                }
         }
         showDiaryCompleted()
         showBadgeDialog()
@@ -169,6 +155,23 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
     }
 
+    private suspend fun updateWriteDiaryButtonVisibility() {
+        val recentDiaryDateFlow: Flow<String> = dataStore.data
+            .map { storage ->
+                storage[RECENT_DIARY_DATE] ?: "2023-01-14"
+            }
+        recentDiaryDateFlow.collect { date ->
+            val recent = DateUtil.asLocalDate(date)
+            val isTodaySelected = homeViewModel.selectedDate.value == LocalDate.now()
+            val isTodayDiaryWritten = recent == LocalDate.now()
+            binding.btnWriteDiary.visibility = when {
+                !isTodaySelected -> View.VISIBLE
+                !isTodayDiaryWritten -> View.VISIBLE
+                else -> View.INVISIBLE
+            }
+        }
+    }
+
     private fun setInitListener() {
         binding.clDiaryList.setOnSingleClickListener {
             Intent(this, DiaryDetailActivity::class.java).apply {
@@ -180,13 +183,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     private fun observeData() {
         lifecycleScope.launch {
             homeViewModel.selectedDate.collect {
-                when {
-                    homeViewModel.diaryList.value != null -> binding.btnWriteDiary.visibility =
-                        View.INVISIBLE
-
-                    it == LocalDate.now() -> binding.btnWriteDiary.visibility = View.VISIBLE
-                    else -> binding.btnWriteDiary.visibility = View.INVISIBLE
-                }
+                updateWriteDiaryButtonVisibility()
             }
         }
         // 홈에 일기 띄우는 로직
