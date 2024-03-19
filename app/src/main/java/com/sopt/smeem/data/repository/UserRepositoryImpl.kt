@@ -51,6 +51,7 @@ class UserRepositoryImpl(
                 myPageBadge = MyPageBadge.from(response.data.badge),
                 hasPushAlarm = response.data.hasPushAlarm,
                 goal = TrainingGoal(
+                    title = response.data.title,
                     goal = response.data.target,
                     detail = response.data.detail ?: "",
                     way = response.data.way ?: ""
