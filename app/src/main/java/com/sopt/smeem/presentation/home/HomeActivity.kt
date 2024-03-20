@@ -20,6 +20,8 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.lifecycleScope
 import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
+import com.sopt.smeem.data.SmeemDataStore.RECENT_DIARY_DATE
+import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.event.AmplitudeEventType
@@ -32,9 +34,13 @@ import com.sopt.smeem.presentation.home.calendar.core.CalendarIntent
 import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
 import com.sopt.smeem.presentation.mypage.MyPageActivity
+import com.sopt.smeem.util.DateUtil
 import com.sopt.smeem.util.getWeekStartDate
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -44,6 +50,7 @@ import java.util.Locale
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     lateinit var bs: WritingBottomSheet
+    lateinit var recentDiaryDate: LocalDate
 
     private val homeViewModel by viewModels<HomeViewModel>()
     private val eventVm: EventVM by viewModels()
@@ -61,7 +68,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 SmeemTheme {
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
-                        color = MaterialTheme.colorScheme.background
+                        color = MaterialTheme.colorScheme.background,
                     ) {
                         SmeemCalendar()
                     }
@@ -92,7 +99,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
         Column(Modifier.verticalScroll(scrollState)) {
             SmeemCalendarImpl(
-                onDayClick = { selectedDate = it }
+                onDayClick = { selectedDate = it },
             )
         }
     }
@@ -115,17 +122,12 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 onIntent(
                     CalendarIntent.LoadNextDates(
                         startDate = day.minusWeeks(1).getWeekStartDate(),
-                        period = Period.WEEK
-                    )
+                        period = Period.WEEK,
+                    ),
                 )
                 onIntent(CalendarIntent.SelectDate(date = day))
+                updateWriteDiaryButtonVisibility()
             }
-            binding.btnWriteDiary.visibility =
-                if (homeViewModel.diaryList.value == null) {
-                    View.VISIBLE
-                } else {
-                    View.INVISIBLE
-                }
         }
         showDiaryCompleted()
         showBadgeDialog()
@@ -154,6 +156,25 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
     }
 
+    private suspend fun updateWriteDiaryButtonVisibility() {
+        val recentDiaryDateFlow: Flow<String> = dataStore.data
+            .map { storage ->
+                storage[RECENT_DIARY_DATE] ?: "2023-01-14"
+            }
+
+        recentDiaryDateFlow.collect { date ->
+            val recent = DateUtil.asLocalDate(date)
+            val isTodaySelected = homeViewModel.selectedDate.value == LocalDate.now()
+            val isTodayDiaryWritten = recent == LocalDate.now()
+
+            binding.btnWriteDiary.visibility = if (isTodaySelected && !isTodayDiaryWritten) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
+        }
+    }
+
     private fun setInitListener() {
         binding.clDiaryList.setOnSingleClickListener {
             Intent(this, DiaryDetailActivity::class.java).apply {
@@ -164,14 +185,8 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private fun observeData() {
         lifecycleScope.launch {
-            homeViewModel.selectedDate.collect {
-                when {
-                    homeViewModel.diaryList.value != null -> binding.btnWriteDiary.visibility =
-                        View.INVISIBLE
-
-                    it == LocalDate.now() -> binding.btnWriteDiary.visibility = View.VISIBLE
-                    else -> binding.btnWriteDiary.visibility = View.INVISIBLE
-                }
+            homeViewModel.selectedDate.collectLatest {
+                updateWriteDiaryButtonVisibility()
             }
         }
         // 홈에 일기 띄우는 로직
