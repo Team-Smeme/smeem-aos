@@ -20,17 +20,27 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.lifecycleScope
 import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
+import com.sopt.smeem.data.SmeemDataStore.RECENT_DIARY_DATE
+import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.domain.model.RetrievedBadge
+import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.home.calendar.SmeemCalendarImpl
+import com.sopt.smeem.presentation.home.calendar.core.CalendarIntent
+import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
 import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.util.DateUtil
+import com.sopt.smeem.util.getWeekStartDate
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -39,18 +49,18 @@ import java.util.Locale
 @AndroidEntryPoint
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
-    private var todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-    private var weeklyDate = todayDate
     lateinit var bs: WritingBottomSheet
+    lateinit var recentDiaryDate: LocalDate
 
     private val homeViewModel by viewModels<HomeViewModel>()
+    private val eventVm: EventVM by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val calendar = binding.composeCalendar
         bs = WritingBottomSheet()
-        initView(weeklyDate)
+        initView(LocalDate.now())
         setInitListener()
         calendar.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
@@ -58,7 +68,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 SmeemTheme {
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
-                        color = MaterialTheme.colorScheme.background
+                        color = MaterialTheme.colorScheme.background,
                     ) {
                         SmeemCalendar()
                     }
@@ -69,30 +79,17 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         moveToMyPage()
         observeData()
         onTouchWrite()
+        eventVm.sendEvent(AmplitudeEventType.HOME_VIEW)
     }
 
     override fun onResume() {
         super.onResume()
-
-        lifecycleScope.launch {
-            homeViewModel.getDateDiary(DateUtil.asLocalDate(todayDate))
-
-            if (homeViewModel.diaryList.value != null) {
-                binding.btnWriteDiary.visibility = View.INVISIBLE
-            }
-        }
+        initView(LocalDate.now())
     }
 
     override fun onRestart() {
         super.onRestart()
-
-        lifecycleScope.launch {
-            homeViewModel.getDateDiary(DateUtil.asLocalDate(todayDate))
-
-            if (homeViewModel.diaryList.value != null) {
-                binding.btnWriteDiary.visibility = View.INVISIBLE
-            }
-        }
+        initView(LocalDate.now())
     }
 
     @Composable
@@ -102,7 +99,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
         Column(Modifier.verticalScroll(scrollState)) {
             SmeemCalendarImpl(
-                onDayClick = { selectedDate = it }
+                onDayClick = { selectedDate = it },
             )
         }
     }
@@ -119,15 +116,18 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
     }
 
-    private fun initView(day: String) {
+    private fun initView(day: LocalDate) {
         lifecycleScope.launch {
-            homeViewModel.getDateDiary(DateUtil.asLocalDate(day))
-            binding.btnWriteDiary.visibility =
-                if (homeViewModel.diaryList.value == null) {
-                    View.VISIBLE
-                } else {
-                    View.INVISIBLE
-                }
+            with(homeViewModel) {
+                onIntent(
+                    CalendarIntent.LoadNextDates(
+                        startDate = day.minusWeeks(1).getWeekStartDate(),
+                        period = Period.WEEK,
+                    ),
+                )
+                onIntent(CalendarIntent.SelectDate(date = day))
+                updateWriteDiaryButtonVisibility()
+            }
         }
         showDiaryCompleted()
         showBadgeDialog()
@@ -156,6 +156,25 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
     }
 
+    private suspend fun updateWriteDiaryButtonVisibility() {
+        val recentDiaryDateFlow: Flow<String> = dataStore.data
+            .map { storage ->
+                storage[RECENT_DIARY_DATE] ?: "2023-01-14"
+            }
+
+        recentDiaryDateFlow.collect { date ->
+            val recent = DateUtil.asLocalDate(date)
+            val isTodaySelected = homeViewModel.selectedDate.value == LocalDate.now()
+            val isTodayDiaryWritten = recent == LocalDate.now()
+
+            binding.btnWriteDiary.visibility = if (isTodaySelected && !isTodayDiaryWritten) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
+        }
+    }
+
     private fun setInitListener() {
         binding.clDiaryList.setOnSingleClickListener {
             Intent(this, DiaryDetailActivity::class.java).apply {
@@ -166,28 +185,24 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private fun observeData() {
         lifecycleScope.launch {
-            homeViewModel.selectedDate.collect {
-                when {
-                    homeViewModel.diaryList.value != null -> binding.btnWriteDiary.visibility =
-                        View.INVISIBLE
-
-                    it == LocalDate.now() -> binding.btnWriteDiary.visibility = View.VISIBLE
-                    else -> binding.btnWriteDiary.visibility = View.INVISIBLE
-                }
+            homeViewModel.selectedDate.collectLatest {
+                updateWriteDiaryButtonVisibility()
             }
         }
+        // 홈에 일기 띄우는 로직
         homeViewModel.diaryList.observe(this) {
-            if (it == null) {
-                binding.clDiaryList.visibility = View.GONE
-                binding.clNoDiary.visibility = View.VISIBLE
-            } else {
-                binding.clDiaryList.visibility = View.VISIBLE
-                binding.clNoDiary.visibility = View.GONE
+            val timeFormatter = DateTimeFormatter.ofPattern("h : mm a", Locale.ENGLISH)
 
-                val timeFormatter = DateTimeFormatter.ofPattern("h : mm a", Locale.ENGLISH)
-
-                binding.tvDiaryWritenTime.text = it.createdAt.format(timeFormatter)
-                binding.tvDiary.text = it.content
+            with(homeViewModel.diaryList.value) {
+                if (this == null) {
+                    binding.clDiaryList.visibility = View.GONE
+                    binding.clNoDiary.visibility = View.VISIBLE
+                } else {
+                    binding.clDiaryList.visibility = View.VISIBLE
+                    binding.clNoDiary.visibility = View.GONE
+                    binding.tvDiaryWritenTime.text = this.createdAt.format(timeFormatter)
+                    binding.tvDiary.text = this.content
+                }
             }
         }
     }

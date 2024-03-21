@@ -6,7 +6,7 @@ data class MyPageBadge(
     val badgeId: Long,
     val title: String,
     val description: String?,
-    val badgeType: BadgeType,
+    val badgeType: String,
     val imageUrl: String?
 ) {
     companion object {

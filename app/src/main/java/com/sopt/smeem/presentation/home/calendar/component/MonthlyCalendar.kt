@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.domain.model.Date
@@ -23,37 +25,47 @@ internal fun MonthlyCalendar(
     selectedDate: LocalDate,
     currentMonth: YearMonth,
     loadDatesForMonth: (YearMonth) -> Unit,
-    onDayClick: (LocalDate) -> Unit
+    onDayClick: (LocalDate) -> Unit,
+    isLoading: Boolean,
 ) {
     val itemWidth = (LocalConfiguration.current.screenWidthDp.dp - 38.dp) / 7
-    CalendarPager(
-        dateList = dateList,
-        loadNextDates = { loadDatesForMonth(currentMonth) },
-        loadPrevDates = { loadDatesForMonth(currentMonth.minusMonths(2)) }
-    ) { currentPage ->
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 18.dp, end = 18.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            dateList[currentPage].forEachIndexed { index, date ->
-                Box(
-                    modifier = Modifier
-                        .width(itemWidth),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    DayItem(
-                        date = date.day,
-                        isSelected = date.isCurrentMonth && selectedDate == date.day,
-                        isCurrentMonth = date.isCurrentMonth,
-                        isDiaryWritten = date.isDiaryWritten,
-                        onDayClick = { onDayClick(date.day) },
-                        isFirstWeek = index < 7,
-                        isSixWeeks = dateList[currentPage].size > 35
-                    )
+
+    Box {
+        CalendarPager(
+            dateList = dateList,
+            loadNextDates = { loadDatesForMonth(currentMonth) },
+            loadPrevDates = { loadDatesForMonth(currentMonth.minusMonths(2)) },
+        ) { currentPage ->
+            FlowRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 18.dp, end = 18.dp),
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                dateList[currentPage].forEachIndexed { index, date ->
+                    Box(
+                        modifier = Modifier
+                            .width(itemWidth),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        DayItem(
+                            date = date.day,
+                            isSelected = date.isCurrentMonth && selectedDate == date.day,
+                            isCurrentMonth = date.isCurrentMonth,
+                            isDiaryWritten = date.isDiaryWritten,
+                            onDayClick = { onDayClick(date.day) },
+                            isFirstWeek = index < 7,
+                            isSixWeeks = dateList[currentPage].size > 35,
+                        )
+                    }
                 }
             }
+        }
+        if (isLoading) { // 로딩 상태일 때 인디케이터 표시
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+                color = Color.Transparent,
+            )
         }
     }
 }

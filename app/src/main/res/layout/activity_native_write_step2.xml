@@ -22,7 +22,7 @@
             layout="@layout/diary_write_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:isNext="@{true}"
+            app:hasNext="@{false}"
             app:language="@{@string/language_english}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityDiaryDetailBinding
 import com.sopt.smeem.description
+import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.home.HomeActivity
@@ -29,6 +30,7 @@ class DiaryDetailActivity :
         viewModel.getDiaryDetail { e->
             Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()
         }
+        eventVm.sendEvent(AmplitudeEventType.MY_DIARY_CLICK)
     }
 
     override fun addListeners() {

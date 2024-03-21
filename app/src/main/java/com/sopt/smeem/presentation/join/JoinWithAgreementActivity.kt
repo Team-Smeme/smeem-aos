@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.join
 
 import android.content.Intent
 import android.widget.Toast
+import android.window.OnBackInvokedDispatcher
 import androidx.activity.viewModels
 import com.google.android.material.button.MaterialButton
 import com.sopt.smeem.R
@@ -168,7 +169,7 @@ class JoinWithAgreementActivity :
                             )
                         ) as Serializable)
                     }.run(::startActivity)
-                    finish()
+                    finishAffinity()
                 }
 
                 false -> {

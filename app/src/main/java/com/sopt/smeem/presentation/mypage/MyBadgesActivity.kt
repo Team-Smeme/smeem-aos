@@ -1,5 +1,7 @@
 package com.sopt.smeem.presentation.mypage
 
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isInvisible
@@ -8,6 +10,9 @@ import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.databinding.ActivityMyBadgesBinding
 import com.sopt.smeem.domain.model.BadgeType
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.home.BadgeDialogFragment.Companion.FROM_BADGE_DIALOG
+import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.mypage.MyPageActivity.Companion.FROM_MY_PAGE
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -106,7 +111,22 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
 
     private fun onTouchBack() {
         binding.btnMyBadgesBack.setOnClickListener {
+            when (intent.getStringExtra(ENTER_MY_BADGES_FROM)) {
+                FROM_MY_PAGE -> Intent(this, MyPageActivity::class.java)
+                    .apply {
+                        flags = FLAG_ACTIVITY_SINGLE_TOP
+                    }.run(::startActivity)
+
+                FROM_BADGE_DIALOG -> Intent(this, HomeActivity::class.java)
+                    .apply {
+                        flags = FLAG_ACTIVITY_SINGLE_TOP
+                    }.run(::startActivity)
+            }
             finish()
         }
+    }
+
+    companion object {
+        const val ENTER_MY_BADGES_FROM = "enterMyBadgesFrom"
     }
 }

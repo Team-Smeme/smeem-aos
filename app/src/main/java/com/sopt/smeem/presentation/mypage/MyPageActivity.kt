@@ -13,6 +13,7 @@ import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.EventVM
+import com.sopt.smeem.presentation.mypage.MyBadgesActivity.Companion.ENTER_MY_BADGES_FROM
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -96,7 +97,12 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
 
     private fun onTouchBadge() {
         binding.layoutMyPageBadges.setOnClickListener {
-            startActivity(Intent(this, MyBadgesActivity::class.java))
+            Intent(this, MyBadgesActivity::class.java)
+                .apply {
+                    putExtra(ENTER_MY_BADGES_FROM, FROM_MY_PAGE)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
+                .run(::startActivity)
         }
     }
 
@@ -218,5 +224,9 @@ class MyPageActivity : BindingActivity<ActivityMyPageBinding>(R.layout.activity_
 
     private fun canTouch() {
         binding.layoutMyPageAlarmTimeTable.isClickable = true
+    }
+
+    companion object {
+        const val FROM_MY_PAGE = "fromMyPage"
     }
 }

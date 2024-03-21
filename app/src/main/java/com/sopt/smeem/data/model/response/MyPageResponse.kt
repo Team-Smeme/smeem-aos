@@ -4,6 +4,7 @@ import com.sopt.smeem.domain.model.BadgeType
 
 data class MyPageResponse(
     val username: String,
+    val title: String,
     val target: String,
     val way: String?,
     val detail: String?,
@@ -21,7 +22,7 @@ data class MyPageResponse(
     data class MyPageBadgeResponse(
         val id: Long,
         val name: String,
-        val type: BadgeType,
+        val type: String,
         val imageUrl: String,
         val description: String?
     )
