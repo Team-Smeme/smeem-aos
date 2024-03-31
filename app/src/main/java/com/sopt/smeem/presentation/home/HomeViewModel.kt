@@ -46,7 +46,7 @@ class HomeViewModel @Inject constructor(
 
     // diary
     private val _diaryDateList: MutableStateFlow<List<LocalDate>> = MutableStateFlow(emptyList())
-    val diaryDateList: StateFlow<List<LocalDate>> = _diaryDateList.asStateFlow()
+//    val diaryDateList: StateFlow<List<LocalDate>> = _diaryDateList.asStateFlow()
 
     private val _diaryList: MutableLiveData<DiarySummary?> = MutableLiveData()
     val diaryList: LiveData<DiarySummary?>
@@ -178,6 +178,14 @@ class HomeViewModel @Inject constructor(
                     Period.MONTH -> getDates(startDate, Period.MONTH)
                 },
             )
+
+            _visibleDates.emit(
+                when (period) {
+                    Period.WEEK -> calculateWeeklyCalendarDays(startDate)
+                    Period.MONTH -> calculateMonthlyCalendarDays(startDate)
+                },
+            )
+
             _isLoading.emit(false)
         }
     }
@@ -196,7 +204,7 @@ class HomeViewModel @Inject constructor(
         val dateList = mutableListOf<Date>()
 
         startDate.getNextDates(THREE_WEEKS).map {
-            dateList.add(Date(it, true, diaryDateList.value?.contains(it) == true))
+            dateList.add(Date(it, true, _diaryDateList.value.contains(it)))
         }
         return Array(DATELIST_SIZE) {
             dateList.slice(it * 7 until (it + 1) * 7)
@@ -211,17 +219,17 @@ class HomeViewModel @Inject constructor(
             monthFirstDate.getWeekStartDate().let { weekBeginningDate ->
                 if (weekBeginningDate != monthFirstDate) {
                     weekBeginningDate.getRemainingDatesInMonth().map {
-                        Date(it, false, diaryDateList.value?.contains(it) == true)
+                        Date(it, false, _diaryDateList.value?.contains(it) == true)
                     }
                 } else {
                     listOf()
                 } +
                     monthFirstDate.getNextDates(monthFirstDate.month.length(monthFirstDate.isLeapYear))
                         .map {
-                            Date(it, true, diaryDateList.value?.contains(it) == true)
+                            Date(it, true, _diaryDateList.value?.contains(it) == true)
                         } +
                     monthLastDate.getRemainingDatesInWeek().map {
-                        Date(it, false, diaryDateList.value?.contains(it) == true)
+                        Date(it, false, _diaryDateList.value?.contains(it) == true)
                     }
             }
         }
