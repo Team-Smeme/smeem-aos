@@ -137,6 +137,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         val msg = intent.getStringExtra("snackbarText")
         if (msg != null) {
             DefaultSnackBar.make(binding.root, msg).show()
+            intent.removeExtra("snackbarText")
         }
     }
 
@@ -161,6 +162,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                     if (isFirstBadge) isFirstBadge = false
                 }
             }
+            intent.removeExtra("retrievedBadge")
         }
     }
 
