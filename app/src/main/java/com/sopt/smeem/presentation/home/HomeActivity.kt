@@ -142,13 +142,21 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private fun showBadgeDialog() {
         val retrievedBadge =
-            intent.getSerializableExtra("retrievedBadge") as List<RetrievedBadge>? ?: emptyList()
+            intent.getSerializableExtra("retrievedBadge") as List<RetrievedBadge>?
+                ?: emptyList()
         if (retrievedBadge.isNotEmpty()) {
             val badgeList = retrievedBadge.asReversed()
             badgeList.map { badge ->
-                BadgeDialogFragment
-                    .newInstance(badge.name, badge.imageUrl, homeViewModel.isFirstBadge)
-                    .show(supportFragmentManager, "badgeDialog")
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(
+                        BadgeDialogFragment.newInstance(
+                            badge.name,
+                            badge.imageUrl,
+                            homeViewModel.isFirstBadge
+                        ), "badgeDialog"
+                    )
+                    .commitAllowingStateLoss()
                 with(homeViewModel) {
                     if (isFirstBadge) isFirstBadge = false
                 }

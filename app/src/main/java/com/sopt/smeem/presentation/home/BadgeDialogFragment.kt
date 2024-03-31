@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -19,9 +18,14 @@ import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BadgeDialogFragment: DialogFragment() {
+class BadgeDialogFragment : DialogFragment() {
     private val binding by lazy<DialogBadgeBinding> {
-        DataBindingUtil.inflate(requireActivity().layoutInflater, R.layout.dialog_badge, null, false)
+        DataBindingUtil.inflate(
+            requireActivity().layoutInflater,
+            R.layout.dialog_badge,
+            null,
+            false
+        )
     }
     private val viewModel by viewModels<HomeViewModel>()
     private val eventVm: EventVM by viewModels()
@@ -44,25 +48,24 @@ class BadgeDialogFragment: DialogFragment() {
 
     private fun addListeners() {
         binding.btnBadgeExit.setOnSingleClickListener {
-            dismiss()
-
-            if(arguments?.getBoolean(IS_FIRST_BADGE) == true) {
+            if (arguments?.getBoolean(IS_FIRST_BADGE) == true) {
                 eventVm.sendEvent(AmplitudeEventType.WELCOME_QUIT_CLICK)
             }
+            dismiss()
         }
         binding.btnBadgeMore.setOnSingleClickListener {
+            eventVm.sendEvent(AmplitudeEventType.BADGE_MORE_CLICK)
+
+            if (arguments?.getBoolean(IS_FIRST_BADGE) == true) {
+                eventVm.sendEvent(AmplitudeEventType.WELCOME_MORE_CLICK)
+            }
+            dismiss()
             Intent(requireContext(), MyBadgesActivity::class.java)
                 .apply {
                     putExtra(ENTER_MY_BADGES_FROM, FROM_BADGE_DIALOG)
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }
                 .run(::startActivity)
-            dismiss()
-            eventVm.sendEvent(AmplitudeEventType.BADGE_MORE_CLICK)
-
-            if(arguments?.getBoolean(IS_FIRST_BADGE) == true) {
-                eventVm.sendEvent(AmplitudeEventType.WELCOME_MORE_CLICK)
-            }
         }
     }
 
@@ -89,7 +92,11 @@ class BadgeDialogFragment: DialogFragment() {
         private const val IS_FIRST_BADGE = "isFirstBadge"
         const val FROM_BADGE_DIALOG = "fromBadgeDialog"
 
-        fun newInstance(name: String, imageUrl: String, isFirstBadge: Boolean) : BadgeDialogFragment {
+        fun newInstance(
+            name: String,
+            imageUrl: String,
+            isFirstBadge: Boolean
+        ): BadgeDialogFragment {
             val args = Bundle().apply {
                 putString(BADGE_NAME, name)
                 putString(BADGE_IMAGE_URL, imageUrl)
