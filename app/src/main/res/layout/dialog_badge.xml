@@ -44,6 +44,7 @@
             <ImageView
                 android:id="@+id/iv_badge"
                 imgUrl="@{vm.badgeImageUrl}"
+                imageUrlPreload="@{vm.badgeImageUrl}"
                 android:layout_width="164dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="28dp"

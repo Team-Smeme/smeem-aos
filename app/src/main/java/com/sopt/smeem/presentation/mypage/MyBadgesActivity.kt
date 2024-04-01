@@ -50,7 +50,7 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
         viewModel.getBadges(
             onError = { t ->
                 Toast.makeText(this, t.cause.toString(), Toast.LENGTH_SHORT).show()
-            }
+            },
         )
 
         viewModel.badges.observe(this) {
@@ -62,8 +62,8 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
                 welcomeAdaptor.submitList(
                     it[BadgeType.EVENT]!! + BadgeList.event.subList(
                         it[BadgeType.EVENT]!!.size,
-                        BadgeList.event.size
-                    )
+                        BadgeList.event.size,
+                    ),
                 )
             }
 
@@ -75,8 +75,8 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
                 accumulatedAdaptor.submitList(
                     it[BadgeType.COUNTING]!! + BadgeList.counting.subList(
                         it[BadgeType.COUNTING]!!.size,
-                        BadgeList.counting.size
-                    )
+                        BadgeList.counting.size,
+                    ),
                 )
             }
 
@@ -88,8 +88,8 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
                 continuedAdaptor.submitList(
                     it[BadgeType.COMBO]!! + BadgeList.combo.subList(
                         it[BadgeType.COMBO]!!.size,
-                        BadgeList.combo.size
-                    )
+                        BadgeList.combo.size,
+                    ),
                 )
             }
 
@@ -101,11 +101,10 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
                 extraAdaptor.submitList(
                     it[BadgeType.EXPLORATION]!! + BadgeList.exploration.subList(
                         it[BadgeType.EXPLORATION]!!.size,
-                        BadgeList.exploration.size
-                    )
+                        BadgeList.exploration.size,
+                    ),
                 )
             }
-
         }
     }
 

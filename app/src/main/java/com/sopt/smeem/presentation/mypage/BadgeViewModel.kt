@@ -23,7 +23,7 @@ class BadgeViewModel @Inject constructor(
         get() = _badges
 
     fun getBadges(
-        onError: (SmeemException) -> Unit
+        onError: (SmeemException) -> Unit,
     ) {
         viewModelScope.launch {
             userRepository.getMyBadges()

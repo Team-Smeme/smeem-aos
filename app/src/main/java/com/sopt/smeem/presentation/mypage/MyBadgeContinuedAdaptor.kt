@@ -11,10 +11,9 @@ import com.sopt.smeem.presentation.mypage.MyBadgeWelcomeAdaptor.Companion.diffUt
 class MyBadgeContinuedAdaptor :
     ListAdapter<Badge, MyBadgeContinuedAdaptor.MyBadgeContinuedAdaptorViewHolder>(diffUtil) {
 
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): MyBadgeContinuedAdaptor.MyBadgeContinuedAdaptorViewHolder {
         val binding = ItemMyBadgeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyBadgeContinuedAdaptorViewHolder(binding)
@@ -22,7 +21,7 @@ class MyBadgeContinuedAdaptor :
 
     override fun onBindViewHolder(
         holder: MyBadgeContinuedAdaptor.MyBadgeContinuedAdaptorViewHolder,
-        position: Int
+        position: Int,
     ) {
         holder.onBind(currentList[position])
     }

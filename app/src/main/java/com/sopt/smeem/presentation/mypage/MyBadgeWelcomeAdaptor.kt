@@ -13,12 +13,12 @@ class MyBadgeWelcomeAdaptor :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): MyBadgeWelcomeAdaptorViewHolder {
         val binding = ItemMyBadgeBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false
+            false,
         )
         return MyBadgeWelcomeAdaptorViewHolder(binding)
     }
@@ -32,7 +32,7 @@ class MyBadgeWelcomeAdaptor :
 
         fun onBind(data: Badge) {
             with(binding) {
-                binding.badge = data
+                badge = data
             }
         }
     }

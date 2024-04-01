@@ -13,7 +13,7 @@ class MyBadgeExtraAdaptor :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): MyBadgeExtraAdaptorViewHolder {
         val binding = ItemMyBadgeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyBadgeExtraAdaptorViewHolder(binding)
@@ -27,7 +27,7 @@ class MyBadgeExtraAdaptor :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(data: Badge) {
             with(binding) {
-                binding.badge = data
+                badge = data
             }
         }
     }
