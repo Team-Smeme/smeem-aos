@@ -6,6 +6,7 @@
     <data>
 
         <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.sopt.smeem.presentation.detail.DiaryDetailViewModel" />
@@ -92,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     android:paddingVertical="2dp"
-                    android:text="@{vm.date}"
+                    android:text="@{vm.dateForUI}"
                     android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
                     android:textColor="@color/gray_500"
                     app:layout_constraintEnd_toEndOf="@+id/tv_diary_detail_content"

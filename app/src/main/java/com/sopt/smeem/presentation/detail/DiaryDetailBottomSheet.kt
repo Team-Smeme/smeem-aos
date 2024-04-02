@@ -19,10 +19,7 @@ import com.sopt.smeem.description
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.EventVM
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 class DiaryDetailBottomSheet(
     private val viewModel: DiaryDetailViewModel,
@@ -31,10 +28,7 @@ class DiaryDetailBottomSheet(
     private var _binding: BottomSheetDiaryDetailBinding? = null
     private val binding get() = requireNotNull(_binding)
 
-    private val formatter = DateTimeFormatter.ofPattern("yyyy년 M월 dd일", Locale.KOREAN)
-    private val viewModelDateStr = viewModel.date.value?.substringBeforeLast(" ") ?: ""
-    private val viewModelDate = LocalDate.parse(viewModelDateStr, formatter)
-
+    private lateinit var viewModelDate: LocalDate
     private lateinit var fragmentContext: Context
 
     override fun onAttach(context: Context) {
@@ -48,7 +42,9 @@ class DiaryDetailBottomSheet(
         savedInstanceState: Bundle?,
     ): View {
         _binding = BottomSheetDiaryDetailBinding.inflate(inflater, container, false)
-        Timber.e("viewModelDate: $viewModelDate, LocalDate.now(): ${LocalDate.now()}")
+
+        viewModelDate = viewModel.date.value?.toLocalDate()!!
+
         return binding.root
     }
 
@@ -85,7 +81,7 @@ class DiaryDetailBottomSheet(
                 viewModel.deleteDiary(
                     onSuccess = {
                         // 오늘 작성한 일기일 때만 일기 삭제 시 datastore의 최근 일기 날짜 삭제
-                        if (viewModelDate == LocalDate.now()) {
+                        if (viewModelDate.isEqual(LocalDate.now())) {
                             lifecycleScope.launch {
                                 fragmentContext.dataStore.edit { storage ->
                                     storage.remove(RECENT_DIARY_DATE)
