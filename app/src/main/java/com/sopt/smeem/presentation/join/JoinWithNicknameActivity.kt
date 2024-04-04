@@ -29,11 +29,6 @@ class JoinWithNicknameActivity :
         onNext()
     }
 
-    // 뒤로가기 아예 막아버림.
-    override fun onBackPressed() {
-        // super.onBackPressed()
-    }
-
     private fun onTextWrite() {
         binding.etEntranceNickname.addTextChangedListener { watcher ->
             if (watcher.isNullOrBlank() || watcher.length > 10) {

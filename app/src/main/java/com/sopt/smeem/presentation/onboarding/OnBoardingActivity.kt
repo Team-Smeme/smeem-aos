@@ -8,11 +8,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.sopt.smeem.R
-import com.sopt.smeem.Smeem.Companion.AMPLITUDE
 import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.databinding.ActivityOnBoardingBinding
 import com.sopt.smeem.description
-import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_ALARM_VIEW
 import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_GOAL_VIEW
 import com.sopt.smeem.event.AmplitudeEventType.SIGN_UP_SUCCESS
@@ -52,7 +50,9 @@ class OnBoardingActivity :
         observeLoading()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
+        super.onBackPressed()
         vm.backStep()
     }
 
@@ -147,7 +147,7 @@ class OnBoardingActivity :
     private fun observeOnStep1() {
         vm.selectedGoal.observe(this@OnBoardingActivity) {
             // 어떤 버튼값이라도 선택되어있으면 step2 로가는 next 를 활성화시킨다.
-            if(it != TrainingGoalType.NO_SELECTED) {
+            if (it != TrainingGoalType.NO_SELECTED) {
                 nextButtonOn()
             } else {
                 nextButtonOff()
@@ -213,11 +213,11 @@ class OnBoardingActivity :
                             startActivity(toJoin)
                             if (!isFinishing) finish()
                         },
-                        onError = { e -> Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show() }
+                        onError = { e ->
+                            Toast.makeText(this, e.description(), Toast.LENGTH_SHORT).show()
+                        }
                     )
-                }
-
-                else {
+                } else {
                     bs.show(supportFragmentManager, SignUpBottomSheet.TAG)
                 }
             }
