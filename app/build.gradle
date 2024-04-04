@@ -210,9 +210,6 @@ dependencies {
     // hilt navigation compose
     implementation(libs.androidx.hilt.navigation.compose)
 
-    // Compose navigation
-    implementation(libs.androidx.navigation.compose)
-
     // Optional - Integration with activities
     implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
