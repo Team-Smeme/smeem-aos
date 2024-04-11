@@ -10,7 +10,19 @@ plugins {
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['store_file'])
+            storePassword keystoreProperties['store_password']
+            keyPassword keystoreProperties['key_password']
+            keyAlias keystoreProperties['key_alias']
+        }
+    }
     namespace 'com.sopt.smeem'
     compileSdk 34
 
@@ -38,7 +50,7 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
-        signingConfig signingConfigs.debug
+        signingConfig signingConfigs.release
     }
 
     buildTypes {
