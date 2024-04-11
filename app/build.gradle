@@ -50,7 +50,6 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
-        signingConfig signingConfigs.release
     }
 
     buildTypes {
@@ -69,6 +68,7 @@ android {
             minifyEnabled true
             buildConfigField("boolean", "IS_DEBUG", "false")
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
 
             manifestPlaceholders = [
                     appName: "@string/app_name",
