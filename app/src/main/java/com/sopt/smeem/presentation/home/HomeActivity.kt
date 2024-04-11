@@ -49,8 +49,7 @@ import java.util.Locale
 @AndroidEntryPoint
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
-    lateinit var bs: WritingBottomSheet
-    lateinit var recentDiaryDate: LocalDate
+    private lateinit var bs: WritingBottomSheet
 
     private val homeViewModel by viewModels<HomeViewModel>()
     private val eventVm: EventVM by viewModels()
@@ -215,9 +214,5 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 }
             }
         }
-    }
-
-    companion object {
-        const val TARGET_MONTH_PATTERN = "yyyy년 M월"
     }
 }
