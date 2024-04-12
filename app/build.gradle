@@ -201,6 +201,9 @@ dependencies {
     // Compose Material Design 3
     implementation(libs.androidx.compose.material3)
 
+    // lifecycle
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
     // Optional - Integration with activities
     implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
