@@ -7,11 +7,9 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.domain.model.Date
@@ -26,7 +24,6 @@ internal fun MonthlyCalendar(
     currentMonth: YearMonth,
     loadDatesForMonth: (YearMonth) -> Unit,
     onDayClick: (LocalDate) -> Unit,
-    isLoading: Boolean,
 ) {
     val itemWidth = (LocalConfiguration.current.screenWidthDp.dp - 38.dp) / 7
 
@@ -60,12 +57,6 @@ internal fun MonthlyCalendar(
                     }
                 }
             }
-        }
-        if (isLoading) { // 로딩 상태일 때 인디케이터 표시
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-                color = Color.Transparent,
-            )
         }
     }
 }

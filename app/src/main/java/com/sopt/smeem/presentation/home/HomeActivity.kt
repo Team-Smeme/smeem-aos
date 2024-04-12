@@ -4,17 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.lifecycleScope
@@ -29,7 +21,7 @@ import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
-import com.sopt.smeem.presentation.home.calendar.SmeemCalendarImpl
+import com.sopt.smeem.presentation.home.calendar.SmeemCalendar
 import com.sopt.smeem.presentation.home.calendar.core.CalendarIntent
 import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
@@ -69,7 +61,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                         modifier = Modifier.fillMaxWidth(),
                         color = MaterialTheme.colorScheme.background,
                     ) {
-                        SmeemCalendar()
+                        SmeemCalendar(homeViewModel)
                     }
                 }
             }
@@ -89,18 +81,6 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     override fun onRestart() {
         super.onRestart()
         initView(LocalDate.now())
-    }
-
-    @Composable
-    fun SmeemCalendar() {
-        var selectedDate by remember { mutableStateOf(LocalDate.now()) }
-        val scrollState = rememberScrollState()
-
-        Column(Modifier.verticalScroll(scrollState)) {
-            SmeemCalendarImpl(
-                onDayClick = { selectedDate = it },
-            )
-        }
     }
 
     private fun onTouchWrite() {

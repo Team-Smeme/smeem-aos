@@ -7,14 +7,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.presentation.home.HomeViewModel
 import com.sopt.smeem.presentation.home.calendar.component.CalendarTitle
@@ -30,25 +31,26 @@ import java.time.LocalDate
 import java.time.YearMonth
 
 @Composable
-fun SmeemCalendarImpl(
-    onDayClick: (LocalDate) -> Unit,
+fun SmeemCalendar(
+    viewModel: HomeViewModel
 ) {
-    val viewModel: HomeViewModel = viewModel()
-    val dateList = viewModel.visibleDates.collectAsState()
-    val selectedDate = viewModel.selectedDate.collectAsState()
-    val isCalendarExpanded = viewModel.isCalendarExpanded.collectAsState()
-    val currentMonth = viewModel.currentMonth.collectAsState()
-    val isLoading = viewModel.isLoading.collectAsState()
+    val scrollState = rememberScrollState()
 
-    SmeemCalendarImpl(
-        dateList = dateList.value,
-        selectedDate = selectedDate.value,
-        currentMonth = currentMonth.value,
-        onIntent = viewModel::onIntent,
-        isCalendarExpanded = isCalendarExpanded.value,
-        onDayClick = onDayClick,
-        isLoading = isLoading.value,
-    )
+    val dateList = viewModel.visibleDates.collectAsStateWithLifecycle()
+    val selectedDate = viewModel.selectedDate.collectAsStateWithLifecycle()
+    val isCalendarExpanded = viewModel.isCalendarExpanded.collectAsStateWithLifecycle()
+    val currentMonth = viewModel.currentMonth.collectAsStateWithLifecycle()
+
+    Column(Modifier.verticalScroll(scrollState)) {
+        SmeemCalendarImpl(
+            dateList = dateList.value,
+            selectedDate = selectedDate.value,
+            currentMonth = currentMonth.value,
+            onIntent = viewModel::onIntent,
+            isCalendarExpanded = isCalendarExpanded.value,
+            onDayClick = {},
+        )
+    }
 }
 
 @Composable
@@ -59,7 +61,6 @@ private fun SmeemCalendarImpl(
     onIntent: (CalendarIntent) -> Unit,
     isCalendarExpanded: Boolean,
     onDayClick: (LocalDate) -> Unit,
-    isLoading: Boolean,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -98,7 +99,6 @@ private fun SmeemCalendarImpl(
                     onIntent(CalendarIntent.SelectDate(it))
                     onDayClick(it)
                 },
-                isLoading = isLoading,
             )
         } else {
             WeeklyCalendar(
@@ -126,7 +126,6 @@ private fun SmeemCalendarImpl(
                     onIntent(CalendarIntent.SelectDate(it))
                     onDayClick(it)
                 },
-                isLoading = isLoading,
             )
         }
         Spacer(
