@@ -9,7 +9,7 @@ import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.domain.model.DiarySummary
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.event.AmplitudeEventType
-import com.sopt.smeem.presentation.home.calendar.core.CalendarIntent
+import com.sopt.smeem.presentation.home.calendar.core.CalendarState
 import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.util.DateUtil
 import com.sopt.smeem.util.getNextDates
@@ -119,9 +119,9 @@ class HomeViewModel @Inject constructor(
     }
 
     // calendar
-    fun onIntent(intent: CalendarIntent) {
-        when (intent) {
-            CalendarIntent.ExpandCalendar -> {
+    fun onStateChange(state: CalendarState) {
+        when (state) {
+            CalendarState.ExpandCalendar -> {
                 calculateCalendarDates(
                     startDate = currentMonth.value.minusMonths(1).atDay(FIRST),
                     period = Period.MONTH,
@@ -130,7 +130,7 @@ class HomeViewModel @Inject constructor(
                 sendEvent(AmplitudeEventType.FULL_CALENDAR_APPEAR)
             }
 
-            CalendarIntent.CollapseCalendar -> {
+            CalendarState.CollapseCalendar -> {
                 calculateCalendarDates(
                     startDate = calculateWeeklyCalendarVisibleStartDay()
                         .getWeekStartDate()
@@ -140,14 +140,14 @@ class HomeViewModel @Inject constructor(
                 _isCalendarExpanded.value = false
             }
 
-            is CalendarIntent.LoadNextDates -> {
-                calculateCalendarDates(intent.startDate, intent.period)
+            is CalendarState.LoadNextDates -> {
+                calculateCalendarDates(state.startDate, state.period)
             }
 
-            is CalendarIntent.SelectDate -> {
+            is CalendarState.SelectDate -> {
                 viewModelScope.launch {
-                    getDateDiary(intent.date)
-                    _selectedDate.emit(intent.date)
+                    getDateDiary(state.date)
+                    _selectedDate.emit(state.date)
                 }
             }
         }

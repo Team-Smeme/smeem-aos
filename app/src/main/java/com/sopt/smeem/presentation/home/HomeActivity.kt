@@ -22,7 +22,7 @@ import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.home.calendar.SmeemCalendar
-import com.sopt.smeem.presentation.home.calendar.core.CalendarIntent
+import com.sopt.smeem.presentation.home.calendar.core.CalendarState
 import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
 import com.sopt.smeem.presentation.mypage.MyPageActivity
@@ -98,13 +98,13 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     private fun initView(day: LocalDate) {
         lifecycleScope.launch {
             with(homeViewModel) {
-                onIntent(
-                    CalendarIntent.LoadNextDates(
+                onStateChange(
+                    CalendarState.LoadNextDates(
                         startDate = day.minusWeeks(1).getWeekStartDate(),
                         period = Period.WEEK,
                     ),
                 )
-                onIntent(CalendarIntent.SelectDate(date = day))
+                onStateChange(CalendarState.SelectDate(date = day))
                 updateWriteDiaryButtonVisibility()
             }
         }
