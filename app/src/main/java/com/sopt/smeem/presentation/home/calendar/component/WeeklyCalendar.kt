@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.domain.model.Date
+import com.sopt.smeem.presentation.home.calendar.core.Period
 import java.time.LocalDate
 
 @Composable
@@ -26,6 +27,7 @@ internal fun WeeklyCalendar(
 
     Box { // 전체를 감싸는 Box 추가
         CalendarPager(
+            weekOrMonth = Period.WEEK,
             dateList = dateList,
             loadNextDates = loadNextWeek,
             loadPrevDates = loadPrevWeek,

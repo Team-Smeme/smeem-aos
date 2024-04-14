@@ -1,7 +1,10 @@
 package com.sopt.smeem.util
 
+import com.sopt.smeem.presentation.home.calendar.CalendarConstant.yearRange
+import com.sopt.smeem.presentation.home.calendar.core.Period
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.regex.Pattern
 
 object DateUtil {
@@ -72,11 +75,34 @@ object DateUtil {
     fun gap(start: String, end: String): Int =
         asLocalDate(end).compareTo(asLocalDate(start))
 
+    fun getBetweenCount(
+        weekOrMonth: Period,
+        startYear: Int = yearRange.first,
+        endYear: Int = yearRange.last
+    ): Int {
+        val start = LocalDate.of(startYear, 1, 1)
+        val end = LocalDate.of(endYear, 12, 31)
+        return when (weekOrMonth) {
+            Period.WEEK -> ChronoUnit.WEEKS.between(start, end).toInt()
+            Period.MONTH -> ChronoUnit.MONTHS.between(start, end).toInt()
+        }
+    }
+
+    fun getCurrentDateIndex(weekOrMonth: Period, startYear: Int = yearRange.first): Int {
+        val start = LocalDate.of(startYear, 1, 1)
+        val today = LocalDate.now()
+        return when (weekOrMonth) {
+            Period.WEEK -> ChronoUnit.WEEKS.between(start, today).toInt()
+            Period.MONTH -> ChronoUnit.MONTHS.between(start, today).toInt()
+        }
+    }
+
     object WithServer {
         fun asStringOnlyDate(now: LocalDate): String {
             val monthValue =
                 if (now.monthValue < 10) "0${now.monthValue}" else now.monthValue.toString()
-            val dayValue = if(now.dayOfMonth < 10) "0${now.dayOfMonth}" else now.dayOfMonth.toString()
+            val dayValue =
+                if (now.dayOfMonth < 10) "0${now.dayOfMonth}" else now.dayOfMonth.toString()
             return "${now.year}-${monthValue}-${dayValue}"
         }
 

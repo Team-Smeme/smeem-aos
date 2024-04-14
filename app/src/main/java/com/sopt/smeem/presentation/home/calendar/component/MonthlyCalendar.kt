@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.domain.model.Date
+import com.sopt.smeem.presentation.home.calendar.core.Period
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -29,6 +30,7 @@ internal fun MonthlyCalendar(
 
     Box {
         CalendarPager(
+            weekOrMonth = Period.MONTH,
             dateList = dateList,
             loadNextDates = { loadDatesForMonth(currentMonth) },
             loadPrevDates = { loadDatesForMonth(currentMonth.minusMonths(2)) },
