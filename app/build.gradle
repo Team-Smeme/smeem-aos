@@ -201,6 +201,9 @@ dependencies {
     // Compose Material Design 3
     implementation(libs.androidx.compose.material3)
 
+    // lifecycle
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
     // Compose navigation
     implementation(libs.androidx.navigation.compose)
 
