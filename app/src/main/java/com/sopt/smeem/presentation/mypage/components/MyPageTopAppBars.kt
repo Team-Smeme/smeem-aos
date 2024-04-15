@@ -66,8 +66,58 @@ fun MySummaryTopAppBar(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingTopAppBar(
+    onNavigationIconClick: () -> Unit = {},
+    onSettingClick: () -> Unit = {}
+) {
+    CenterAlignedTopAppBar(
+        modifier = Modifier
+            .fillMaxWidth(),
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
+            containerColor = Color.White
+        ),
+        title = {
+            Text(
+                text = "설정",
+                style = Typography.titleMedium
+            )
+        },
+        navigationIcon = {
+            IconButton(
+                modifier = Modifier.padding(start = 6.dp),
+                onClick = onNavigationIconClick
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_back),
+                    contentDescription = "Back"
+                )
+            }
+        },
+        actions = {
+            IconButton(
+                modifier = Modifier.padding(end = 6.dp),
+                onClick = onSettingClick
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_menu_more),
+                    contentDescription = "More"
+                )
+            }
+        }
+    )
+}
+
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun MySummaryTopAppBarPreview() {
     MySummaryTopAppBar()
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun SettingTopAppBarPreview() {
+    SettingTopAppBar()
 }
