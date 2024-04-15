@@ -70,7 +70,7 @@ fun MySummaryTopAppBar(
 @Composable
 fun SettingTopAppBar(
     onNavigationIconClick: () -> Unit = {},
-    onSettingClick: () -> Unit = {}
+    onMoreClick: () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
         modifier = Modifier
@@ -98,7 +98,7 @@ fun SettingTopAppBar(
         actions = {
             IconButton(
                 modifier = Modifier.padding(end = 6.dp),
-                onClick = onSettingClick
+                onClick = onMoreClick
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_menu_more),
@@ -106,6 +106,32 @@ fun SettingTopAppBar(
                 )
             }
         }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun OnlyBackArrowTopAppBar(
+    onNavigationIconClick: () -> Unit = {},
+) {
+    CenterAlignedTopAppBar(
+        modifier = Modifier
+            .fillMaxWidth(),
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
+            containerColor = Color.White
+        ),
+        title = {},
+        navigationIcon = {
+            IconButton(
+                modifier = Modifier.padding(start = 6.dp),
+                onClick = onNavigationIconClick
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_back),
+                    contentDescription = "Back"
+                )
+            }
+        },
     )
 }
 
@@ -120,4 +146,10 @@ fun MySummaryTopAppBarPreview() {
 @Composable
 fun SettingTopAppBarPreview() {
     SettingTopAppBar()
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun OnlyBackArrowTopAppBarPreview() {
+    OnlyBackArrowTopAppBar()
 }
