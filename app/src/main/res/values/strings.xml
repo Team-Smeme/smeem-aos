@@ -71,4 +71,7 @@
     <string name="marketing_info_agreement">https://smeem.notion.site/793bae40ccd14654828b68ee41ac51b6?pvs=4</string>
     <string name="manual_url">https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4</string>
     <string name="title_activity_smeem_calendar">SmeemCalendar</string>
+
+    <!-- My Page -->
+    <string name="my_smeem">나의 스밈</string>
 </resources>
