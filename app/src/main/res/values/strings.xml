@@ -74,4 +74,10 @@
 
     <!-- My Page -->
     <string name="my_smeem">나의 스밈</string>
+    <string name="my_plan">나의 플랜</string>
+
+    <string name="my_plan_visit_days">방문일</string>
+    <string name="my_plan_entire_diary">총 일기</string>
+    <string name="my_plan_continuity_diary">연속일기</string>
+    <string name="my_plan_badge">배지</string>
 </resources>
