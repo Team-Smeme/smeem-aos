@@ -46,19 +46,19 @@ fun MySmeemCard(
             ) {
                 MySmeemContent(
                     count = mySmeem.visitDays,
-                    title = "방문일"
+                    title = stringResource(R.string.my_plan_visit_days)
                 )
                 MySmeemContent(
                     count = mySmeem.diaryCount,
-                    title = "총 일기"
+                    title = stringResource(R.string.my_plan_entire_diary)
                 )
                 MySmeemContent(
                     count = mySmeem.diaryComboCount,
-                    title = "연속일기"
+                    title = stringResource(R.string.my_plan_continuity_diary)
                 )
                 MySmeemContent(
                     count = mySmeem.badgeCount,
-                    title = "배지"
+                    title = stringResource(R.string.my_plan_badge)
                 )
             }
 
