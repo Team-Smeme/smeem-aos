@@ -29,7 +29,7 @@ fun MySmeemCard(
     mySmeem: MySmeem
 ) {
     SmeemContents(
-        modifier = modifier.padding(vertical = 18.dp),
+        modifier = modifier,
         title = stringResource(R.string.my_smeem)
     ) {
         Card(
