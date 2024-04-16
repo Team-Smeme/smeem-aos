@@ -8,7 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.sopt.smeem.domain.model.mypage.MyPlan
 import com.sopt.smeem.domain.model.mypage.MySmeem
+import com.sopt.smeem.presentation.mypage.components.MyPlanCard
 import com.sopt.smeem.presentation.mypage.components.MySmeemCard
 
 @Composable
@@ -23,11 +25,20 @@ fun MySummaryScreen(
         badgeCount = 10
     )
 
+    val mockMyPlan = MyPlan(
+        plan = "매일 일기 작성하기",
+        goal = "유창한 비즈니스 영어",
+        clearedCount = 2,
+        clearCount = 7
+    )
+
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         MySmeemCard(mySmeem = mockMySmeem)
+
+        MyPlanCard(myPlan = mockMyPlan)
     }
 }
 
