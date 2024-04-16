@@ -37,7 +37,7 @@ fun MyPlanCard(
     myPlan: MyPlan?
 ) {
     SmeemContents(
-        modifier = modifier.padding(top = 26.dp),
+        modifier = modifier,
         title = stringResource(R.string.my_plan)
     ) {
         Card(

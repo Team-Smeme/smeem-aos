@@ -6,12 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.domain.model.mypage.MyPlan
 import com.sopt.smeem.domain.model.mypage.MySmeem
 import com.sopt.smeem.presentation.mypage.components.MyPlanCard
 import com.sopt.smeem.presentation.mypage.components.MySmeemCard
+import com.sopt.smeem.util.VerticalSpacer
 
 @Composable
 fun MySummaryScreen(
@@ -36,7 +38,11 @@ fun MySummaryScreen(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        VerticalSpacer(height = 18.dp)
+
         MySmeemCard(mySmeem = mockMySmeem)
+
+        VerticalSpacer(height = 44.dp)
 
         MyPlanCard(myPlan = mockMyPlan)
     }
