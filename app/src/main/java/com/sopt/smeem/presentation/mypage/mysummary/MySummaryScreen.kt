@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.domain.model.mypage.MySmeem
-import com.sopt.smeem.presentation.mypage.components.MySmeem
+import com.sopt.smeem.presentation.mypage.components.MySmeemCard
 
 @Composable
 fun MySummaryScreen(
@@ -27,7 +27,7 @@ fun MySummaryScreen(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        MySmeem(mySmeem = mockMySmeem)
+        MySmeemCard(mySmeem = mockMySmeem)
     }
 }
 
