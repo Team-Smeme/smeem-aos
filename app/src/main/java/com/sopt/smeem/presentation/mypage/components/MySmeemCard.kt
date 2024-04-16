@@ -24,7 +24,7 @@ import com.sopt.smeem.presentation.home.calendar.ui.theme.gray100
 import com.sopt.smeem.util.VerticalSpacer
 
 @Composable
-fun MySmeem(
+fun MySmeemCard(
     modifier: Modifier = Modifier,
     mySmeem: MySmeem
 ) {
@@ -93,7 +93,7 @@ fun MySmeemContentPreview() {
 @Preview(showBackground = true, showSystemUi = true, widthDp = 360, heightDp = 800)
 @Composable
 fun MySmeemPreview() {
-    MySmeem(
+    MySmeemCard(
         mySmeem = MySmeem(
             visitDays = 23,
             diaryCount = 19,
