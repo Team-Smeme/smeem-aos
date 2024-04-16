@@ -1,0 +1,26 @@
+package com.sopt.smeem.util
+
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
+
+fun Modifier.dashedBorder(
+    borderWidth: Float,
+    color: Color,
+    dashLength: Float,
+    spaceLength: Float
+): Modifier {
+    return this.drawWithContent {
+        drawContent()
+
+        val pathEffect = PathEffect.dashPathEffect(floatArrayOf(dashLength, spaceLength), 0f)
+
+        drawCircle(
+            color = color,
+            radius = size.minDimension / 2 - borderWidth / 2,
+            style = Stroke(width = borderWidth, pathEffect = pathEffect)
+        )
+    }
+}
