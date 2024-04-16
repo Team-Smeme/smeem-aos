@@ -33,11 +33,11 @@ fun MySmeemCard(
         title = stringResource(R.string.my_smeem)
     ) {
         Card(
-            modifier = modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors().copy(
                 containerColor = Color.White
             ),
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(16.dp),
             border = BorderStroke(1.dp, gray100)
         ) {
             Row(
@@ -75,9 +75,14 @@ fun MySmeemContent(
         modifier = Modifier.padding(horizontal = 10.dp, vertical = 18.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = count.toString(), style = Typography.titleMedium)
+        Text(
+            text = count.toString(),
+            style = Typography.titleMedium, color = Color.Black
+        )
         VerticalSpacer(height = 6.dp)
-        Text(text = title, style = Typography.labelLarge)
+        Text(
+            text = title, style = Typography.labelLarge, color = Color.Black
+        )
     }
 }
 
