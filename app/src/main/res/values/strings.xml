@@ -80,4 +80,7 @@
     <string name="my_plan_entire_diary">총 일기</string>
     <string name="my_plan_continuity_diary">연속일기</string>
     <string name="my_plan_badge">배지</string>
+
+    <string name="smeem_card_edit">수정하기</string>
+    <string name="change_nickname_card">닉네임 변경</string>
 </resources>
