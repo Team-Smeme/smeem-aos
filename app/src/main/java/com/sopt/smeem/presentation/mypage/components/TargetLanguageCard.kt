@@ -1,6 +1,5 @@
 package com.sopt.smeem.presentation.mypage.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -11,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
 import com.sopt.smeem.presentation.home.calendar.ui.theme.point
+import com.sopt.smeem.util.noRippleClickable
 
 @Composable
 fun TargetLanguageCard(
@@ -27,7 +27,7 @@ fun TargetLanguageCard(
                 tint = point,
                 modifier = Modifier
                     .padding(top = 7.dp, bottom = 7.dp, end = 14.dp)
-                    .clickable { onEditClick() }
+                    .noRippleClickable { onEditClick() }
             )
         }
     }
