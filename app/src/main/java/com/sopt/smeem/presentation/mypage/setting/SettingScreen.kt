@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.presentation.mypage.components.ChangeMyPlanCard
 import com.sopt.smeem.presentation.mypage.components.ChangeNicknameCard
+import com.sopt.smeem.presentation.mypage.components.TargetLanguageCard
 import com.sopt.smeem.util.VerticalSpacer
 
 @Composable
@@ -35,7 +36,7 @@ fun SettingScreen(
 
         VerticalSpacer(height = 28.dp)
 
-
+        TargetLanguageCard(onEditClick = {})
     }
 }
 
