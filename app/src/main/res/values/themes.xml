@@ -16,6 +16,8 @@
         <item name="colorOnSurface">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?android:colorBackground</item>
+        <!-- window background color -->
+        <item name="android:windowIsTranslucent">true</item>
 
         <!-- etc -->
         <item name="colorControlActivated">@color/point</item>
