@@ -1,10 +1,13 @@
 package com.sopt.smeem.presentation.mypage.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -12,17 +15,25 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.sopt.smeem.R
 import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.model.mypage.MyBadges
+import com.sopt.smeem.presentation.home.calendar.ui.theme.Pretendard
 import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
+import com.sopt.smeem.util.previewPlaceholder
 
 @Composable
 fun MyBadgesContent(
@@ -55,7 +66,40 @@ fun MyBadgesObtainedCard(
     info: MyBadges,
     modifier: Modifier = Modifier
 ) {
-
+    Card(
+        modifier = modifier.aspectRatio(1f),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.background,
+        ),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.surface),
+        shape = RoundedCornerShape(10.dp)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 18.dp, vertical = 9.dp),
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(context = LocalContext.current)
+                    .data(info.imageUrl)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = null,
+                placeholder = previewPlaceholder(image = R.drawable.ic_badge_welcome),
+                modifier = Modifier
+                    .widthIn(min = 66.dp)
+                    .aspectRatio(1f)
+            )
+            Text(
+                text = info.name,
+                fontFamily = Pretendard,
+                fontWeight = FontWeight.Medium,
+                fontSize = 12.sp
+            )
+        }
+    }
 }
 
 @Composable
@@ -88,6 +132,14 @@ fun MyBadgesNotObtainedCard(
 fun MyBadgesPreview() {
     SmeemTheme {
         MyBadgesContent(badges = BadgeList.sprint2)
+    }
+}
+
+@Preview(widthDp = 200)
+@Composable
+fun MyBadgesObtainedCardPreview() {
+    SmeemTheme {
+        MyBadgesObtainedCard(info = BadgeList.sprint2.first())
     }
 }
 
