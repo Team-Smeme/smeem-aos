@@ -2,8 +2,82 @@ package com.sopt.smeem.data.datasource
 
 import com.sopt.smeem.domain.model.Badge
 import com.sopt.smeem.domain.model.BadgeType
+import com.sopt.smeem.domain.model.mypage.MyBadges
 
 object BadgeList {
+
+    /***** new - temp *****/
+    val sprint2 = listOf<MyBadges>(
+        MyBadges(
+            name = "웰컴 배지",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7",
+            description = "스밈에 오신 것을 환영해요!",
+            hasObtained = true,
+            userPercentage = 90
+        ),
+        MyBadges(
+            name = "첫 일기",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
+            description = "시작이 좋아요!",
+            hasObtained = true,
+            userPercentage = 50
+        ),
+        MyBadges(
+            name = "10번째 일기",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
+            description = "일기를 n번 더 작성해요",
+            hasObtained = false,
+            diariesLeftToObtain = 6,
+            userPercentage = 30
+        ),
+        MyBadges(
+            name = "10번째 일기",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
+            description = "일기를 n번 더 작성해요",
+            hasObtained = false,
+            diariesLeftToObtain = 26,
+            userPercentage = 5
+        ),
+        MyBadges(
+            name = "10번째 일기",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
+            description = "일기를 n번 더 작성해요",
+            hasObtained = false,
+            diariesLeftToObtain = 46,
+            userPercentage = 10
+        ),
+        MyBadges(
+            name = "3일 연속 일기",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/3b26b274-722f-4dca-a560-e28c266efe69",
+            description = "벌써 3일째! 좋은 습관을 만들어 보아요:)",
+            hasObtained = true,
+            userPercentage = 30
+        ),
+        MyBadges(
+            name = "7일 연속 일기",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
+            description = "일기를 7일 연속으로 작성해요.",
+            hasObtained = false,
+            userPercentage = 30
+        ),
+        MyBadges(
+            name = "7일 연속 일기",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
+            description = "일기를 15일 연속으로 작성해요.",
+            hasObtained = false,
+            userPercentage = 20
+        ),
+        MyBadges(
+            name = "7일 연속 일기",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
+            description = "일기를 15일 연속으로 작성해요.",
+            hasObtained = false,
+            userPercentage = 10
+        ),
+    )
+
+    /***** original *****/
+
     val event = listOf<Badge>(
         Badge(
             name = "웰컴 배지",
