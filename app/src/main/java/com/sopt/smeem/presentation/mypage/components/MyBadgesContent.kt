@@ -39,8 +39,8 @@ import com.sopt.smeem.util.previewPlaceholder
 @Composable
 fun MyBadgesContent(
     modifier: Modifier = Modifier,
-    onClickCard: () -> Unit,
-    badges: List<MyBadges>
+    badges: List<MyBadges>,
+    onClickCard: (MyBadges) -> Unit
 ) {
     SmeemContents(
         title = stringResource(R.string.my_badges)
@@ -53,9 +53,9 @@ fun MyBadgesContent(
         ) {
             items(badges) { badge ->
                 if (badge.hasObtained) {
-                    MyBadgesObtainedCard(info = badge, onClick = onClickCard)
+                    MyBadgesObtainedCard(info = badge, onClick = { onClickCard(badge) })
                 } else {
-                    MyBadgesNotObtainedCard(info = badge, onClick = onClickCard)
+                    MyBadgesNotObtainedCard(info = badge, onClick = { onClickCard(badge) })
                 }
             }
         }

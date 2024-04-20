@@ -10,7 +10,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -20,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.data.datasource.BadgeList
+import com.sopt.smeem.domain.model.mypage.MyBadges
 import com.sopt.smeem.domain.model.mypage.MyPlan
 import com.sopt.smeem.domain.model.mypage.MySmeem
 import com.sopt.smeem.presentation.mypage.components.MyBadgesBottomSheet
@@ -50,13 +50,13 @@ fun MySummaryScreen(
     )
 
     val sheetState = rememberModalBottomSheetState()
-    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
+    var selectedBadge by rememberSaveable { mutableStateOf<MyBadges?>(null) }
 
-    if (showBottomSheet) {
+    if (selectedBadge != null) {
         MyBadgesBottomSheet(
-            badge = BadgeList.sprint2.first(),
+            badge = selectedBadge!!,
             sheetState = sheetState,
-            onDismiss = { showBottomSheet = false }
+            onDismiss = { selectedBadge = null }
         )
     }
 
@@ -78,7 +78,7 @@ fun MySummaryScreen(
 
         MyBadgesContent(
             badges = BadgeList.sprint2,
-            onClickCard = { showBottomSheet = true },
+            onClickCard = { clickedBadge -> selectedBadge = clickedBadge },
             modifier = Modifier.heightIn(max = 1000.dp)
         )
 

@@ -16,9 +16,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.sopt.smeem.R
 import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.model.mypage.MyBadges
@@ -27,6 +30,7 @@ import com.sopt.smeem.presentation.theme.black
 import com.sopt.smeem.presentation.theme.gray500
 import com.sopt.smeem.presentation.theme.white
 import com.sopt.smeem.util.VerticalSpacer
+import com.sopt.smeem.util.previewPlaceholder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,13 +48,16 @@ fun MyBadgesBottomSheet(
         dragHandle = null,
         onDismissRequest = onDismiss
     ) {
-        MyBadgesBottomSheetContent(info = badge)
+        if (badge.hasObtained) {
+            ObtainedBottomSheetContent(info = badge)
+        } else {
+            NotObtainedBottomSheetContent(info = badge)
+        }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyBadgesBottomSheetContent(
+fun ObtainedBottomSheetContent(
     info: MyBadges,
     modifier: Modifier = Modifier
 ) {
@@ -72,12 +79,16 @@ fun MyBadgesBottomSheetContent(
                 contentDescription = null
             )
         }
-        Image(
+        AsyncImage(
+            model = ImageRequest.Builder(context = LocalContext.current)
+                .data(info.imageUrl)
+                .crossfade(true)
+                .build(),
+            contentDescription = null,
+            placeholder = previewPlaceholder(image = R.drawable.ic_badge_welcome),
             modifier = Modifier
                 .widthIn(max = 120.dp)
-                .aspectRatio(1f),
-            painter = painterResource(id = R.drawable.ic_badge_welcome),
-            contentDescription = null
+                .aspectRatio(1f)
         )
         VerticalSpacer(height = 26.dp)
         Text(
@@ -100,9 +111,40 @@ fun MyBadgesBottomSheetContent(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun NotObtainedBottomSheetContent(
+    info: MyBadges,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 57.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp, end = 8.dp),
+            contentAlignment = Alignment.TopEnd
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_badge_x),
+                contentDescription = null
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true, widthDp = 360)
 @Composable
-fun MyBadgesBottomSheetContentPreview() {
-    MyBadgesBottomSheetContent(info = BadgeList.sprint2.first())
+fun ObtainedBottomSheetContentPreview() {
+    ObtainedBottomSheetContent(info = BadgeList.sprint2.first())
+}
+
+@Preview(showBackground = true, widthDp = 360)
+@Composable
+fun NotObtainedBottomSheetContentPreview() {
+    NotObtainedBottomSheetContent(info = BadgeList.sprint2[2], modifier = Modifier.widthIn(max = 120.dp))
 }
