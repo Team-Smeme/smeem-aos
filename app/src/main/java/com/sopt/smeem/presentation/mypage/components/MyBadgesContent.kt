@@ -33,6 +33,7 @@ import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.model.mypage.MyBadges
 import com.sopt.smeem.presentation.home.calendar.ui.theme.Pretendard
 import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
+import com.sopt.smeem.presentation.home.calendar.ui.theme.Typography
 import com.sopt.smeem.util.previewPlaceholder
 
 @Composable
@@ -94,9 +95,9 @@ fun MyBadgesObtainedCard(
             )
             Text(
                 text = info.name,
-                fontFamily = Pretendard,
-                fontWeight = FontWeight.Medium,
-                fontSize = 12.sp
+                style = Typography.labelSmall.copy(
+                    fontWeight = FontWeight.Medium
+                )
             )
         }
     }
