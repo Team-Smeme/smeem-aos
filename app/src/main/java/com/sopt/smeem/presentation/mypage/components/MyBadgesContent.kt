@@ -2,12 +2,12 @@ package com.sopt.smeem.presentation.mypage.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -39,6 +39,7 @@ import com.sopt.smeem.util.previewPlaceholder
 @Composable
 fun MyBadgesContent(
     modifier: Modifier = Modifier,
+    onClickCard: () -> Unit,
     badges: List<MyBadges>
 ) {
     SmeemContents(
@@ -52,9 +53,9 @@ fun MyBadgesContent(
         ) {
             items(badges) { badge ->
                 if (badge.hasObtained) {
-                    MyBadgesObtainedCard(info = badge)
+                    MyBadgesObtainedCard(info = badge, onClick = onClickCard)
                 } else {
-                    MyBadgesNotObtainedCard(info = badge)
+                    MyBadgesNotObtainedCard(info = badge, onClick = onClickCard)
                 }
             }
         }
@@ -64,10 +65,13 @@ fun MyBadgesContent(
 @Composable
 fun MyBadgesObtainedCard(
     info: MyBadges,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.aspectRatio(1f),
+        modifier = modifier
+            .aspectRatio(1f)
+            .clickable { onClick() },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background,
         ),
@@ -105,10 +109,13 @@ fun MyBadgesObtainedCard(
 @Composable
 fun MyBadgesNotObtainedCard(
     info: MyBadges,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.aspectRatio(1f),
+        modifier = modifier
+            .aspectRatio(1f)
+            .clickable { onClick() },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
         ),
@@ -131,7 +138,7 @@ fun MyBadgesNotObtainedCard(
 @Composable
 fun MyBadgesPreview() {
     SmeemTheme {
-        MyBadgesContent(badges = BadgeList.sprint2)
+        MyBadgesContent(badges = BadgeList.sprint2, onClickCard = {})
     }
 }
 
@@ -139,7 +146,7 @@ fun MyBadgesPreview() {
 @Composable
 fun MyBadgesObtainedCardPreview() {
     SmeemTheme {
-        MyBadgesObtainedCard(info = BadgeList.sprint2.first())
+        MyBadgesObtainedCard(info = BadgeList.sprint2.first(), onClick = {})
     }
 }
 
@@ -147,6 +154,6 @@ fun MyBadgesObtainedCardPreview() {
 @Composable
 fun MyBadgesNotObtainedCardPreview() {
     SmeemTheme {
-        MyBadgesNotObtainedCard(info = BadgeList.sprint2[2])
+        MyBadgesNotObtainedCard(info = BadgeList.sprint2[2], onClick = {})
     }
 }

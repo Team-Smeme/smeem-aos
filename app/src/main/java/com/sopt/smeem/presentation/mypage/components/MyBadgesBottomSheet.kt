@@ -5,15 +5,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,32 +22,33 @@ import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
 import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.model.mypage.MyBadges
-import com.sopt.smeem.presentation.theme.white
 import com.sopt.smeem.presentation.theme.Typography
 import com.sopt.smeem.presentation.theme.black
 import com.sopt.smeem.presentation.theme.gray500
+import com.sopt.smeem.presentation.theme.white
 import com.sopt.smeem.util.VerticalSpacer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyBadgesBottomSheet(
     badge: MyBadges,
+    sheetState: SheetState,
+    onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = false
-    )
     ModalBottomSheet(
-        modifier = modifier.fillMaxSize(),
-        sheetState = bottomSheetState,
+        modifier = modifier.fillMaxWidth(),
+        sheetState = sheetState,
         shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
         containerColor = white,
-        onDismissRequest = {}
+        dragHandle = null,
+        onDismissRequest = onDismiss
     ) {
         MyBadgesBottomSheetContent(info = badge)
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyBadgesBottomSheetContent(
     info: MyBadges,
@@ -100,6 +100,7 @@ fun MyBadgesBottomSheetContent(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, widthDp = 360)
 @Composable
 fun MyBadgesBottomSheetContentPreview() {
