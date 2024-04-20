@@ -23,10 +23,10 @@ import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
 import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.model.mypage.MyBadges
-import com.sopt.smeem.presentation.home.calendar.ui.theme.Typography
-import com.sopt.smeem.presentation.home.calendar.ui.theme.black
-import com.sopt.smeem.presentation.home.calendar.ui.theme.gray500
-import com.sopt.smeem.presentation.home.calendar.ui.theme.white
+import com.sopt.smeem.presentation.theme.white
+import com.sopt.smeem.presentation.theme.Typography
+import com.sopt.smeem.presentation.theme.black
+import com.sopt.smeem.presentation.theme.gray500
 import com.sopt.smeem.util.VerticalSpacer
 
 @OptIn(ExperimentalMaterial3Api::class)

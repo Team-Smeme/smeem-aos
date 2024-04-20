@@ -25,15 +25,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sopt.smeem.R
 import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.model.mypage.MyBadges
-import com.sopt.smeem.presentation.home.calendar.ui.theme.Pretendard
-import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
-import com.sopt.smeem.presentation.home.calendar.ui.theme.Typography
+import com.sopt.smeem.presentation.theme.SmeemTheme
+import com.sopt.smeem.presentation.theme.Typography
 import com.sopt.smeem.util.previewPlaceholder
 
 @Composable

@@ -2,9 +2,6 @@ package com.sopt.smeem.presentation.mypage.mysummary
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,15 +10,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.data.datasource.BadgeList
-import com.sopt.smeem.domain.model.Badge
-import com.sopt.smeem.domain.model.BadgeType
-import com.sopt.smeem.domain.model.mypage.MyBadges
 import com.sopt.smeem.domain.model.mypage.MyPlan
 import com.sopt.smeem.domain.model.mypage.MySmeem
-import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
 import com.sopt.smeem.presentation.mypage.components.MyBadgesContent
 import com.sopt.smeem.presentation.mypage.components.MyPlanCard
 import com.sopt.smeem.presentation.mypage.components.MySmeemCard
+import com.sopt.smeem.presentation.theme.SmeemTheme
 import com.sopt.smeem.util.VerticalSpacer
 
 @Composable
