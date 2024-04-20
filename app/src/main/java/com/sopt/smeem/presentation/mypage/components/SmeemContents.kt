@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.presentation.home.calendar.ui.theme.Typography
+import com.sopt.smeem.presentation.home.calendar.ui.theme.black
 import com.sopt.smeem.util.VerticalSpacer
 
 @Composable
@@ -21,7 +22,11 @@ fun SmeemContents(
             .fillMaxWidth()
             .padding(horizontal = 18.dp)
     ) {
-        Text(text = title, style = Typography.titleLarge)
+        Text(
+            text = title,
+            style = Typography.titleLarge,
+            color = black
+        )
 
         VerticalSpacer(height = 12.dp)
 

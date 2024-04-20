@@ -13,14 +13,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
 import com.sopt.smeem.domain.model.mypage.MySmeem
 import com.sopt.smeem.presentation.home.calendar.ui.theme.Typography
+import com.sopt.smeem.presentation.home.calendar.ui.theme.black
 import com.sopt.smeem.presentation.home.calendar.ui.theme.gray100
+import com.sopt.smeem.presentation.home.calendar.ui.theme.white
 import com.sopt.smeem.util.VerticalSpacer
 
 @Composable
@@ -35,7 +36,7 @@ fun MySmeemCard(
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors().copy(
-                containerColor = Color.White
+                containerColor = white
             ),
             shape = RoundedCornerShape(16.dp),
             border = BorderStroke(1.dp, gray100)
@@ -77,11 +78,14 @@ fun MySmeemContent(
     ) {
         Text(
             text = count.toString(),
-            style = Typography.titleMedium, color = Color.Black
+            style = Typography.titleMedium,
+            color = black
         )
         VerticalSpacer(height = 6.dp)
         Text(
-            text = title, style = Typography.labelLarge, color = Color.Black
+            text = title,
+            style = Typography.labelLarge,
+            color = black
         )
     }
 }

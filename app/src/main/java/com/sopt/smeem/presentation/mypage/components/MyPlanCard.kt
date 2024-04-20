@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,9 +24,11 @@ import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
 import com.sopt.smeem.domain.model.mypage.MyPlan
 import com.sopt.smeem.presentation.home.calendar.ui.theme.Typography
+import com.sopt.smeem.presentation.home.calendar.ui.theme.black
 import com.sopt.smeem.presentation.home.calendar.ui.theme.gray100
 import com.sopt.smeem.presentation.home.calendar.ui.theme.gray600
 import com.sopt.smeem.presentation.home.calendar.ui.theme.point
+import com.sopt.smeem.presentation.home.calendar.ui.theme.white
 import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.dashedBorder
 
@@ -43,7 +44,7 @@ fun MyPlanCard(
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors().copy(
-                containerColor = Color.White
+                containerColor = white
             ),
             shape = RoundedCornerShape(16.dp),
             border = BorderStroke(1.dp, gray100)
@@ -59,7 +60,7 @@ fun MyPlanCard(
                     Text(
                         text = myPlan.plan,
                         style = Typography.titleMedium,
-                        color = Color.Black
+                        color = black
                     )
 
                     VerticalSpacer(height = 4.dp)
@@ -67,7 +68,7 @@ fun MyPlanCard(
                     Text(
                         text = myPlan.goal,
                         style = Typography.labelLarge,
-                        color = Color.Black
+                        color = black
                     )
 
                     VerticalSpacer(height = 16.dp)
@@ -91,7 +92,7 @@ fun MyPlanDot(
 
     Card(
         colors = CardDefaults.cardColors().copy(
-            containerColor = if (isCleared) point else Color.White
+            containerColor = if (isCleared) point else white
         ),
         shape = RoundedCornerShape(50),
         modifier = Modifier
@@ -108,7 +109,7 @@ fun MyPlanDot(
                 modifier = Modifier.padding(top = 3.dp, bottom = 3.dp, start = 5.dp, end = 6.dp),
                 text = number.toString(),
                 style = Typography.labelSmall.copy(fontWeight = FontWeight.SemiBold),
-                color = if (isCleared) Color.White else gray600,
+                color = if (isCleared) white else gray600,
             )
         }
     }

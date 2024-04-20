@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
 import com.sopt.smeem.presentation.home.calendar.ui.theme.Typography
 import com.sopt.smeem.presentation.home.calendar.ui.theme.gray500
+import com.sopt.smeem.presentation.home.calendar.ui.theme.white
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,7 +30,7 @@ fun MySummaryTopAppBar(
         modifier = Modifier
             .fillMaxWidth(),
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
-            containerColor = Color.White
+            containerColor = white
         ),
         title = {
             Text(
@@ -76,7 +76,7 @@ fun SettingTopAppBar(
         modifier = Modifier
             .fillMaxWidth(),
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
-            containerColor = Color.White
+            containerColor = white
         ),
         title = {
             Text(
@@ -118,7 +118,7 @@ fun OnlyBackArrowTopAppBar(
         modifier = Modifier
             .fillMaxWidth(),
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
-            containerColor = Color.White
+            containerColor = white
         ),
         title = {},
         navigationIcon = {
