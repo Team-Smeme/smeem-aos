@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.home.calendar.ui.theme
+package com.sopt.smeem.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -20,8 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sopt.smeem.presentation.home.calendar.ui.theme.SmeemTheme
-import com.sopt.smeem.presentation.home.calendar.ui.theme.gray400
+import com.sopt.smeem.presentation.theme.SmeemTheme
+import com.sopt.smeem.presentation.theme.gray400
 import com.sopt.smeem.util.noRippleClickable
 import java.time.LocalDate
 

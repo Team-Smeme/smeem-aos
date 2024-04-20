@@ -9,7 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
-import com.sopt.smeem.presentation.home.calendar.ui.theme.point
+import com.sopt.smeem.presentation.theme.point
 import com.sopt.smeem.util.noRippleClickable
 
 @Composable

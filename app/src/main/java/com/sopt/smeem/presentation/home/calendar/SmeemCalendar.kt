@@ -25,7 +25,7 @@ import com.sopt.smeem.presentation.home.calendar.component.WeekLabel
 import com.sopt.smeem.presentation.home.calendar.component.WeeklyCalendar
 import com.sopt.smeem.presentation.home.calendar.core.CalendarIntent
 import com.sopt.smeem.presentation.home.calendar.core.Period
-import com.sopt.smeem.presentation.home.calendar.ui.theme.gray100
+import com.sopt.smeem.presentation.theme.gray100
 import com.sopt.smeem.util.getWeekStartDate
 import java.time.LocalDate
 import java.time.YearMonth

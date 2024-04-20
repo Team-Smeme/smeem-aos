@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.home.calendar.ui.theme
+package com.sopt.smeem.presentation.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
