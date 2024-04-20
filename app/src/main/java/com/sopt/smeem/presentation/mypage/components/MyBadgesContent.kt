@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -40,11 +42,10 @@ fun MyBadgesContent(
     badges: List<MyBadges>
 ) {
     SmeemContents(
-        modifier = modifier,
         title = stringResource(R.string.my_badges)
     ) {
         LazyVerticalGrid(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxWidth(),
             columns = GridCells.Fixed(3),
             verticalArrangement = Arrangement.spacedBy(7.dp),
             horizontalArrangement = Arrangement.spacedBy(7.dp)

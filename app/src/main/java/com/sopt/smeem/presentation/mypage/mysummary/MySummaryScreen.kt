@@ -2,6 +2,9 @@ package com.sopt.smeem.presentation.mypage.mysummary
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,7 +41,9 @@ fun MySummaryScreen(
     )
 
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         VerticalSpacer(height = 18.dp)
@@ -51,7 +56,7 @@ fun MySummaryScreen(
 
         VerticalSpacer(height = 36.dp)
 
-        MyBadgesContent(badges = BadgeList.sprint2)
+        MyBadgesContent(badges = BadgeList.sprint2, modifier = Modifier.heightIn(max = 1000.dp))
 
         VerticalSpacer(height = 120.dp)
     }
