@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.mypage.components
+package com.sopt.smeem.presentation.mypage.components.topbar
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,6 +11,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -135,6 +136,38 @@ fun OnlyBackArrowTopAppBar(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TitleTopAppbar(
+    onNavigationIconClick: () -> Unit = {},
+    title: String
+) {
+    CenterAlignedTopAppBar(
+        modifier = Modifier
+            .fillMaxWidth(),
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
+            containerColor = white
+        ),
+        title = {
+            Text(
+                text = title,
+                style = Typography.titleMedium
+            )
+        },
+        navigationIcon = {
+            IconButton(
+                modifier = Modifier.padding(start = 6.dp),
+                onClick = onNavigationIconClick
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_back),
+                    contentDescription = "Back"
+                )
+            }
+        },
+    )
+}
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -152,4 +185,10 @@ fun SettingTopAppBarPreview() {
 @Composable
 fun OnlyBackArrowTopAppBarPreview() {
     OnlyBackArrowTopAppBar()
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun TitleTopAppbarPreview() {
+    TitleTopAppbar(title = stringResource(R.string.my_page_change_nickname))
 }
