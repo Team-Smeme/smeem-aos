@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,8 +39,8 @@ fun SmeemTextField(
             .padding(vertical = 19.dp, horizontal = 20.dp),
         textStyle = Typography.headlineSmall.copy(
             color = point
-        )
-
+        ),
+        cursorBrush = SolidColor(point)
     )
 }
 
