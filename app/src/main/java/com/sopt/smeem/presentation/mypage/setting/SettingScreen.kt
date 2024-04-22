@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.presentation.mypage.components.ChangeMyPlanCard
 import com.sopt.smeem.presentation.mypage.components.ChangeNicknameCard
 import com.sopt.smeem.presentation.mypage.components.TargetLanguageCard
+import com.sopt.smeem.presentation.mypage.navigation.MyPageScreen
 import com.sopt.smeem.util.VerticalSpacer
 
 @Composable
@@ -28,7 +29,12 @@ fun SettingScreen(
     ) {
         VerticalSpacer(height = 50.dp)
 
-        ChangeNicknameCard(nickname = mockNickname, onEditClick = {})
+        ChangeNicknameCard(
+            nickname = mockNickname,
+            onEditClick = {
+                navController.navigate(MyPageScreen.ChangeNickname.createRoute(mockNickname))
+            }
+        )
 
         VerticalSpacer(height = 28.dp)
 
