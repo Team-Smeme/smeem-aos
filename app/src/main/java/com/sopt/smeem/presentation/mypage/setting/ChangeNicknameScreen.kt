@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
+import com.sopt.smeem.presentation.compose.components.SmeemButton
 import com.sopt.smeem.presentation.compose.components.SmeemTextField
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.gray400
@@ -57,9 +58,17 @@ fun ChangeNicknameScreen(
             HorizontalSpacer(width = 18.dp)
         }
 
+        Spacer(modifier = Modifier.weight(1f))
 
+
+        SmeemButton(
+            text = stringResource(id = R.string.my_page_change_nickname_button),
+            onClick = { /*TODO*/ },
+            modifier = Modifier.padding(horizontal = 18.dp)
+        )
+
+        VerticalSpacer(height = 10.dp)
     }
-
 }
 
 @Composable

@@ -85,4 +85,5 @@
     <string name="language_english">English</string>
     <string name="edit_target_language">edit target language</string>
     <string name="my_page_change_nickname">닉네임 변경</string>
+    <string name="my_page_change_nickname_button">완료</string>
 </resources>
