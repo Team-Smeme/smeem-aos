@@ -29,6 +29,8 @@ import com.sopt.smeem.presentation.compose.components.SmeemButton
 import com.sopt.smeem.presentation.compose.components.SmeemTextField
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.gray400
+import com.sopt.smeem.presentation.mypage.NICKNAME_MAX_LENGTH
+import com.sopt.smeem.presentation.mypage.NICKNAME_MIN_LENGTH
 import com.sopt.smeem.util.HorizontalSpacer
 import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.addFocusCleaner
@@ -95,7 +97,9 @@ fun ChangeNicknameScreen(
         SmeemButton(
             text = stringResource(id = R.string.my_page_change_nickname_button),
             onClick = { /*TODO*/ },
-            modifier = Modifier.padding(horizontal = 18.dp)
+            modifier = Modifier.padding(horizontal = 18.dp),
+            isButtonEnabled = textFieldState.text.length
+                    in NICKNAME_MIN_LENGTH..NICKNAME_MAX_LENGTH
         )
 
         VerticalSpacer(height = 10.dp)
