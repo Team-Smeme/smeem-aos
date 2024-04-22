@@ -13,6 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,6 +24,7 @@ import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.gray400
 import com.sopt.smeem.util.HorizontalSpacer
 import com.sopt.smeem.util.VerticalSpacer
+import com.sopt.smeem.util.addFocusCleaner
 
 @Composable
 fun ChangeNicknameScreen(
@@ -32,7 +34,7 @@ fun ChangeNicknameScreen(
     var newNickName by rememberSaveable { mutableStateOf(nickname) }
 
     Column(
-        modifier = modifier,
+        modifier = modifier.addFocusCleaner(LocalFocusManager.current),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
