@@ -10,23 +10,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.compose.theme.point
 
-// 공백이나 11자 초과시 버튼 비활성화
-
 @Composable
 fun SmeemTextField(
     modifier: Modifier = Modifier,
-    text: String,
+    value: TextFieldValue,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    onValueChange: (String) -> Unit
+    onValueChange: (TextFieldValue) -> Unit
 ) {
     BasicTextField(
-        value = text,
+        value = value,
         onValueChange = onValueChange,
         singleLine = true,
         keyboardOptions = KeyboardOptions(
@@ -48,7 +47,7 @@ fun SmeemTextField(
 @Composable
 fun SmeemTextFieldPreview() {
     SmeemTextField(
-        text = "텍스트",
+        value = TextFieldValue("텍스트"),
         onValueChange = {}
     )
 }
