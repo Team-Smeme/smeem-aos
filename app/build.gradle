@@ -189,6 +189,8 @@ dependencies {
     implementation(libs.glide)
     // Amplitude
     implementation(libs.analytics.android)
+    // Browser
+    implementation(libs.androidx.browser)
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
