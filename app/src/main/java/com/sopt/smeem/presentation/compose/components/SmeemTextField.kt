@@ -3,6 +3,7 @@ package com.sopt.smeem.presentation.compose.components
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
@@ -33,7 +34,7 @@ fun SmeemTextField(
         ),
         modifier = modifier
             .fillMaxWidth()
-            .border(width = 1.dp, color = gray100)
+            .border(width = 1.dp, color = gray100, shape = RoundedCornerShape(6.dp))
             .padding(vertical = 19.dp, horizontal = 20.dp),
         textStyle = Typography.headlineSmall.copy(
             color = point
