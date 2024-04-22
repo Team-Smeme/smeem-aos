@@ -84,6 +84,14 @@
     <string name="my_page_alarm">학습 알림</string>
     <string name="language_english">English</string>
     <string name="edit_target_language">edit target language</string>
+    
     <string name="my_page_change_nickname">닉네임 변경</string>
     <string name="my_page_change_nickname_button">완료</string>
+
+    <!- My Page More View>
+    <string name="my_page_more_information">정보</string>
+    <string name="my_page_more_instructions">이용 안내</string>
+    <string name="my_page_more_account_management">계정 관리</string>
+    <string name="my_page_more_logout">로그아웃</string>
+    <string name="my_page_more_delete_account">계정 삭제</string>
 </resources>
