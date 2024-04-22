@@ -45,7 +45,7 @@ fun MySummaryTopAppBar(
                 onClick = onNavigationIconClick
             ) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_back),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_left),
                     contentDescription = "Back"
                 )
             }
@@ -91,7 +91,7 @@ fun SettingTopAppBar(
                 onClick = onNavigationIconClick
             ) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_back),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_left),
                     contentDescription = "Back"
                 )
             }
@@ -128,7 +128,7 @@ fun OnlyBackArrowTopAppBar(
                 onClick = onNavigationIconClick
             ) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_back),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_left),
                     contentDescription = "Back"
                 )
             }
@@ -160,7 +160,7 @@ fun TitleTopAppbar(
                 onClick = onNavigationIconClick
             ) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_back),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_left),
                     contentDescription = "Back"
                 )
             }
