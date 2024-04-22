@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
-import com.sopt.smeem.presentation.theme.gray300
+import com.sopt.smeem.presentation.compose.theme.gray300
 
 @Composable
 fun CalendarToggleSlider(

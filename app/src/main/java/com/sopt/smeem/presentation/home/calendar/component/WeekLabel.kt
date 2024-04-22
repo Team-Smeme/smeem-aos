@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sopt.smeem.presentation.theme.SmeemTheme
+import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import java.time.DayOfWeek
 
 @Composable

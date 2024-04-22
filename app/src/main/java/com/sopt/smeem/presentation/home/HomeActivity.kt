@@ -19,13 +19,13 @@ import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.EventVM
+import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.home.calendar.SmeemCalendar
 import com.sopt.smeem.presentation.home.calendar.core.CalendarState
 import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.presentation.mypage.TempMyPageActivity
-import com.sopt.smeem.presentation.theme.SmeemTheme
 import com.sopt.smeem.util.DateUtil
 import com.sopt.smeem.util.getWeekStartDate
 import com.sopt.smeem.util.setOnSingleClickListener

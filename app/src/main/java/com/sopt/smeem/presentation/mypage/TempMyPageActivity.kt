@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
+import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.presentation.mypage.navigation.MyPageNavHost
-import com.sopt.smeem.presentation.theme.SmeemTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

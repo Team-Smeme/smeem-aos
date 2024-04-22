@@ -17,9 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
-import com.sopt.smeem.presentation.theme.Typography
-import com.sopt.smeem.presentation.theme.gray500
-import com.sopt.smeem.presentation.theme.white
+import com.sopt.smeem.presentation.compose.theme.Typography
+import com.sopt.smeem.presentation.compose.theme.gray500
+import com.sopt.smeem.presentation.compose.theme.white
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

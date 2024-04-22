@@ -17,6 +17,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sopt.smeem.domain.model.Date
+import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.home.HomeViewModel
 import com.sopt.smeem.presentation.home.calendar.component.CalendarTitle
 import com.sopt.smeem.presentation.home.calendar.component.CalendarToggleSlider
@@ -25,7 +26,6 @@ import com.sopt.smeem.presentation.home.calendar.component.WeekLabel
 import com.sopt.smeem.presentation.home.calendar.component.WeeklyCalendar
 import com.sopt.smeem.presentation.home.calendar.core.CalendarState
 import com.sopt.smeem.presentation.home.calendar.core.Period
-import com.sopt.smeem.presentation.theme.gray100
 import com.sopt.smeem.util.getWeekStartDate
 import java.time.LocalDate
 import java.time.YearMonth

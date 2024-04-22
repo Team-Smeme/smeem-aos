@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.theme
+package com.sopt.smeem.presentation.compose.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme

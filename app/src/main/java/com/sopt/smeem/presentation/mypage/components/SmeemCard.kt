@@ -18,11 +18,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
-import com.sopt.smeem.presentation.theme.Typography
-import com.sopt.smeem.presentation.theme.black
-import com.sopt.smeem.presentation.theme.gray100
-import com.sopt.smeem.presentation.theme.point
-import com.sopt.smeem.presentation.theme.white
+import com.sopt.smeem.presentation.compose.theme.Typography
+import com.sopt.smeem.presentation.compose.theme.black
+import com.sopt.smeem.presentation.compose.theme.gray100
+import com.sopt.smeem.presentation.compose.theme.point
+import com.sopt.smeem.presentation.compose.theme.white
 
 @Composable
 fun SmeemCard(

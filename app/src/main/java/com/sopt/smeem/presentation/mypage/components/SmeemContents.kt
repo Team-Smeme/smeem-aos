@@ -7,8 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sopt.smeem.presentation.theme.Typography
-import com.sopt.smeem.presentation.theme.black
+import com.sopt.smeem.presentation.compose.theme.Typography
+import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.util.VerticalSpacer
 
 @Composable
