@@ -34,6 +34,7 @@ import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.model.mypage.MyBadges
 import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.presentation.compose.theme.Typography
+import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.util.previewPlaceholder
 
 @Composable
@@ -55,7 +56,7 @@ fun MyBadgesContent(
                 if (badge.hasObtained) {
                     MyBadgesObtainedCard(info = badge, onClick = { onClickCard(badge) })
                 } else {
-                    MyBadgesNotObtainedCard(info = badge, onClick = { onClickCard(badge) })
+                    MyBadgesNotObtainedCard(onClick = { onClickCard(badge) })
                 }
             }
         }
@@ -108,7 +109,6 @@ fun MyBadgesObtainedCard(
 
 @Composable
 fun MyBadgesNotObtainedCard(
-    info: MyBadges,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -117,14 +117,14 @@ fun MyBadgesNotObtainedCard(
             .aspectRatio(1f)
             .clickable { onClick() },
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = gray100,
         ),
         shape = RoundedCornerShape(10.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_badge_lock),
@@ -154,6 +154,6 @@ fun MyBadgesObtainedCardPreview() {
 @Composable
 fun MyBadgesNotObtainedCardPreview() {
     SmeemTheme {
-        MyBadgesNotObtainedCard(info = BadgeList.sprint2[2], onClick = {})
+        MyBadgesNotObtainedCard(onClick = {})
     }
 }
