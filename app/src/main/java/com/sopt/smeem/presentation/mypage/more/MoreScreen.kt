@@ -1,5 +1,7 @@
 package com.sopt.smeem.presentation.mypage.more
 
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Box
@@ -9,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -18,6 +22,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.R
+import com.sopt.smeem.presentation.compose.components.SmeemDialog
+import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.presentation.theme.Typography
 import com.sopt.smeem.presentation.theme.black
 import com.sopt.smeem.presentation.theme.gray600
@@ -31,6 +37,35 @@ fun MoreScreen(
 ) {
     val viewModel: MoreViewModel = hiltViewModel()
     val context = LocalContext.current
+
+    val (showLogoutDialog, setShowLogoutDialog) = rememberSaveable { mutableStateOf(false) }
+    val (showDeleteDialog, setShowDeleteDialog) = rememberSaveable { mutableStateOf(false) }
+
+    if (showLogoutDialog) {
+        SmeemDialog(
+            setShowDialog = setShowLogoutDialog,
+            title = stringResource(R.string.smeem_dialog_logout_title),
+            content = stringResource(R.string.smeem_dialog_logout_content),
+            onConfirmButtonClick = {
+                viewModel.clearLocal()
+                context.startActivity(Intent(context, SplashLoginActivity::class.java))
+                (context as? Activity)?.finishAffinity()
+            })
+    }
+
+    // 계정 삭제 대화상자
+    if (showDeleteDialog) {
+        SmeemDialog(
+            setShowDialog = setShowDeleteDialog,
+            title = stringResource(R.string.smeem_dialog_delete_account_title),
+            content = stringResource(R.string.smeem_dialog_delete_dialog_content),
+            onConfirmButtonClick = {
+                viewModel.withdrawal()
+                context.startActivity(Intent(context, SplashLoginActivity::class.java))
+                (context as? Activity)?.finishAffinity()
+            })
+    }
+
 
     Column(
         modifier = modifier
@@ -58,7 +93,7 @@ fun MoreScreen(
                         .run {
                             launchUrl(
                                 context, Uri.parse(
-                                    context.getString(R.string.my_page_more_manual_link)
+                                    context.getString(R.string.manual_url)
                                 )
                             )
                         }
@@ -85,6 +120,7 @@ fun MoreScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .noRippleClickable { setShowLogoutDialog(true) }
                 .padding(vertical = 12.dp, horizontal = 8.dp)
         ) {
             Text(
@@ -99,6 +135,7 @@ fun MoreScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .noRippleClickable { setShowDeleteDialog(true) }
                 .padding(vertical = 12.dp, horizontal = 8.dp)
         ) {
             Text(

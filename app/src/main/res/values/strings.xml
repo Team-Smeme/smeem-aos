@@ -94,5 +94,12 @@
     <string name="my_page_more_account_management">계정 관리</string>
     <string name="my_page_more_logout">로그아웃</string>
     <string name="my_page_more_delete_account">계정 삭제</string>
-    <string name="my_page_more_manual_link"><![CDATA[https://www.youtube.com/watch?v=IMWT6937uUs&ab_channel=NerdConnection-Topic]]></string>
+
+    <!-- Smeem Dialog -->
+    <string name="smeem_dialog_yes">예</string>
+    <string name="smeem_dialog_no">아니요</string>
+    <string name="smeem_dialog_logout_title">로그아웃</string>
+    <string name="smeem_dialog_logout_content">로그아웃 하시겠습니까?</string>
+    <string name="smeem_dialog_delete_account_title">계정을 삭제하시겠습니까?</string>
+    <string name="smeem_dialog_delete_dialog_content">이전에 작성했던 일기는 모두 사라집니다.</string>
 </resources>
