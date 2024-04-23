@@ -4,10 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +28,6 @@ import com.sopt.smeem.presentation.theme.Typography
 import com.sopt.smeem.presentation.theme.black
 import com.sopt.smeem.presentation.theme.gray600
 import com.sopt.smeem.util.VerticalSpacer
-import com.sopt.smeem.util.noRippleClickable
 
 @Composable
 fun MoreScreen(
@@ -83,27 +82,26 @@ fun MoreScreen(
 
         VerticalSpacer(height = 9.dp)
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .noRippleClickable {
-                    CustomTabsIntent
-                        .Builder()
-                        .build()
-                        .run {
-                            launchUrl(
-                                context, Uri.parse(
-                                    context.getString(R.string.manual_url)
-                                )
+
+        Box(modifier = Modifier
+            .clickable {
+                CustomTabsIntent
+                    .Builder()
+                    .build()
+                    .run {
+                        launchUrl(
+                            context, Uri.parse(
+                                context.getString(R.string.manual_url)
                             )
-                        }
-                }
-                .padding(vertical = 12.dp, horizontal = 8.dp)
+                        )
+                    }
+            }
+            .padding(vertical = 12.dp, horizontal = 8.dp)
         ) {
             Text(
                 text = stringResource(R.string.my_page_more_manual),
                 style = Typography.bodyMedium,
-                color = gray600
+                color = gray600,
             )
         }
 
@@ -112,21 +110,20 @@ fun MoreScreen(
         Text(
             text = stringResource(R.string.my_page_more_account_management),
             style = Typography.titleMedium,
-            color = black
+            color = black,
         )
 
         VerticalSpacer(height = 10.dp)
 
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .noRippleClickable { setShowLogoutDialog(true) }
+                .clickable { setShowLogoutDialog(true) }
                 .padding(vertical = 12.dp, horizontal = 8.dp)
         ) {
             Text(
                 text = stringResource(R.string.my_page_more_logout),
                 style = Typography.bodyMedium,
-                color = gray600
+                color = gray600,
             )
         }
 
@@ -134,17 +131,15 @@ fun MoreScreen(
 
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .noRippleClickable { setShowDeleteDialog(true) }
+                .clickable { setShowDeleteDialog(true) }
                 .padding(vertical = 12.dp, horizontal = 8.dp)
         ) {
             Text(
                 text = stringResource(R.string.my_page_more_delete_account),
                 style = Typography.bodyMedium,
-                color = gray600
+                color = gray600,
             )
         }
-
     }
 }
 
