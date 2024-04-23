@@ -32,8 +32,8 @@ import coil.request.ImageRequest
 import com.sopt.smeem.R
 import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.model.mypage.MyBadges
-import com.sopt.smeem.presentation.theme.SmeemTheme
-import com.sopt.smeem.presentation.theme.Typography
+import com.sopt.smeem.presentation.compose.theme.SmeemTheme
+import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.util.previewPlaceholder
 
 @Composable

@@ -25,10 +25,10 @@ import coil.request.ImageRequest
 import com.sopt.smeem.R
 import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.model.mypage.MyBadges
-import com.sopt.smeem.presentation.theme.Typography
-import com.sopt.smeem.presentation.theme.black
-import com.sopt.smeem.presentation.theme.gray500
-import com.sopt.smeem.presentation.theme.white
+import com.sopt.smeem.presentation.compose.theme.Typography
+import com.sopt.smeem.presentation.compose.theme.black
+import com.sopt.smeem.presentation.compose.theme.gray500
+import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.previewPlaceholder
 
@@ -146,5 +146,8 @@ fun ObtainedBottomSheetContentPreview() {
 @Preview(showBackground = true, widthDp = 360)
 @Composable
 fun NotObtainedBottomSheetContentPreview() {
-    NotObtainedBottomSheetContent(info = BadgeList.sprint2[2], modifier = Modifier.widthIn(max = 120.dp))
+    NotObtainedBottomSheetContent(
+        info = BadgeList.sprint2[2],
+        modifier = Modifier.widthIn(max = 120.dp)
+    )
 }

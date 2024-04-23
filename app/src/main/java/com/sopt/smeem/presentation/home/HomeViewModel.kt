@@ -8,6 +8,7 @@ import com.sopt.smeem.Smeem
 import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.event.AmplitudeEventType
+import com.sopt.smeem.presentation.home.calendar.core.CalendarState
 import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.util.DateUtil
 import com.sopt.smeem.util.getNextDates
@@ -25,6 +26,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.time.LocalDate
 import java.time.YearMonth

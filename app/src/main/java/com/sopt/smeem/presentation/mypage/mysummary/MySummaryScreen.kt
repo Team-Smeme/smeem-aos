@@ -26,7 +26,7 @@ import com.sopt.smeem.presentation.mypage.components.MyBadgesBottomSheet
 import com.sopt.smeem.presentation.mypage.components.MyBadgesContent
 import com.sopt.smeem.presentation.mypage.components.MyPlanCard
 import com.sopt.smeem.presentation.mypage.components.MySmeemCard
-import com.sopt.smeem.presentation.theme.SmeemTheme
+import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.util.VerticalSpacer
 
 @OptIn(ExperimentalMaterial3Api::class)
