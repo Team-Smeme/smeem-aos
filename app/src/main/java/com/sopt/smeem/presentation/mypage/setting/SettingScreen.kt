@@ -3,6 +3,10 @@ package com.sopt.smeem.presentation.mypage.setting
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -11,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.presentation.mypage.components.ChangeMyPlanCard
 import com.sopt.smeem.presentation.mypage.components.ChangeNicknameCard
+import com.sopt.smeem.presentation.mypage.components.StudyNotificationCard
 import com.sopt.smeem.presentation.mypage.components.TargetLanguageCard
 import com.sopt.smeem.presentation.mypage.navigation.MyPageScreen
 import com.sopt.smeem.util.VerticalSpacer
@@ -22,6 +27,9 @@ fun SettingScreen(
 ) {
     val mockNickname = "이태하이"
     val mockMyPlan = "주 3회 일기 작성하기"
+
+    // TODO 초기값 서버에서 가져오기
+    var isSwitchChecked by rememberSaveable { mutableStateOf(true) }
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -43,6 +51,13 @@ fun SettingScreen(
         VerticalSpacer(height = 28.dp)
 
         TargetLanguageCard(onEditClick = {})
+
+        VerticalSpacer(height = 28.dp)
+
+        StudyNotificationCard(
+            checked = isSwitchChecked,
+            onCheckedChange = { isSwitchChecked = it }
+        )
     }
 }
 
