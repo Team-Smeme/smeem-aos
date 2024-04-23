@@ -357,7 +357,7 @@
                     android:layout_height="0dp"
 
                     android:layout_marginTop="52dp"
-                    android:text="@string/my_page_alarm"
+                    android:text="@string/my_page_study_alarm"
                     android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_my_page_language" />
@@ -378,7 +378,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
-                        android:text="@string/my_page_push"
+                        android:text="@string/my_page_training_push_alarm"
                         android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
