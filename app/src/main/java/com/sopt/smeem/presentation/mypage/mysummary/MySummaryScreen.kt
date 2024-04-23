@@ -10,6 +10,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -22,12 +23,13 @@ import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.model.mypage.MyBadges
 import com.sopt.smeem.domain.model.mypage.MyPlan
 import com.sopt.smeem.domain.model.mypage.MySmeem
+import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.presentation.mypage.components.MyBadgesBottomSheet
 import com.sopt.smeem.presentation.mypage.components.MyBadgesContent
 import com.sopt.smeem.presentation.mypage.components.MyPlanCard
 import com.sopt.smeem.presentation.mypage.components.MySmeemCard
-import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.util.VerticalSpacer
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,14 +51,20 @@ fun MySummaryScreen(
         clearCount = 7
     )
 
+
+    /***** bottom sheet configuration *****/
     val sheetState = rememberModalBottomSheetState()
+    val coroutineScope = rememberCoroutineScope()
     var selectedBadge by rememberSaveable { mutableStateOf<MyBadges?>(null) }
 
     if (selectedBadge != null) {
         MyBadgesBottomSheet(
             badge = selectedBadge!!,
             sheetState = sheetState,
-            onDismiss = { selectedBadge = null }
+            onDismiss = {
+                selectedBadge = null
+                coroutineScope.launch { sheetState.hide() }
+            }
         )
     }
 

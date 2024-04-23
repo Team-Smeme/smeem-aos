@@ -1,6 +1,7 @@
 package com.sopt.smeem.presentation.mypage.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,9 +50,9 @@ fun MyBadgesBottomSheet(
         onDismissRequest = onDismiss
     ) {
         if (badge.hasObtained) {
-            ObtainedBottomSheetContent(info = badge)
+            ObtainedBottomSheetContent(info = badge, onDismiss = onDismiss)
         } else {
-            NotObtainedBottomSheetContent(info = badge)
+            NotObtainedBottomSheetContent(info = badge, onDismiss = onDismiss)
         }
     }
 }
@@ -59,12 +60,14 @@ fun MyBadgesBottomSheet(
 @Composable
 fun ObtainedBottomSheetContent(
     info: MyBadges,
+    onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(bottom = 57.dp),
+            .padding(bottom = 57.dp)
+            .clickable { onDismiss() },
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -114,12 +117,14 @@ fun ObtainedBottomSheetContent(
 @Composable
 fun NotObtainedBottomSheetContent(
     info: MyBadges,
+    onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(bottom = 57.dp),
+            .padding(bottom = 57.dp)
+            .clickable { onDismiss() },
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -140,7 +145,7 @@ fun NotObtainedBottomSheetContent(
 @Preview(showBackground = true, widthDp = 360)
 @Composable
 fun ObtainedBottomSheetContentPreview() {
-    ObtainedBottomSheetContent(info = BadgeList.sprint2.first())
+    ObtainedBottomSheetContent(info = BadgeList.sprint2.first(), onDismiss = {})
 }
 
 @Preview(showBackground = true, widthDp = 360)
@@ -148,6 +153,7 @@ fun ObtainedBottomSheetContentPreview() {
 fun NotObtainedBottomSheetContentPreview() {
     NotObtainedBottomSheetContent(
         info = BadgeList.sprint2[2],
+        onDismiss = {},
         modifier = Modifier.widthIn(max = 120.dp)
     )
 }
