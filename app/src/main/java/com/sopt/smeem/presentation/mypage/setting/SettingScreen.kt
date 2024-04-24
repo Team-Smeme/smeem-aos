@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.mypage.setting
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.sopt.smeem.presentation.compose.components.SmeemAlarmDays
 import com.sopt.smeem.presentation.mypage.components.ChangeMyPlanCard
 import com.sopt.smeem.presentation.mypage.components.ChangeNicknameCard
 import com.sopt.smeem.presentation.mypage.components.StudyNotificationCard
@@ -56,8 +58,15 @@ fun SettingScreen(
 
         StudyNotificationCard(
             checked = isSwitchChecked,
-            onCheckedChange = { isSwitchChecked = it }
+            onCheckedChange = {
+                isSwitchChecked = it
+                // TODO if 문으로 뷰모델의 changePushAlarm 호출
+            }
         )
+
+        VerticalSpacer(height = 28.dp)
+
+        SmeemAlarmDays(modifier = Modifier.padding(horizontal = 19.dp))
     }
 }
 

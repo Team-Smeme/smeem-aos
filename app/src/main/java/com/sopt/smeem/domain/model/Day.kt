@@ -1,6 +1,6 @@
 package com.sopt.smeem.domain.model
 
-enum class Day(private val korean: String) {
+enum class Day(val korean: String) {
     MON("월"),
     TUE("화"),
     WED("수"),
