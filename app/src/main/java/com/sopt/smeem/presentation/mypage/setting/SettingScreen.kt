@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.sopt.smeem.presentation.compose.components.SmeemAlarmDays
+import com.sopt.smeem.presentation.compose.components.SmeemAlarmCard
 import com.sopt.smeem.presentation.mypage.components.ChangeMyPlanCard
 import com.sopt.smeem.presentation.mypage.components.ChangeNicknameCard
 import com.sopt.smeem.presentation.mypage.components.StudyNotificationCard
@@ -32,6 +32,7 @@ fun SettingScreen(
 
     // TODO 초기값 서버에서 가져오기
     var isSwitchChecked by rememberSaveable { mutableStateOf(true) }
+    val mockDays = setOf("월", "화", "수", "목", "금")
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -66,7 +67,10 @@ fun SettingScreen(
 
         VerticalSpacer(height = 28.dp)
 
-        SmeemAlarmDays(modifier = Modifier.padding(horizontal = 19.dp))
+        SmeemAlarmCard(
+            modifier = Modifier.padding(horizontal = 19.dp),
+            isDaySelected = { mockDays.contains(it) }
+        )
     }
 }
 

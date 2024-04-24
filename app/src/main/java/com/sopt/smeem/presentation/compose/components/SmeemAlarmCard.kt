@@ -19,14 +19,18 @@ import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.compose.theme.gray400
+import com.sopt.smeem.presentation.compose.theme.point
 import com.sopt.smeem.presentation.compose.theme.white
 
 @Composable
-fun SmeemAlarmDays(
+fun SmeemAlarmCard(
     modifier: Modifier = Modifier,
+    isDaySelected: (String) -> Boolean
 ) {
 
     val daysOfWeek = Day.entries.map { it.korean }
+
+    // 화면의 가로 길이를 가져와서 요일의 개수로 나누어 요일의 너비를 계산
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val itemWidth = with(LocalConfiguration.current) {
         (screenWidth - 38.dp) / daysOfWeek.size
@@ -43,13 +47,23 @@ fun SmeemAlarmDays(
         items(daysOfWeek.size) { day ->
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.size(itemWidth),
+                modifier = Modifier
+                    .size(itemWidth)
+                    .then(if (isDaySelected(daysOfWeek[day])) Modifier.background(point) else Modifier)
             ) {
-                Text(
-                    text = daysOfWeek[day],
-                    style = Typography.bodySmall,
-                    color = gray400,
-                )
+                if (isDaySelected(daysOfWeek[day])) {
+                    Text(
+                        text = daysOfWeek[day],
+                        style = Typography.bodySmall,
+                        color = white,
+                    )
+                } else {
+                    Text(
+                        text = daysOfWeek[day],
+                        style = Typography.bodySmall,
+                        color = gray400,
+                    )
+                }
             }
         }
     }
@@ -58,5 +72,6 @@ fun SmeemAlarmDays(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SmeemAlarmDaysPreview() {
-    SmeemAlarmDays()
+    val mockDays = listOf("월", "화", "수", "목", "금")
+    SmeemAlarmCard(modifier = Modifier, isDaySelected = { mockDays.contains(it) })
 }
