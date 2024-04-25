@@ -1,7 +1,6 @@
 package com.sopt.smeem.presentation.compose.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.presentation.compose.theme.Typography
+import com.sopt.smeem.presentation.compose.theme.gray200
 import com.sopt.smeem.presentation.compose.theme.gray500
 import com.sopt.smeem.presentation.compose.theme.point
 import com.sopt.smeem.presentation.compose.theme.white
@@ -52,7 +52,8 @@ fun SmeemAlarmCard(
         ) {
             items(daysOfWeek.size) { day ->
                 val daySelected = isDaySelected(daysOfWeek[day])
-                val borderColor = if (daySelected) point else gray500
+                val borderColor = if (daySelected) point else gray200
+                val sideBorder = Border(strokeWidth = 1.dp, color = borderColor)
 
                 val radiusModifier = when (day) {
                     0 -> Modifier.clip(RoundedCornerShape(topStart = 6.dp))
@@ -63,37 +64,36 @@ fun SmeemAlarmCard(
                 val itemModifier = Modifier
                     .size(itemWidth)
                     .then(radiusModifier)
+                    .background(if (daySelected) point else white)
                     .then(
                         if (!daySelected) {
                             Modifier
                                 .let { modifier ->
                                     when (day) {
                                         0 -> {
-                                            modifier.border(
-                                                1.dp,
-                                                color = borderColor,
-                                                RoundedCornerShape(topStart = 6.dp)
+                                            modifier.sideBorder(
+                                                topStart = sideBorder,
+                                                bottom = sideBorder
                                             )
                                         }
 
                                         daysOfWeek.size - 1 -> {
-                                            modifier
-                                                .border(
-                                                    width = 1.dp,
-                                                    color = borderColor,
-                                                    shape = RoundedCornerShape(topEnd = 6.dp)
-                                                )
+                                            modifier.sideBorder(
+                                                topEnd = sideBorder,
+                                                bottom = sideBorder
+                                            )
                                         }
 
                                         else -> modifier.sideBorder(
-                                            top = Border(1.dp, borderColor),
+                                            top = sideBorder,
+                                            bottom = sideBorder
                                         )
                                     }
                                 }
                                 .padding(1.dp)
                         } else Modifier
                     )
-                    .background(if (daySelected) point else white)
+
 
                 Box(
                     contentAlignment = Alignment.Center,
@@ -108,13 +108,15 @@ fun SmeemAlarmCard(
             }
         }
 
-
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(bottomStart = 6.dp, bottomEnd = 6.dp))
                 .background(white)
-                .border(1.dp, gray500, RoundedCornerShape(bottomStart = 6.dp, bottomEnd = 6.dp)),
+                .sideBorder(
+                    bottomStart = Border(1.dp, gray200),
+                    bottomEnd = Border(1.dp, gray200)
+                )
         ) {
             Column(
                 modifier = Modifier
