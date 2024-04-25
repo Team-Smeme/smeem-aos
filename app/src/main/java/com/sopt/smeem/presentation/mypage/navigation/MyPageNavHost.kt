@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import com.sopt.smeem.R
 import com.sopt.smeem.presentation.mypage.TempMyPageActivity
 import com.sopt.smeem.presentation.mypage.components.topbar.MySummaryTopAppBar
@@ -47,7 +48,7 @@ fun MyPageNavHost(
                     }
                 )
 
-                MyPageScreen.Setting.route -> SettingTopAppBar(
+                SettingNavGraph.SettingMain.route -> SettingTopAppBar(
                     onNavigationIconClick = { navController.popBackStack() },
                     onMoreClick = {
                         navController.navigate(MyPageScreen.More.route) {
@@ -61,7 +62,7 @@ fun MyPageNavHost(
                     onNavigationIconClick = { navController.popBackStack() }
                 )
 
-                MyPageScreen.ChangeNickname.route -> TitleTopAppbar(
+                SettingNavGraph.ChangeNickname.route -> TitleTopAppbar(
                     onNavigationIconClick = { navController.popBackStack() },
                     title = stringResource(R.string.my_page_change_nickname)
                 )
@@ -72,7 +73,6 @@ fun MyPageNavHost(
             addMySummary(navController = navController, modifier = Modifier.padding(it))
             addSetting(navController = navController, modifier = Modifier.padding(it))
             addMore(navController = navController, modifier = Modifier.padding(it))
-            addChangeNickname(modifier = Modifier.padding(it))
         }
     }
 }
@@ -87,11 +87,28 @@ private fun NavGraphBuilder.addMySummary(navController: NavController, modifier:
 }
 
 private fun NavGraphBuilder.addSetting(navController: NavController, modifier: Modifier) {
-    composable(route = MyPageScreen.Setting.route) {
-        SettingScreen(
-            navController = navController,
-            modifier = modifier
-        )
+    navigation(
+        startDestination = SettingNavGraph.SettingMain.route,
+        route = MyPageScreen.Setting.route
+    ) {
+        composable(route = SettingNavGraph.SettingMain.route) {
+            SettingScreen(
+                navController = navController,
+                modifier = modifier
+            )
+        }
+
+        composable(
+            route = SettingNavGraph.ChangeNickname.route,
+            arguments = listOf(navArgument("nickname") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val nickname = backStackEntry.arguments?.getString("nickname") ?: ""
+
+            ChangeNicknameScreen(
+                modifier = modifier,
+                nickname = nickname
+            )
+        }
     }
 }
 
@@ -104,16 +121,3 @@ private fun NavGraphBuilder.addMore(navController: NavController, modifier: Modi
     }
 }
 
-private fun NavGraphBuilder.addChangeNickname(modifier: Modifier) {
-    composable(
-        route = MyPageScreen.ChangeNickname.route,
-        arguments = listOf(navArgument("nickname") { type = NavType.StringType })
-    ) { backStackEntry ->
-        val nickname = backStackEntry.arguments?.getString("nickname") ?: ""
-
-        ChangeNicknameScreen(
-            modifier = modifier,
-            nickname = nickname
-        )
-    }
-}

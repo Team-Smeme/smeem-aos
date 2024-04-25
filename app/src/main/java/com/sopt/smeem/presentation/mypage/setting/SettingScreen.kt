@@ -10,6 +10,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -19,7 +20,7 @@ import com.sopt.smeem.presentation.mypage.components.ChangeMyPlanCard
 import com.sopt.smeem.presentation.mypage.components.ChangeNicknameCard
 import com.sopt.smeem.presentation.mypage.components.StudyNotificationCard
 import com.sopt.smeem.presentation.mypage.components.TargetLanguageCard
-import com.sopt.smeem.presentation.mypage.navigation.MyPageScreen
+import com.sopt.smeem.presentation.mypage.navigation.SettingNavGraph
 import com.sopt.smeem.util.VerticalSpacer
 
 @Composable
@@ -27,6 +28,8 @@ fun SettingScreen(
     navController: NavController,
     modifier: Modifier
 ) {
+    val context = LocalContext.current
+
     val mockNickname = "이태하이"
     val mockMyPlan = "주 3회 일기 작성하기"
 
@@ -43,7 +46,7 @@ fun SettingScreen(
         ChangeNicknameCard(
             nickname = mockNickname,
             onEditClick = {
-                navController.navigate(MyPageScreen.ChangeNickname.createRoute(mockNickname))
+                navController.navigate(SettingNavGraph.ChangeNickname.createRoute(mockNickname))
             }
         )
 
@@ -69,7 +72,12 @@ fun SettingScreen(
 
         SmeemAlarmCard(
             modifier = Modifier.padding(horizontal = 19.dp),
-            isDaySelected = { mockDays.contains(it) }
+            isDaySelected = { mockDays.contains(it) },
+            onClick = {
+                if (isSwitchChecked) {
+//                    context.startActivity(Intent(context, EditTrainingTimeActivity::class.java))
+                }
+            }
         )
     }
 }
