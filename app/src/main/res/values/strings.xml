@@ -102,4 +102,8 @@
     <string name="smeem_dialog_logout_content">로그아웃 하시겠습니까?</string>
     <string name="smeem_dialog_delete_account_title">계정을 삭제하시겠습니까?</string>
     <string name="smeem_dialog_delete_dialog_content">이전에 작성했던 일기는 모두 사라집니다.</string>
+
+    <!-- Training Time -->
+    <string name="default_training_time">10:00 PM</string>
+    <string name="my_page_setting_training_time_title">알림 시간</string>
 </resources>

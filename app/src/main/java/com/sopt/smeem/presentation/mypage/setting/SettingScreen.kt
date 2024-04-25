@@ -65,7 +65,7 @@ fun SettingScreen(
             }
         )
 
-        VerticalSpacer(height = 28.dp)
+        VerticalSpacer(height = 10.dp)
 
         SmeemAlarmCard(
             modifier = Modifier.padding(horizontal = 19.dp),
