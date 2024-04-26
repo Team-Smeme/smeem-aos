@@ -76,7 +76,7 @@ fun SmeemTimePickerDialog(
                     Picker(
                         state = timeOfDayPickerState,
                         items = timeOfDay,
-                        visibleItemsCount = 2,
+                        visibleItemsCount = 3,
                         textModifier = Modifier.padding(18.dp),
                         modifier = Modifier.weight(1f),
                         textStyle = Typography.titleSmall.copy(color = black),
@@ -112,7 +112,7 @@ fun SmeemTimePickerDialog(
                     Picker(
                         state = minutePickerState,
                         items = minute,
-                        visibleItemsCount = 2,
+                        visibleItemsCount = 3,
                         textModifier = Modifier.padding(18.dp),
                         modifier = Modifier.weight(1f),
                         textStyle = Typography.titleSmall.copy(color = black),
@@ -151,13 +151,8 @@ fun SmeemTimePickerDialog(
                             color = point
                         )
                     }
-
-
                 }
-
-
             }
-
         }
     }
 }
