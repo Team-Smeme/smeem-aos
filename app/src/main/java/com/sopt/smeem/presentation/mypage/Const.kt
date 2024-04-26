@@ -6,6 +6,7 @@ const val MORE = "More"
 
 const val SETTING_MAIN = "SettingMain"
 const val CHANGE_NICKNAME = "ChangeNickname"
+const val EDIT_TRAINING_PLAN = "EditTrainingPlan"
 const val EDIT_TRAINING_TIME = "EditTrainingTime"
 
 const val NICKNAME_MIN_LENGTH = 1

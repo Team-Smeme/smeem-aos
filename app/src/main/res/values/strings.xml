@@ -108,4 +108,7 @@
     <string name="my_page_setting_training_time_title">알림 시간</string>
     <string name="edit_traint_time_top_app_bar_title">학습 알림 설정</string>
     <string name="training_time_change_button">완료</string>
+
+    <!-- Training Plan -->
+    <string name="edit_training_plan_title">트레이닝 플랜 변경</string>
 </resources>

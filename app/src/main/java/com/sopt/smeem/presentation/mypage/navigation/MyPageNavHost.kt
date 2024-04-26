@@ -29,6 +29,7 @@ import com.sopt.smeem.presentation.mypage.components.topbar.TitleTopAppbar
 import com.sopt.smeem.presentation.mypage.more.MoreScreen
 import com.sopt.smeem.presentation.mypage.mysummary.MySummaryScreen
 import com.sopt.smeem.presentation.mypage.setting.ChangeNicknameScreen
+import com.sopt.smeem.presentation.mypage.setting.EditTrainingPlanScreen
 import com.sopt.smeem.presentation.mypage.setting.EditTrainingTimeScreen
 import com.sopt.smeem.presentation.mypage.setting.SettingScreen
 
@@ -72,6 +73,11 @@ fun MyPageNavHost(
                 SettingNavGraph.ChangeNickname.route -> TitleTopAppbar(
                     onNavigationIconClick = { navController.popBackStack() },
                     title = stringResource(R.string.my_page_change_nickname)
+                )
+
+                SettingNavGraph.EditTrainingPlan.route -> TitleTopAppbar(
+                    onNavigationIconClick = { navController.popBackStack() },
+                    title = stringResource(R.string.edit_training_plan_title)
                 )
 
                 SettingNavGraph.EditTrainingTime.route -> TitleTopAppbar(
@@ -120,6 +126,12 @@ private fun NavGraphBuilder.addSetting(navController: NavController, modifier: M
                 modifier = modifier,
                 nickname = nickname
             )
+        }
+
+        composable(
+            route = SettingNavGraph.EditTrainingPlan.route
+        ) {
+            EditTrainingPlanScreen(modifier = modifier)
         }
 
         composable(
