@@ -136,7 +136,10 @@ private fun NavGraphBuilder.addSetting(navController: NavController, modifier: M
                 }
             }
 
-            EditTrainingTimeScreen(trainingTime = trainingTime.value, modifier = modifier)
+            EditTrainingTimeScreen(
+                modifier = modifier,
+                trainingTime = trainingTime.value,
+            )
         }
     }
 }
