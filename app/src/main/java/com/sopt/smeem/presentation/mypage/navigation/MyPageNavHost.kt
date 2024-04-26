@@ -3,7 +3,10 @@ package com.sopt.smeem.presentation.mypage.navigation
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -17,6 +20,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.sopt.smeem.R
+import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.presentation.mypage.TempMyPageActivity
 import com.sopt.smeem.presentation.mypage.components.topbar.MySummaryTopAppBar
 import com.sopt.smeem.presentation.mypage.components.topbar.OnlyBackArrowTopAppBar
@@ -25,6 +29,7 @@ import com.sopt.smeem.presentation.mypage.components.topbar.TitleTopAppbar
 import com.sopt.smeem.presentation.mypage.more.MoreScreen
 import com.sopt.smeem.presentation.mypage.mysummary.MySummaryScreen
 import com.sopt.smeem.presentation.mypage.setting.ChangeNicknameScreen
+import com.sopt.smeem.presentation.mypage.setting.EditTrainingTimeScreen
 import com.sopt.smeem.presentation.mypage.setting.SettingScreen
 
 @Composable
@@ -49,7 +54,9 @@ fun MyPageNavHost(
                 )
 
                 SettingNavGraph.SettingMain.route -> SettingTopAppBar(
-                    onNavigationIconClick = { navController.popBackStack() },
+                    onNavigationIconClick = {
+                        navController.popBackStack()
+                    },
                     onMoreClick = {
                         navController.navigate(MyPageScreen.More.route) {
                             launchSingleTop = true
@@ -65,6 +72,11 @@ fun MyPageNavHost(
                 SettingNavGraph.ChangeNickname.route -> TitleTopAppbar(
                     onNavigationIconClick = { navController.popBackStack() },
                     title = stringResource(R.string.my_page_change_nickname)
+                )
+
+                SettingNavGraph.EditTrainingTime.route -> TitleTopAppbar(
+                    onNavigationIconClick = { navController.popBackStack() },
+                    title = stringResource(R.string.edit_traint_time_top_app_bar_title)
                 )
             }
         }
@@ -108,6 +120,23 @@ private fun NavGraphBuilder.addSetting(navController: NavController, modifier: M
                 modifier = modifier,
                 nickname = nickname
             )
+        }
+
+        composable(
+            route = SettingNavGraph.EditTrainingTime.route,
+        ) {
+            var trainingTime = rememberSaveable { mutableStateOf(TrainingTime(setOf(), 0, 0)) }
+
+            LaunchedEffect(key1 = it) {
+                val result =
+                    navController.previousBackStackEntry?.savedStateHandle?.get<TrainingTime>("trainingTime")
+
+                result?.let {
+                    trainingTime.value = it
+                }
+            }
+
+            EditTrainingTimeScreen(trainingTime = trainingTime.value, modifier = modifier)
         }
     }
 }

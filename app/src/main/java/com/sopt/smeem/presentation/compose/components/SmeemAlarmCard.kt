@@ -26,13 +26,18 @@ import com.sopt.smeem.presentation.compose.theme.point
 import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.util.Border
 import com.sopt.smeem.util.VerticalSpacer
+import com.sopt.smeem.util.noRippleClickable
 import com.sopt.smeem.util.sideBorder
 
 @Composable
 fun SmeemAlarmCard(
     modifier: Modifier = Modifier,
     isDaySelected: (String) -> Boolean,
-    trainingTime: String = stringResource(R.string.default_training_time)
+    trainingTime: String = stringResource(R.string.default_training_time),
+    onAlarmCardClick: () -> Unit = {},
+    isContentClickable: Boolean = false,
+    onDayClick: (String) -> Unit = {},
+    onTimeClick: () -> Unit = {}
 ) {
 
     val daysOfWeek = Day.entries.map { it.korean }
@@ -43,7 +48,11 @@ fun SmeemAlarmCard(
         (screenWidth - 38.dp) / daysOfWeek.size
     }
 
-    Column(modifier = modifier.fillMaxWidth()) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .noRippleClickable { onAlarmCardClick() }
+    ) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -145,8 +154,8 @@ fun SmeemAlarmCard(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SmeemAlarmDaysPreview() {
-    val mockDays = listOf("월", "화", "수", "목", "금")
+    val mockDays = arrayOf("월", "화", "수", "목", "금")
     SmeemAlarmCard(
         modifier = Modifier.padding(horizontal = 19.dp),
-        isDaySelected = { mockDays.contains(it) })
+        isDaySelected = { mockDays.contains(it) }, onAlarmCardClick = {})
 }

@@ -20,6 +20,7 @@ fun MySummaryScreen(
     navController: NavController,
     modifier: Modifier
 ) {
+
     val mockMySmeem = MySmeem(
         visitDays = 23,
         diaryCount = 19,

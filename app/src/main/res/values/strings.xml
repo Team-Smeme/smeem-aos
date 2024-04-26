@@ -106,4 +106,5 @@
     <!-- Training Time -->
     <string name="default_training_time">10:00 PM</string>
     <string name="my_page_setting_training_time_title">알림 시간</string>
+    <string name="edit_traint_time_top_app_bar_title">학습 알림 설정</string>
 </resources>
