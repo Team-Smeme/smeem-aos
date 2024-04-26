@@ -37,7 +37,7 @@ fun SmeemAlarmCard(
     onAlarmCardClick: () -> Unit = {},
     isContentClickable: Boolean = false,
     onDayClick: (String) -> Unit = {},
-    onTimeClick: () -> Unit = {}
+    onTimeCardClick: () -> Unit = {}
 ) {
 
     val daysOfWeek = Day.entries.map { it.korean }
@@ -130,6 +130,11 @@ fun SmeemAlarmCard(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .then(
+                        if (isContentClickable) {
+                            Modifier.noRippleClickable { onTimeCardClick() }
+                        } else Modifier
+                    )
                     .padding(vertical = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
