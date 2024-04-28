@@ -39,8 +39,7 @@ fun SmeemBottomSheet(
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(bottom = 57.dp)
-                .clickable { onDismissRequest() },
+                .padding(bottom = 57.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -52,6 +51,7 @@ fun SmeemBottomSheet(
                 contentAlignment = Alignment.TopEnd
             ) {
                 Image(
+                    modifier = Modifier.clickable { onDismissRequest() },
                     painter = painterResource(id = R.drawable.ic_badge_x),
                     contentDescription = null
                 )
