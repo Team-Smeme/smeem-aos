@@ -49,7 +49,7 @@ class MyBadgesActivity : BindingActivity<ActivityMyBadgesBinding>(R.layout.activ
     private fun getBadges() {
         viewModel.getBadges(
             onError = { t ->
-                Toast.makeText(this, t.cause.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, t.message, Toast.LENGTH_SHORT).show()
             },
         )
 

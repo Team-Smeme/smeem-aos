@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.SmeemException
-import com.sopt.smeem.data.ApiPool.onHttpFailure
 import com.sopt.smeem.domain.model.Badge
 import com.sopt.smeem.domain.model.BadgeType
 import com.sopt.smeem.domain.repository.UserRepository
@@ -22,15 +20,18 @@ class BadgeViewModel @Inject constructor(
     val badges: LiveData<Map<BadgeType, List<Badge>>>
         get() = _badges
 
-    fun getBadges(
-        onError: (SmeemException) -> Unit,
-    ) {
+    fun getBadges(onError: (Throwable) -> Unit) {
         viewModelScope.launch {
-            userRepository.getMyBadges()
-                .onSuccess {
-                    _badges.value = it.groupBy(keySelector = Badge::type)
+            try {
+                userRepository.getMyBadges().run {
+                    data().let { dto ->
+                        // FIXME : 구현시 주입
+                        // _badges.value =
+                    }
                 }
-                .onHttpFailure { e -> onError(e) }
+            } catch (t: Throwable) {
+                onError(t)
+            }
         }
     }
 }

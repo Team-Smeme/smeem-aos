@@ -1,17 +1,17 @@
 package com.sopt.smeem.data.repository
 
-import com.sopt.smeem.data.datasource.MyBadgeRetriever
 import com.sopt.smeem.data.model.request.PushRequest
 import com.sopt.smeem.data.model.request.TrainingRequest
 import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
+import com.sopt.smeem.data.service.MyBadgeService
 import com.sopt.smeem.data.service.UserService
 import com.sopt.smeem.domain.ApiResult
+import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.domain.dto.LoginResultDto
 import com.sopt.smeem.domain.dto.MyInfoDto
 import com.sopt.smeem.domain.dto.MyPlanDto
 import com.sopt.smeem.domain.dto.MySmeemDataDto
 import com.sopt.smeem.domain.dto.PostOnBoardingDto
-import com.sopt.smeem.domain.model.Badge
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.PushAlarm
 import com.sopt.smeem.domain.model.Training
@@ -19,8 +19,7 @@ import com.sopt.smeem.domain.repository.UserRepository
 
 class UserRepositoryImpl(
     private val userService: UserService,
-
-    private val myBadgeRetriever: MyBadgeRetriever,
+    private val myBadgeService: MyBadgeService,
 ) : UserRepository {
     override suspend fun registerOnBoarding(
         onBoardingDto: PostOnBoardingDto,
@@ -31,6 +30,7 @@ class UserRepositoryImpl(
                 target = onBoardingDto.trainingGoalType,
                 trainingTime = onBoardingDto.extractTime(),
                 hasAlarm = onBoardingDto.hasAlarm,
+                planId = 0, // FIXME : 구현시 수정
             ),
             token = "Bearer ${loginResult.apiAccessToken}",
         ).let { response ->
@@ -89,20 +89,21 @@ class UserRepositoryImpl(
         }
 
 
-    override suspend fun getMyPlanData(): ApiResult<MyPlanDto> =
+    override suspend fun getMyPlanData(): ApiResult<MyPlanDto?> =
         userService.getMyPlanData()
             .let { response ->
                 if (response.isSuccessful) {
-                    response.body()!!.data.let { data ->
-                        ApiResult(
-                            response.code(), MyPlanDto(
+                    ApiResult(
+                        response.code(),
+                        response.body()?.data?.let { data ->
+                            MyPlanDto(
                                 plan = data.plan,
                                 goal = data.goal,
                                 clearedCount = data.clearedCount,
                                 clearCount = data.clearCount,
                             )
-                        )
-                    }
+                        }
+                    )
                 } else {
                     throw response.code().handleStatusCode()
                 }
@@ -145,7 +146,8 @@ class UserRepositoryImpl(
             request = TrainingRequest(
                 target = training.type,
                 trainingTime = training.extractTime(),
-                hasAlarm = training.hasAlarm
+                hasAlarm = training.hasAlarm,
+                planId = 0, // FIXME : 구현시 수정
             )
         ).let { response ->
             if (response.isSuccessful) {
@@ -161,7 +163,8 @@ class UserRepositoryImpl(
             request = TrainingRequest(
                 target = training.type,
                 trainingTime = training.extractTime(),
-                hasAlarm = training.hasAlarm
+                hasAlarm = training.hasAlarm,
+                planId = 0, // FIXME : 구현시 수정
             )
         ).let { resposne ->
             if (resposne.isSuccessful) {
@@ -207,21 +210,24 @@ class UserRepositoryImpl(
         }
 
 
-    override suspend fun getMyBadges(): Result<List<Badge>> =
-        kotlin.runCatching {
-            myBadgeRetriever.getResponse()
-        }.map { response ->
-            response.data?.badgeTypes
-                ?.flatMap { it.badges }
-                ?.map { badgeResponse ->
-                    Badge(
-                        name = badgeResponse.name,
-                        imageUrl = badgeResponse.imageUrl,
-                        type = badgeResponse.type,
+    override suspend fun getMyBadges(): ApiResult<List<GetBadgeListDto>> =
+        myBadgeService.getBadges().let { response ->
+            if (response.isSuccessful) {
+                ApiResult(response.code(), response.body()!!.data.badges.map {
+                    GetBadgeListDto(
+                        badgeId = it.badgeId,
+                        name = it.name,
+                        type = it.type,
+                        hasBadge = it.hasBadge,
+                        contentForBadgeOwner = it.contentForBadgeOwner,
+                        contentForNonBadgeOwner = it.contentForNonBadgeOwner,
+                        imageUrl = it.imageUrl,
+                        badgeAcquisitionRatio = it.badgeAcquisitionRatio,
+                        remainingNumber = it.remainingNumber,
                     )
-                }
-                ?: throw IllegalArgumentException("내부 로직 구현 오류")
+                })
+            } else {
+                throw response.code().handleStatusCode()
+            }
         }
-
-
 }

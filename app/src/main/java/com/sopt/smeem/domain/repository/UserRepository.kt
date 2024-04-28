@@ -1,6 +1,7 @@
 package com.sopt.smeem.domain.repository
 
 import com.sopt.smeem.domain.ApiResult
+import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.domain.dto.LoginResultDto
 import com.sopt.smeem.domain.dto.MyInfoDto
 import com.sopt.smeem.domain.dto.MyPlanDto
@@ -27,7 +28,7 @@ interface UserRepository {
 
     suspend fun getMySmeemData(): ApiResult<MySmeemDataDto>
 
-    suspend fun getMyPlanData(): ApiResult<MyPlanDto>
+    suspend fun getMyPlanData(): ApiResult<MyPlanDto?>
 
     suspend fun getMyInfo(): ApiResult<MyInfoDto>
 
@@ -36,10 +37,5 @@ interface UserRepository {
     suspend fun registerPushAlarm(accessToken: String, push: PushAlarm): ApiResult<Unit>
     suspend fun editPushAlarm(push: PushAlarm): ApiResult<Unit>
     suspend fun deleteUser(): ApiResult<Unit>
-
-
-    /**
-     * 나의 뱃지 정보를 조회합니다.
-     */
-    suspend fun getMyBadges(): Result<List<Badge>>
+    suspend fun getMyBadges(): ApiResult<List<GetBadgeListDto>>
 }

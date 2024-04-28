@@ -6,7 +6,8 @@ import com.sopt.smeem.domain.model.Day
 data class TrainingRequest(
     val target: TrainingGoalType?,
     val trainingTime: TrainingTime?,
-    val hasAlarm: Boolean?
+    val hasAlarm: Boolean?,
+    val planId: Long?,
 ) {
     data class TrainingTime(
         val day: String,

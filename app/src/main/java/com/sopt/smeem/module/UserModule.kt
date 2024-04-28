@@ -1,7 +1,6 @@
 package com.sopt.smeem.module
 
 import com.sopt.smeem.data.datasource.DiaryReader
-import com.sopt.smeem.data.datasource.MyBadgeRetriever
 import com.sopt.smeem.data.repository.DiaryRepositoryImpl
 import com.sopt.smeem.data.repository.UserRepositoryImpl
 import com.sopt.smeem.data.service.DiaryService
@@ -25,10 +24,8 @@ object UserModule {
             userService = networkModule.apiServerRetrofitForAuthentication.create(
                 UserService::class.java
             ),
-            myBadgeRetriever = MyBadgeRetriever(
-                networkModule.apiServerRetrofitForAuthentication.create(
-                    MyBadgeService::class.java
-                )
+            myBadgeService = networkModule.apiServerRetrofitForAuthentication.create(
+                MyBadgeService::class.java
             )
         )
     }

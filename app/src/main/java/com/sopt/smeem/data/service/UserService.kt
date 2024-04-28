@@ -7,7 +7,6 @@ import com.sopt.smeem.data.model.response.ApiResponse
 import com.sopt.smeem.data.model.response.MyInfoResponse
 import com.sopt.smeem.data.model.response.MyPlanDataResponse
 import com.sopt.smeem.data.model.response.MySmeemDataResponse
-import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -58,13 +57,15 @@ interface UserService {
     @DELETE("/api/v2/auth")
     suspend fun delete(): Response<ApiResponse<Unit>>
 
-    @GET("/api/v2/members/summary")
+    @GET("/api/v2/members/performance/summary")
     suspend fun getMySmeemData(): Response<ApiResponse<MySmeemDataResponse>>
 
-    @GET("/api/v2/members/plan")
+    @GET("/api/v2/members/plan") // data 가 nullable 합니다.
     suspend fun getMyPlanData(): Response<ApiResponse<MyPlanDataResponse>>
 
     @GET("/api/v2/members/me")
     suspend fun getMyInfo(): Response<ApiResponse<MyInfoResponse>>
 
+    @PATCH("/api/v2/members/visit")
+    suspend fun visit(): Response<ApiResponse<Unit>>
 }

@@ -1,7 +1,6 @@
 package com.sopt.smeem.module
 
 import com.sopt.smeem.Anonymous
-import com.sopt.smeem.data.datasource.MyBadgeRetriever
 import com.sopt.smeem.data.repository.LoginRepositoryImpl
 import com.sopt.smeem.data.repository.TrainingRepositoryImpl
 import com.sopt.smeem.data.repository.UserRepositoryImpl
@@ -27,11 +26,7 @@ object AnonymousModule {
     fun anonymousMemberRepository(networkModule: NetworkModule): UserRepository =
         UserRepositoryImpl(
             userService = networkModule.apiServerRetrofitForAnonymous.create(UserService::class.java),
-            myBadgeRetriever = MyBadgeRetriever(
-                networkModule.apiServerRetrofitForAnonymous.create(
-                    MyBadgeService::class.java
-                )
-            ),
+            myBadgeService = networkModule.apiServerRetrofitForAnonymous.create(MyBadgeService::class.java)
         )
 
     @Provides
