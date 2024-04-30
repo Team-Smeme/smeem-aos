@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
-import com.sopt.smeem.domain.model.mypage.MySmeem
+import com.sopt.smeem.domain.dto.MySmeemDataDto
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray100
@@ -27,7 +27,7 @@ import com.sopt.smeem.util.VerticalSpacer
 @Composable
 fun MySmeemCard(
     modifier: Modifier = Modifier,
-    mySmeem: MySmeem
+    mySmeem: MySmeemDataDto
 ) {
     SmeemContents(
         modifier = modifier,
@@ -103,7 +103,7 @@ fun MySmeemContentPreview() {
 @Composable
 fun MySmeemPreview() {
     MySmeemCard(
-        mySmeem = MySmeem(
+        mySmeem = MySmeemDataDto(
             visitDays = 23,
             diaryCount = 19,
             diaryComboCount = 3,

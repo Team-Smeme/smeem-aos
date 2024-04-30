@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
-import com.sopt.smeem.domain.model.mypage.MyPlan
+import com.sopt.smeem.domain.dto.MyPlanDto
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray100
@@ -35,7 +35,7 @@ import com.sopt.smeem.util.dashedBorder
 @Composable
 fun MyPlanCard(
     modifier: Modifier = Modifier,
-    myPlan: MyPlan?
+    myPlan: MyPlanDto?
 ) {
     SmeemContents(
         modifier = modifier,
@@ -152,7 +152,7 @@ fun MyPlanNotClearedDotPreview() {
 @Composable
 fun MyPlanCardPreview() {
     MyPlanCard(
-        myPlan = MyPlan(
+        myPlan = MyPlanDto(
             plan = "매일 일기 작성하기",
             goal = "유창한 비즈니스 영어",
             clearedCount = 3,
