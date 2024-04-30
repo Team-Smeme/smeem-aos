@@ -111,4 +111,5 @@
 
     <!-- Training Plan -->
     <string name="edit_training_plan_title">트레이닝 플랜 변경</string>
+    <string name="training_plan_selection_icon">selection icon</string>
 </resources>
