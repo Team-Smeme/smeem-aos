@@ -10,6 +10,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -28,6 +29,7 @@ import com.sopt.smeem.presentation.mypage.components.topbar.SettingTopAppBar
 import com.sopt.smeem.presentation.mypage.components.topbar.TitleTopAppbar
 import com.sopt.smeem.presentation.mypage.more.MoreScreen
 import com.sopt.smeem.presentation.mypage.mysummary.MySummaryScreen
+import com.sopt.smeem.presentation.mypage.mysummary.MySummaryViewModel
 import com.sopt.smeem.presentation.mypage.setting.ChangeNicknameScreen
 import com.sopt.smeem.presentation.mypage.setting.EditTrainingPlanScreen
 import com.sopt.smeem.presentation.mypage.setting.EditTrainingTimeScreen
@@ -97,8 +99,10 @@ fun MyPageNavHost(
 
 private fun NavGraphBuilder.addMySummary(navController: NavController, modifier: Modifier) {
     composable(route = MyPageScreen.MySummary.route) {
+        val viewModel: MySummaryViewModel = hiltViewModel()
+
         MySummaryScreen(
-            navController = navController,
+            viewModel = viewModel,
             modifier = modifier
         )
     }
