@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -64,6 +65,7 @@ fun TrainingPlanCard(
             Icon(
                 imageVector = iconVector,
                 contentDescription = stringResource(R.string.training_plan_selection_icon),
+                tint = Color.Unspecified,
                 modifier = Modifier.padding(top = 21.dp, bottom = 19.dp)
             )
 
