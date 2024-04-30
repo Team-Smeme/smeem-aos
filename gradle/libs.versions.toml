@@ -36,6 +36,7 @@ retrofit = "2.11.0"
 retrofit2KotlinxSerializationConverter = "1.0.0"
 secretsGradlePlugin = "2.0.1"
 securityCryptoKtx = "1.1.0-alpha05"
+orbit = "4.4.0"
 timber = "5.0.1"
 v2User = "2.13.0"
 kotlin = "1.9.22"
@@ -103,8 +104,16 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 v2-user = { module = "com.kakao.sdk:v2-user", version.ref = "v2User" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
 
+orbit-core = { group = "org.orbit-mvi", name = "orbit-core", version.ref = "orbit" }
+orbit-viewmodel = { group = "org.orbit-mvi", name = "orbit-viewmodel", version.ref = "orbit" }
+orbit-compose = { group = "org.orbit-mvi", name = "orbit-compose", version.ref = "orbit" }
+orbit-test = { group = "org.orbit-mvi", name = "orbit-test", version.ref = "orbit" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
+
+[bundles]
+orbit = ["orbit-core", "orbit-viewmodel", "orbit-compose", "orbit-test"]
 

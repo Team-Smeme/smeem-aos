@@ -220,6 +220,9 @@ dependencies {
     // Optional - Integration with ViewModels
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
+    // Orbit
+    implementation(libs.bundles.orbit)
+
     // Compose test
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
