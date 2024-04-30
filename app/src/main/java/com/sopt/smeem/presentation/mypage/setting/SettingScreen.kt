@@ -52,7 +52,9 @@ fun SettingScreen(
 
         VerticalSpacer(height = 28.dp)
 
-        ChangeMyPlanCard(myPlan = mockMyPlan, onEditClick = {})
+        ChangeMyPlanCard(myPlan = mockMyPlan, onEditClick = {
+            navController.navigate(SettingNavGraph.EditTrainingPlan.route)
+        })
 
         VerticalSpacer(height = 28.dp)
 
