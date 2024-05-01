@@ -5,6 +5,7 @@ import com.sopt.smeem.data.service.TrainingService
 import com.sopt.smeem.domain.ApiResult
 import com.sopt.smeem.domain.dto.TrainingGoalDto
 import com.sopt.smeem.domain.dto.TrainingGoalSimpleDto
+import com.sopt.smeem.domain.dto.TrainingPlanDto
 import com.sopt.smeem.domain.repository.TrainingRepository
 
 class TrainingRepositoryImpl(
@@ -39,6 +40,23 @@ class TrainingRepositoryImpl(
                         )
                     )
                 }
+            } else {
+                throw response.code().handleStatusCode()
+            }
+        }
+
+    override suspend fun getPlans(): ApiResult<List<TrainingPlanDto>> =
+        trainingService.getPlans().let { response ->
+            if (response.isSuccessful) {
+                ApiResult(
+                    response.code(),
+                    response.body()!!.data.plans.map { planResponse ->
+                        TrainingPlanDto(
+                            id = planResponse.id,
+                            content = planResponse.content,
+                        )
+                    }
+                )
             } else {
                 throw response.code().handleStatusCode()
             }
