@@ -17,17 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.model.mypage.MyBadges
-import com.sopt.smeem.domain.model.mypage.MyPlan
-import com.sopt.smeem.domain.model.mypage.MySmeem
-import com.sopt.smeem.presentation.compose.theme.SmeemTheme
+import com.sopt.smeem.presentation.compose.components.LoadingScreen
 import com.sopt.smeem.presentation.mypage.components.MyBadgesBottomSheet
 import com.sopt.smeem.presentation.mypage.components.MyBadgesContent
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.sopt.smeem.presentation.compose.components.LoadingScreen
 import com.sopt.smeem.presentation.mypage.components.MyPlanCard
 import com.sopt.smeem.presentation.mypage.components.MySmeemCard
 import com.sopt.smeem.util.VerticalSpacer
@@ -42,6 +37,22 @@ fun MySummaryScreen(
 ) {
     val state by viewModel.collectAsState()
 
+    /***** bottom sheet configuration *****/
+    val sheetState = rememberModalBottomSheetState()
+    val coroutineScope = rememberCoroutineScope()
+    var selectedBadge by rememberSaveable { mutableStateOf<MyBadges?>(null) }
+
+    if (selectedBadge != null) {
+        MyBadgesBottomSheet(
+            badge = selectedBadge!!,
+            sheetState = sheetState,
+            onDismiss = {
+                selectedBadge = null
+                coroutineScope.launch { sheetState.hide() }
+            }
+        )
+    }
+
     when (val uiState = state.uiState) {
         is MySummaryUiState.Loading -> {
             LoadingScreen()
@@ -52,7 +63,9 @@ fun MySummaryScreen(
             val (smeemData, planData) = uiState
 
             Column(
-                modifier = modifier.fillMaxSize(),
+                modifier = modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 VerticalSpacer(height = 18.dp)
@@ -70,7 +83,7 @@ fun MySummaryScreen(
                     onClickCard = { clickedBadge -> selectedBadge = clickedBadge },
                     modifier = Modifier.heightIn(max = 1000.dp)
                 )
-    
+
                 VerticalSpacer(height = 120.dp)
             }
         }
@@ -78,10 +91,7 @@ fun MySummaryScreen(
         is MySummaryUiState.Error -> {
             // ErrorScreen
         }
-       
     }
-
-
 }
 
 @Preview(showSystemUi = true, showBackground = true)
