@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -72,6 +73,7 @@ fun MyBadgesObtainedCard(
     Card(
         modifier = modifier
             .aspectRatio(1f)
+            .clip(RoundedCornerShape(10.dp))
             .clickable { onClick() },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background,
@@ -115,6 +117,7 @@ fun MyBadgesNotObtainedCard(
     Card(
         modifier = modifier
             .aspectRatio(1f)
+            .clip(RoundedCornerShape(10.dp))
             .clickable { onClick() },
         colors = CardDefaults.cardColors(
             containerColor = gray100,
