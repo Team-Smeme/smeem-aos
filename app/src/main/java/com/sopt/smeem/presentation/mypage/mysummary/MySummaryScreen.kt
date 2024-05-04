@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.model.mypage.MyBadges
 import com.sopt.smeem.presentation.compose.components.LoadingScreen
@@ -25,6 +27,8 @@ import com.sopt.smeem.presentation.mypage.components.MyBadgesBottomSheet
 import com.sopt.smeem.presentation.mypage.components.MyBadgesContent
 import com.sopt.smeem.presentation.mypage.components.MyPlanCard
 import com.sopt.smeem.presentation.mypage.components.MySmeemCard
+import com.sopt.smeem.presentation.mypage.components.NoMyPlanCard
+import com.sopt.smeem.presentation.mypage.navigation.SettingNavGraph
 import com.sopt.smeem.util.VerticalSpacer
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
@@ -32,6 +36,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MySummaryScreen(
+    navController: NavController,
     viewModel: MySummaryViewModel,
     modifier: Modifier
 ) {
@@ -74,7 +79,15 @@ fun MySummaryScreen(
 
                 VerticalSpacer(height = 44.dp)
 
-                MyPlanCard(myPlan = planData)
+                if (planData != null) {
+                    MyPlanCard(myPlan = planData)
+                } else {
+                    NoMyPlanCard(onSetPlanClick = {
+                        navController.navigate(
+                            SettingNavGraph.EditTrainingPlan.route
+                        )
+                    })
+                }
 
                 VerticalSpacer(height = 36.dp)
 
@@ -97,5 +110,9 @@ fun MySummaryScreen(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun MySummaryScreenPreview() {
-    MySummaryScreen(viewModel = hiltViewModel(), modifier = Modifier)
+    MySummaryScreen(
+        navController = rememberNavController(),
+        viewModel = hiltViewModel(),
+        modifier = Modifier
+    )
 }

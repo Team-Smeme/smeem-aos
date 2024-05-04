@@ -114,4 +114,6 @@
     <string name="edit_training_plan_title">트레이닝 플랜 변경</string>
     <string name="training_plan_selection_icon">selection icon</string>
     <string name="edit_training_plan_button">완료</string>
+    <string name="no_plan_title">아직 플랜이 없어요!</string>
+    <string name="no_plan_navigate_description">플랜 설정하러 가기</string>
 </resources>

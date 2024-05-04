@@ -102,6 +102,7 @@ private fun NavGraphBuilder.addMySummary(navController: NavController, modifier:
         val viewModel: MySummaryViewModel = hiltViewModel()
 
         MySummaryScreen(
+            navController = navController,
             viewModel = viewModel,
             modifier = modifier
         )
