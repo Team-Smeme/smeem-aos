@@ -16,6 +16,7 @@ import com.sopt.smeem.domain.dto.PostOnBoardingDto
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.PushAlarm
 import com.sopt.smeem.domain.model.Training
+import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.domain.repository.UserRepository
 
 class UserRepositoryImpl(
@@ -126,8 +127,8 @@ class UserRepositoryImpl(
                             targetLang = data.targetLang,
                             hasPushAlarm = data.hasPushAlarm,
                             trainingTime = data.trainingTime?.let {
-                                MyInfoDto.MyTrainingTime(
-                                    day = it.day.split(",").map { Day.valueOf(it) }
+                                TrainingTime(
+                                    days = it.day.split(",").map { Day.valueOf(it) }
                                         .toSet(),
                                     hour = it.hour,
                                     minute = it.minute

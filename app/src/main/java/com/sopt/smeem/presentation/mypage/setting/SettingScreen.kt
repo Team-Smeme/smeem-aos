@@ -1,22 +1,25 @@
 package com.sopt.smeem.presentation.mypage.setting
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.sopt.smeem.domain.dto.MyInfoDto
 import com.sopt.smeem.domain.model.Day
+import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.presentation.compose.components.LoadingScreen
 import com.sopt.smeem.presentation.compose.components.SmeemAlarmCard
 import com.sopt.smeem.presentation.mypage.components.ChangeMyPlanCard
@@ -35,7 +38,8 @@ fun SettingScreen(
     modifier: Modifier
 ) {
     val state by viewModel.collectAsState()
-    var isSwitchChecked by rememberSaveable { mutableStateOf(true) }
+    val context = LocalContext.current
+    var isSwitchChecked by rememberSaveable { mutableStateOf(false) }
 
     when (val uiState = state.uiState) {
         is UiState.Loading -> {
@@ -47,15 +51,18 @@ fun SettingScreen(
             val username = response.username
             val myPlan = response.trainingPlan?.content
             val targetLanguage = response.targetLang
-            isSwitchChecked = response.hasPushAlarm
-            val selectedTrainingTime = if (response.trainingTime!!.day.isNotEmpty()) {
+            val selectedTrainingTime = if (response.trainingTime!!.isSet()) {
                 response.trainingTime
             } else {
-                MyInfoDto.MyTrainingTime(
+                TrainingTime(
                     setOf(Day.MON, Day.TUE, Day.WED, Day.THU, Day.FRI),
                     22,
                     0
                 )
+            }
+
+            LaunchedEffect(key1 = Unit) {
+                isSwitchChecked = response.hasPushAlarm
             }
 
             Column(
@@ -94,7 +101,21 @@ fun SettingScreen(
                     checked = isSwitchChecked,
                     onCheckedChange = {
                         isSwitchChecked = it
-                        // TODO if 문으로 뷰모델의 changePushAlarm 호출
+                        if (it) {
+                            viewModel.changePushAlarm(
+                                hasAlarm = true,
+                                onError = { t ->
+                                    Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+                                }
+                            )
+                        } else {
+                            viewModel.changePushAlarm(
+                                hasAlarm = false,
+                                onError = { t ->
+                                    Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+                                }
+                            )
+                        }
                     }
                 )
 
@@ -103,7 +124,7 @@ fun SettingScreen(
                 SmeemAlarmCard(
                     modifier = Modifier.padding(horizontal = 19.dp),
                     isActive = isSwitchChecked,
-                    isDaySelected = { selectedTrainingTime.day.contains(Day.from(it)) },
+                    isDaySelected = { selectedTrainingTime.days.contains(Day.from(it)) },
                     onAlarmCardClick = {
                         if (isSwitchChecked) {
                             navController.currentBackStackEntry?.savedStateHandle?.set(

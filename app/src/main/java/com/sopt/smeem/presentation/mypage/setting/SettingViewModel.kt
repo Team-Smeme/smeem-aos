@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.mypage.setting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.domain.model.PushAlarm
 import com.sopt.smeem.domain.repository.UserRepository
 import com.sopt.smeem.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,6 +51,16 @@ class SettingViewModel @Inject constructor(
                         state.copy(uiState = UiState.Failure)
                     }
                 }
+                onError(t)
+            }
+        }
+    }
+
+    fun changePushAlarm(hasAlarm: Boolean, onError: (Throwable) -> Unit) {
+        viewModelScope.launch {
+            try {
+                userRepository.editPushAlarm(PushAlarm(hasAlarm = hasAlarm))
+            } catch (t: Throwable) {
                 onError(t)
             }
         }

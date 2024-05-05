@@ -1,6 +1,6 @@
 package com.sopt.smeem.domain.dto
 
-import com.sopt.smeem.domain.model.Day
+import com.sopt.smeem.domain.model.TrainingTime
 
 data class MyInfoDto(
     val username: String,
@@ -8,15 +8,9 @@ data class MyInfoDto(
     val detail: String,
     val targetLang: String,
     val hasPushAlarm: Boolean,
-    val trainingTime: MyTrainingTime?,
+    val trainingTime: TrainingTime?,
     val trainingPlan: MyTrainingPlan?
 ) {
-    data class MyTrainingTime(
-        val day: Set<Day>,
-        val hour: Int,
-        val minute: Int,
-    )
-
     data class MyTrainingPlan(
         val id: Int,
         val content: String,

@@ -51,6 +51,7 @@ fun SmeemAlarmCard(
     Column(
         modifier = modifier
             .fillMaxWidth()
+            .clip(RoundedCornerShape(6.dp))
             .noRippleClickable { if (isActive && !isContentClickable) onAlarmCardClick() }
     ) {
         LazyRow(
