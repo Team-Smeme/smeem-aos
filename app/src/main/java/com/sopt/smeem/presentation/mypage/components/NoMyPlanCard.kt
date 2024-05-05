@@ -30,31 +30,37 @@ fun NoMyPlanCard(
     onSetPlanClick: () -> Unit
 ) {
 
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .border(width = 1.dp, color = gray100, shape = RoundedCornerShape(20.dp))
-            .clip(RoundedCornerShape(20.dp))
-            .clickable { onSetPlanClick() }
-            .padding(vertical = 44.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    SmeemContents(
+        modifier = modifier,
+        title = stringResource(R.string.my_plan)
     ) {
-        Text(
-            text = stringResource(R.string.no_plan_title),
-            style = Typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-            color = gray500
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(width = 1.dp, color = gray100, shape = RoundedCornerShape(20.dp))
+                .clip(RoundedCornerShape(20.dp))
+                .clickable { onSetPlanClick() }
+                .padding(vertical = 44.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = stringResource(R.string.no_plan_title),
+                style = Typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+                color = gray500
+            )
 
-        VerticalSpacer(height = 6.dp)
+            VerticalSpacer(height = 6.dp)
 
-        Text(
-            text = stringResource(R.string.no_plan_navigate_description),
-            style = Typography.labelLarge,
-            color = gray400,
-            textDecoration = TextDecoration.Underline
-        )
+            Text(
+                text = stringResource(R.string.no_plan_navigate_description),
+                style = Typography.labelLarge,
+                color = gray400,
+                textDecoration = TextDecoration.Underline
+            )
+        }
     }
+
 }
 
 @Preview(showBackground = true, showSystemUi = true)
