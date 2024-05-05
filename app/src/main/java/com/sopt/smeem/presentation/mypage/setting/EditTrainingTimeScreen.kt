@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.mypage.setting
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,6 +37,7 @@ fun EditTrainingTimeScreen(
 
     viewModel.originalTime = trainingTime
 
+    val context = LocalContext.current
     var showTimePickDialog by rememberSaveable { mutableStateOf(false) }
     val selectedDays by viewModel.days.collectAsStateWithLifecycle()
     val selectedHour by viewModel.hour.collectAsStateWithLifecycle()
@@ -61,9 +64,14 @@ fun EditTrainingTimeScreen(
 
         SmeemButton(
             text = stringResource(R.string.training_time_change_button),
-            onClick = { /*TODO*/ },
+            onClick = {
+                viewModel.sendServer { t ->
+                    Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+                }
+                navController.popBackStack()
+            },
             modifier = Modifier.padding(horizontal = 18.dp),
-            isButtonEnabled = true
+            isButtonEnabled = viewModel.canConfirmEdit()
         )
 
         VerticalSpacer(height = 10.dp)

@@ -175,7 +175,7 @@ class UserRepositoryImpl(
                 target = training.type,
                 trainingTime = training.extractTime(),
                 hasAlarm = training.hasAlarm,
-                planId = 0, // FIXME : 구현시 수정
+                planId = null, // FIXME : 구현시 수정
             )
         ).let { resposne ->
             if (resposne.isSuccessful) {
