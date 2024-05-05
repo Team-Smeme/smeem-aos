@@ -19,10 +19,13 @@ class MySummaryUseCase @Inject constructor(
 //            Triple(smeemData, myPlan, badgeList)
 //        }
 
-    suspend operator fun invoke(): Pair<MySmeemDataDto, MyPlanDto?> = coroutineScope {
-        val smeemData = userRepository.getMySmeemData().data()
-        // 여기서 isResponseBodyNull true/false 에 따라 handling 되면 될 듯
-        val myPlan = userRepository.getMyPlanData().data()
-        Pair(smeemData, myPlan)
+    suspend operator fun invoke(): Pair<MySmeemDataDto, MyPlanDto?> {
+        val (smeemData, myPlan) = coroutineScope {
+            val smeemData = userRepository.getMySmeemData().data()
+            val response = userRepository.getMyPlanData().data()
+            Pair(smeemData, response.dto.takeUnless { response.isResponseBodyNull })
+        }
+
+        return Pair(smeemData, myPlan)
     }
 }
