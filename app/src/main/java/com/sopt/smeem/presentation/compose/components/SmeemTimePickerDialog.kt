@@ -35,6 +35,8 @@ fun SmeemTimePickerDialog(
     setShowDialog: (Boolean) -> Unit,
     onDismissRequest: () -> Unit,
     onSaveButtonClick: () -> Unit,
+    initialHour: Int,
+    initialMinute: Int,
     modifier: Modifier = Modifier,
 ) {
 
@@ -77,6 +79,7 @@ fun SmeemTimePickerDialog(
                         state = timeOfDayPickerState,
                         items = timeOfDay,
                         visibleItemsCount = 3,
+                        startIndex = if (initialHour < 12 || initialHour == 24) 0 else 1,
                         textModifier = Modifier.padding(18.dp),
                         modifier = Modifier.weight(1f),
                         textStyle = Typography.titleSmall.copy(color = black),
@@ -89,6 +92,7 @@ fun SmeemTimePickerDialog(
                         state = hourPickerState,
                         items = hour,
                         visibleItemsCount = 3,
+                        startIndex = if (initialHour <= 12) initialHour - 1 else initialHour - 13,
                         textModifier = Modifier.padding(18.dp),
                         modifier = Modifier
                             .weight(1f)
@@ -113,6 +117,7 @@ fun SmeemTimePickerDialog(
                         state = minutePickerState,
                         items = minute,
                         visibleItemsCount = 3,
+                        startIndex = if (initialMinute == 0) 0 else 1,
                         textModifier = Modifier.padding(18.dp),
                         modifier = Modifier.weight(1f),
                         textStyle = Typography.titleSmall.copy(color = black),
@@ -163,6 +168,8 @@ fun PreviewSmeemTimePickerDialog() {
     SmeemTimePickerDialog(
         setShowDialog = {},
         onSaveButtonClick = {},
+        initialHour = 13,
+        initialMinute = 30,
         onDismissRequest = {}
     )
 }
