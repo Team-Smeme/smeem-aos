@@ -116,4 +116,5 @@
     <string name="edit_training_plan_button">완료</string>
     <string name="no_plan_title">아직 플랜이 없어요!</string>
     <string name="no_plan_navigate_description">플랜 설정하러 가기</string>
+    <string name="set_my_plan">플랜 설정하기</string>
 </resources>

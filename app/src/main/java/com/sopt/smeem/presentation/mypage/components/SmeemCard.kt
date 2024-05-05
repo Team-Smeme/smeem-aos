@@ -21,12 +21,14 @@ import com.sopt.smeem.R
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray100
+import com.sopt.smeem.presentation.compose.theme.gray500
 import com.sopt.smeem.presentation.compose.theme.point
 import com.sopt.smeem.presentation.compose.theme.white
 
 @Composable
 fun SmeemCard(
     modifier: Modifier = Modifier,
+    isActive: Boolean = true,
     text: String,
     content: @Composable () -> Unit,
 ) {
@@ -44,7 +46,7 @@ fun SmeemCard(
             Text(
                 text = text,
                 style = Typography.bodySmall,
-                color = black,
+                color = if (isActive) black else gray500,
                 modifier = Modifier.padding(top = 17.dp, bottom = 18.dp)
             )
 
@@ -57,7 +59,8 @@ fun SmeemCard(
 
 @Composable
 fun EditButton(
-    action: () -> Unit
+    text: String = stringResource(R.string.smeem_card_edit),
+    action: () -> Unit,
 ) {
     Button(
         onClick = action,
@@ -67,7 +70,7 @@ fun EditButton(
         contentPadding = PaddingValues(0.dp),
     ) {
         Text(
-            text = stringResource(R.string.smeem_card_edit),
+            text = text,
             style = Typography.labelMedium,
             color = point,
             modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 18.dp, bottom = 19.dp)
