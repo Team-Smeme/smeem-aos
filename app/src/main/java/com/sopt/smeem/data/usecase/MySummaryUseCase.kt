@@ -21,6 +21,7 @@ class MySummaryUseCase @Inject constructor(
 
     suspend operator fun invoke(): Pair<MySmeemDataDto, MyPlanDto?> = coroutineScope {
         val smeemData = userRepository.getMySmeemData().data()
+        // 여기서 isResponseBodyNull true/false 에 따라 handling 되면 될 듯
         val myPlan = userRepository.getMyPlanData().data()
         Pair(smeemData, myPlan)
     }

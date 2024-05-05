@@ -5,6 +5,7 @@ import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.domain.dto.LoginResultDto
 import com.sopt.smeem.domain.dto.MyInfoDto
 import com.sopt.smeem.domain.dto.MyPlanDto
+import com.sopt.smeem.domain.dto.MyPlanDtoWrapper
 import com.sopt.smeem.domain.dto.MySmeemDataDto
 import com.sopt.smeem.domain.dto.PostOnBoardingDto
 import com.sopt.smeem.domain.model.Badge
@@ -28,7 +29,7 @@ interface UserRepository {
 
     suspend fun getMySmeemData(): ApiResult<MySmeemDataDto>
 
-    suspend fun getMyPlanData(): ApiResult<MyPlanDto?>
+    suspend fun getMyPlanData(): ApiResult<MyPlanDtoWrapper>
 
     suspend fun getMyInfo(): ApiResult<MyInfoDto>
 

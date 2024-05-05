@@ -10,6 +10,7 @@ import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.domain.dto.LoginResultDto
 import com.sopt.smeem.domain.dto.MyInfoDto
 import com.sopt.smeem.domain.dto.MyPlanDto
+import com.sopt.smeem.domain.dto.MyPlanDtoWrapper
 import com.sopt.smeem.domain.dto.MySmeemDataDto
 import com.sopt.smeem.domain.dto.PostOnBoardingDto
 import com.sopt.smeem.domain.model.Day
@@ -89,20 +90,23 @@ class UserRepositoryImpl(
         }
 
 
-    override suspend fun getMyPlanData(): ApiResult<MyPlanDto?> =
+    override suspend fun getMyPlanData(): ApiResult<MyPlanDtoWrapper> =
         userService.getMyPlanData()
             .let { response ->
                 if (response.isSuccessful) {
                     ApiResult(
                         response.code(),
                         response.body()?.data?.let { data ->
-                            MyPlanDto(
-                                plan = data.plan,
-                                goal = data.goal,
-                                clearedCount = data.clearedCount,
-                                clearCount = data.clearCount,
+                            MyPlanDtoWrapper(
+                                isResponseBodyNull = false,
+                                dto = MyPlanDto(
+                                    plan = data.plan,
+                                    goal = data.goal,
+                                    clearedCount = data.clearedCount,
+                                    clearCount = data.clearCount,
+                                )
                             )
-                        }
+                        } ?: MyPlanDtoWrapper(true)
                     )
                 } else {
                     throw response.code().handleStatusCode()
