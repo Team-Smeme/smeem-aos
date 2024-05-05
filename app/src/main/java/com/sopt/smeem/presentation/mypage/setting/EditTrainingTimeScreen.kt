@@ -37,6 +37,9 @@ fun EditTrainingTimeScreen(
 
     var showTimePickDialog by rememberSaveable { mutableStateOf(false) }
     val selectedDays by viewModel.days.collectAsStateWithLifecycle()
+    val selectedHour by viewModel.hour.collectAsStateWithLifecycle()
+    val selectedMinute by viewModel.minute.collectAsStateWithLifecycle()
+    val updatedTrainingTime = TrainingTime(selectedDays, selectedHour, selectedMinute)
 
     Column(modifier = modifier.fillMaxWidth()) {
 
@@ -46,7 +49,7 @@ fun EditTrainingTimeScreen(
             modifier = Modifier.padding(horizontal = 19.dp),
             isActive = true,
             selectedDays = selectedDays,
-            trainingTime = "${trainingTime.asHour()}:${trainingTime.asMinute()} ${trainingTime.asAmpm()}",
+            trainingTime = updatedTrainingTime.asText(),
             onTimeCardClick = { showTimePickDialog = true },
             isContentClickable = true,
             onDayClick = { day ->
@@ -71,7 +74,12 @@ fun EditTrainingTimeScreen(
         SmeemTimePickerDialog(
             setShowDialog = { showTimePickDialog = it },
             onDismissRequest = { showTimePickDialog = false },
-            onSaveButtonClick = { }
+            onSaveButtonClick = { hour, minute ->
+                viewModel.updateHourMinute(hour, minute)
+                showTimePickDialog = false
+            },
+            initialHour = selectedHour,
+            initialMinute = selectedMinute
         )
     }
 

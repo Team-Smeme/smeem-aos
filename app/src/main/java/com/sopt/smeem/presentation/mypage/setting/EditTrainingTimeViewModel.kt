@@ -1,6 +1,5 @@
 package com.sopt.smeem.presentation.mypage.setting
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.domain.model.Day
@@ -27,8 +26,15 @@ class EditTrainingTimeViewModel @Inject constructor(
     // 서버로 보내기 위한 선택시간 저장 변수
     private val _days = MutableStateFlow(originalTime.days.toMutableSet())
     val days: StateFlow<MutableSet<Day>> = _days.asStateFlow()
-    var hour = MutableLiveData<Int>()
-    var minute = MutableLiveData<Int>()
+
+    private val _hour = MutableStateFlow(originalTime.hour)
+    val hour: StateFlow<Int> = _hour.asStateFlow()
+
+    private val _minute = MutableStateFlow(originalTime.minute)
+    val minute: StateFlow<Int> = _minute.asStateFlow()
+
+    private val _trainingTime = MutableStateFlow(originalTime)
+    val trainingTime: StateFlow<TrainingTime> = _trainingTime.asStateFlow()
 
     fun isDaySelected(content: String) = _days.value.contains(Day.from(content))
     fun addDay(content: String) = _days.value.add(Day.from(content))
@@ -42,12 +48,13 @@ class EditTrainingTimeViewModel @Inject constructor(
         }
     }
 
-    fun canConfirmEdit() =
-        _days.value.isNotEmpty() && (TrainingTime(
-            _days.value,
-            hour.value!!,
-            minute.value!!
-        ) != originalTime)
+    fun updateHourMinute(hour: Int, minute: Int) {
+        _hour.value = hour
+        _minute.value = minute
+    }
+
+    fun canConfirmEdit() = _days.value.isNotEmpty() &&
+            TrainingTime(_days.value, hour.value, minute.value) != originalTime
 
     fun sendServer(onError: (Throwable) -> Unit) {
         viewModelScope.launch {
@@ -56,8 +63,8 @@ class EditTrainingTimeViewModel @Inject constructor(
                     Training(
                         trainingTime = TrainingTime(
                             _days.value,
-                            hour.value!!,
-                            minute.value!!
+                            hour.value,
+                            minute.value
                         )
                     )
                 )

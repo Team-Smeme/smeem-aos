@@ -34,7 +34,7 @@ import com.sopt.smeem.util.VerticalSpacer
 fun SmeemTimePickerDialog(
     setShowDialog: (Boolean) -> Unit,
     onDismissRequest: () -> Unit,
-    onSaveButtonClick: () -> Unit,
+    onSaveButtonClick: (Int, Int) -> Unit,
     initialHour: Int,
     initialMinute: Int,
     modifier: Modifier = Modifier,
@@ -46,9 +46,19 @@ fun SmeemTimePickerDialog(
     val hour = remember { (1..12).map { it.toString() } }
     val minute = remember { listOf("00", "30") }
 
-    val timeOfDayPickerState = rememberPickerState()
-    val hourPickerState = rememberPickerState()
-    val minutePickerState = rememberPickerState()
+    val timeOfDayPickerState = rememberPickerState("오전")
+    val hourPickerState = rememberPickerState("1")
+    val minutePickerState = rememberPickerState("00")
+
+    val selectedTimeOfDay = timeOfDayPickerState.selectedItem
+    val selectedHour = hourPickerState.selectedItem.toInt()
+    val selectedMinute = minutePickerState.selectedItem.toInt()
+
+    val selectedHour24 = if (selectedTimeOfDay == "오후") {
+        if (selectedHour == 12) selectedHour else selectedHour + 12
+    } else {
+        if (selectedHour == 12) 0 else selectedHour
+    }
 
     Dialog(onDismissRequest = onDismissRequest) {
         Surface(
@@ -148,7 +158,7 @@ fun SmeemTimePickerDialog(
                     HorizontalSpacer(width = 8.dp)
 
                     TextButton(
-                        onClick = onSaveButtonClick,
+                        onClick = { onSaveButtonClick(selectedHour24, selectedMinute) },
                     ) {
                         Text(
                             text = "저장",
@@ -167,7 +177,7 @@ fun SmeemTimePickerDialog(
 fun PreviewSmeemTimePickerDialog() {
     SmeemTimePickerDialog(
         setShowDialog = {},
-        onSaveButtonClick = {},
+        onSaveButtonClick = { _, _ -> },
         initialHour = 13,
         initialMinute = 30,
         onDismissRequest = {}

@@ -35,10 +35,13 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 @Composable
-fun rememberPickerState() = remember { PickerState() }
+fun rememberPickerState(initialSelectedItem: String = "") = remember {
+    PickerState(initialSelectedItem)
+}
 
-class PickerState {
-    var selectedItem by mutableStateOf("")
+
+class PickerState(initialSelectedItem: String = "") {
+    var selectedItem by mutableStateOf(initialSelectedItem)
 }
 
 @OptIn(ExperimentalFoundationApi::class)

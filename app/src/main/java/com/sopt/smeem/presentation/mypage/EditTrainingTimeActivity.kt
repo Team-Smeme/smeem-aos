@@ -11,7 +11,6 @@ import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
 import com.sopt.smeem.presentation.mypage.setting.EditTrainingTimeViewModel
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
-import com.sopt.smeem.util.DateUtil
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -109,15 +108,15 @@ class EditTrainingTimeActivity :
     }
 
     private fun observeTime() {
-        viewModel.hour.observe(this) {
-            binding.tvMyPageEditTimeHour.text = "%02d".format(DateUtil.asHour(it))
-            binding.tvMyPageEditTimeAmpm.text = " ${DateUtil.asAmpm(it)}"
-            checkSelection()
-        }
-        viewModel.minute.observe(this) {
-            binding.tvMyPageEditTimeMinute.text = DateUtil.asMinute(it)
-            checkSelection()
-        }
+//        viewModel.hour.observe(this) {
+//            binding.tvMyPageEditTimeHour.text = "%02d".format(DateUtil.asHour(it))
+//            binding.tvMyPageEditTimeAmpm.text = " ${DateUtil.asAmpm(it)}"
+//            checkSelection()
+//        }
+//        viewModel.minute.observe(this) {
+//            binding.tvMyPageEditTimeMinute.text = DateUtil.asMinute(it)
+//            checkSelection()
+//        }
     }
 
     private fun setDaysHeight() {

@@ -29,8 +29,8 @@ class EditTimePickerFragment : DialogFragment() {
             .setView(timePicker.root)
             .setNegativeButton("취소", null)
             .setPositiveButton("저장") { _, _ ->
-                vm.hour.value = if (hourPicker.value == 0) 24 else hourPicker.value
-                vm.minute.value = minutePicker.value * MINUTE_INTERVAL
+//                vm.hour.value = if (hourPicker.value == 0) 24 else hourPicker.value
+//                vm.minute.value = minutePicker.value * MINUTE_INTERVAL
             }
             .create()
     }

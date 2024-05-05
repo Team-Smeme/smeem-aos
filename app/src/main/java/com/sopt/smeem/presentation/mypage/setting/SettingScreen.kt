@@ -125,6 +125,7 @@ fun SettingScreen(
                     modifier = Modifier.padding(horizontal = 19.dp),
                     isActive = isSwitchChecked,
                     selectedDays = selectedTrainingTime.days.toMutableSet(),
+                    trainingTime = selectedTrainingTime.asText(),
                     onAlarmCardClick = {
                         if (isSwitchChecked) {
                             navController.currentBackStackEntry?.savedStateHandle?.set(
