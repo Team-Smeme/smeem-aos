@@ -132,6 +132,12 @@ class UserRepositoryImpl(
                                     hour = it.hour,
                                     minute = it.minute
                                 )
+                            },
+                            trainingPlan = data.trainingPlan?.let {
+                                MyInfoDto.MyTrainingPlan(
+                                    id = it.id,
+                                    content = it.content
+                                )
                             }
                         )
                     )

@@ -9,7 +9,6 @@ import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,7 +29,6 @@ class MySummaryViewModel @Inject constructor(
                 reduce {
                     state.copy(uiState = MySummaryUiState.Loading)
                 }
-                Timber.e("fetchMySummaryData loading")
             }
 
             // TODO : 배지 반영 -> 주석 해제
@@ -41,7 +39,6 @@ class MySummaryViewModel @Inject constructor(
                 reduce {
                     state.copy(uiState = MySummaryUiState.Success(smeemData, planData))
                 }
-                Timber.e("fetchMySummaryData success")
             }
         }
     }

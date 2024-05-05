@@ -8,12 +8,12 @@ import com.sopt.smeem.R
 @Composable
 fun ChangeMyPlanCard(
     isPlanSet: Boolean = true,
-    myPlan: String,
+    myPlan: String?,
     onEditClick: () -> Unit,
 ) {
     SmeemContents(title = stringResource(R.string.my_plan)) {
         SmeemCard(
-            text = if (isPlanSet) myPlan else stringResource(R.string.no_plan_title),
+            text = if (isPlanSet) myPlan!! else stringResource(R.string.no_plan_title),
             isActive = isPlanSet
         ) {
             EditButton(

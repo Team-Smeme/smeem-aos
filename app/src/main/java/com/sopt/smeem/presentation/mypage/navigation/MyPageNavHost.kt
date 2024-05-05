@@ -34,6 +34,7 @@ import com.sopt.smeem.presentation.mypage.setting.ChangeNicknameScreen
 import com.sopt.smeem.presentation.mypage.setting.EditTrainingPlanScreen
 import com.sopt.smeem.presentation.mypage.setting.EditTrainingTimeScreen
 import com.sopt.smeem.presentation.mypage.setting.SettingScreen
+import com.sopt.smeem.presentation.mypage.setting.SettingViewModel
 
 @Composable
 fun MyPageNavHost(
@@ -115,8 +116,11 @@ private fun NavGraphBuilder.addSetting(navController: NavController, modifier: M
         route = MyPageScreen.Setting.route
     ) {
         composable(route = SettingNavGraph.SettingMain.route) {
+            val viewModel: SettingViewModel = hiltViewModel()
+
             SettingScreen(
                 navController = navController,
+                viewModel = viewModel,
                 modifier = modifier
             )
         }
