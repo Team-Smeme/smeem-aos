@@ -44,9 +44,8 @@ fun SmeemAlarmCard(
     val daysOfWeek = Day.entries.map { it.korean }
 
     // 화면의 가로 길이를 가져와서 요일의 개수로 나누어 요일의 너비를 계산
-    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val itemWidth = with(LocalConfiguration.current) {
-        (screenWidth - 38.dp) / daysOfWeek.size
+        (screenWidthDp.dp - 38.dp) / daysOfWeek.size
     }
 
     Column(
@@ -74,7 +73,13 @@ fun SmeemAlarmCard(
                 val itemModifier = Modifier
                     .size(itemWidth)
                     .then(radiusModifier)
-                    .background(if (daySelected) point else white)
+                    .background(
+                        when {
+                            daySelected && isActive -> point
+                            daySelected -> gray200
+                            else -> white
+                        }
+                    )
                     .then(
                         if (!daySelected) {
                             Modifier
@@ -142,7 +147,7 @@ fun SmeemAlarmCard(
                 Text(
                     text = stringResource(R.string.my_page_setting_training_time_title),
                     style = Typography.labelLarge,
-                    color = point
+                    color = if (isActive) point else gray200
                 )
 
                 VerticalSpacer(height = 4.dp)
@@ -150,7 +155,7 @@ fun SmeemAlarmCard(
                 Text(
                     text = trainingTime,
                     style = Typography.titleMedium,
-                    color = point
+                    color = if (isActive) point else gray200
                 )
             }
         }
@@ -166,3 +171,14 @@ fun SmeemAlarmDaysPreview() {
         isActive = true,
         isDaySelected = { mockDays.contains(it) }, onAlarmCardClick = {})
 }
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun InActiveSmeemAlarmDaysPreview() {
+    val mockDays = arrayOf("월", "화", "수", "목", "금")
+    SmeemAlarmCard(
+        modifier = Modifier.padding(horizontal = 19.dp),
+        isActive = false,
+        isDaySelected = { mockDays.contains(it) }, onAlarmCardClick = {})
+}
+
