@@ -1,20 +1,17 @@
 package com.sopt.smeem.presentation.mypage
 
 import android.content.Intent
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityEditTrainingTimeBinding
-import com.sopt.smeem.description
-import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
+import com.sopt.smeem.presentation.mypage.setting.EditTrainingTimeViewModel
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.DateUtil
-import com.sopt.smeem.util.getParcelable
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +23,7 @@ class EditTrainingTimeActivity :
 
     override fun constructLayout() {
         setUpDays()
-        initData()
+//        initData()
     }
 
     override fun addListeners() {
@@ -53,19 +50,19 @@ class EditTrainingTimeActivity :
         )
     }
 
-    private fun initData() {
-        binding.trainingTime = intent.getParcelable("selectedTime", TrainingTime::class.java)
-        viewModel.originalTime = binding.trainingTime!!
-
-        viewModel.hour.value = binding.trainingTime!!.hour
-        viewModel.minute.value = binding.trainingTime!!.minute
-        viewModel.days.addAll(binding.trainingTime!!.days)
-        days?.values?.forEach { day ->
-            if (viewModel.isDaySelected(day.text.toString())) {
-                day.switchOn()
-            }
-        }
-    }
+//    private fun initData() {
+//        binding.trainingTime = intent.getParcelable("selectedTime", TrainingTime::class.java)
+//        viewModel.originalTime = binding.trainingTime!!
+//
+//        viewModel.hour.value = binding.trainingTime!!.hour
+//        viewModel.minute.value = binding.trainingTime!!.minute
+//        viewModel.days.addAll(binding.trainingTime!!.days)
+//        days?.values?.forEach { day ->
+//            if (viewModel.isDaySelected(day.text.toString())) {
+//                day.switchOn()
+//            }
+//        }
+//    }
 
     private fun onTouchBack() {
         binding.topbarMyPageEditTime.setNavigationOnClickListener {

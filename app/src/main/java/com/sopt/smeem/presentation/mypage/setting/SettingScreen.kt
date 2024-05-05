@@ -50,7 +50,7 @@ fun SettingScreen(
             val response = uiState.data
             val username = response.username
             val myPlan = response.trainingPlan?.content
-            val targetLanguage = response.targetLang
+            // val targetLanguage = response.targetLang TODO : 언어 추가시 주석 해제
             val selectedTrainingTime = if (response.trainingTime!!.isSet()) {
                 response.trainingTime
             } else {
@@ -124,7 +124,7 @@ fun SettingScreen(
                 SmeemAlarmCard(
                     modifier = Modifier.padding(horizontal = 19.dp),
                     isActive = isSwitchChecked,
-                    isDaySelected = { selectedTrainingTime.days.contains(Day.from(it)) },
+                    selectedDays = selectedTrainingTime.days.toMutableSet(),
                     onAlarmCardClick = {
                         if (isSwitchChecked) {
                             navController.currentBackStackEntry?.savedStateHandle?.set(

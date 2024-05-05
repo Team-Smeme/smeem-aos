@@ -9,7 +9,8 @@
 
         <variable
             name="vm"
-            type="com.sopt.smeem.presentation.mypage.EditTrainingTimeViewModel" />
+            type="com.sopt.smeem.presentation.mypage.setting.EditTrainingTimeViewModel" />
+
         <variable
             name="trainingTime"
             type="com.sopt.smeem.domain.model.TrainingTime" />

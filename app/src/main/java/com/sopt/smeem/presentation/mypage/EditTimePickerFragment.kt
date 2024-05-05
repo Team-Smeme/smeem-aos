@@ -7,9 +7,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sopt.smeem.databinding.DialogTimePickerBinding
-import com.sopt.smeem.presentation.mypage.EditTrainingTimeViewModel.Companion.DEFAULT_HOUR
-import com.sopt.smeem.presentation.mypage.EditTrainingTimeViewModel.Companion.DEFAULT_MINUTE
-import com.sopt.smeem.presentation.onboarding.OnBoardingVM
+import com.sopt.smeem.presentation.mypage.setting.EditTrainingTimeViewModel
+import com.sopt.smeem.presentation.mypage.setting.EditTrainingTimeViewModel.Companion.DEFAULT_HOUR
+import com.sopt.smeem.presentation.mypage.setting.EditTrainingTimeViewModel.Companion.DEFAULT_MINUTE
 
 class EditTimePickerFragment : DialogFragment() {
     private val timePicker by lazy { DialogTimePickerBinding.inflate(layoutInflater) }

@@ -13,6 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.R
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.TrainingTime
@@ -23,11 +27,16 @@ import com.sopt.smeem.util.VerticalSpacer
 
 @Composable
 fun EditTrainingTimeScreen(
+    navController: NavController,
     modifier: Modifier = Modifier,
     trainingTime: TrainingTime,
+    viewModel: EditTrainingTimeViewModel = hiltViewModel()
 ) {
 
+    viewModel.originalTime = trainingTime
+
     var showTimePickDialog by rememberSaveable { mutableStateOf(false) }
+    val selectedDays by viewModel.days.collectAsStateWithLifecycle()
 
     Column(modifier = modifier.fillMaxWidth()) {
 
@@ -36,15 +45,16 @@ fun EditTrainingTimeScreen(
         SmeemAlarmCard(
             modifier = Modifier.padding(horizontal = 19.dp),
             isActive = true,
-            isDaySelected = { trainingTime.days.contains(Day.from(it)) },
+            selectedDays = selectedDays,
             trainingTime = "${trainingTime.asHour()}:${trainingTime.asMinute()} ${trainingTime.asAmpm()}",
             onTimeCardClick = { showTimePickDialog = true },
-            isContentClickable = true
+            isContentClickable = true,
+            onDayClick = { day ->
+                viewModel.toggleDaySelection(day)
+            }
         )
 
-
         Spacer(modifier = Modifier.weight(1f))
-
 
         SmeemButton(
             text = stringResource(R.string.training_time_change_button),
@@ -71,6 +81,7 @@ fun EditTrainingTimeScreen(
 @Composable
 fun PreviewEditTrainingTimeScreen() {
     EditTrainingTimeScreen(
+        navController = rememberNavController(),
         trainingTime = TrainingTime(setOf(Day.MON, Day.THU), 10, 30),
     )
 }

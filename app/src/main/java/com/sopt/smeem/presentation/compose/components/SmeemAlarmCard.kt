@@ -33,11 +33,11 @@ import com.sopt.smeem.util.sideBorder
 fun SmeemAlarmCard(
     modifier: Modifier = Modifier,
     isActive: Boolean,
-    isDaySelected: (String) -> Boolean,
+    selectedDays: MutableSet<Day>,
     trainingTime: String = stringResource(R.string.default_training_time),
     onAlarmCardClick: () -> Unit = {},
     isContentClickable: Boolean = false,
-    onDayClick: (String) -> Unit = {},
+    onDayClick: (Day) -> Unit = {},
     onTimeCardClick: () -> Unit = {}
 ) {
 
@@ -61,7 +61,7 @@ fun SmeemAlarmCard(
                 .background(white)
         ) {
             items(daysOfWeek.size) { day ->
-                val daySelected = isDaySelected(daysOfWeek[day])
+                val daySelected = selectedDays.contains(Day.from(daysOfWeek[day]))
                 val borderColor = if (daySelected) point else gray200
                 val sideBorder = Border(strokeWidth = 1.dp, color = borderColor)
 
@@ -113,7 +113,7 @@ fun SmeemAlarmCard(
 
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = itemModifier
+                    modifier = itemModifier.noRippleClickable { onDayClick(Day.from(daysOfWeek[day])) }
                 ) {
                     Text(
                         text = daysOfWeek[day],
@@ -166,20 +166,22 @@ fun SmeemAlarmCard(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SmeemAlarmDaysPreview() {
-    val mockDays = arrayOf("월", "화", "수", "목", "금")
     SmeemAlarmCard(
         modifier = Modifier.padding(horizontal = 19.dp),
         isActive = true,
-        isDaySelected = { mockDays.contains(it) }, onAlarmCardClick = {})
+        selectedDays = mutableSetOf(Day.MON, Day.TUE, Day.WED, Day.THU, Day.FRI),
+        onAlarmCardClick = {}
+    )
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun InActiveSmeemAlarmDaysPreview() {
-    val mockDays = arrayOf("월", "화", "수", "목", "금")
     SmeemAlarmCard(
         modifier = Modifier.padding(horizontal = 19.dp),
         isActive = false,
-        isDaySelected = { mockDays.contains(it) }, onAlarmCardClick = {})
+        selectedDays = mutableSetOf(Day.MON, Day.TUE, Day.WED, Day.THU, Day.FRI),
+        onAlarmCardClick = {}
+    )
 }
 
