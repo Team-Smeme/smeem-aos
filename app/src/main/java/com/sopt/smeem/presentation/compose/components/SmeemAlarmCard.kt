@@ -32,6 +32,7 @@ import com.sopt.smeem.util.sideBorder
 @Composable
 fun SmeemAlarmCard(
     modifier: Modifier = Modifier,
+    isActive: Boolean,
     isDaySelected: (String) -> Boolean,
     trainingTime: String = stringResource(R.string.default_training_time),
     onAlarmCardClick: () -> Unit = {},
@@ -51,7 +52,7 @@ fun SmeemAlarmCard(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .noRippleClickable { onAlarmCardClick() }
+            .noRippleClickable { if (isActive && !isContentClickable) onAlarmCardClick() }
     ) {
         LazyRow(
             modifier = Modifier
@@ -162,5 +163,6 @@ fun SmeemAlarmDaysPreview() {
     val mockDays = arrayOf("월", "화", "수", "목", "금")
     SmeemAlarmCard(
         modifier = Modifier.padding(horizontal = 19.dp),
+        isActive = true,
         isDaySelected = { mockDays.contains(it) }, onAlarmCardClick = {})
 }

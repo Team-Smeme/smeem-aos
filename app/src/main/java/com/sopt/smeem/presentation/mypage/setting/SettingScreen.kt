@@ -102,6 +102,7 @@ fun SettingScreen(
 
                 SmeemAlarmCard(
                     modifier = Modifier.padding(horizontal = 19.dp),
+                    isActive = isSwitchChecked,
                     isDaySelected = { selectedTrainingTime.day.contains(Day.from(it)) },
                     onAlarmCardClick = {
                         if (isSwitchChecked) {

@@ -35,6 +35,7 @@ fun EditTrainingTimeScreen(
 
         SmeemAlarmCard(
             modifier = Modifier.padding(horizontal = 19.dp),
+            isActive = true,
             isDaySelected = { trainingTime.days.contains(Day.from(it)) },
             trainingTime = "${trainingTime.asHour()}:${trainingTime.asMinute()} ${trainingTime.asAmpm()}",
             onTimeCardClick = { showTimePickDialog = true },
