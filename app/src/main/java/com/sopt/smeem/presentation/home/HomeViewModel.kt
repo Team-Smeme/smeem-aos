@@ -104,7 +104,7 @@ class HomeViewModel @Inject constructor(
         try {
             diaryRepository.getDiaries(start = dateAsString, end = dateAsString)
                 .run {
-                    _diaryList.postValue(data().diaries.values.first().let { dto ->
+                    _diaryList.postValue(data().diaries.values.firstOrNull()?.let { dto ->
                         DiarySummary(
                             id = dto.id,
                             content = dto.content,
