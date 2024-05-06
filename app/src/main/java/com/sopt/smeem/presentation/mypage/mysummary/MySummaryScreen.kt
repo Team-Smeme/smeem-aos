@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.data.datasource.BadgeList
+import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.domain.model.mypage.MyBadges
 import com.sopt.smeem.presentation.compose.components.LoadingScreen
 import com.sopt.smeem.presentation.mypage.components.MyBadgesBottomSheet
@@ -45,7 +46,7 @@ fun MySummaryScreen(
     /***** bottom sheet configuration *****/
     val sheetState = rememberModalBottomSheetState()
     val coroutineScope = rememberCoroutineScope()
-    var selectedBadge by rememberSaveable { mutableStateOf<MyBadges?>(null) }
+    var selectedBadge by rememberSaveable { mutableStateOf<GetBadgeListDto?>(null) }
 
     if (selectedBadge != null) {
         MyBadgesBottomSheet(
@@ -64,8 +65,7 @@ fun MySummaryScreen(
         }
 
         is MySummaryUiState.Success -> {
-//            val (smeemData, planData, + 배지) = uiState
-            val (smeemData, planData) = uiState
+            val (smeemData, planData, badgesData) = uiState
 
             Column(
                 modifier = modifier
@@ -92,7 +92,7 @@ fun MySummaryScreen(
                 VerticalSpacer(height = 36.dp)
 
                 MyBadgesContent(
-                    badges = BadgeList.sprint2,
+                    badges = badgesData,
                     onClickCard = { clickedBadge -> selectedBadge = clickedBadge },
                     modifier = Modifier.heightIn(max = 1000.dp)
                 )

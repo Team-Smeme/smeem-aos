@@ -25,7 +25,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sopt.smeem.R
 import com.sopt.smeem.data.datasource.BadgeList
-import com.sopt.smeem.domain.model.mypage.MyBadges
+import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.presentation.compose.components.SmeemBottomSheet
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
@@ -37,7 +37,7 @@ import com.sopt.smeem.util.previewPlaceholder
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyBadgesBottomSheet(
-    badge: MyBadges,
+    badge: GetBadgeListDto,
     sheetState: SheetState,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier
@@ -47,7 +47,7 @@ fun MyBadgesBottomSheet(
         onDismissRequest = onDismiss,
         modifier = modifier
     ) {
-        if (badge.hasObtained) {
+        if (badge.hasBadge) {
             ObtainedBottomSheetContent(info = badge, modifier = Modifier.widthIn(max = 120.dp))
         } else {
             NotObtainedBottomSheetContent(info = badge, modifier = Modifier.widthIn(max = 120.dp))
@@ -57,7 +57,7 @@ fun MyBadgesBottomSheet(
 
 @Composable
 fun ObtainedBottomSheetContent(
-    info: MyBadges,
+    info: GetBadgeListDto,
     modifier: Modifier = Modifier
 ) {
     AsyncImage(
@@ -77,7 +77,7 @@ fun ObtainedBottomSheetContent(
     )
     Text(
         modifier = Modifier.padding(top = 8.dp),
-        text = info.description,
+        text = info.contentForBadgeOwner ?: "",
         style = Typography.bodyMedium,
         color = black
     )
@@ -91,7 +91,7 @@ fun ObtainedBottomSheetContent(
 
 @Composable
 fun NotObtainedBottomSheetContent(
-    info: MyBadges,
+    info: GetBadgeListDto,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -156,7 +156,7 @@ fun NotObtainedBottomSheetContentPreview() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         NotObtainedBottomSheetContent(
-            info = BadgeList.sprint2[2],
+            info = BadgeList.sprint2[1],
             modifier = Modifier.widthIn(max = 120.dp)
         )
     }

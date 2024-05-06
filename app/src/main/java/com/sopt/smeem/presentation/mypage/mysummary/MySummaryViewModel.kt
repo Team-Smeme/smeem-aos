@@ -31,13 +31,11 @@ class MySummaryViewModel @Inject constructor(
                 }
             }
 
-            // TODO : 배지 반영 -> 주석 해제
-            // val (smeemData, planData, badgesData) = mySummaryUseCase()
-            val (smeemData, planData) = mySummaryUseCase()
+            val (smeemData, planData, badgesData) = mySummaryUseCase()
 
             intent {
                 reduce {
-                    state.copy(uiState = MySummaryUiState.Success(smeemData, planData))
+                    state.copy(uiState = MySummaryUiState.Success(smeemData, planData, badgesData))
                 }
             }
         }

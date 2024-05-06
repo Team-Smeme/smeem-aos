@@ -4,11 +4,9 @@ import com.sopt.smeem.domain.ApiResult
 import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.domain.dto.LoginResultDto
 import com.sopt.smeem.domain.dto.MyInfoDto
-import com.sopt.smeem.domain.dto.MyPlanDto
 import com.sopt.smeem.domain.dto.MyPlanDtoWrapper
 import com.sopt.smeem.domain.dto.MySmeemDataDto
 import com.sopt.smeem.domain.dto.PostOnBoardingDto
-import com.sopt.smeem.domain.model.Badge
 import com.sopt.smeem.domain.model.PushAlarm
 import com.sopt.smeem.domain.model.Training
 

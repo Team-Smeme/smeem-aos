@@ -1,82 +1,115 @@
 package com.sopt.smeem.data.datasource
 
+import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.domain.model.Badge
 import com.sopt.smeem.domain.model.BadgeType
-import com.sopt.smeem.domain.model.mypage.MyBadges
 
 object BadgeList {
 
     /***** new - temp *****/
-    val sprint2 = listOf<MyBadges>(
-        MyBadges(
+    val sprint2 = listOf<GetBadgeListDto>(
+        GetBadgeListDto(
+            badgeId = 1,
             name = "웰컴 배지",
+            type = BadgeType.EVENT,
+            hasBadge = true,
+            remainingNumber = null,
+            contentForNonBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            contentForBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
             imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7",
-            description = "스밈에 오신 것을 환영해요!",
-            hasObtained = true,
-            userPercentage = 90
+            badgeAcquisitionRatio = 0.9
         ),
-        MyBadges(
-            name = "첫 일기",
+        GetBadgeListDto(
+            badgeId = 2,
+            name = "첫 번째 일기",
+            type = BadgeType.COUNTING,
+            hasBadge = false,
+            remainingNumber = 6,
+            contentForNonBadgeOwner = "일기를 n번 더 작성해요.",
+            contentForBadgeOwner = "시작이 좋아요!",
             imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
-            description = "시작이 좋아요!",
-            hasObtained = true,
-            userPercentage = 50
+            badgeAcquisitionRatio = 0.5
         ),
-        MyBadges(
+        GetBadgeListDto(
+            badgeId = 3,
             name = "10번째 일기",
-            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
-            description = "일기를 n번 더 작성해요",
-            hasObtained = false,
-            diariesLeftToObtain = 6,
-            userPercentage = 30
+            type = BadgeType.COUNTING,
+            hasBadge = true,
+            remainingNumber = null,
+            contentForNonBadgeOwner = "일기를 n번 더 작성해요.",
+            contentForBadgeOwner = "벌써 10번째 일기라니, 멋져요!",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/645082e3-9c25-4698-b614-b575b75be188",
+            badgeAcquisitionRatio = 0.38
         ),
-        MyBadges(
-            name = "10번째 일기",
-            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
-            description = "일기를 n번 더 작성해요",
-            hasObtained = false,
-            diariesLeftToObtain = 26,
-            userPercentage = 5
+        GetBadgeListDto(
+            badgeId = 4,
+            name = "웰컴 배지",
+            type = BadgeType.EVENT,
+            hasBadge = false,
+            remainingNumber = null,
+            contentForNonBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            contentForBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7",
+            badgeAcquisitionRatio = 0.255
         ),
-        MyBadges(
-            name = "10번째 일기",
-            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
-            description = "일기를 n번 더 작성해요",
-            hasObtained = false,
-            diariesLeftToObtain = 46,
-            userPercentage = 10
+        GetBadgeListDto(
+            badgeId = 5,
+            name = "웰컴 배지",
+            type = BadgeType.EVENT,
+            hasBadge = false,
+            remainingNumber = null,
+            contentForNonBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            contentForBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7",
+            badgeAcquisitionRatio = 0.9
         ),
-        MyBadges(
-            name = "3일 연속 일기",
-            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/3b26b274-722f-4dca-a560-e28c266efe69",
-            description = "벌써 3일째! 좋은 습관을 만들어 보아요:)",
-            hasObtained = true,
-            userPercentage = 30
+        GetBadgeListDto(
+            badgeId = 6,
+            name = "웰컴 배지",
+            type = BadgeType.EVENT,
+            hasBadge = false,
+            remainingNumber = null,
+            contentForNonBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            contentForBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7",
+            badgeAcquisitionRatio = 0.9
         ),
-        MyBadges(
-            name = "7일 연속 일기",
-            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
-            description = "일기를 7일 연속으로 작성해요.",
-            hasObtained = false,
-            userPercentage = 30
+        GetBadgeListDto(
+            badgeId = 7,
+            name = "웰컴 배지",
+            type = BadgeType.EVENT,
+            hasBadge = false,
+            remainingNumber = null,
+            contentForNonBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            contentForBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7",
+            badgeAcquisitionRatio = 0.9
         ),
-        MyBadges(
-            name = "7일 연속 일기",
-            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
-            description = "일기를 15일 연속으로 작성해요.",
-            hasObtained = false,
-            userPercentage = 20
+        GetBadgeListDto(
+            badgeId = 8,
+            name = "웰컴 배지",
+            type = BadgeType.EVENT,
+            hasBadge = false,
+            remainingNumber = null,
+            contentForNonBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            contentForBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7",
+            badgeAcquisitionRatio = 0.9
         ),
-        MyBadges(
-            name = "7일 연속 일기",
-            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5",
-            description = "일기를 15일 연속으로 작성해요.",
-            hasObtained = false,
-            userPercentage = 10
+        GetBadgeListDto(
+            badgeId = 9,
+            name = "웰컴 배지",
+            type = BadgeType.EVENT,
+            hasBadge = false,
+            remainingNumber = null,
+            contentForNonBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            contentForBadgeOwner = "가입한 모든 사용자에게 제공돼요.",
+            imageUrl = "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7",
+            badgeAcquisitionRatio = 0.9
         ),
     )
 
-    /***** original *****/
+    /***** old dummy data *****/
 
     val event = listOf<Badge>(
         Badge(

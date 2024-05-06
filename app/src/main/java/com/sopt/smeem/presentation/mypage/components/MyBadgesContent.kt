@@ -32,6 +32,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sopt.smeem.R
 import com.sopt.smeem.data.datasource.BadgeList
+import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.domain.model.mypage.MyBadges
 import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.presentation.compose.theme.Typography
@@ -41,8 +42,8 @@ import com.sopt.smeem.util.previewPlaceholder
 @Composable
 fun MyBadgesContent(
     modifier: Modifier = Modifier,
-    badges: List<MyBadges>,
-    onClickCard: (MyBadges) -> Unit
+    badges: List<GetBadgeListDto>,
+    onClickCard: (GetBadgeListDto) -> Unit
 ) {
     SmeemContents(
         title = stringResource(R.string.my_badges)
@@ -54,7 +55,7 @@ fun MyBadgesContent(
             horizontalArrangement = Arrangement.spacedBy(7.dp)
         ) {
             items(badges) { badge ->
-                if (badge.hasObtained) {
+                if (badge.hasBadge) {
                     MyBadgesObtainedCard(info = badge, onClick = { onClickCard(badge) })
                 } else {
                     MyBadgesNotObtainedCard(onClick = { onClickCard(badge) })
@@ -66,7 +67,7 @@ fun MyBadgesContent(
 
 @Composable
 fun MyBadgesObtainedCard(
-    info: MyBadges,
+    info: GetBadgeListDto,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
