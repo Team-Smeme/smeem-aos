@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,7 +37,6 @@ class EditTrainingTimeViewModel @Inject constructor(
         _days.value = newTrainingTime.days.toMutableSet()
         _hour.value = newTrainingTime.hour
         _minute.value = newTrainingTime.minute
-        Timber.e("initialize: ${_trainingTime.value}")
     }
 
     fun isDaySelected(content: String) = _days.value.contains(Day.from(content))
