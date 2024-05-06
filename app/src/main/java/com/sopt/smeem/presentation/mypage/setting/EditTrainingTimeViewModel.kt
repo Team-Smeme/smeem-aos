@@ -61,7 +61,7 @@ class EditTrainingTimeViewModel @Inject constructor(
     fun canConfirmEdit() = _days.value.isNotEmpty() &&
             TrainingTime(_days.value, hour.value, minute.value) != trainingTime.value
 
-    fun sendServer(onError: (Throwable) -> Unit) {
+    fun sendServer(onSuccess: () -> Unit, onError: (Throwable) -> Unit) {
         viewModelScope.launch {
             try {
                 userRepository.editTraining(
@@ -73,6 +73,7 @@ class EditTrainingTimeViewModel @Inject constructor(
                         )
                     )
                 )
+                onSuccess()
             } catch (t: Throwable) {
                 onError(t)
             }

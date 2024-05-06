@@ -97,13 +97,20 @@ class EditTrainingTimeActivity :
 
     private fun onTouchComplete() {
         binding.btnMyPageEditTime.setOnSingleClickListener {
-            viewModel.sendServer { t ->
-                Toast.makeText(applicationContext, t.message, Toast.LENGTH_SHORT).show()
-            }
-            Intent(this, MyPageActivity::class.java).apply {
-                putExtra(SNACKBAR_TEXT, resources.getString(R.string.my_page_edit_done_message))
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            }.run(::startActivity)
+            viewModel.sendServer(
+                onSuccess = {
+                    Intent(this, MyPageActivity::class.java).apply {
+                        putExtra(
+                            SNACKBAR_TEXT,
+                            resources.getString(R.string.my_page_edit_done_message)
+                        )
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    }.run(::startActivity)
+                },
+                onError = { t ->
+                    Toast.makeText(applicationContext, t.message, Toast.LENGTH_SHORT).show()
+                }
+            )
         }
     }
 

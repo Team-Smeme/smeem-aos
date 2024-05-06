@@ -70,14 +70,18 @@ fun EditTrainingTimeScreen(
         SmeemButton(
             text = stringResource(R.string.training_time_change_button),
             onClick = {
-                viewModel.sendServer { t ->
-                    Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-                }
-                navController.navigate(MyPageScreen.Setting.route) {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = false
+                viewModel.sendServer(
+                    onSuccess = {
+                        navController.navigate(MyPageScreen.Setting.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = false
+                            }
+                        }
+                    },
+                    onError = { t ->
+                        Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
                     }
-                }
+                )
             },
             modifier = Modifier.padding(horizontal = 18.dp),
             isButtonEnabled = viewModel.canConfirmEdit()

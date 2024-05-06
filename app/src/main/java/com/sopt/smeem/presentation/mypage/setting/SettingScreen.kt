@@ -34,7 +34,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 @Composable
 fun SettingScreen(
     navController: NavController,
-    viewModel: SettingViewModel,
+    viewModel: SettingViewModel = hiltViewModel(),
     modifier: Modifier
 ) {
     val state by viewModel.collectAsState()
