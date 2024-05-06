@@ -3,6 +3,7 @@ package com.sopt.smeem.presentation.mypage.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,11 +27,13 @@ import coil.request.ImageRequest
 import com.sopt.smeem.R
 import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.dto.GetBadgeListDto
+import com.sopt.smeem.domain.model.BadgeType
 import com.sopt.smeem.presentation.compose.components.SmeemBottomSheet
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.compose.theme.gray500
+import com.sopt.smeem.presentation.compose.theme.point
 import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.previewPlaceholder
 
@@ -118,12 +121,44 @@ fun NotObtainedBottomSheetContent(
         style = Typography.headlineSmall,
         color = black
     )
-    Text(
-        modifier = Modifier.padding(top = 8.dp),
-        text = info.description,
-        style = Typography.bodyMedium,
-        color = black
-    )
+    if (info.type == BadgeType.COUNTING) {
+        val parts = info.getNonBadgeTextParts()
+        // TODO: getNonBadgesTextParts 수정시 대응
+        if (parts.isEmpty()) {
+            Text(
+                text = "",
+                style = Typography.bodyMedium,
+                color = black
+            )
+        } else {
+            Row(
+                modifier = Modifier.padding(top = 8.dp)
+            ) {
+                Text(
+                    text = parts[0],
+                    style = Typography.bodyMedium,
+                    color = black
+                )
+                Text(
+                    text = parts[1],
+                    style = Typography.bodyLarge,
+                    color = point
+                )
+                Text(
+                    text = parts[2],
+                    style = Typography.bodyMedium,
+                    color = black
+                )
+            }
+        }
+    } else {
+        Text(
+            modifier = Modifier.padding(top = 8.dp),
+            text = info.contentForNonBadgeOwner ?: "",
+            style = Typography.bodyMedium,
+            color = black
+        )
+    }
     Text(
         modifier = Modifier.padding(top = 12.dp),
         text = info.getAcquistionText(),
