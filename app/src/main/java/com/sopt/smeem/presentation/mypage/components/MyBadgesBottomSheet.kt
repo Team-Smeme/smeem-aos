@@ -83,7 +83,7 @@ fun ObtainedBottomSheetContent(
     )
     Text(
         modifier = Modifier.padding(top = 12.dp),
-        text = "${info.userPercentage}%의 사용자가 획득했어요",
+        text = info.getAcquistionText(),
         style = Typography.bodyMedium,
         color = gray500
     )
@@ -126,7 +126,7 @@ fun NotObtainedBottomSheetContent(
     )
     Text(
         modifier = Modifier.padding(top = 12.dp),
-        text = "${info.userPercentage}%의 사용자가 획득했어요",
+        text = info.getAcquistionText(),
         style = Typography.bodyMedium,
         color = gray500
     )
