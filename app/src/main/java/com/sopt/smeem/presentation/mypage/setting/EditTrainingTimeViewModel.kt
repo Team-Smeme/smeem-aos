@@ -11,30 +11,35 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class EditTrainingTimeViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : ViewModel() {
-    var originalTime: TrainingTime = TrainingTime(
-        setOf(Day.MON, Day.TUE, Day.WED, Day.THU, Day.FRI),
-        DEFAULT_HOUR,
-        DEFAULT_MINUTE
-    )
+
+    private val _trainingTime =
+        MutableStateFlow<TrainingTime>(TrainingTime(setOf(), DEFAULT_HOUR, DEFAULT_MINUTE))
+    val trainingTime: StateFlow<TrainingTime> = _trainingTime.asStateFlow()
 
     // 서버로 보내기 위한 선택시간 저장 변수
-    private val _days = MutableStateFlow(originalTime.days.toMutableSet())
+    private val _days = MutableStateFlow(trainingTime.value.days.toMutableSet())
     val days: StateFlow<MutableSet<Day>> = _days.asStateFlow()
 
-    private val _hour = MutableStateFlow(originalTime.hour)
+    private val _hour = MutableStateFlow(trainingTime.value.hour)
     val hour: StateFlow<Int> = _hour.asStateFlow()
 
-    private val _minute = MutableStateFlow(originalTime.minute)
+    private val _minute = MutableStateFlow(trainingTime.value.minute)
     val minute: StateFlow<Int> = _minute.asStateFlow()
 
-    private val _trainingTime = MutableStateFlow(originalTime)
-    val trainingTime: StateFlow<TrainingTime> = _trainingTime.asStateFlow()
+    fun initialize(newTrainingTime: TrainingTime) {
+        _trainingTime.value = newTrainingTime
+        _days.value = newTrainingTime.days.toMutableSet()
+        _hour.value = newTrainingTime.hour
+        _minute.value = newTrainingTime.minute
+        Timber.e("initialize: ${_trainingTime.value}")
+    }
 
     fun isDaySelected(content: String) = _days.value.contains(Day.from(content))
     fun addDay(content: String) = _days.value.add(Day.from(content))
@@ -54,7 +59,7 @@ class EditTrainingTimeViewModel @Inject constructor(
     }
 
     fun canConfirmEdit() = _days.value.isNotEmpty() &&
-            TrainingTime(_days.value, hour.value, minute.value) != originalTime
+            TrainingTime(_days.value, hour.value, minute.value) != trainingTime.value
 
     fun sendServer(onError: (Throwable) -> Unit) {
         viewModelScope.launch {

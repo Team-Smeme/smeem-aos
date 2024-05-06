@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -20,22 +22,25 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.R
-import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.presentation.compose.components.SmeemAlarmCard
 import com.sopt.smeem.presentation.compose.components.SmeemButton
 import com.sopt.smeem.presentation.compose.components.SmeemTimePickerDialog
+import com.sopt.smeem.presentation.mypage.navigation.MyPageScreen
 import com.sopt.smeem.util.VerticalSpacer
 
 @Composable
 fun EditTrainingTimeScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    trainingTime: TrainingTime,
     viewModel: EditTrainingTimeViewModel = hiltViewModel()
 ) {
-
-    viewModel.originalTime = trainingTime
+    val trainingTimeResult = remember {
+        navController.previousBackStackEntry?.savedStateHandle?.get<TrainingTime>("trainingTime")
+    }
+    LaunchedEffect(trainingTimeResult) {
+        trainingTimeResult?.let { viewModel.initialize(it) }
+    }
 
     val context = LocalContext.current
     var showTimePickDialog by rememberSaveable { mutableStateOf(false) }
@@ -68,7 +73,11 @@ fun EditTrainingTimeScreen(
                 viewModel.sendServer { t ->
                     Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
                 }
-                navController.popBackStack()
+                navController.navigate(MyPageScreen.Setting.route) {
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = false
+                    }
+                }
             },
             modifier = Modifier.padding(horizontal = 18.dp),
             isButtonEnabled = viewModel.canConfirmEdit()
@@ -98,6 +107,6 @@ fun EditTrainingTimeScreen(
 fun PreviewEditTrainingTimeScreen() {
     EditTrainingTimeScreen(
         navController = rememberNavController(),
-        trainingTime = TrainingTime(setOf(Day.MON, Day.THU), 10, 30),
+        viewModel = hiltViewModel()
     )
 }
