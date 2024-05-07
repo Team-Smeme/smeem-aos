@@ -6,6 +6,7 @@ import com.sopt.smeem.Anonymous
 import com.sopt.smeem.domain.repository.LoginRepository
 import com.sopt.smeem.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -48,6 +49,8 @@ class ChangeNickNameViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 userRepository.modifyUsername(nickname)
+                // 키보드가 완전히 내려지기 전까지 기다리는 시간 TODO: 상태 감지
+                delay(800)
                 intent {
                     postSideEffect(ChangeNicknameSideEffect.NavigateToSettingScreen)
                 }

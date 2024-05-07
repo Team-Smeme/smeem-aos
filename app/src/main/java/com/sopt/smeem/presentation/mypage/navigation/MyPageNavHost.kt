@@ -125,6 +125,7 @@ private fun NavGraphBuilder.addSetting(navController: NavController, modifier: M
             val nickname = backStackEntry.arguments?.getString("nickname") ?: ""
 
             ChangeNicknameScreen(
+                navController = navController,
                 modifier = modifier,
                 nickname = nickname
             )

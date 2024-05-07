@@ -21,6 +21,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
@@ -54,6 +55,7 @@ fun ChangeNicknameScreen(
     val context = LocalContext.current
 
     val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
     var textFieldState by remember { mutableStateOf(TextFieldValue(text = nickname)) }
 
@@ -118,7 +120,11 @@ fun ChangeNicknameScreen(
 
         SmeemButton(
             text = stringResource(id = R.string.my_page_change_nickname_button),
-            onClick = { viewModel.changeNickname(textFieldState.text) },
+            onClick = {
+                focusManager.clearFocus()
+                keyboardController?.hide()
+                viewModel.changeNickname(textFieldState.text)
+            },
             modifier = Modifier.padding(horizontal = 18.dp),
             isButtonEnabled = textFieldState.text.length
                     in NICKNAME_MIN_LENGTH..NICKNAME_MAX_LENGTH
@@ -145,6 +151,12 @@ fun ChangeNicknameScreen(
                         saveState = false
                     }
                 }
+
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.my_page_edit_done_message),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -154,5 +166,8 @@ fun ChangeNicknameScreen(
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun ChangeNicknameScreenPreview() {
-    ChangeNicknameScreen(navController = rememberNavController(), nickname = "이태하이")
+    ChangeNicknameScreen(
+        navController = rememberNavController(),
+        nickname = "이태하이"
+    )
 }
