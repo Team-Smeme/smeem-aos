@@ -16,7 +16,7 @@ data class GetBadgeListDto(
     val imageUrl: String,
     val badgeAcquisitionRatio: Double,
 ) {
-    fun getAcquistionText() = run { "${badgeRatio}%의 사용자가 획득했어요" }
+    fun getAcquistionText() = run { "$badgePercentage%의 사용자가 획득했어요" }
 
     // TODO: not nullable하게 변경시 23번째 줄 제거
     fun getNonBadgeTextParts(): List<String> =
@@ -30,7 +30,7 @@ data class GetBadgeListDto(
             )
         }
 
-    val badgeRatio =
+    val badgePercentage =
         // 웰컴 배지는 100%
         if (badgeId == 1.toLong()) {
             100
