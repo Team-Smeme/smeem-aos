@@ -29,11 +29,10 @@ data class GetBadgeListDto(
         if (badgeId == 1.toLong()) {
             100
         } else {
-            val percentage = badgeAcquisitionRatio * 100
-            if (percentage == percentage.toInt().toDouble()) {
-                percentage.toInt()
+            if (badgeAcquisitionRatio == badgeAcquisitionRatio.toInt().toDouble()) {
+                badgeAcquisitionRatio.toInt()
             } else {
-                percentage
+                badgeAcquisitionRatio
             }
         }
 }

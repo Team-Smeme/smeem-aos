@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.presentation.compose.components.LoadingScreen
 import com.sopt.smeem.presentation.mypage.components.MyBadgesBottomSheet
