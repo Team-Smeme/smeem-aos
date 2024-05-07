@@ -123,33 +123,24 @@ fun NotObtainedBottomSheetContent(
     )
     if (info.type == BadgeType.COUNTING) {
         val parts = info.getNonBadgeTextParts()
-        // TODO: getNonBadgesTextParts 수정시 대응
-        if (parts.isEmpty()) {
+        Row(
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
             Text(
-                text = "",
+                text = parts[0],
                 style = Typography.bodyMedium,
                 color = black
             )
-        } else {
-            Row(
-                modifier = Modifier.padding(top = 8.dp)
-            ) {
-                Text(
-                    text = parts[0],
-                    style = Typography.bodyMedium,
-                    color = black
-                )
-                Text(
-                    text = parts[1],
-                    style = Typography.bodyLarge,
-                    color = point
-                )
-                Text(
-                    text = parts[2],
-                    style = Typography.bodyMedium,
-                    color = black
-                )
-            }
+            Text(
+                text = parts[1],
+                style = Typography.bodyLarge,
+                color = point
+            )
+            Text(
+                text = parts[2],
+                style = Typography.bodyMedium,
+                color = black
+            )
         }
     } else {
         Text(
