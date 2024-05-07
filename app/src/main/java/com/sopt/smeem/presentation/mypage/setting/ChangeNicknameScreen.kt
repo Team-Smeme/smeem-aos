@@ -29,21 +29,21 @@ import com.sopt.smeem.presentation.compose.components.SmeemButton
 import com.sopt.smeem.presentation.compose.components.SmeemTextField
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.gray400
+import com.sopt.smeem.presentation.compose.theme.point
 import com.sopt.smeem.presentation.mypage.NICKNAME_MAX_LENGTH
 import com.sopt.smeem.presentation.mypage.NICKNAME_MIN_LENGTH
-import com.sopt.smeem.util.HorizontalSpacer
 import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.addFocusCleaner
 
 @Composable
 fun ChangeNicknameScreen(
     modifier: Modifier = Modifier,
-    nickname: String
+    nickname: String,
+    isDuplicated: Boolean = false
 ) {
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     var textFieldState by remember { mutableStateOf(TextFieldValue(text = nickname)) }
-
 
     LaunchedEffect(key1 = Unit) {
         focusRequester.requestFocus()
@@ -79,7 +79,19 @@ fun ChangeNicknameScreen(
 
         VerticalSpacer(height = 10.dp)
 
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 18.dp)
+        ) {
+            if (isDuplicated) {
+                Text(
+                    text = "이미 사용 중인 닉네임이에요 :(",
+                    style = Typography.labelSmall,
+                    color = point,
+                )
+            }
+
             Spacer(modifier = Modifier.weight(1f))
 
             Text(
@@ -87,8 +99,6 @@ fun ChangeNicknameScreen(
                 style = Typography.labelSmall,
                 color = gray400,
             )
-
-            HorizontalSpacer(width = 18.dp)
         }
 
         Spacer(modifier = Modifier.weight(1f))
