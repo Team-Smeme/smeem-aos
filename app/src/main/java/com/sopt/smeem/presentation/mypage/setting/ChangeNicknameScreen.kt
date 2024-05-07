@@ -86,7 +86,7 @@ fun ChangeNicknameScreen(
         ) {
             if (isDuplicated) {
                 Text(
-                    text = "이미 사용 중인 닉네임이에요 :(",
+                    text = stringResource(id = R.string.entrance_nickname_duplicated),
                     style = Typography.labelSmall,
                     color = point,
                 )
@@ -109,7 +109,7 @@ fun ChangeNicknameScreen(
             onClick = { /*TODO*/ },
             modifier = Modifier.padding(horizontal = 18.dp),
             isButtonEnabled = textFieldState.text.length
-                    in NICKNAME_MIN_LENGTH..NICKNAME_MAX_LENGTH
+                    in NICKNAME_MIN_LENGTH..NICKNAME_MAX_LENGTH && textFieldState.text != nickname
         )
 
         VerticalSpacer(height = 10.dp)
