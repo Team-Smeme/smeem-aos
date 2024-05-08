@@ -1,5 +1,10 @@
 package com.sopt.smeem.presentation.mypage.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -85,7 +90,38 @@ fun MyPageNavHost(
             }
         }
     ) {
-        NavHost(navController = navController, startDestination = MyPageScreen.MySummary.route) {
+        NavHost(
+            navController = navController,
+            startDestination = MyPageScreen.MySummary.route,
+            enterTransition = {
+                fadeIn(animationSpec = tween(100)) +
+                        slideInHorizontally(
+                            initialOffsetX = { fullWidth -> fullWidth },
+                            animationSpec = tween(100)
+                        )
+            },
+            exitTransition = {
+                fadeOut(animationSpec = tween(100)) +
+                        slideOutHorizontally(
+                            targetOffsetX = { fullWidth -> -fullWidth },
+                            animationSpec = tween(100)
+                        )
+            },
+            popEnterTransition = {
+                fadeIn(animationSpec = tween(100)) +
+                        slideInHorizontally(
+                            initialOffsetX = { fullWidth -> -fullWidth },
+                            animationSpec = tween(100)
+                        )
+            },
+            popExitTransition = {
+                fadeOut(animationSpec = tween(100)) +
+                        slideOutHorizontally(
+                            targetOffsetX = { fullWidth -> fullWidth },
+                            animationSpec = tween(100)
+                        )
+            }
+        ) {
             addMySummary(navController = navController, modifier = Modifier.padding(it))
             addSetting(navController = navController, modifier = Modifier.padding(it))
             addMore(navController = navController, modifier = Modifier.padding(it))
@@ -111,7 +147,6 @@ private fun NavGraphBuilder.addSetting(navController: NavController, modifier: M
         route = MyPageScreen.Setting.route
     ) {
         composable(route = SettingNavGraph.SettingMain.route) {
-
             SettingScreen(
                 navController = navController,
                 modifier = modifier

@@ -59,7 +59,7 @@ fun MySummaryScreen(
 
     when (val uiState = state.uiState) {
         is MySummaryUiState.Loading -> {
-            LoadingScreen()
+            LoadingScreen(modifier = modifier)
         }
 
         is MySummaryUiState.Success -> {
