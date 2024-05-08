@@ -7,14 +7,14 @@ data class TrainingRequest(
     val target: TrainingGoalType?,
     val trainingTime: TrainingTime?,
     val hasAlarm: Boolean?,
-    val planId: Long?,
+    val planId: Int?,
 ) {
     data class TrainingTime(
         val day: String,
         val hour: Int?,
         val minute: Int?
     ) {
-        companion object{
+        companion object {
             fun of(day: Collection<Day>, hour: Int?, minute: Int?) =
                 TrainingTime(
                     day = with(day) {
@@ -22,7 +22,7 @@ data class TrainingRequest(
                         this.forEach { day -> daysString += "${day.name}," }
                         daysString.dropLast(1)
                     },
-                    hour = hour?.let { if(hour == 0) 22 else hour } ?: 22,
+                    hour = hour?.let { if (hour == 0) 22 else hour } ?: 22,
                     minute = minute ?: 0
                 )
         }
