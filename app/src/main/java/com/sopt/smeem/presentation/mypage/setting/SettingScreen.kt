@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -40,11 +39,10 @@ fun SettingScreen(
 ) {
     val state by viewModel.collectAsState()
     val context = LocalContext.current
-    var isSwitchChecked by rememberSaveable { mutableStateOf(false) }
 
     when (val uiState = state.uiState) {
         is UiState.Loading -> {
-            LoadingScreen()
+            LoadingScreen(modifier = modifier)
         }
 
         is UiState.Success -> {
@@ -61,10 +59,7 @@ fun SettingScreen(
                     0
                 )
             }
-
-            LaunchedEffect(key1 = Unit) {
-                isSwitchChecked = response.hasPushAlarm
-            }
+            var isSwitchChecked by rememberSaveable { mutableStateOf(response.hasPushAlarm) }
 
             Column(
                 modifier = modifier.fillMaxSize(),
