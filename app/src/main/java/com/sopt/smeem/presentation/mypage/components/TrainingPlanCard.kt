@@ -23,7 +23,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
-import com.sopt.smeem.domain.model.mypage.TrainingPlanDescription
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.compose.theme.gray600
@@ -35,14 +34,13 @@ import com.sopt.smeem.util.HorizontalSpacer
 @Composable
 fun TrainingPlanCard(
     isSelected: Boolean = false,
-    planId: Int,
+    planContent: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
     val textColor = if (isSelected) point else gray600
     val textStyle = if (isSelected) Typography.bodySmall else Typography.bodyMedium
-    val planDescription = TrainingPlanDescription.entries.firstOrNull { it.id == planId } ?: return
     val borderColor = if (isSelected) point else gray100
     val iconVector =
         if (isSelected) ImageVector.vectorResource(id = R.drawable.ic_selection_active)
@@ -80,7 +78,7 @@ fun TrainingPlanCard(
             HorizontalSpacer(width = 12.dp)
 
             Text(
-                text = planDescription.description,
+                text = planContent,
                 style = textStyle,
                 color = textColor,
                 modifier = Modifier.padding(top = 21.dp, bottom = 20.dp)
@@ -93,11 +91,11 @@ fun TrainingPlanCard(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun TrainingPlanUnSelectedCardPreview() {
-    TrainingPlanCard(planId = 1, onClick = {})
+    TrainingPlanCard(planContent = "주 1회 작성할게요", onClick = {})
 }
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun TrainingPlanSelectedCardPreview() {
-    TrainingPlanCard(planId = 1, isSelected = true, onClick = {})
+    TrainingPlanCard(planContent = "주 1회 작성할게요", isSelected = true, onClick = {})
 }
