@@ -89,59 +89,59 @@ fun MyPageNavHost(
                 )
             }
         }
-    ) {
+    ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = MyPageScreen.MySummary.route,
             enterTransition = {
-                fadeIn(animationSpec = tween(100)) +
+                fadeIn(animationSpec = tween(50)) +
                         slideInHorizontally(
                             initialOffsetX = { fullWidth -> fullWidth },
-                            animationSpec = tween(100)
+                            animationSpec = tween(50)
                         )
             },
             exitTransition = {
-                fadeOut(animationSpec = tween(100)) +
+                fadeOut(animationSpec = tween(50)) +
                         slideOutHorizontally(
                             targetOffsetX = { fullWidth -> -fullWidth },
-                            animationSpec = tween(100)
+                            animationSpec = tween(50)
                         )
             },
             popEnterTransition = {
-                fadeIn(animationSpec = tween(100)) +
+                fadeIn(animationSpec = tween(50)) +
                         slideInHorizontally(
                             initialOffsetX = { fullWidth -> -fullWidth },
-                            animationSpec = tween(100)
+                            animationSpec = tween(50)
                         )
             },
             popExitTransition = {
-                fadeOut(animationSpec = tween(100)) +
+                fadeOut(animationSpec = tween(50)) +
                         slideOutHorizontally(
                             targetOffsetX = { fullWidth -> fullWidth },
-                            animationSpec = tween(100)
+                            animationSpec = tween(50)
                         )
-            }
+            },
+            modifier = Modifier.padding(innerPadding)
         ) {
-            addMySummary(navController = navController, modifier = Modifier.padding(it))
-            addSetting(navController = navController, modifier = Modifier.padding(it))
-            addMore(navController = navController, modifier = Modifier.padding(it))
+            addMySummary(navController = navController)
+            addSetting(navController = navController)
+            addMore(navController = navController)
         }
     }
 }
 
-private fun NavGraphBuilder.addMySummary(navController: NavController, modifier: Modifier) {
+private fun NavGraphBuilder.addMySummary(navController: NavController) {
     composable(route = MyPageScreen.MySummary.route) {
         val viewModel: MySummaryViewModel = hiltViewModel()
 
         MySummaryScreen(
             navController = navController,
             viewModel = viewModel,
-            modifier = modifier
         )
     }
 }
 
-private fun NavGraphBuilder.addSetting(navController: NavController, modifier: Modifier) {
+private fun NavGraphBuilder.addSetting(navController: NavController) {
     navigation(
         startDestination = SettingNavGraph.SettingMain.route,
         route = MyPageScreen.Setting.route
@@ -149,7 +149,6 @@ private fun NavGraphBuilder.addSetting(navController: NavController, modifier: M
         composable(route = SettingNavGraph.SettingMain.route) {
             SettingScreen(
                 navController = navController,
-                modifier = modifier
             )
         }
 
@@ -161,7 +160,6 @@ private fun NavGraphBuilder.addSetting(navController: NavController, modifier: M
 
             ChangeNicknameScreen(
                 navController = navController,
-                modifier = modifier,
                 nickname = nickname
             )
         }
@@ -169,7 +167,7 @@ private fun NavGraphBuilder.addSetting(navController: NavController, modifier: M
         composable(
             route = SettingNavGraph.EditTrainingPlan.route
         ) {
-            EditTrainingPlanScreen(modifier = modifier)
+            EditTrainingPlanScreen()
         }
 
         composable(
@@ -178,17 +176,15 @@ private fun NavGraphBuilder.addSetting(navController: NavController, modifier: M
 
             EditTrainingTimeScreen(
                 navController = navController,
-                modifier = modifier,
             )
         }
     }
 }
 
-private fun NavGraphBuilder.addMore(navController: NavController, modifier: Modifier) {
+private fun NavGraphBuilder.addMore(navController: NavController) {
     composable(route = MyPageScreen.More.route) {
         MoreScreen(
             navController = navController,
-            modifier = modifier
         )
     }
 }
