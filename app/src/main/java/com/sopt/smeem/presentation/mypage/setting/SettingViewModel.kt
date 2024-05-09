@@ -6,6 +6,7 @@ import com.sopt.smeem.domain.model.PushAlarm
 import com.sopt.smeem.domain.repository.UserRepository
 import com.sopt.smeem.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -31,26 +32,19 @@ class SettingViewModel @Inject constructor(
 
     private fun fetchSettingData(onError: (Throwable) -> Unit) {
         viewModelScope.launch {
-            intent {
-                reduce {
-                    state.copy(uiState = UiState.Loading)
-                }
+            intent { reduce { state.copy(uiState = UiState.Idle) } }
+
+            val loadingJob = launch {
+                delay(500)
+                intent { reduce { state.copy(uiState = UiState.Loading) } }
             }
 
             try {
                 val response = userRepository.getMyInfo().data()
-
-                intent {
-                    reduce {
-                        state.copy(uiState = UiState.Success(response))
-                    }
-                }
+                loadingJob.cancel()
+                intent { reduce { state.copy(uiState = UiState.Success(response)) } }
             } catch (t: Throwable) {
-                intent {
-                    reduce {
-                        state.copy(uiState = UiState.Failure)
-                    }
-                }
+                intent { reduce { state.copy(uiState = UiState.Failure) } }
                 onError(t)
             }
         }
@@ -65,5 +59,4 @@ class SettingViewModel @Inject constructor(
             }
         }
     }
-
 }

@@ -1,5 +1,5 @@
 package com.sopt.smeem.presentation.mypage.mysummary
 
 data class MySummaryState(
-    val uiState: MySummaryUiState = MySummaryUiState.Loading,
+    val uiState: MySummaryUiState = MySummaryUiState.Idle,
 )

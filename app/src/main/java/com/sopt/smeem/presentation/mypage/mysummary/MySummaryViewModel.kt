@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.data.usecase.MySummaryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -25,13 +26,15 @@ class MySummaryViewModel @Inject constructor(
 
     private fun fetchMySummaryData() {
         viewModelScope.launch {
-            intent {
-                reduce {
-                    state.copy(uiState = MySummaryUiState.Loading)
-                }
+            intent { reduce { state.copy(uiState = MySummaryUiState.Idle) } }
+
+            val loadingJob = launch {
+                delay(500)
+                intent { reduce { state.copy(uiState = MySummaryUiState.Loading) } }
             }
 
             val (smeemData, planData, badgesData) = mySummaryUseCase()
+            loadingJob.cancel()
 
             intent {
                 reduce {
@@ -40,5 +43,4 @@ class MySummaryViewModel @Inject constructor(
             }
         }
     }
-
 }

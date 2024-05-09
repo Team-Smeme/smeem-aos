@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.mypage.mysummary
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
@@ -37,7 +38,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun MySummaryScreen(
     navController: NavController,
     viewModel: MySummaryViewModel,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     val state by viewModel.collectAsState()
 
@@ -58,6 +59,11 @@ fun MySummaryScreen(
     }
 
     when (val uiState = state.uiState) {
+        is MySummaryUiState.Idle -> {
+            // 데이터 로딩이 시간이 0.5초가 넘지 않을 때 보여줌
+            Box(modifier = modifier.fillMaxSize())
+        }
+
         is MySummaryUiState.Loading -> {
             LoadingScreen(modifier = modifier)
         }

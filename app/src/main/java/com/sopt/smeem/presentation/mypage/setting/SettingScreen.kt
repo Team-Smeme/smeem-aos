@@ -1,6 +1,7 @@
 package com.sopt.smeem.presentation.mypage.setting
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -35,12 +36,17 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun SettingScreen(
     navController: NavController,
     viewModel: SettingViewModel = hiltViewModel(),
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     val state by viewModel.collectAsState()
     val context = LocalContext.current
 
     when (val uiState = state.uiState) {
+        is UiState.Idle -> {
+            // 데이터 로딩이 시간이 0.5초가 넘지 않을 때 보여줌
+            Box(modifier = modifier.fillMaxSize())
+        }
+
         is UiState.Loading -> {
             LoadingScreen(modifier = modifier)
         }
