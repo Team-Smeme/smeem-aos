@@ -1,10 +1,9 @@
 package com.sopt.smeem.presentation.mypage.navigation
 
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -94,32 +93,36 @@ fun MyPageNavHost(
             navController = navController,
             startDestination = MyPageScreen.MySummary.route,
             enterTransition = {
-                fadeIn(animationSpec = tween(50)) +
-                        slideInHorizontally(
-                            initialOffsetX = { fullWidth -> fullWidth },
-                            animationSpec = tween(50)
-                        )
+                fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 10,
+                        easing = LinearOutSlowInEasing
+                    )
+                )
             },
             exitTransition = {
-                fadeOut(animationSpec = tween(50)) +
-                        slideOutHorizontally(
-                            targetOffsetX = { fullWidth -> -fullWidth },
-                            animationSpec = tween(50)
-                        )
+                fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 10,
+                        easing = LinearOutSlowInEasing
+                    )
+                )
             },
             popEnterTransition = {
-                fadeIn(animationSpec = tween(50)) +
-                        slideInHorizontally(
-                            initialOffsetX = { fullWidth -> -fullWidth },
-                            animationSpec = tween(50)
-                        )
+                fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 10,
+                        easing = LinearOutSlowInEasing
+                    )
+                )
             },
             popExitTransition = {
-                fadeOut(animationSpec = tween(50)) +
-                        slideOutHorizontally(
-                            targetOffsetX = { fullWidth -> fullWidth },
-                            animationSpec = tween(50)
-                        )
+                fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 10,
+                        easing = LinearOutSlowInEasing
+                    )
+                )
             },
             modifier = Modifier.padding(innerPadding)
         ) {
