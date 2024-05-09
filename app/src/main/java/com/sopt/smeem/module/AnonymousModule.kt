@@ -38,13 +38,8 @@ object AnonymousModule {
     @Provides
     @ViewModelScoped
     @Anonymous
-    fun trainingRepository(
-        networkModule: NetworkModule
-    ): TrainingRepository {
-        return TrainingRepositoryImpl(
-            networkModule.apiServerRetrofitForAnonymous.create(
-                TrainingService::class.java
-            )
+    fun trainingRepository(networkModule: NetworkModule): TrainingRepository =
+        TrainingRepositoryImpl(
+            networkModule.apiServerRetrofitForAnonymous.create(TrainingService::class.java)
         )
-    }
 }

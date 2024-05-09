@@ -5,7 +5,6 @@ import com.sopt.smeem.data.model.response.ApiResponse
 import com.sopt.smeem.data.model.response.TrainingGoalResponse
 import com.sopt.smeem.data.model.response.TrainingGoalSimpleResponse
 import com.sopt.smeem.data.model.response.TrainingPlansResponse
-import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -19,6 +18,6 @@ interface TrainingService {
     @GET("/api/v2/goals")
     suspend fun getAll(): Response<ApiResponse<TrainingGoalSimpleResponse>>
 
-    @GET("/api/v2/plan")
+    @GET("/api/v2/plans")
     suspend fun getPlans(): Response<ApiResponse<TrainingPlansResponse>>
 }

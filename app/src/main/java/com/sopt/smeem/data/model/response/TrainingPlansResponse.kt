@@ -4,7 +4,7 @@ data class TrainingPlansResponse(
     val plans: List<TrainingPlanResponse>,
 ) {
     data class TrainingPlanResponse(
-        val id: Long,
+        val id: Int,
         val content: String,
     )
 }
