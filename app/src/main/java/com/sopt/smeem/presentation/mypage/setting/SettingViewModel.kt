@@ -44,7 +44,7 @@ class SettingViewModel @Inject constructor(
                 loadingJob.cancel()
                 intent { reduce { state.copy(uiState = UiState.Success(response)) } }
             } catch (t: Throwable) {
-                intent { reduce { state.copy(uiState = UiState.Failure) } }
+                intent { reduce { state.copy(uiState = UiState.Failure(t) } }
                 onError(t)
             }
         }
