@@ -30,11 +30,12 @@ import com.sopt.smeem.util.VerticalSpacer
 @Composable
 fun EditTrainingPlanScreen(
     modifier: Modifier = Modifier,
-    viewModel: EditTrainingPlanViewModel = hiltViewModel()
+    onEditSuccess: () -> Unit,
+    editTrainingPlanViewModel: EditTrainingPlanViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     var selectedItemId by rememberSaveable { mutableIntStateOf(0) }
-    val trainingPlanState by viewModel.trainingPlans.collectAsStateWithLifecycle()
+    val trainingPlanState by editTrainingPlanViewModel.trainingPlans.collectAsStateWithLifecycle()
 
     when (val uiState = trainingPlanState) {
         is UiState.Loading -> {
@@ -51,7 +52,7 @@ fun EditTrainingPlanScreen(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(4) { index ->
+                    items(trainingPlanList.size) { index ->
                         val item = trainingPlanList[index]
 
                         TrainingPlanCard(
@@ -66,7 +67,15 @@ fun EditTrainingPlanScreen(
 
                 SmeemButton(
                     text = stringResource(id = R.string.edit_training_plan_button),
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        editTrainingPlanViewModel.editTrainingPlan(
+                            planId = selectedItemId,
+                            onSuccess = onEditSuccess,
+                            onError = { t ->
+                                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+                            }
+                        )
+                    },
                     modifier = Modifier.padding(horizontal = 18.dp),
                     isButtonEnabled = selectedItemId != 0
                 )
@@ -80,12 +89,10 @@ fun EditTrainingPlanScreen(
             Toast.makeText(context, uiState.error.message, Toast.LENGTH_SHORT).show()
         }
     }
-
-
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun EditTrainingPlanScreenPreview() {
-    EditTrainingPlanScreen()
+    EditTrainingPlanScreen(onEditSuccess = {})
 }

@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.data.usecase.MySummaryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
@@ -18,13 +20,16 @@ class MySummaryViewModel @Inject constructor(
 ) : ContainerHost<MySummaryState, MySummarySideEffect>,
     ViewModel() {
 
+    private val _isDataChanged = MutableStateFlow(false)
+    val isDataChanged = _isDataChanged.asStateFlow()
+
     override val container = container<MySummaryState, MySummarySideEffect>(MySummaryState())
 
     init {
         fetchMySummaryData()
     }
 
-    private fun fetchMySummaryData() {
+    fun fetchMySummaryData() {
         viewModelScope.launch {
             intent { reduce { state.copy(uiState = MySummaryUiState.Idle) } }
 
@@ -33,14 +38,26 @@ class MySummaryViewModel @Inject constructor(
                 intent { reduce { state.copy(uiState = MySummaryUiState.Loading) } }
             }
 
-            val (smeemData, planData, badgesData) = mySummaryUseCase()
-            loadingJob.cancel()
+            try {
+                val (smeemData, planData, badgesData) = mySummaryUseCase()
+                loadingJob.cancel()
 
-            intent {
-                reduce {
-                    state.copy(uiState = MySummaryUiState.Success(smeemData, planData, badgesData))
+                intent {
+                    reduce {
+                        state.copy(uiState = MySummaryUiState.Success(smeemData, planData, badgesData))
+                    }
+                }
+            } catch (t: Throwable) {
+                intent {
+                    reduce {
+                        state.copy(uiState = MySummaryUiState.Error(t))
+                    }
                 }
             }
         }
+    }
+
+    fun setDataChanged(value: Boolean) {
+        _isDataChanged.value = value
     }
 }

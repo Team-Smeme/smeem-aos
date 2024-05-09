@@ -13,5 +13,5 @@ sealed class MySummaryUiState {
         val badgesData: List<GetBadgeListDto>
     ) : MySummaryUiState()
 
-    data class Error(val message: String) : MySummaryUiState()
+    data class Error(val error: Throwable) : MySummaryUiState()
 }

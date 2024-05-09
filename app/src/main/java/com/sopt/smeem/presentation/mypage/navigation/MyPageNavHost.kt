@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.mypage.navigation
 
+import android.widget.Toast
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -42,6 +43,7 @@ fun MyPageNavHost(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val context = LocalContext.current
+    val mySummaryViewModel: MySummaryViewModel = hiltViewModel()
 
     Scaffold(
         topBar = {
@@ -133,18 +135,23 @@ fun MyPageNavHost(
     }
 }
 
-private fun NavGraphBuilder.addMySummary(navController: NavController) {
+private fun NavGraphBuilder.addMySummary(
+    navController: NavController,
+    mySummaryViewModel: MySummaryViewModel
+) {
     composable(route = MyPageScreen.MySummary.route) {
-        val viewModel: MySummaryViewModel = hiltViewModel()
 
         MySummaryScreen(
             navController = navController,
-            viewModel = viewModel,
+            viewModel = mySummaryViewModel
         )
     }
 }
 
-private fun NavGraphBuilder.addSetting(navController: NavController) {
+private fun NavGraphBuilder.addSetting(
+    navController: NavController,
+    mySummaryViewModel: MySummaryViewModel,
+) {
     navigation(
         startDestination = SettingNavGraph.SettingMain.route,
         route = MyPageScreen.Setting.route
@@ -170,7 +177,25 @@ private fun NavGraphBuilder.addSetting(navController: NavController) {
         composable(
             route = SettingNavGraph.EditTrainingPlan.route
         ) {
-            EditTrainingPlanScreen()
+            val context = LocalContext.current
+
+            EditTrainingPlanScreen(
+                modifier = modifier,
+                onEditSuccess = {
+                    mySummaryViewModel.setDataChanged(true)
+                    navController.navigate(SettingNavGraph.SettingMain.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = false
+                        }
+                    }
+
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.my_page_edit_done_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                },
+            )
         }
 
         composable(
