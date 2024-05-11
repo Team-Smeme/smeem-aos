@@ -6,6 +6,7 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -31,13 +32,24 @@ class SplashStartActivity() : AppCompatActivity() {
 
     fun constructLayout() {
         setStatusBarColor()
+        setNavigationBarColor()
         checkVersion()
         vm.checkAuthed()
     }
 
     private fun setStatusBarColor() {
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = getColor(R.color.point)
+        window.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            statusBarColor = getColor(R.color.point)
+            WindowInsetsControllerCompat(
+                this,
+                this.decorView
+            ).isAppearanceLightStatusBars = false
+        }
+    }
+
+    private fun setNavigationBarColor() {
+        window.navigationBarColor = getColor(R.color.point)
     }
 
     private fun checkVersion() {

@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sopt.smeem.SocialType
 import com.sopt.smeem.databinding.BottomSheetSignUpBinding
 import com.sopt.smeem.logging
-import com.sopt.smeem.presentation.auth.LoginProcess
 import com.sopt.smeem.presentation.auth.KakaoHandler
+import com.sopt.smeem.presentation.auth.LoginProcess
 import com.sopt.smeem.util.setOnSingleClickListener
 import timber.log.Timber
 
@@ -71,9 +70,9 @@ class SignUpBottomSheet() : BottomSheetDialogFragment(), LoginProcess {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
-        vm.loadingEnd()
         _binding = null
+        vm.loadingEnd()
+        super.onDestroy()
     }
 
     companion object {

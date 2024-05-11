@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sopt.smeem.databinding.BottomSheetWritingBinding
@@ -17,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WritingBottomSheet : BottomSheetDialogFragment() {
-    var _binding: BottomSheetWritingBinding? = null
+    private var _binding: BottomSheetWritingBinding? = null
     private val eventVm: EventVM by viewModels()
 
     private val binding: BottomSheetWritingBinding
