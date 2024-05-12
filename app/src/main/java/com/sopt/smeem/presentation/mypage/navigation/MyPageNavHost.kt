@@ -128,8 +128,8 @@ fun MyPageNavHost(
             },
             modifier = Modifier.padding(innerPadding)
         ) {
-            addMySummary(navController = navController)
-            addSetting(navController = navController)
+            addMySummary(navController = navController, mySummaryViewModel = mySummaryViewModel)
+            addSetting(navController = navController, mySummaryViewModel = mySummaryViewModel)
             addMore(navController = navController)
         }
     }
@@ -180,7 +180,6 @@ private fun NavGraphBuilder.addSetting(
             val context = LocalContext.current
 
             EditTrainingPlanScreen(
-                modifier = modifier,
                 onEditSuccess = {
                     mySummaryViewModel.setDataChanged(true)
                     navController.navigate(SettingNavGraph.SettingMain.route) {

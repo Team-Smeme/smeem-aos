@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.mypage.setting
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,6 +39,10 @@ fun EditTrainingPlanScreen(
     val trainingPlanState by editTrainingPlanViewModel.trainingPlans.collectAsStateWithLifecycle()
 
     when (val uiState = trainingPlanState) {
+        is UiState.Idle -> {
+            Box(modifier = modifier.fillMaxSize())
+        }
+
         is UiState.Loading -> {
             LoadingScreen(modifier = modifier)
         }

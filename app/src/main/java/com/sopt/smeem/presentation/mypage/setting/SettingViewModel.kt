@@ -10,7 +10,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
-import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -23,14 +22,10 @@ class SettingViewModel @Inject constructor(
     override val container = container<SettingState, SettingSideEffect>(SettingState())
 
     init {
-        fetchSettingData(onError = {
-            intent {
-                postSideEffect(SettingSideEffect.ShowToast("알 수 없는 오류가 발생했습니다."))
-            }
-        })
+        fetchSettingData()
     }
 
-    private fun fetchSettingData(onError: (Throwable) -> Unit) {
+    private fun fetchSettingData() {
         viewModelScope.launch {
             intent { reduce { state.copy(uiState = UiState.Idle) } }
 
@@ -44,8 +39,7 @@ class SettingViewModel @Inject constructor(
                 loadingJob.cancel()
                 intent { reduce { state.copy(uiState = UiState.Success(response)) } }
             } catch (t: Throwable) {
-                intent { reduce { state.copy(uiState = UiState.Failure(t) } }
-                onError(t)
+                intent { reduce { state.copy(uiState = UiState.Failure(t)) } }
             }
         }
     }

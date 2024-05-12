@@ -9,6 +9,7 @@ import com.sopt.smeem.domain.repository.TrainingRepository
 import com.sopt.smeem.domain.repository.UserRepository
 import com.sopt.smeem.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,8 +31,17 @@ class EditTrainingPlanViewModel @Inject constructor(
 
     private fun getTrainingPlans() {
         viewModelScope.launch {
+            _trainingPlans.value = UiState.Idle
+
+            val loadingJob = launch {
+                delay(500)
+                _trainingPlans.value = UiState.Loading
+            }
+
             try {
                 val response = trainingRepository.getPlans()
+                loadingJob.cancel()
+
                 response.data().let { dto ->
                     _trainingPlans.value = UiState.Success(dto)
                 }
