@@ -12,8 +12,8 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.DialogBadgeBinding
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.EventVM
-import com.sopt.smeem.presentation.mypage.MyBadgesActivity
 import com.sopt.smeem.presentation.mypage.MyBadgesActivity.Companion.ENTER_MY_BADGES_FROM
+import com.sopt.smeem.presentation.mypage.TempMyPageActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,7 +60,7 @@ class BadgeDialogFragment : DialogFragment() {
                 eventVm.sendEvent(AmplitudeEventType.WELCOME_MORE_CLICK)
             }
             dismiss()
-            Intent(requireContext(), MyBadgesActivity::class.java)
+            Intent(requireContext(), TempMyPageActivity::class.java)
                 .apply {
                     putExtra(ENTER_MY_BADGES_FROM, FROM_BADGE_DIALOG)
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
