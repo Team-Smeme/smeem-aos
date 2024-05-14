@@ -8,7 +8,7 @@ import com.sopt.smeem.R
 import com.sopt.smeem.SmeemErrorCode
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.databinding.ActivityJoinAgreementBinding
-import com.sopt.smeem.domain.model.RetrievedBadge
+import com.sopt.smeem.domain.dto.RetrievedBadgeDto
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
 import com.sopt.smeem.presentation.agreement.AgreementViewActivity
@@ -171,7 +171,7 @@ class JoinWithAgreementActivity :
                     Intent(this, HomeActivity::class.java).apply {
                         putExtra(
                             RETRIEVED_BADGE_DTO, listOf(
-                                RetrievedBadge(
+                                RetrievedBadgeDto(
                                     "웰컴 배지",
                                     "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7"
                                 )

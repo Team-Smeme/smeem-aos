@@ -15,7 +15,7 @@ import com.sopt.smeem.R
 import com.sopt.smeem.data.SmeemDataStore.RECENT_DIARY_DATE
 import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.databinding.ActivityHomeBinding
-import com.sopt.smeem.domain.model.RetrievedBadge
+import com.sopt.smeem.domain.dto.RetrievedBadgeDto
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.EventVM
@@ -125,7 +125,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private fun showBadgeDialog() {
         val retrievedBadge =
-            intent.getSerializableExtra(RETRIEVED_BADGE_DTO) as List<RetrievedBadge>?
+            intent.getSerializableExtra(RETRIEVED_BADGE_DTO) as List<RetrievedBadgeDto>?
                 ?: emptyList()
         if (retrievedBadge.isNotEmpty()) {
             val badgeList = retrievedBadge.asReversed()
