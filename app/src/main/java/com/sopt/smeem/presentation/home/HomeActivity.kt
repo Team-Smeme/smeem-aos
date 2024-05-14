@@ -19,6 +19,9 @@ import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.EventVM
+import com.sopt.smeem.presentation.IntentConstants.DIARY_ID
+import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
+import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
 import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
@@ -113,16 +116,16 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     }
 
     private fun showDiaryCompleted() {
-        val msg = intent.getStringExtra("snackbarText")
+        val msg = intent.getStringExtra(SNACKBAR_TEXT)
         if (msg != null) {
             DefaultSnackBar.make(binding.root, msg).show()
-            intent.removeExtra("snackbarText")
+            intent.removeExtra(SNACKBAR_TEXT)
         }
     }
 
     private fun showBadgeDialog() {
         val retrievedBadge =
-            intent.getSerializableExtra("retrievedBadge") as List<RetrievedBadge>?
+            intent.getSerializableExtra(RETRIEVED_BADGE_DTO) as List<RetrievedBadge>?
                 ?: emptyList()
         if (retrievedBadge.isNotEmpty()) {
             val badgeList = retrievedBadge.asReversed()
@@ -141,7 +144,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                     if (isFirstBadge) isFirstBadge = false
                 }
             }
-            intent.removeExtra("retrievedBadge")
+            intent.removeExtra(RETRIEVED_BADGE_DTO)
         }
     }
 
@@ -167,7 +170,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     private fun setInitListener() {
         binding.clDiaryList.setOnSingleClickListener {
             Intent(this, DiaryDetailActivity::class.java).apply {
-                putExtra("diaryId", homeViewModel.diaryList.value?.id)
+                putExtra(DIARY_ID, homeViewModel.diaryList.value?.id)
             }.run(::startActivity)
         }
     }

@@ -2,16 +2,15 @@ package com.sopt.smeem.presentation.join
 
 import android.content.Intent
 import android.widget.Toast
-import android.window.OnBackInvokedDispatcher
 import androidx.activity.viewModels
 import com.google.android.material.button.MaterialButton
 import com.sopt.smeem.R
 import com.sopt.smeem.SmeemErrorCode
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.databinding.ActivityJoinAgreementBinding
-import com.sopt.smeem.description
 import com.sopt.smeem.domain.model.RetrievedBadge
 import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
 import com.sopt.smeem.presentation.agreement.AgreementViewActivity
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
@@ -33,8 +32,12 @@ class JoinWithAgreementActivity :
     private lateinit var refreshToken: String
 
     override fun constructLayout() {
-        accessToken = intent.getStringExtra(ACCESS_TOKEN) ?: throw SmeemException(SmeemErrorCode.SYSTEM_ERROR, "토큰이 정상적으로 전달되지 않았습니다.")
-        refreshToken = intent.getStringExtra(REFRESH_TOKEN) ?: throw SmeemException(SmeemErrorCode.SYSTEM_ERROR, "토큰이 정상적으로 전달되지 않았습니다.")
+        accessToken = intent.getStringExtra(ACCESS_TOKEN) ?: throw SmeemException(
+            SmeemErrorCode.SYSTEM_ERROR,
+            "토큰이 정상적으로 전달되지 않았습니다."
+        )
+        refreshToken = intent.getStringExtra(REFRESH_TOKEN)
+            ?: throw SmeemException(SmeemErrorCode.SYSTEM_ERROR, "토큰이 정상적으로 전달되지 않았습니다.")
 
 
         EntranceSelection.SERVICE.id = binding.btnEntranceAgreementService.id
@@ -144,7 +147,11 @@ class JoinWithAgreementActivity :
         }
     }
 
-    private fun sendServer(nickname: String, selected: Set<EntranceSelection>, accessToken: String) {
+    private fun sendServer(
+        nickname: String,
+        selected: Set<EntranceSelection>,
+        accessToken: String
+    ) {
         vm.registerNicknameAndAcceptance(
             nickname,
             selected,
@@ -162,12 +169,14 @@ class JoinWithAgreementActivity :
                 true -> {
                     vm.saveTokenInLocal(accessToken, refreshToken)
                     Intent(this, HomeActivity::class.java).apply {
-                        putExtra("retrievedBadge", listOf(
-                            RetrievedBadge(
-                                "웰컴 배지",
-                                "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7"
-                            )
-                        ) as Serializable)
+                        putExtra(
+                            RETRIEVED_BADGE_DTO, listOf(
+                                RetrievedBadge(
+                                    "웰컴 배지",
+                                    "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7"
+                                )
+                            ) as Serializable
+                        )
                     }.run(::startActivity)
                     finishAffinity()
                 }
