@@ -3,6 +3,7 @@ package com.sopt.smeem.presentation.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
@@ -10,6 +11,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.data.SmeemDataStore.RECENT_DIARY_DATE
@@ -46,6 +48,7 @@ import java.util.Locale
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private lateinit var bs: WritingBottomSheet
+    private var backPressedTime: Long = 0
 
     private val homeViewModel by viewModels<HomeViewModel>()
     private val eventVm: EventVM by viewModels()
@@ -75,6 +78,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         observeData()
         onTouchWrite()
         eventVm.sendEvent(AmplitudeEventType.HOME_VIEW)
+        initBackPressedCallback()
         homeViewModel.activeVisit { Timber.e("visit count 반영 실패. ", it)}
     }
 
@@ -199,5 +203,28 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 }
             }
         }
+    }
+
+    private fun initBackPressedCallback() {
+        val onBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (System.currentTimeMillis() - backPressedTime >= BACK_PRESSED_INTERVAL) {
+                        backPressedTime = System.currentTimeMillis()
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.notice_back_process),
+                            Snackbar.LENGTH_SHORT,
+                        ).show()
+                    } else {
+                        finish()
+                    }
+                }
+            }
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    companion object {
+        const val BACK_PRESSED_INTERVAL = 2000
     }
 }
