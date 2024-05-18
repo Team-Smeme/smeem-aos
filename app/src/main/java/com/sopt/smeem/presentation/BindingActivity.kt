@@ -6,7 +6,6 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.sopt.smeem.R
 
 abstract class BindingActivity<Binding : ViewDataBinding>(
     @LayoutRes private val layoutRes: Int,
@@ -32,20 +31,20 @@ abstract class BindingActivity<Binding : ViewDataBinding>(
     private fun createOpenAnimation() {
         if (Build.VERSION.SDK_INT >= 34) {
             overrideActivityTransition(
-                OVERRIDE_TRANSITION_OPEN, R.anim.fade_in, R.anim.fade_out
+                OVERRIDE_TRANSITION_OPEN, 0, 0
             )
         } else {
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            overridePendingTransition(0, 0)
         }
     }
 
     private fun createCloseAnimation() {
         if (Build.VERSION.SDK_INT >= 34) {
             overrideActivityTransition(
-                OVERRIDE_TRANSITION_CLOSE, R.anim.fade_in, R.anim.fade_out
+                OVERRIDE_TRANSITION_CLOSE, 0, 0
             )
         } else {
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            overridePendingTransition(0, 0)
         }
     }
 
