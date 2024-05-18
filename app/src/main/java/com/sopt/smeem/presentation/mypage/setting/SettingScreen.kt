@@ -27,6 +27,7 @@ import com.sopt.smeem.presentation.mypage.components.ChangeNicknameCard
 import com.sopt.smeem.presentation.mypage.components.StudyNotificationCard
 import com.sopt.smeem.presentation.mypage.components.TargetLanguageCard
 import com.sopt.smeem.presentation.mypage.navigation.SettingNavGraph
+import com.sopt.smeem.util.CrashlyticsManager
 import com.sopt.smeem.util.UiState
 import com.sopt.smeem.util.VerticalSpacer
 import org.orbitmvi.orbit.compose.collectAsState
@@ -145,7 +146,7 @@ fun SettingScreen(
         }
 
         is UiState.Failure -> {
-            // TODO : 실패 시 처리
+            CrashlyticsManager.logMessage(uiState.error.message ?: "SettingScreen Failure")
         }
     }
 

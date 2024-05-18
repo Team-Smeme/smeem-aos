@@ -33,6 +33,7 @@ import com.sopt.smeem.presentation.mypage.components.MyPlanCard
 import com.sopt.smeem.presentation.mypage.components.MySmeemCard
 import com.sopt.smeem.presentation.mypage.components.NoMyPlanCard
 import com.sopt.smeem.presentation.mypage.navigation.SettingNavGraph
+import com.sopt.smeem.util.CrashlyticsManager
 import com.sopt.smeem.util.VerticalSpacer
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
@@ -121,6 +122,7 @@ fun MySummaryScreen(
 
         is MySummaryUiState.Error -> {
             Toast.makeText(context, uiState.error.message, Toast.LENGTH_SHORT).show()
+            CrashlyticsManager.logMessage(uiState.error.message ?: "MySummaryScreen Error")
         }
     }
 }
