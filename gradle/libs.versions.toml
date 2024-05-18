@@ -13,6 +13,7 @@ coreSplashscreen = "1.0.0"
 datastorePreferences = "1.0.0"
 espressoCore = "3.5.1"
 firebaseBom = "32.8.0"
+firebaseCrashlyticsGradle = "3.0.1"
 fragmentKtx = "1.6.2"
 glide = "4.13.2"
 googleServices = "4.4.1"
@@ -83,6 +84,8 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-config-ktx = { module = "com.google.firebase:firebase-config-ktx" }
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
+firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }

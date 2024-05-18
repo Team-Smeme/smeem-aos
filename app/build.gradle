@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
     id 'kotlin-parcelize'
@@ -174,6 +175,7 @@ dependencies {
     implementation(libs.firebase.config.ktx)
     implementation(libs.firebase.analytics.ktx)
     implementation(libs.firebase.messaging.ktx)
+    implementation(libs.firebase.crashlytics.ktx)
     // test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
