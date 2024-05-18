@@ -19,4 +19,5 @@
     <!-- etc -->
     <color name="kakao">#FEE500</color>
     <color name="snackbar">#474747</color>
+    <color name="ic_smeem_background">#FFFFFF</color>
 </resources>
