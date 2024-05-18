@@ -37,4 +37,5 @@ interface UserRepository {
     suspend fun editPushAlarm(push: PushAlarm): ApiResult<Unit>
     suspend fun deleteUser(): ApiResult<Unit>
     suspend fun getMyBadges(): ApiResult<List<GetBadgeListDto>>
+    suspend fun activeVisit(): ApiResult<Unit>
 }

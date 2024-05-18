@@ -241,4 +241,12 @@ class UserRepositoryImpl(
                 throw response.code().handleStatusCode()
             }
         }
+
+    override suspend fun activeVisit(): ApiResult<Unit> = userService.visit().let { response ->
+        if (response.isSuccessful) {
+            ApiResult(response.code(), Unit)
+        } else {
+            throw response.code().handleStatusCode()
+        }
+    }
 }

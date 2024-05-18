@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.Smeem
 import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.domain.repository.DiaryRepository
+import com.sopt.smeem.domain.repository.UserRepository
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.home.calendar.core.CalendarState
 import com.sopt.smeem.presentation.home.calendar.core.Period
@@ -35,6 +36,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val diaryRepository: DiaryRepository,
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
     /***** variables *****/
@@ -241,6 +243,16 @@ class HomeViewModel @Inject constructor(
         } catch (t: Throwable) {
             // 이벤트 발송이 기존 로직에 영향은 없도록
             Timber.tag("AMPLITUDE").e("amplitude send error!")
+        }
+    }
+
+    fun activeVisit(onError: (Throwable) -> Unit) {
+        viewModelScope.launch {
+            try {
+                userRepository.activeVisit()
+            } catch (t: Throwable) {
+                onError(t)
+            }
         }
     }
 

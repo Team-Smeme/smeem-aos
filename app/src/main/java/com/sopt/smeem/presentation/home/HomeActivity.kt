@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -74,6 +75,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         observeData()
         onTouchWrite()
         eventVm.sendEvent(AmplitudeEventType.HOME_VIEW)
+        homeViewModel.activeVisit { Timber.e("visit count 반영 실패. ", it)}
     }
 
     override fun onResume() {
