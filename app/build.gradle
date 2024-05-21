@@ -47,6 +47,7 @@ android {
         buildConfigField "String", "DEEPL_API_KEY", properties['deepl_api_key']
         buildConfigField "String", "DEV_AMPLITUDE_API_KEY", properties['dev_amplitude_api_key']
         buildConfigField "String", "PROD_AMPLITUDE_API_KEY", properties['prod_amplitude_api_key']
+        buildConfigField "String", "APPFLYER_DEV_KEY", properties['appsflyer_dev_key']
         manifestPlaceholders = [KAKAO_API_KEY: properties['kakao_api_key_manifest']]
         vectorDrawables {
             useSupportLibrary true
@@ -224,6 +225,9 @@ dependencies {
 
     // Orbit
     implementation(libs.bundles.orbit)
+
+    // Appsflyer
+    implementation(libs.appsflyer.android.sdk)
 
     // Compose test
     androidTestImplementation(platform(libs.androidx.compose.bom))

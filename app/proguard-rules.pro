@@ -135,3 +135,7 @@
 
 -keep class com.sopt.smeem.data.model.response.** { *; }
 -keep class com.sopt.smeem.data.model.request.** { *; }
+
+# Appsflyer
+-keep class com.appsflyer.** { *; }
+-keep class kotlin.jvm.internal.** { *; }
