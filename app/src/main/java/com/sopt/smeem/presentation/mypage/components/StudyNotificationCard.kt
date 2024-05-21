@@ -35,7 +35,7 @@ fun StudyNotificationCard(
                 ),
                 modifier = modifier
                     .scale(0.69f)
-                    .padding(end = 20.dp)
+                    .padding(top = 5.dp, end = 20.dp)
             )
         }
     }
