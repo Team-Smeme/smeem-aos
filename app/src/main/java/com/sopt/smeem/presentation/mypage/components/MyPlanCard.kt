@@ -35,7 +35,7 @@ import com.sopt.smeem.util.dashedBorder
 @Composable
 fun MyPlanCard(
     modifier: Modifier = Modifier,
-    myPlan: MyPlanDto?
+    myPlan: MyPlanDto
 ) {
     SmeemContents(
         modifier = modifier,
@@ -49,35 +49,24 @@ fun MyPlanCard(
             shape = RoundedCornerShape(16.dp),
             border = BorderStroke(1.dp, gray100)
         ) {
-            if (myPlan == null) {
-                // TODO : 노 플랜 카드
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 18.dp, horizontal = 20.dp)
-                ) {
-                    Text(
-                        text = myPlan.plan,
-                        style = Typography.titleMedium,
-                        color = black
-                    )
 
-                    VerticalSpacer(height = 4.dp)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 18.dp, horizontal = 20.dp)
+            ) {
+                Text(
+                    text = myPlan.plan,
+                    style = Typography.titleMedium,
+                    color = black
+                )
 
-                    Text(
-                        text = myPlan.goal,
-                        style = Typography.labelLarge,
-                        color = black
-                    )
+                VerticalSpacer(height = 16.dp)
 
-                    VerticalSpacer(height = 16.dp)
-
-                    MyPlanClearedDots(
-                        clearedCount = myPlan.clearedCount,
-                        clearCount = myPlan.clearCount
-                    )
-                }
+                MyPlanClearedDots(
+                    clearedCount = myPlan.clearedCount,
+                    clearCount = myPlan.clearCount
+                )
             }
         }
     }
