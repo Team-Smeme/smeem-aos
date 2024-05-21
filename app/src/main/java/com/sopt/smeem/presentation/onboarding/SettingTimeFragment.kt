@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.onboarding
 
 import android.app.TimePickerDialog
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.FragmentSettingTimeBinding
@@ -21,6 +22,12 @@ class SettingTimeFragment :
 
     override fun constructLayout() {
         setUpDays()
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // do nothing!
+            }
+        })
     }
 
     override fun addListeners() {

@@ -90,6 +90,9 @@ class OnBoardingActivity :
                 }
 
                 1 -> { // step 1 fragment => 트레이닝 목표 선택하기
+                    if(vm.selectedGoal.value!!.selected) {
+                        nextButtonOn()
+                    }
                     setHeaderStepNo(1)
                     setHeaderTitle(resources.getText(R.string.on_boarding_goal_header_title))
                     setHeaderDescription(resources.getText(R.string.on_boarding_goal_header_description))

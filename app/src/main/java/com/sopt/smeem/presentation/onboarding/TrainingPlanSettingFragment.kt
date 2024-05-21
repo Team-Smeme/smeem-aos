@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.onboarding
 
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.button.MaterialButton
 import com.sopt.smeem.R
@@ -55,6 +56,12 @@ class TrainingPlanSettingFragment :
         )
 
         buttonSelected()
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // do nothing!
+            }
+        })
     }
 
     override fun addListeners() {
