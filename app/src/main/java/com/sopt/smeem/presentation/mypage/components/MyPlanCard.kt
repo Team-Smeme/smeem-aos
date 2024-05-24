@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -50,24 +51,51 @@ fun MyPlanCard(
             border = BorderStroke(1.dp, gray100)
         ) {
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 18.dp, horizontal = 20.dp)
-            ) {
-                Text(
-                    text = myPlan.plan,
-                    style = Typography.titleMedium,
-                    color = black
-                )
+            if (myPlan.clearCount >= 5) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 18.dp, horizontal = 20.dp)
+                ) {
+                    Text(
+                        text = myPlan.plan,
+                        style = Typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+                        color = black
+                    )
 
-                VerticalSpacer(height = 16.dp)
+                    VerticalSpacer(height = 16.dp)
 
-                MyPlanClearedDots(
-                    clearedCount = myPlan.clearedCount,
-                    clearCount = myPlan.clearCount
-                )
+                    MyPlanClearedDots(
+                        modifier = Modifier.fillMaxWidth(),
+                        clearedCount = myPlan.clearedCount,
+                        clearCount = myPlan.clearCount
+                    )
+                }
+            } else {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 18.dp, bottom = 19.dp, start = 17.dp, end = 17.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = myPlan.plan,
+                        style = Typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+                        color = black,
+                        modifier = Modifier.weight(2f)
+                    )
+
+                    MyPlanClearedDots(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        clearedCount = myPlan.clearedCount,
+                        clearCount = myPlan.clearCount
+                    )
+                }
             }
+
+
         }
     }
 
@@ -106,10 +134,14 @@ fun MyPlanDot(
 
 @Composable
 fun MyPlanClearedDots(
+    modifier: Modifier = Modifier,
     clearedCount: Int,
     clearCount: Int
 ) {
-    LazyRow(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+    LazyRow(
+        modifier = modifier,
+        horizontalArrangement = if (clearCount == 1) Arrangement.End else Arrangement.SpaceBetween
+    ) {
         itemsIndexed(List(clearCount) { it }) { index, _ ->
             MyPlanDot(
                 number = index + 1,
@@ -139,7 +171,7 @@ fun MyPlanNotClearedDotPreview() {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun MyPlanCardPreview() {
+fun LargeMyPlanCardPreview() {
     MyPlanCard(
         myPlan = MyPlanDto(
             plan = "매일 일기 작성하기",
@@ -149,4 +181,31 @@ fun MyPlanCardPreview() {
         )
     )
 }
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun SmallMyPlanCardPreview() {
+    MyPlanCard(
+        myPlan = MyPlanDto(
+            plan = "매일 일기 작성하기",
+            goal = "유창한 비즈니스 영어",
+            clearedCount = 3,
+            clearCount = 3
+        )
+    )
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun ExtraSmallMyPlanCardPreview() {
+    MyPlanCard(
+        myPlan = MyPlanDto(
+            plan = "매일 일기 작성하기",
+            goal = "유창한 비즈니스 영어",
+            clearedCount = 1,
+            clearCount = 1
+        )
+    )
+}
+
 
