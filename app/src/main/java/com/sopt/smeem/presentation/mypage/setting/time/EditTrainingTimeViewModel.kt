@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.mypage.setting
+package com.sopt.smeem.presentation.mypage.setting.time
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

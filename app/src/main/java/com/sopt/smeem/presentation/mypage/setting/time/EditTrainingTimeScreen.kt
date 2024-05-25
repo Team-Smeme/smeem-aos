@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation.mypage.setting
+package com.sopt.smeem.presentation.mypage.setting.time
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
