@@ -169,7 +169,7 @@ fun MyPlanNotClearedDotPreview() {
     )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, name = "주 7회", group = "MyPlanCards")
 @Composable
 fun LargeMyPlanCardPreview() {
     MyPlanCard(
@@ -182,7 +182,20 @@ fun LargeMyPlanCardPreview() {
     )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, name = "주 5회", group = "MyPlanCards")
+@Composable
+fun MediumMyPlanCardPreview() {
+    MyPlanCard(
+        myPlan = MyPlanDto(
+            plan = "매일 일기 작성하기",
+            goal = "유창한 비즈니스 영어",
+            clearedCount = 3,
+            clearCount = 5
+        )
+    )
+}
+
+@Preview(showBackground = true, name = "주 3회", group = "MyPlanCards")
 @Composable
 fun SmallMyPlanCardPreview() {
     MyPlanCard(
@@ -195,7 +208,7 @@ fun SmallMyPlanCardPreview() {
     )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, name = "주 1회", group = "MyPlanCards")
 @Composable
 fun ExtraSmallMyPlanCardPreview() {
     MyPlanCard(
