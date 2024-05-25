@@ -1,23 +1,18 @@
 package com.sopt.smeem.presentation.mypage.setting
 
-import android.app.Activity
 import android.widget.Toast
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,8 +22,6 @@ import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.presentation.compose.components.LoadingScreen
 import com.sopt.smeem.presentation.compose.components.SmeemAlarmCard
-import com.sopt.smeem.presentation.compose.theme.background
-import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.presentation.mypage.components.ChangeMyPlanCard
 import com.sopt.smeem.presentation.mypage.components.ChangeNicknameCard
 import com.sopt.smeem.presentation.mypage.components.StudyNotificationCard
@@ -48,15 +41,6 @@ fun SettingScreen(
 ) {
     val state by viewModel.collectAsState()
     val context = LocalContext.current
-
-    /**** status bar configuration ****/
-    val view = LocalView.current
-
-    DisposableEffect(isSystemInDarkTheme()) {
-        val activity = view.context as Activity
-        activity.window.statusBarColor = white.toArgb()
-        onDispose { }
-    }
 
     /**** UI ****/
     when (val uiState = state.uiState) {
