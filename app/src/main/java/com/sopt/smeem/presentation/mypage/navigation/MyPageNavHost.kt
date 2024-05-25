@@ -23,7 +23,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.sopt.smeem.R
-import com.sopt.smeem.presentation.mypage.TempMyPageActivity
+import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.presentation.mypage.components.topbar.MySummaryTopAppBar
 import com.sopt.smeem.presentation.mypage.components.topbar.OnlyBackArrowTopAppBar
 import com.sopt.smeem.presentation.mypage.components.topbar.SettingTopAppBar
@@ -31,10 +31,10 @@ import com.sopt.smeem.presentation.mypage.components.topbar.TitleTopAppbar
 import com.sopt.smeem.presentation.mypage.more.MoreScreen
 import com.sopt.smeem.presentation.mypage.mysummary.MySummaryScreen
 import com.sopt.smeem.presentation.mypage.mysummary.MySummaryViewModel
-import com.sopt.smeem.presentation.mypage.setting.ChangeNicknameScreen
-import com.sopt.smeem.presentation.mypage.setting.EditTrainingPlanScreen
-import com.sopt.smeem.presentation.mypage.setting.EditTrainingTimeScreen
 import com.sopt.smeem.presentation.mypage.setting.SettingScreen
+import com.sopt.smeem.presentation.mypage.setting.nickname.ChangeNicknameScreen
+import com.sopt.smeem.presentation.mypage.setting.plan.EditTrainingPlanScreen
+import com.sopt.smeem.presentation.mypage.setting.time.EditTrainingTimeScreen
 
 @Composable
 fun MyPageNavHost(
@@ -49,7 +49,7 @@ fun MyPageNavHost(
         topBar = {
             when (currentRoute) {
                 MyPageScreen.MySummary.route -> MySummaryTopAppBar(
-                    onNavigationIconClick = { if (context is TempMyPageActivity) context.finish() },
+                    onNavigationIconClick = { if (context is MyPageActivity) context.finish() },
                     onSettingClick = {
                         navController.navigate(MyPageScreen.Setting.route) {
                             launchSingleTop = true
