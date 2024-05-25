@@ -16,8 +16,8 @@ import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_ALARM_VIEW
 import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_GOAL_VIEW
 import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_PLAN_VIEW
 import com.sopt.smeem.event.AmplitudeEventType.SIGN_UP_SUCCESS
-import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.EventVM
+import com.sopt.smeem.presentation.base.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
 import com.sopt.smeem.presentation.join.JoinConstant.REFRESH_TOKEN
@@ -92,7 +92,7 @@ class OnBoardingActivity :
                 }
 
                 1 -> { // step 1 fragment => 트레이닝 목표 선택하기
-                    if(vm.selectedGoal.value!!.selected) {
+                    if (vm.selectedGoal.value!!.selected) {
                         nextButtonOn()
                     }
                     setHeaderStepNo(1)

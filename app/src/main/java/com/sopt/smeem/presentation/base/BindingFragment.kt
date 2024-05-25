@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation
+package com.sopt.smeem.presentation.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

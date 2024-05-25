@@ -12,7 +12,7 @@ import com.sopt.smeem.TrainingGoalType.HOBBY
 import com.sopt.smeem.TrainingGoalType.NONE
 import com.sopt.smeem.TrainingGoalType.NO_SELECTED
 import com.sopt.smeem.databinding.FragmentSettingGoalBinding
-import com.sopt.smeem.presentation.BindingFragment
+import com.sopt.smeem.presentation.base.BindingFragment
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener

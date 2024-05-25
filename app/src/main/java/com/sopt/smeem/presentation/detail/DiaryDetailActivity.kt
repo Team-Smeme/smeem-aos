@@ -7,9 +7,9 @@ import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityDiaryDetailBinding
 import com.sopt.smeem.event.AmplitudeEventType
-import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.IntentConstants.DIARY_ID
+import com.sopt.smeem.presentation.base.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint

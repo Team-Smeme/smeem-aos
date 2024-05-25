@@ -5,7 +5,7 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.button.MaterialButton
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.FragmentSettingTrainingPlanBinding
-import com.sopt.smeem.presentation.BindingFragment
+import com.sopt.smeem.presentation.base.BindingFragment
 import com.sopt.smeem.presentation.onboarding.TrainingPlanType.EVERY
 import com.sopt.smeem.presentation.onboarding.TrainingPlanType.FIVE
 import com.sopt.smeem.presentation.onboarding.TrainingPlanType.NOT_SELECTED
@@ -57,11 +57,13 @@ class TrainingPlanSettingFragment :
 
         buttonSelected()
 
-        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                // do nothing!
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // do nothing!
+                }
+            })
     }
 
     override fun addListeners() {

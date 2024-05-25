@@ -4,7 +4,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityHealthCheckBinding
-import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.base.BindingActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

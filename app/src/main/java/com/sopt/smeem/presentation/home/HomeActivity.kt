@@ -19,11 +19,11 @@ import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.databinding.ActivityHomeBinding
 import com.sopt.smeem.domain.dto.RetrievedBadgeDto
 import com.sopt.smeem.event.AmplitudeEventType
-import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.IntentConstants.DIARY_ID
 import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
 import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
+import com.sopt.smeem.presentation.base.BindingActivity
 import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG

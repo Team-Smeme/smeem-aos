@@ -9,9 +9,9 @@ import com.sopt.smeem.SmeemErrorCode
 import com.sopt.smeem.SmeemException
 import com.sopt.smeem.databinding.ActivityJoinAgreementBinding
 import com.sopt.smeem.domain.dto.RetrievedBadgeDto
-import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
 import com.sopt.smeem.presentation.agreement.AgreementViewActivity
+import com.sopt.smeem.presentation.base.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
 import com.sopt.smeem.presentation.join.JoinConstant.NICKNAME

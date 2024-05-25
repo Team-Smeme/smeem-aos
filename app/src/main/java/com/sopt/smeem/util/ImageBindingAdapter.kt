@@ -1,4 +1,4 @@
-package com.sopt.smeem.presentation
+package com.sopt.smeem.util
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

@@ -7,8 +7,8 @@ import androidx.fragment.app.activityViewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.FragmentSettingTimeBinding
 import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_LATER_CLICK
-import com.sopt.smeem.presentation.BindingFragment
 import com.sopt.smeem.presentation.EventVM
+import com.sopt.smeem.presentation.base.BindingFragment
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener
@@ -23,11 +23,13 @@ class SettingTimeFragment :
     override fun constructLayout() {
         setUpDays()
 
-        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                // do nothing!
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // do nothing!
+                }
+            })
     }
 
     override fun addListeners() {

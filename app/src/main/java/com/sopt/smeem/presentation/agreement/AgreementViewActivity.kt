@@ -4,7 +4,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityAgreementViewBinding
-import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.base.BindingActivity
 
 class AgreementViewActivity :
     BindingActivity<ActivityAgreementViewBinding>(R.layout.activity_agreement_view) {

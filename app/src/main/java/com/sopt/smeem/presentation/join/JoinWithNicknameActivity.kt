@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityJoinNicknameBinding
-import com.sopt.smeem.presentation.BindingActivity
+import com.sopt.smeem.presentation.base.BindingActivity
 import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
 import com.sopt.smeem.presentation.join.JoinConstant.NICKNAME
 import com.sopt.smeem.presentation.join.JoinConstant.REFRESH_TOKEN

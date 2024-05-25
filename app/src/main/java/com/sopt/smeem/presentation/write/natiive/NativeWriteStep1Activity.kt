@@ -9,10 +9,9 @@ import androidx.lifecycle.LifecycleOwner
 import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityNativeWriteStep1Binding
-import com.sopt.smeem.description
 import com.sopt.smeem.event.AmplitudeEventType
-import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.EventVM
+import com.sopt.smeem.presentation.base.BindingActivity
 import com.sopt.smeem.presentation.write.Constant.tooltipHasNeverChecked
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip
 import com.sopt.smeem.util.setOnSingleClickListener

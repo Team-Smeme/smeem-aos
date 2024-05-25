@@ -7,8 +7,8 @@ import androidx.activity.viewModels
 import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityDiaryEditBinding
-import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
+import com.sopt.smeem.presentation.base.BindingActivity
 import com.sopt.smeem.presentation.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
