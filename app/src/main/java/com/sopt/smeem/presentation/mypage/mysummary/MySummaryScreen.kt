@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +28,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.presentation.compose.components.LoadingScreen
+import com.sopt.smeem.presentation.compose.theme.background
 import com.sopt.smeem.presentation.mypage.components.MyBadgesBottomSheet
 import com.sopt.smeem.presentation.mypage.components.MyBadgesContent
 import com.sopt.smeem.presentation.mypage.components.MyPlanCard
@@ -86,37 +88,41 @@ fun MySummaryScreen(
         is MySummaryUiState.Success -> {
             val (smeemData, planData, badgesData) = uiState
 
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally,
+            Surface(
+                color = background
             ) {
-                VerticalSpacer(height = 18.dp)
+                Column(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    VerticalSpacer(height = 18.dp)
 
-                MySmeemCard(mySmeem = smeemData)
+                    MySmeemCard(mySmeem = smeemData)
 
-                VerticalSpacer(height = 44.dp)
+                    VerticalSpacer(height = 44.dp)
 
-                if (planData != null) {
-                    MyPlanCard(myPlan = planData)
-                } else {
-                    NoMyPlanCard(onSetPlanClick = {
-                        navController.navigate(
-                            SettingNavGraph.EditTrainingPlan.route
-                        )
-                    })
+                    if (planData != null) {
+                        MyPlanCard(myPlan = planData)
+                    } else {
+                        NoMyPlanCard(onSetPlanClick = {
+                            navController.navigate(
+                                SettingNavGraph.EditTrainingPlan.route
+                            )
+                        })
+                    }
+
+                    VerticalSpacer(height = 36.dp)
+
+                    MyBadgesContent(
+                        badges = badgesData,
+                        onClickCard = { clickedBadge -> selectedBadge = clickedBadge },
+                        modifier = Modifier.heightIn(max = 1000.dp)
+                    )
+
+                    VerticalSpacer(height = 100.dp)
                 }
-
-                VerticalSpacer(height = 36.dp)
-
-                MyBadgesContent(
-                    badges = badgesData,
-                    onClickCard = { clickedBadge -> selectedBadge = clickedBadge },
-                    modifier = Modifier.heightIn(max = 1000.dp)
-                )
-
-                VerticalSpacer(height = 120.dp)
             }
         }
 
