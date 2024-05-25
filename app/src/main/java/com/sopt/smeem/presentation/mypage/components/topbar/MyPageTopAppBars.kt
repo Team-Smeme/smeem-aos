@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
 import com.sopt.smeem.presentation.compose.theme.Typography
+import com.sopt.smeem.presentation.compose.theme.background
 import com.sopt.smeem.presentation.compose.theme.gray500
 import com.sopt.smeem.presentation.compose.theme.white
 
@@ -31,7 +32,7 @@ fun MySummaryTopAppBar(
         modifier = Modifier
             .fillMaxWidth(),
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
-            containerColor = white
+            containerColor = background
         ),
         title = {
             Text(
