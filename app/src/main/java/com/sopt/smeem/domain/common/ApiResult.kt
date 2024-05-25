@@ -1,7 +1,4 @@
-package com.sopt.smeem.domain
-
-import com.sopt.smeem.SmeemErrorCode
-import com.sopt.smeem.SmeemException
+package com.sopt.smeem.domain.common
 
 data class ApiResult<DATA>(
     val statusCode: Int,

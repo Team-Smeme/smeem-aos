@@ -6,16 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.sopt.smeem.SocialType
 import com.sopt.smeem.databinding.BottomSheetAuthBinding
-import com.sopt.smeem.description
-import com.sopt.smeem.logging
-import com.sopt.smeem.presentation.auth.LoginProcess
+import com.sopt.smeem.domain.common.logging
+import com.sopt.smeem.domain.model.SocialType
 import com.sopt.smeem.presentation.auth.KakaoHandler
+import com.sopt.smeem.presentation.auth.LoginProcess
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -8,11 +8,11 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.sopt.smeem.LocalStatus
-import com.sopt.smeem.SmeemErrorCode
-import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.SmeemDataStore.dataStore
+import com.sopt.smeem.domain.common.SmeemErrorCode
+import com.sopt.smeem.domain.common.SmeemException
 import com.sopt.smeem.domain.model.Authentication
+import com.sopt.smeem.domain.model.LocalStatus
 import com.sopt.smeem.domain.repository.LocalRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first

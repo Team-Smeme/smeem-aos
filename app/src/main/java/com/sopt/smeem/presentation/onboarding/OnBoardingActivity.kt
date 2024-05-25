@@ -8,8 +8,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.sopt.smeem.R
-import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.databinding.ActivityOnBoardingBinding
+import com.sopt.smeem.domain.model.TrainingGoalType
 import com.sopt.smeem.description
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_ALARM_VIEW

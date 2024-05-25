@@ -1,4 +1,4 @@
-package com.sopt.smeem
+package com.sopt.smeem.domain.model
 
 enum class TrainingGoalType(val text: String) {
     DEVELOP("자기계발"),

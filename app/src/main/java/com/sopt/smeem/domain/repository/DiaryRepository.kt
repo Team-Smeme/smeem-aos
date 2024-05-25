@@ -1,6 +1,6 @@
 package com.sopt.smeem.domain.repository
 
-import com.sopt.smeem.domain.ApiResult
+import com.sopt.smeem.domain.common.ApiResult
 import com.sopt.smeem.domain.dto.DeleteDiaryRequestDto
 import com.sopt.smeem.domain.dto.GetDiaryResponseDto
 import com.sopt.smeem.domain.dto.GetDiarySummariesDto

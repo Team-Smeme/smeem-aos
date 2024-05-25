@@ -1,7 +1,7 @@
 package com.sopt.smeem.data
 
-import com.sopt.smeem.SmeemErrorCode
-import com.sopt.smeem.SmeemException
+import com.sopt.smeem.domain.common.SmeemErrorCode
+import com.sopt.smeem.domain.common.SmeemException
 import retrofit2.HttpException
 
 object ApiPool {

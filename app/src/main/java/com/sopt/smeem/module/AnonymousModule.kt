@@ -1,6 +1,5 @@
 package com.sopt.smeem.module
 
-import com.sopt.smeem.Anonymous
 import com.sopt.smeem.data.repository.LoginRepositoryImpl
 import com.sopt.smeem.data.repository.TrainingRepositoryImpl
 import com.sopt.smeem.data.repository.UserRepositoryImpl

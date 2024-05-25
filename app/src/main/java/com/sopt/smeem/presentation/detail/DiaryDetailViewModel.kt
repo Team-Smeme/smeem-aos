@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.SmeemErrorCode
-import com.sopt.smeem.SmeemException
 import com.sopt.smeem.data.SmeemDataStore
+import com.sopt.smeem.domain.common.SmeemErrorCode
+import com.sopt.smeem.domain.common.SmeemException
 import com.sopt.smeem.domain.dto.DeleteDiaryRequestDto
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.domain.repository.LocalRepository

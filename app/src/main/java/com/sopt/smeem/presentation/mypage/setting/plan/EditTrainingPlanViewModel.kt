@@ -2,11 +2,11 @@ package com.sopt.smeem.presentation.mypage.setting.plan
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.Anonymous
 import com.sopt.smeem.domain.dto.TrainingPlanDto
 import com.sopt.smeem.domain.model.Training
 import com.sopt.smeem.domain.repository.TrainingRepository
 import com.sopt.smeem.domain.repository.UserRepository
+import com.sopt.smeem.module.Anonymous
 import com.sopt.smeem.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay

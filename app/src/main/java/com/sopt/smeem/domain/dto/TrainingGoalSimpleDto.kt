@@ -1,6 +1,6 @@
 package com.sopt.smeem.domain.dto
 
-import com.sopt.smeem.TrainingGoalType
+import com.sopt.smeem.domain.model.TrainingGoalType
 
 data class TrainingGoalSimpleDto(
     val goalType: TrainingGoalType,

@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.sopt.smeem.SocialType
 import com.sopt.smeem.databinding.BottomSheetSignUpBinding
-import com.sopt.smeem.logging
+import com.sopt.smeem.domain.common.logging
+import com.sopt.smeem.domain.model.SocialType
 import com.sopt.smeem.presentation.auth.KakaoHandler
 import com.sopt.smeem.presentation.auth.LoginProcess
 import com.sopt.smeem.util.setOnSingleClickListener

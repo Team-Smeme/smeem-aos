@@ -3,7 +3,7 @@ package com.sopt.smeem.data.repository
 import com.sopt.smeem.data.datasource.DiaryReader
 import com.sopt.smeem.data.model.request.DiaryRequest
 import com.sopt.smeem.data.service.DiaryService
-import com.sopt.smeem.domain.ApiResult
+import com.sopt.smeem.domain.common.ApiResult
 import com.sopt.smeem.domain.dto.DeleteDiaryRequestDto
 import com.sopt.smeem.domain.dto.GetDiaryResponseDto
 import com.sopt.smeem.domain.dto.GetDiarySummariesDto

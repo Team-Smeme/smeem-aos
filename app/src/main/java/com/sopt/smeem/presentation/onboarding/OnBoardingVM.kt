@@ -5,20 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.messaging.FirebaseMessaging
-import com.sopt.smeem.Anonymous
-import com.sopt.smeem.SocialType
-import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.domain.dto.LoginResultDto
 import com.sopt.smeem.domain.dto.PostOnBoardingDto
 import com.sopt.smeem.domain.dto.TrainingGoalDto
 import com.sopt.smeem.domain.model.Authentication
 import com.sopt.smeem.domain.model.Day
+import com.sopt.smeem.domain.model.SocialType
 import com.sopt.smeem.domain.model.Training
+import com.sopt.smeem.domain.model.TrainingGoalType
 import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.LoginRepository
 import com.sopt.smeem.domain.repository.TrainingRepository
 import com.sopt.smeem.domain.repository.UserRepository
+import com.sopt.smeem.module.Anonymous
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -44,7 +44,7 @@ class OnBoardingVM @Inject constructor(
         get() = _trainingGoal
 
     private val _selectedPlan = MutableLiveData(TrainingPlanType.NOT_SELECTED)
-    val selectedPlan : LiveData<TrainingPlanType>
+    val selectedPlan: LiveData<TrainingPlanType>
         get() = _selectedPlan
 
     private val _setTimeLater = MutableLiveData<Boolean>()
@@ -128,7 +128,7 @@ class OnBoardingVM @Inject constructor(
     }
 
     fun upsertPlanType(target: TrainingPlanType) {
-        if(selectedPlan.value == target) {
+        if (selectedPlan.value == target) {
             _selectedPlan.value!!.selected = false
             _selectedPlan.value = TrainingPlanType.NOT_SELECTED
         } else {

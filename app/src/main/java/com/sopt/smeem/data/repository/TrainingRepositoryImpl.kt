@@ -1,11 +1,11 @@
 package com.sopt.smeem.data.repository
 
-import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.data.service.TrainingService
-import com.sopt.smeem.domain.ApiResult
+import com.sopt.smeem.domain.common.ApiResult
 import com.sopt.smeem.domain.dto.TrainingGoalDto
 import com.sopt.smeem.domain.dto.TrainingGoalSimpleDto
 import com.sopt.smeem.domain.dto.TrainingPlanDto
+import com.sopt.smeem.domain.model.TrainingGoalType
 import com.sopt.smeem.domain.repository.TrainingRepository
 
 class TrainingRepositoryImpl(

@@ -1,8 +1,8 @@
 package com.sopt.smeem.domain.dto
 
-import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.data.model.request.TrainingRequest
 import com.sopt.smeem.domain.model.Day
+import com.sopt.smeem.domain.model.TrainingGoalType
 
 data class PostOnBoardingDto(
     val trainingGoalType: TrainingGoalType,

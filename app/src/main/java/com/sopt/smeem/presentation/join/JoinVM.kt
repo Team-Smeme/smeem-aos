@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.Anonymous
 import com.sopt.smeem.domain.model.Authentication
 import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.UserRepository
+import com.sopt.smeem.module.Anonymous
 import com.sopt.smeem.presentation.join.EntranceSelection.MARKETING
 import com.sopt.smeem.presentation.join.EntranceSelection.PERSONAL
 import com.sopt.smeem.presentation.join.EntranceSelection.SERVICE

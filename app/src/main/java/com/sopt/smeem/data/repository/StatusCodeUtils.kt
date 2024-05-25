@@ -1,7 +1,7 @@
 package com.sopt.smeem.data.repository
 
-import com.sopt.smeem.SmeemErrorCode
-import com.sopt.smeem.SmeemException
+import com.sopt.smeem.domain.common.SmeemErrorCode
+import com.sopt.smeem.domain.common.SmeemException
 
 fun Int.handleStatusCode(specificAction: (() -> Throwable)? = null): Throwable =
     specificAction?.invoke()

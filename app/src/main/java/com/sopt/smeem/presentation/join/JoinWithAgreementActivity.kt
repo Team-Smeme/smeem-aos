@@ -5,9 +5,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.google.android.material.button.MaterialButton
 import com.sopt.smeem.R
-import com.sopt.smeem.SmeemErrorCode
-import com.sopt.smeem.SmeemException
 import com.sopt.smeem.databinding.ActivityJoinAgreementBinding
+import com.sopt.smeem.domain.common.SmeemErrorCode
+import com.sopt.smeem.domain.common.SmeemException
 import com.sopt.smeem.domain.dto.RetrievedBadgeDto
 import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
 import com.sopt.smeem.presentation.agreement.AgreementViewActivity

@@ -1,6 +1,5 @@
 package com.sopt.smeem.module
 
-import com.sopt.smeem.Anonymous
 import com.sopt.smeem.data.datasource.Translater
 import com.sopt.smeem.data.repository.TranslateRepositoryImpl
 import com.sopt.smeem.data.service.DeepLApiService

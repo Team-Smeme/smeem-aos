@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.messaging.FirebaseMessaging
-import com.sopt.smeem.Anonymous
-import com.sopt.smeem.SocialType
 import com.sopt.smeem.domain.dto.LoginResultDto
 import com.sopt.smeem.domain.model.Authentication
+import com.sopt.smeem.domain.model.SocialType
 import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.LoginRepository
+import com.sopt.smeem.module.Anonymous
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

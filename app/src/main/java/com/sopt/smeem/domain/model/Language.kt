@@ -1,7 +1,6 @@
 package com.sopt.smeem.domain.model
 
 import androidx.annotation.DrawableRes
-import com.sopt.smeem.LanguageCode
 import com.sopt.smeem.R
 import com.sopt.smeem.data.model.response.MyPageResponse
 

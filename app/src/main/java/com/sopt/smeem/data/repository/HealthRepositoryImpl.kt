@@ -1,7 +1,7 @@
 package com.sopt.smeem.data.repository
 
 import com.sopt.smeem.data.service.HealthService
-import com.sopt.smeem.domain.ApiResult
+import com.sopt.smeem.domain.common.ApiResult
 import com.sopt.smeem.domain.repository.HealthRepository
 
 class HealthRepositoryImpl(

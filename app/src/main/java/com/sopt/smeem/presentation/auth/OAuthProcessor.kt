@@ -6,8 +6,8 @@ import com.kakao.sdk.common.model.ApiError
 import com.kakao.sdk.common.model.AuthError
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.user.UserApiClient
-import com.sopt.smeem.SmeemErrorCode
-import com.sopt.smeem.SmeemException
+import com.sopt.smeem.domain.common.SmeemErrorCode
+import com.sopt.smeem.domain.common.SmeemException
 
 object KakaoHandler : OAuthHandler {
     override fun isAppEnabled(context: Context) =

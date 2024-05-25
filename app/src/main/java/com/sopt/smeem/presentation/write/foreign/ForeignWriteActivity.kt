@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.LifecycleOwner
-import com.sopt.smeem.DefaultSnackBar
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityForeignWriteBinding
 import com.sopt.smeem.event.AmplitudeEventType
@@ -13,6 +12,7 @@ import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
 import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
 import com.sopt.smeem.presentation.base.BindingActivity
+import com.sopt.smeem.presentation.base.DefaultSnackBar
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.presentation.write.Constant.tooltipHasNeverChecked
 import com.sopt.smeem.util.TooltipUtil.createTopicTooltip

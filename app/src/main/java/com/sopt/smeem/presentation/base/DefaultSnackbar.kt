@@ -1,17 +1,19 @@
-package com.sopt.smeem
+package com.sopt.smeem.presentation.base
 
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
+import com.sopt.smeem.R
 import com.sopt.smeem.databinding.SnackbarDefaultBinding
 
 class DefaultSnackBar(view: View, private val anchor: Int?, private val message: String) {
 
     companion object {
         fun make(view: View, message: String) = DefaultSnackBar(view, null, message)
-        fun makeOnTopOf(view: View, anchor: Int, message: String) = DefaultSnackBar(view, anchor, message)
+        fun makeOnTopOf(view: View, anchor: Int, message: String) =
+            DefaultSnackBar(view, anchor, message)
     }
 
     private val context = view.context

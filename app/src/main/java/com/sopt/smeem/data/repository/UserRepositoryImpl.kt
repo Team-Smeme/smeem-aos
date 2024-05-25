@@ -5,7 +5,7 @@ import com.sopt.smeem.data.model.request.TrainingRequest
 import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
 import com.sopt.smeem.data.service.MyBadgeService
 import com.sopt.smeem.data.service.UserService
-import com.sopt.smeem.domain.ApiResult
+import com.sopt.smeem.domain.common.ApiResult
 import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.domain.dto.LoginResultDto
 import com.sopt.smeem.domain.dto.MyInfoDto

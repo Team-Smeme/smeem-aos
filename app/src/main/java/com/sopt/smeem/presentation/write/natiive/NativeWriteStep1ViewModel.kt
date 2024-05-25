@@ -5,13 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.Anonymous
-import com.sopt.smeem.LocalStatus
+import com.sopt.smeem.domain.model.LocalStatus
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.TranslateRepository
+import com.sopt.smeem.module.Anonymous
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -38,7 +37,7 @@ class NativeWriteStep1ViewModel @Inject constructor(
                         topicId = data().id
                         topic.value = data().content
                     }
-            } catch (t:Throwable) {
+            } catch (t: Throwable) {
                 onError(t)
             }
         }

@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.LocalStatus
 import com.sopt.smeem.data.SmeemDataStore.RECENT_DIARY_DATE
 import com.sopt.smeem.domain.dto.RetrievedBadgeDto
 import com.sopt.smeem.domain.dto.WriteDiaryRequestDto
+import com.sopt.smeem.domain.model.LocalStatus
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.domain.repository.LocalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -2,9 +2,9 @@ package com.sopt.smeem.presentation.mypage.setting.nickname
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.Anonymous
 import com.sopt.smeem.domain.repository.LoginRepository
 import com.sopt.smeem.domain.repository.UserRepository
+import com.sopt.smeem.module.Anonymous
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
