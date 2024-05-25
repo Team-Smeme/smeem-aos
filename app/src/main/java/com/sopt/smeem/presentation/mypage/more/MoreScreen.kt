@@ -5,16 +5,20 @@ import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,6 +30,7 @@ import com.sopt.smeem.presentation.compose.components.SmeemDialog
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray600
+import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.VerticalSpacer
 
@@ -65,7 +70,16 @@ fun MoreScreen(
             })
     }
 
+    /**** status bar configuration ****/
+    val view = LocalView.current
 
+    DisposableEffect(isSystemInDarkTheme()) {
+        val activity = view.context as Activity
+        activity.window.statusBarColor = white.toArgb()
+        onDispose { }
+    }
+
+    /**** UI ****/
     Column(
         modifier = modifier
             .fillMaxSize()
