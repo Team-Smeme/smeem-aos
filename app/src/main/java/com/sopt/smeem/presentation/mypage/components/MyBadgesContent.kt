@@ -4,12 +4,12 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sopt.smeem.R
@@ -83,27 +84,33 @@ fun MyBadgesObtainedCard(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 18.dp, vertical = 9.dp),
+                .fillMaxWidth()
+                .padding(horizontal = 18.dp, vertical = 16.dp)
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(context = LocalContext.current)
-                    .data(info.imageUrl)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = null,
-                placeholder = previewPlaceholder(image = R.drawable.ic_badge_welcome),
+            Box(
                 modifier = Modifier
-                    .widthIn(min = 66.dp)
-                    .aspectRatio(1f)
-            )
+                    .fillMaxWidth()
+                    .weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                AsyncImage(
+                    model = ImageRequest.Builder(context = LocalContext.current)
+                        .data(info.imageUrl)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = null,
+                    placeholder = previewPlaceholder(image = R.drawable.ic_badge_thirty_row)
+                )
+            }
             Text(
                 text = info.name,
                 style = Typography.labelSmall.copy(
-                    fontWeight = FontWeight.Medium
-                )
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 9.sp
+                ),
+                modifier = Modifier.padding(top = 4.dp)
             )
         }
     }
@@ -145,7 +152,7 @@ fun MyBadgesPreview() {
     }
 }
 
-@Preview(widthDp = 200)
+@Preview(widthDp = 103)
 @Composable
 fun MyBadgesObtainedCardPreview() {
     SmeemTheme {
@@ -153,7 +160,7 @@ fun MyBadgesObtainedCardPreview() {
     }
 }
 
-@Preview(widthDp = 200)
+@Preview(widthDp = 103)
 @Composable
 fun MyBadgesNotObtainedCardPreview() {
     SmeemTheme {
