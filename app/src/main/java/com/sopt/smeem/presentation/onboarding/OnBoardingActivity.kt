@@ -11,8 +11,10 @@ import com.sopt.smeem.R
 import com.sopt.smeem.TrainingGoalType
 import com.sopt.smeem.databinding.ActivityOnBoardingBinding
 import com.sopt.smeem.description
+import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_ALARM_VIEW
 import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_GOAL_VIEW
+import com.sopt.smeem.event.AmplitudeEventType.ON_BOARDING_PLAN_VIEW
 import com.sopt.smeem.event.AmplitudeEventType.SIGN_UP_SUCCESS
 import com.sopt.smeem.presentation.BindingActivity
 import com.sopt.smeem.presentation.EventVM
@@ -122,6 +124,7 @@ class OnBoardingActivity :
                             TrainingPlanSettingFragment()
                         )
                         .commit()
+                    eventVm.sendEvent(ON_BOARDING_PLAN_VIEW)
                 }
 
                 3 -> { // step 3 fragment => 알림 시간 설정하기

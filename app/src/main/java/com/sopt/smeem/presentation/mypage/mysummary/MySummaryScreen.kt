@@ -27,6 +27,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.domain.dto.GetBadgeListDto
+import com.sopt.smeem.event.AmplitudeEventType
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.compose.components.LoadingScreen
 import com.sopt.smeem.presentation.compose.theme.background
 import com.sopt.smeem.presentation.mypage.components.MyBadgesBottomSheet
@@ -45,6 +47,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun MySummaryScreen(
     navController: NavController,
     viewModel: MySummaryViewModel,
+    eventVM: EventVM,
     modifier: Modifier = Modifier
 ) {
     val state by viewModel.collectAsState()
@@ -54,6 +57,7 @@ fun MySummaryScreen(
         if (isDataChanged) {
             viewModel.fetchMySummaryData()
             viewModel.setDataChanged(false)
+            eventVM.sendEvent(AmplitudeEventType.ACHIEVEMENT_VIEW)
         }
     }
 
@@ -73,6 +77,7 @@ fun MySummaryScreen(
                 coroutineScope.launch { sheetState.hide() }
             }
         )
+        eventVM.sendEvent(AmplitudeEventType.BADGE_BOTTOM_SHEET_VIEW)
     }
 
     /**** UI ****/
@@ -140,6 +145,7 @@ fun MySummaryScreenPreview() {
     MySummaryScreen(
         navController = rememberNavController(),
         viewModel = hiltViewModel(),
+        eventVM = hiltViewModel(),
         modifier = Modifier
     )
 }
