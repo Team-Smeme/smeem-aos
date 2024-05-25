@@ -7,6 +7,7 @@ enum class AmplitudeEventType(val eventName: String) {
     ON_BOARDING_GOAL_VIEW("onboarding_goal_view"),
     ON_BOARDING_ALARM_VIEW("onboarding_alarm_view"),
     ON_BOARDING_LATER_CLICK("onboarding_later_click"),
+    ON_BOARDING_PLAN_VIEW("onboarding_plan_view"),
     SIGN_UP_SUCCESS("signup_success"),
 
     // home
@@ -27,6 +28,8 @@ enum class AmplitudeEventType(val eventName: String) {
 
     // my page
     MY_PAGE_VIEW("mypage_view"),
+    ACHIEVEMENT_VIEW("achievement_view"),
+    BADGE_BOTTOM_SHEET_VIEW("badge_bottom_sheet_view"),
 
     // badge
     BADGE_MORE_CLICK("badge_more_click"),
