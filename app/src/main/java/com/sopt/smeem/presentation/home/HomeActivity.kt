@@ -30,7 +30,7 @@ import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
 import com.sopt.smeem.presentation.home.calendar.SmeemCalendar
 import com.sopt.smeem.presentation.home.calendar.core.CalendarState
 import com.sopt.smeem.presentation.home.calendar.core.Period
-import com.sopt.smeem.presentation.mypage.TempMyPageActivity
+import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.util.DateUtil
 import com.sopt.smeem.util.getWeekStartDate
 import com.sopt.smeem.util.setOnSingleClickListener
@@ -79,7 +79,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         onTouchWrite()
         eventVm.sendEvent(AmplitudeEventType.HOME_VIEW)
         initBackPressedCallback()
-        homeViewModel.activeVisit { Timber.e("visit count 반영 실패. ", it)}
+        homeViewModel.activeVisit { Timber.e("visit count 반영 실패. ", it) }
     }
 
     override fun onResume() {
@@ -100,7 +100,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private fun moveToMyPage() {
         binding.ivMyPage.setOnClickListener {
-            startActivity(Intent(this, TempMyPageActivity::class.java))
+            startActivity(Intent(this, MyPageActivity::class.java))
         }
     }
 
