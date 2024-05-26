@@ -47,7 +47,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun MySummaryScreen(
     navController: NavController,
     viewModel: MySummaryViewModel,
-    eventVM: EventVM,
+    eventVM: EventVM = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     val state by viewModel.collectAsState()
@@ -57,8 +57,11 @@ fun MySummaryScreen(
         if (isDataChanged) {
             viewModel.fetchMySummaryData()
             viewModel.setDataChanged(false)
-            eventVM.sendEvent(AmplitudeEventType.ACHIEVEMENT_VIEW)
         }
+    }
+
+    LaunchedEffect(true) {
+        eventVM.sendEvent(AmplitudeEventType.ACHIEVEMENT_VIEW)
     }
 
     /***** bottom sheet configuration *****/
