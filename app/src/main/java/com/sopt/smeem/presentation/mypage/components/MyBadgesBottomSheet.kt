@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -51,7 +52,7 @@ fun MyBadgesBottomSheet(
         modifier = modifier
     ) {
         if (badge.hasBadge) {
-            ObtainedBottomSheetContent(info = badge, modifier = Modifier.widthIn(max = 120.dp))
+            ObtainedBottomSheetContent(info = badge)
         } else {
             NotObtainedBottomSheetContent(info = badge, modifier = Modifier.widthIn(max = 120.dp))
         }
@@ -63,33 +64,48 @@ fun ObtainedBottomSheetContent(
     info: GetBadgeListDto,
     modifier: Modifier = Modifier
 ) {
-    AsyncImage(
-        model = ImageRequest.Builder(context = LocalContext.current)
-            .data(info.imageUrl)
-            .crossfade(true)
-            .build(),
-        contentDescription = null,
-        placeholder = previewPlaceholder(image = R.drawable.ic_badge_welcome),
-        modifier = modifier.aspectRatio(1f)
-    )
-    VerticalSpacer(height = 26.dp)
-    Text(
-        text = info.name,
-        style = Typography.headlineSmall,
-        color = black
-    )
-    Text(
-        modifier = Modifier.padding(top = 8.dp),
-        text = info.contentForBadgeOwner ?: "",
-        style = Typography.bodyMedium,
-        color = black
-    )
-    Text(
-        modifier = Modifier.padding(top = 12.dp),
-        text = info.getAcquistionText(),
-        style = Typography.bodyMedium,
-        color = gray500
-    )
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(context = LocalContext.current)
+                .data(info.imageUrl)
+                .crossfade(true)
+                .build(),
+            contentDescription = null,
+            placeholder = previewPlaceholder(image = R.drawable.ic_badge_welcome),
+            modifier = Modifier
+                .widthIn(max = 120.dp)
+                .aspectRatio(1f)
+        )
+        VerticalSpacer(height = 26.dp)
+
+        Text(
+            text = info.name,
+            style = Typography.headlineSmall,
+            color = black
+        )
+
+        VerticalSpacer(height = 8.dp)
+
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = info.contentForBadgeOwner ?: "",
+            style = Typography.bodyMedium,
+            color = black,
+            textAlign = TextAlign.Center
+        )
+
+        VerticalSpacer(height = 12.dp)
+
+        Text(
+            text = info.getAcquistionText(),
+            style = Typography.bodyMedium,
+            color = gray500
+        )
+    }
+
 }
 
 @Composable
@@ -97,65 +113,81 @@ fun NotObtainedBottomSheetContent(
     info: GetBadgeListDto,
     modifier: Modifier = Modifier
 ) {
-    Card(
-        modifier = modifier.aspectRatio(1f),
-        colors = CardDefaults.cardColors(
-            containerColor = gray100
-        ),
-        shape = RoundedCornerShape(10.dp)
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize(),
+        Card(
+            modifier = modifier
+                .widthIn(max = 120.dp)
+                .aspectRatio(1f),
+            colors = CardDefaults.cardColors(
+                containerColor = gray100
+            ),
+            shape = RoundedCornerShape(10.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_badge_lock),
-                contentDescription = null
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_badge_lock),
+                    contentDescription = null
+                )
+            }
         }
-    }
-    VerticalSpacer(height = 26.dp)
-    Text(
-        text = info.name,
-        style = Typography.headlineSmall,
-        color = black
-    )
-    if (info.type == BadgeType.COUNTING) {
-        val parts = info.getNonBadgeTextParts()
-        Row(
-            modifier = Modifier.padding(top = 8.dp)
-        ) {
-            Text(
-                text = parts[0],
-                style = Typography.bodyMedium,
-                color = black
-            )
-            Text(
-                text = parts[1],
-                style = Typography.bodyLarge,
-                color = point
-            )
-            Text(
-                text = parts[2],
-                style = Typography.bodyMedium,
-                color = black
-            )
-        }
-    } else {
+
+        VerticalSpacer(height = 26.dp)
+
         Text(
-            modifier = Modifier.padding(top = 8.dp),
-            text = info.contentForNonBadgeOwner ?: "",
-            style = Typography.bodyMedium,
+            text = info.name,
+            style = Typography.headlineSmall,
             color = black
         )
+
+        if (info.type == BadgeType.COUNTING) {
+            val parts = info.getNonBadgeTextParts()
+
+            VerticalSpacer(height = 8.dp)
+
+            Row {
+                Text(
+                    text = parts[0],
+                    style = Typography.bodyMedium,
+                    color = black
+                )
+                Text(
+                    text = parts[1],
+                    style = Typography.bodyLarge,
+                    color = point
+                )
+                Text(
+                    text = parts[2],
+                    style = Typography.bodyMedium,
+                    color = black
+                )
+            }
+        } else {
+            VerticalSpacer(height = 8.dp)
+
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = info.contentForNonBadgeOwner ?: "",
+                style = Typography.bodyMedium,
+                color = black
+            )
+        }
+
+        VerticalSpacer(height = 12.dp)
+
+        Text(
+            text = info.getAcquistionText(),
+            style = Typography.bodyMedium,
+            color = gray500
+        )
     }
-    Text(
-        modifier = Modifier.padding(top = 12.dp),
-        text = info.getAcquistionText(),
-        style = Typography.bodyMedium,
-        color = gray500
-    )
+
 }
 
 @Preview(showBackground = true, widthDp = 360)
@@ -168,7 +200,6 @@ fun ObtainedBottomSheetContentPreview() {
     ) {
         ObtainedBottomSheetContent(
             info = BadgeList.sprint2.first(),
-            modifier = Modifier.widthIn(max = 120.dp)
         )
     }
 }
@@ -183,7 +214,6 @@ fun NotObtainedBottomSheetContentPreview() {
     ) {
         NotObtainedBottomSheetContent(
             info = BadgeList.sprint2[1],
-            modifier = Modifier.widthIn(max = 120.dp)
         )
     }
 }
