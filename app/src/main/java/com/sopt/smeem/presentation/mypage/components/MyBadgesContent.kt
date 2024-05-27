@@ -37,6 +37,7 @@ import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.gray100
+import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.previewPlaceholder
 
 @Composable
@@ -87,7 +88,7 @@ fun MyBadgesObtainedCard(
             verticalArrangement = Arrangement.Top,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 18.dp, vertical = 16.dp)
+                .padding(horizontal = 18.dp, vertical = 9.dp)
         ) {
             Box(
                 modifier = Modifier
@@ -104,13 +105,15 @@ fun MyBadgesObtainedCard(
                     placeholder = previewPlaceholder(image = R.drawable.ic_badge_thirty_row)
                 )
             }
+
+            VerticalSpacer(height = 4.dp)
+
             Text(
                 text = info.name,
                 style = Typography.labelSmall.copy(
                     fontWeight = FontWeight.Medium,
                     fontSize = 9.sp
                 ),
-                modifier = Modifier.padding(top = 4.dp)
             )
         }
     }
@@ -144,7 +147,7 @@ fun MyBadgesNotObtainedCard(
     }
 }
 
-@Preview
+@Preview(showBackground = true, showSystemUi = true, widthDp = 360)
 @Composable
 fun MyBadgesPreview() {
     SmeemTheme {
