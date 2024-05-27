@@ -26,7 +26,7 @@ fun TargetLanguageCard(
                 contentDescription = stringResource(R.string.edit_target_language),
                 tint = point,
                 modifier = Modifier
-                    .padding(top = 7.dp, bottom = 7.dp, end = 14.dp)
+                    .padding(top = 7.dp, bottom = 7.dp, end = 6.dp)
                     .noRippleClickable { onEditClick() }
             )
         }
