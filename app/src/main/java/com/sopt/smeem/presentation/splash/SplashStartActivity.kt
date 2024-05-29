@@ -1,21 +1,25 @@
 package com.sopt.smeem.presentation.splash
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.remoteconfig.ktx.remoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.sopt.smeem.BuildConfig
 import com.sopt.smeem.R
 import com.sopt.smeem.presentation.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SplashStartActivity() : AppCompatActivity() {
@@ -53,40 +57,25 @@ class SplashStartActivity() : AppCompatActivity() {
     }
 
     private fun checkVersion() {
-        val configSettings = remoteConfigSettings {
-            minimumFetchIntervalInSeconds = 3600
-        }.toBuilder().build()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                vm.version
+                    .filter { it.isNotEmpty() }
+                    .collectLatest { latestVersion ->
+                        val installedVersion = BuildConfig.VERSION_NAME
 
-        Firebase.remoteConfig.apply {
-            setConfigSettingsAsync(configSettings)
-            setDefaultsAsync(R.xml.remote_config_defaults)
-            fetch().addOnCompleteListener(this@SplashStartActivity) { task ->
-                val installedVersion = BuildConfig.VERSION_NAME
-                val firebaseVersion =
-                    getString("app_version").takeIf { it.isNotEmpty() }
-                val isNewVersion = when {
-                    firebaseVersion.isNullOrEmpty() -> false
-                    else -> {
-                        val installedVersionX = installedVersion.split(".").first().toInt()
-                        val firebaseVersionX = firebaseVersion.split(".").first().toInt()
-                        installedVersionX >= firebaseVersionX
-                    }
-                }
+                        val isNewVersion = when {
+                            latestVersion.isEmpty() -> false
+                            else -> {
+                                val installedVersionX = installedVersion.split(".").first().toInt()
+                                val latestVersionX = latestVersion.split(".").first().toInt()
 
-                if (task.isSuccessful) {
-                    activate()
-                    if (isNewVersion) {
-                        Timber.tag("smeem doesn't need to be updated")
-                            .d("%s | %s", installedVersion, firebaseVersion)
-                        observeAuthed()
-                    } else {
-                        Timber.tag("smeem needs to be updated!")
-                            .d("%s | %s", installedVersion, firebaseVersion)
-                        showUpdateDialog()
+                                installedVersionX != latestVersionX
+                            }
+                        }
+
+                        if (!isNewVersion) showUpdateDialog() else observeAuthed()
                     }
-                } else {
-                    Timber.e("remote config failed")
-                }
             }
         }
     }
@@ -98,9 +87,26 @@ class SplashStartActivity() : AppCompatActivity() {
                 finishSmeem()
             }
             .setPositiveButton("업데이트") { dialog, which ->
-                // TODO: 스토어로 이동 - 스토어 등록 후 링크 가져오기
-                observeAuthed()
+                val appPackageName = packageName // 현재 앱의 패키지명 가져오기
+                try {
+                    // Play Store 앱을 사용하여 이동
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=com.sopt.smeem")
+                        )
+                    )
+                } catch (e: ActivityNotFoundException) {
+                    // Play Store 앱이 없을 때, 웹 브라우저를 사용하여 이동
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                        )
+                    )
+                }
             }
+            .setCancelable(false)
             .show()
     }
 
