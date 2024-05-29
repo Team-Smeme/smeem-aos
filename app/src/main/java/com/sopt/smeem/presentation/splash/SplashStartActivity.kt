@@ -71,7 +71,7 @@ class SplashStartActivity() : AppCompatActivity() {
                                 val installedVersionX = installedVersion.split(".").first().toInt()
                                 val latestVersionX = latestVersion.split(".").first().toInt()
 
-                                installedVersionX != latestVersionX
+                                installedVersionX >= latestVersionX
                             }
                         }
 
@@ -94,7 +94,7 @@ class SplashStartActivity() : AppCompatActivity() {
                     startActivity(
                         Intent(
                             Intent.ACTION_VIEW,
-                            Uri.parse("market://details?id=com.sopt.smeem")
+                            Uri.parse("market://details?id=$appPackageName")
                         )
                     )
                 } catch (e: ActivityNotFoundException) {
