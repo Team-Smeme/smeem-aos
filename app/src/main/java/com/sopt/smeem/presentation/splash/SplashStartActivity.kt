@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
+import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class SplashStartActivity() : AppCompatActivity() {
@@ -83,7 +84,7 @@ class SplashStartActivity() : AppCompatActivity() {
     private fun showUpdateDialog() {
         MaterialAlertDialogBuilder(this)
             .setCustomTitle(layoutInflater.inflate(R.layout.update_dialog_content, null))
-            .setNegativeButton("나가기") { dialog, which ->
+            .setNegativeButton("나가기") { _, _ ->
                 finishSmeem()
             }
             .setPositiveButton("업데이트") { dialog, which ->
@@ -113,7 +114,7 @@ class SplashStartActivity() : AppCompatActivity() {
     private fun finishSmeem() {
         moveTaskToBack(true)
         finishAndRemoveTask()
-        System.exit(0)
+        exitProcess(0)
     }
 
     private fun observeAuthed() {
