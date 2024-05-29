@@ -15,7 +15,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="11dp"
         android:paddingBottom="12dp">
 
         <View
@@ -36,7 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="11dp"
             android:background="@drawable/shape_dialog"
             android:paddingBottom="10dp"
             app:layout_constraintTop_toTopOf="parent">

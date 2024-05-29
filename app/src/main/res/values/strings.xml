@@ -75,6 +75,11 @@
     <string name="manual_url">https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4</string>
     <string name="title_activity_smeem_calendar">SmeemCalendar</string>
 
+    <!-- Badge Dialog -->
+    <string name="welcome_badge">웰컴 배지</string>
+    <string name="navigate_first_diary">첫 일기 쓰러가기</string>
+    <string name="view_all_badge">배지 모두보기</string>
+
     <!-- My Page -->
     <string name="my_smeem">나의 스밈</string>
     <string name="my_plan">나의 플랜</string>
@@ -125,4 +130,5 @@
     <string name="no_plan_navigate_description">플랜 설정하러 가기</string>
     <string name="set_my_plan">플랜 설정하기</string>
     <string name="notice_back_process">뒤로가기 버튼을 한번 더 누르면 종료됩니다.</string>
+
 </resources>
