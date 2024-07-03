@@ -32,9 +32,9 @@ import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.util.HorizontalSpacer
 
 @Composable
-fun TrainingPlanCard(
+fun SelectCard(
     isSelected: Boolean = false,
-    planContent: String,
+    selectContent: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -78,7 +78,7 @@ fun TrainingPlanCard(
             HorizontalSpacer(width = 12.dp)
 
             Text(
-                text = planContent,
+                text = selectContent,
                 style = textStyle,
                 color = textColor,
                 modifier = Modifier.padding(top = 21.dp, bottom = 20.dp)
@@ -90,12 +90,12 @@ fun TrainingPlanCard(
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun TrainingPlanUnSelectedCardPreview() {
-    TrainingPlanCard(planContent = "주 1회 작성할게요", onClick = {})
+fun UnSelectedCardPreview() {
+    SelectCard(selectContent = "주 1회 작성할게요", onClick = {})
 }
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun TrainingPlanSelectedCardPreview() {
-    TrainingPlanCard(planContent = "주 1회 작성할게요", isSelected = true, onClick = {})
+fun SelectedCardPreview() {
+    SelectCard(selectContent = "주 1회 작성할게요", isSelected = true, onClick = {})
 }

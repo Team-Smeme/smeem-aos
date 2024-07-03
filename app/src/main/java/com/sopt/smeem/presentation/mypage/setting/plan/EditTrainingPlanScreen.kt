@@ -24,7 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sopt.smeem.R
 import com.sopt.smeem.presentation.compose.components.LoadingScreen
 import com.sopt.smeem.presentation.compose.components.SmeemButton
-import com.sopt.smeem.presentation.mypage.components.TrainingPlanCard
+import com.sopt.smeem.presentation.mypage.components.SelectCard
 import com.sopt.smeem.util.UiState
 import com.sopt.smeem.util.VerticalSpacer
 
@@ -60,9 +60,9 @@ fun EditTrainingPlanScreen(
                     items(trainingPlanList.size) { index ->
                         val item = trainingPlanList[index]
 
-                        TrainingPlanCard(
+                        SelectCard(
                             isSelected = selectedItemId == item.id,
-                            planContent = item.content,
+                            selectContent = item.content,
                             onClick = { selectedItemId = item.id },
                         )
                     }
