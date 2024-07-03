@@ -29,6 +29,7 @@ import com.sopt.smeem.presentation.mypage.components.topbar.OnlyBackArrowTopAppB
 import com.sopt.smeem.presentation.mypage.components.topbar.SettingTopAppBar
 import com.sopt.smeem.presentation.mypage.components.topbar.TitleTopAppbar
 import com.sopt.smeem.presentation.mypage.more.MoreScreen
+import com.sopt.smeem.presentation.mypage.more.delete.DeleteAccountScreen
 import com.sopt.smeem.presentation.mypage.mysummary.MySummaryScreen
 import com.sopt.smeem.presentation.mypage.mysummary.MySummaryViewModel
 import com.sopt.smeem.presentation.mypage.setting.SettingScreen
@@ -70,7 +71,7 @@ fun MyPageNavHost(
                     }
                 )
 
-                MyPageScreen.More.route -> OnlyBackArrowTopAppBar(
+                MoreNavGraph.MoreMain.route -> OnlyBackArrowTopAppBar(
                     onNavigationIconClick = { navController.popBackStack() }
                 )
 
@@ -87,6 +88,11 @@ fun MyPageNavHost(
                 SettingNavGraph.EditTrainingTime.route -> TitleTopAppbar(
                     onNavigationIconClick = { navController.popBackStack() },
                     title = stringResource(R.string.edit_traint_time_top_app_bar_title)
+                )
+
+                MoreNavGraph.DeleteAccount.route -> TitleTopAppbar(
+                    onNavigationIconClick = { navController.popBackStack() },
+                    title = stringResource(id = R.string.delete_account_title)
                 )
             }
         }
@@ -209,10 +215,23 @@ private fun NavGraphBuilder.addSetting(
 }
 
 private fun NavGraphBuilder.addMore(navController: NavController) {
-    composable(route = MyPageScreen.More.route) {
-        MoreScreen(
-            navController = navController,
-        )
+    navigation(
+        startDestination = MoreNavGraph.MoreMain.route,
+        route = MyPageScreen.More.route
+    ) {
+        composable(route = MoreNavGraph.MoreMain.route) {
+            MoreScreen(
+                navController = navController,
+            )
+        }
+
+        composable(
+            route = MoreNavGraph.DeleteAccount.route,
+        ) {
+            DeleteAccountScreen(
+                navController = navController
+            )
+        }
     }
 }
 

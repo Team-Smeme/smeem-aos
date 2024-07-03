@@ -9,5 +9,8 @@ const val CHANGE_NICKNAME = "ChangeNickname"
 const val EDIT_TRAINING_PLAN = "EditTrainingPlan"
 const val EDIT_TRAINING_TIME = "EditTrainingTime"
 
+const val MORE_MAIN = "MoreMain"
+const val DELETE_ACCOUNT = "DeleteAccount"
+
 const val NICKNAME_MIN_LENGTH = 1
 const val NICKNAME_MAX_LENGTH = 10

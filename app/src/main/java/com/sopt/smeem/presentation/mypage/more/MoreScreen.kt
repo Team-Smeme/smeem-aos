@@ -26,6 +26,8 @@ import com.sopt.smeem.presentation.compose.components.SmeemDialog
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray600
+import com.sopt.smeem.presentation.mypage.navigation.MoreNavGraph
+import com.sopt.smeem.presentation.mypage.navigation.SettingNavGraph
 import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.VerticalSpacer
 
@@ -38,7 +40,6 @@ fun MoreScreen(
     val context = LocalContext.current
 
     val (showLogoutDialog, setShowLogoutDialog) = rememberSaveable { mutableStateOf(false) }
-    val (showDeleteDialog, setShowDeleteDialog) = rememberSaveable { mutableStateOf(false) }
 
     if (showLogoutDialog) {
         SmeemDialog(
@@ -53,17 +54,17 @@ fun MoreScreen(
     }
 
     // 계정 삭제 대화상자
-    if (showDeleteDialog) {
-        SmeemDialog(
-            setShowDialog = setShowDeleteDialog,
-            title = stringResource(R.string.smeem_dialog_delete_account_title),
-            content = stringResource(R.string.smeem_dialog_delete_dialog_content),
-            onConfirmButtonClick = {
-                viewModel.withdrawal()
-                context.startActivity(Intent(context, SplashLoginActivity::class.java))
-                (context as? Activity)?.finishAffinity()
-            })
-    }
+//    if (showDeleteDialog) {
+//        SmeemDialog(
+//            setShowDialog = setShowDeleteDialog,
+//            title = stringResource(R.string.smeem_dialog_delete_account_title),
+//            content = stringResource(R.string.smeem_dialog_delete_dialog_content),
+//            onConfirmButtonClick = {
+//                viewModel.withdrawal()
+//                context.startActivity(Intent(context, SplashLoginActivity::class.java))
+//                (context as? Activity)?.finishAffinity()
+//            })
+//    }
 
     /**** UI ****/
     Column(
@@ -131,7 +132,9 @@ fun MoreScreen(
 
         Box(
             modifier = Modifier
-                .clickable { setShowDeleteDialog(true) }
+                .clickable {
+                    navController.navigate(MoreNavGraph.DeleteAccount.route)
+                }
                 .padding(vertical = 12.dp, horizontal = 8.dp)
         ) {
             Text(
