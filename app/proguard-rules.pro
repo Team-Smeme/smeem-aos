@@ -139,3 +139,5 @@
 # Appsflyer
 -keep class com.appsflyer.** { *; }
 -keep class kotlin.jvm.internal.** { *; }
+
+-keep class com.sopt.smeem.presentation.mypage.components.** { *; }
