@@ -30,6 +30,7 @@ import com.sopt.smeem.presentation.compose.components.SmeemButton
 import com.sopt.smeem.presentation.compose.components.SmeemTextField
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
+import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.mypage.components.SelectCard
 import com.sopt.smeem.util.VerticalSpacer
 
@@ -119,7 +120,15 @@ fun DeleteAccountScreen(
                             )
                         )
                     }
-                }
+                },
+            minLines = 2,
+            backgroundColor = gray100,
+            cursorColor = black,
+            hasBorder = false,
+            textStyle = Typography.bodySmall.copy(
+                color = black,
+                lineHeight = 22.sp
+            )
         )
 
         VerticalSpacer(height = 12.dp)
