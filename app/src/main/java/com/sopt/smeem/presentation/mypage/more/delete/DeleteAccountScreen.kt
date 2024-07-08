@@ -47,6 +47,7 @@ import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.mypage.components.SelectCard
 import com.sopt.smeem.util.VerticalSpacer
+import com.sopt.smeem.util.addFocusCleaner
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -77,6 +78,7 @@ fun DeleteAccountScreen(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .addFocusCleaner(focusManager)
     ) {
         VerticalSpacer(height = 14.dp)
 
