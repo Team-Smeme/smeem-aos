@@ -64,7 +64,7 @@ fun DeleteAccountScreen(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
-    val moreViewModel: MoreViewModel = hiltViewModel()
+//    val moreViewModel: MoreViewModel = hiltViewModel()
 
     val deleteReasonList =
         listOf(
@@ -167,6 +167,7 @@ fun DeleteAccountScreen(
                     textFieldState = newValue
                 }
             },
+            placeholder = "계정 삭제 사유를 적어주세요.",
             keyboardActions = KeyboardActions(
                 onDone = {
                     focusManager.clearFocus()
