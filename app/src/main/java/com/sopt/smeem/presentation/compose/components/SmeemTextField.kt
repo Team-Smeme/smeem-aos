@@ -96,7 +96,7 @@ fun DeleteAccountTextFieldPreview() {
         value = TextFieldValue("텍스트"),
         onValueChange = {},
         minLines = 2,
-        placeholder = "계정 삭제 사유를 적어주세요.",
+        placeholder = "텍스트 힌트",
         backgroundColor = gray100,
         cursorColor = black,
         hasBorder = false,

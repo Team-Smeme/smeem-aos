@@ -92,7 +92,7 @@ fun MyPageNavHost(
 
                 MoreNavGraph.DeleteAccount.route -> TitleTopAppbar(
                     onNavigationIconClick = { navController.popBackStack() },
-                    title = stringResource(id = R.string.delete_account_title)
+                    title = stringResource(id = R.string.delete_account_navi_title)
                 )
             }
         }

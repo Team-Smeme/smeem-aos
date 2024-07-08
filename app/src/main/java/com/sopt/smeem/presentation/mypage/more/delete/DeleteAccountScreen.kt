@@ -68,11 +68,11 @@ fun DeleteAccountScreen(
 
     val deleteReasonList =
         listOf(
-            "이용이 어렵고 서비스가 불안정해요.",
-            "일기 작성을 도와주는 기능이 부족해요",
-            "일기 쓰기가 귀찮아요",
-            "다른 앱이 더 사용하기 편해요.",
-            "기타 의견"
+            stringResource(R.string.delete_account_reason_1),
+            stringResource(R.string.delete_account_reason_2),
+            stringResource(R.string.delete_account_reason_3),
+            stringResource(R.string.delete_account_reason_4),
+            stringResource(R.string.delete_account_reason_else)
         )
 
     val context = LocalContext.current
@@ -109,7 +109,7 @@ fun DeleteAccountScreen(
         VerticalSpacer(height = 14.dp)
 
         Text(
-            text = "정말 떠나시는 건가요?",
+            text = stringResource(R.string.delete_account_title),
             style = Typography.headlineMedium,
             color = black,
             modifier = Modifier.padding(start = 26.dp)
@@ -118,8 +118,7 @@ fun DeleteAccountScreen(
         VerticalSpacer(height = 6.dp)
 
         Text(
-            text = "계정을 삭제하는 이유를 선택해주세요.\n" +
-                    "서비스 개선에 참고할게요.",
+            text = stringResource(R.string.delete_account_subtitle),
             style = Typography.bodySmall.copy(
                 lineHeight = 22.sp
             ),
@@ -149,7 +148,7 @@ fun DeleteAccountScreen(
         VerticalSpacer(height = 27.dp)
 
         Text(
-            text = "계정 삭제 사유를 자유롭게 적어주세요.",
+            text = stringResource(R.string.delete_account_reason_label),
             style = Typography.bodyLarge.copy(
                 fontWeight = FontWeight.SemiBold,
                 lineHeight = 22.sp
@@ -167,7 +166,7 @@ fun DeleteAccountScreen(
                     textFieldState = newValue
                 }
             },
-            placeholder = "계정 삭제 사유를 적어주세요.",
+            placeholder = stringResource(R.string.delete_account_reason_placeholder),
             keyboardActions = KeyboardActions(
                 onDone = {
                     focusManager.clearFocus()
@@ -206,11 +205,11 @@ fun DeleteAccountScreen(
         Spacer(Modifier.weight(1f))
 
         SmeemButton(
-            text = "탈퇴하기",
+            text = stringResource(R.string.delete_account_navi_title),
             onClick = { setShowDeleteDialog(true) },
             modifier = Modifier.padding(horizontal = 18.dp),
-            isButtonEnabled = (selectedItem != "기타 의견" && selectedItem.isNotEmpty())
-                    || (selectedItem == "기타 의견" && textFieldState.text.isNotBlank() && textFieldState.text.length in REASON_MIN_LENGTH..REASON_MAX_LENGTH)
+            isButtonEnabled = (selectedItem != stringResource(R.string.delete_account_reason_else) && selectedItem.isNotEmpty())
+                    || (selectedItem == stringResource(R.string.delete_account_reason_else) && textFieldState.text.isNotBlank() && textFieldState.text.length in REASON_MIN_LENGTH..REASON_MAX_LENGTH)
         )
 
         VerticalSpacer(height = 16.dp)
