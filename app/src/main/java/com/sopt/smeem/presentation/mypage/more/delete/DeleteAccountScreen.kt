@@ -25,7 +25,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -75,7 +74,7 @@ fun DeleteAccountScreen(
     val coroutineScope = rememberCoroutineScope()
     var textFieldState by remember { mutableStateOf(TextFieldValue(text = "")) }
     val focusRequester = remember { FocusRequester() }
-    
+
     var selectedItem by rememberSaveable { mutableStateOf("") }
     val (showDeleteDialog, setShowDeleteDialog) = rememberSaveable { mutableStateOf(false) }
 
@@ -132,7 +131,11 @@ fun DeleteAccountScreen(
                 SelectCard(
                     isSelected = selectedItem == item,
                     selectContent = item,
-                    onClick = { selectedItem = item },
+                    onClick = {
+                        focusManager.clearFocus()
+                        keyboardController?.hide()
+                        selectedItem = item
+                    },
                 )
             }
         }
