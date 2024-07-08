@@ -1,7 +1,5 @@
 package com.sopt.smeem.presentation.mypage.more.delete
 
-import android.app.Activity
-import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.relocation.BringIntoViewRequester
-import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
@@ -39,7 +35,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.R
@@ -52,8 +47,6 @@ import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.mypage.REASON_MAX_LENGTH
 import com.sopt.smeem.presentation.mypage.REASON_MIN_LENGTH
 import com.sopt.smeem.presentation.mypage.components.SelectCard
-import com.sopt.smeem.presentation.mypage.more.MoreViewModel
-import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.addFocusCleaner
 import kotlinx.coroutines.launch
@@ -75,15 +68,14 @@ fun DeleteAccountScreen(
             stringResource(R.string.delete_account_reason_else)
         )
 
-    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
     var textFieldState by remember { mutableStateOf(TextFieldValue(text = "")) }
     val focusRequester = remember { FocusRequester() }
-    val bringIntoViewRequester = remember { BringIntoViewRequester() }
-
+    
     var selectedItem by rememberSaveable { mutableStateOf("") }
     val (showDeleteDialog, setShowDeleteDialog) = rememberSaveable { mutableStateOf(false) }
 
@@ -103,7 +95,7 @@ fun DeleteAccountScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scrollState)
             .addFocusCleaner(focusManager)
     ) {
         VerticalSpacer(height = 14.dp)
@@ -174,12 +166,11 @@ fun DeleteAccountScreen(
                 }),
             modifier = Modifier
                 .padding(horizontal = 18.dp)
-                .bringIntoViewRequester(bringIntoViewRequester)
                 .focusRequester(focusRequester)
                 .onFocusEvent { focusState ->
                     if (focusState.isFocused) {
                         coroutineScope.launch {
-                            bringIntoViewRequester.bringIntoView()
+                            scrollState.animateScrollTo(scrollState.maxValue)
                         }
                     }
                 }
@@ -204,9 +195,15 @@ fun DeleteAccountScreen(
 
         Spacer(Modifier.weight(1f))
 
+        VerticalSpacer(height = 12.dp)
+
         SmeemButton(
             text = stringResource(R.string.delete_account_navi_title),
-            onClick = { setShowDeleteDialog(true) },
+            onClick = {
+                focusManager.clearFocus()
+                keyboardController?.hide()
+                setShowDeleteDialog(true)
+            },
             modifier = Modifier.padding(horizontal = 18.dp),
             isButtonEnabled = (selectedItem != stringResource(R.string.delete_account_reason_else) && selectedItem.isNotEmpty())
                     || (selectedItem == stringResource(R.string.delete_account_reason_else) && textFieldState.text.isNotBlank() && textFieldState.text.length in REASON_MIN_LENGTH..REASON_MAX_LENGTH)
