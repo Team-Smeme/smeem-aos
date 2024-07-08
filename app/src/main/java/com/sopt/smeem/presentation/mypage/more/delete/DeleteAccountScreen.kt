@@ -131,7 +131,7 @@ fun DeleteAccountScreen(
             )
         )
 
-        VerticalSpacer(height = 12.dp)
+        Spacer(Modifier.weight(1f))
 
         SmeemButton(
             text = "탈퇴하기",
