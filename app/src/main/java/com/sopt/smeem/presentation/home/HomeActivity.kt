@@ -6,10 +6,12 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.smeem.R
@@ -24,6 +26,7 @@ import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
 import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
 import com.sopt.smeem.presentation.base.BindingActivity
 import com.sopt.smeem.presentation.base.DefaultSnackBar
+import com.sopt.smeem.presentation.compose.components.Banner
 import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.home.WritingBottomSheet.Companion.TAG
@@ -33,6 +36,7 @@ import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.util.DateUtil
 import com.sopt.smeem.util.getWeekStartDate
+import com.sopt.smeem.util.setComposeContent
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
@@ -46,7 +50,6 @@ import java.util.Locale
 
 @AndroidEntryPoint
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
-
     private lateinit var bs: WritingBottomSheet
     private var backPressedTime: Long = 0
 
@@ -57,23 +60,23 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         super.onCreate(savedInstanceState)
 
         val calendar = binding.composeCalendar
+        val banner = binding.composeBanner
         bs = WritingBottomSheet()
         initView(LocalDate.now())
         setInitListener()
-        calendar.apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                SmeemTheme {
-                    Surface(
-                        modifier = Modifier.fillMaxWidth(),
-                        color = MaterialTheme.colorScheme.background,
-                    ) {
-                        SmeemCalendar(homeViewModel)
-                    }
+
+        setComposeContent(calendar) {
+            SmeemTheme {
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.background,
+                ) {
+                    SmeemCalendar(homeViewModel)
                 }
             }
         }
 
+        fetchConfigInfo(banner)
         moveToMyPage()
         observeData()
         onTouchWrite()
@@ -142,10 +145,10 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                         BadgeDialogFragment.newInstance(
                             badge.name,
                             badge.imageUrl,
-                            homeViewModel.isFirstBadge
-                        ), "badgeDialog"
-                    )
-                    .commitAllowingStateLoss()
+                            homeViewModel.isFirstBadge,
+                        ),
+                        "badgeDialog",
+                    ).commitAllowingStateLoss()
                 with(homeViewModel) {
                     if (isFirstBadge) isFirstBadge = false
                 }
@@ -155,29 +158,32 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     }
 
     private suspend fun updateWriteDiaryButtonVisibility() {
-        val recentDiaryDateFlow: Flow<String> = dataStore.data
-            .map { storage ->
-                storage[RECENT_DIARY_DATE] ?: "2023-01-14"
-            }
+        val recentDiaryDateFlow: Flow<String> =
+            dataStore.data
+                .map { storage ->
+                    storage[RECENT_DIARY_DATE] ?: "2023-01-14"
+                }
 
         recentDiaryDateFlow.collect { date ->
             val recent = DateUtil.asLocalDate(date)
             val isTodaySelected = homeViewModel.selectedDate.value == LocalDate.now()
             val isTodayDiaryWritten = recent == LocalDate.now()
 
-            binding.btnWriteDiary.visibility = if (isTodaySelected && !isTodayDiaryWritten) {
-                View.VISIBLE
-            } else {
-                View.INVISIBLE
-            }
+            binding.btnWriteDiary.visibility =
+                if (isTodaySelected && !isTodayDiaryWritten) {
+                    View.VISIBLE
+                } else {
+                    View.INVISIBLE
+                }
         }
     }
 
     private fun setInitListener() {
         binding.clDiaryList.setOnSingleClickListener {
-            Intent(this, DiaryDetailActivity::class.java).apply {
-                putExtra(DIARY_ID, homeViewModel.diaryList.value?.id)
-            }.run(::startActivity)
+            Intent(this, DiaryDetailActivity::class.java)
+                .apply {
+                    putExtra(DIARY_ID, homeViewModel.diaryList.value?.id)
+                }.run(::startActivity)
         }
     }
 
@@ -211,17 +217,41 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 override fun handleOnBackPressed() {
                     if (System.currentTimeMillis() - backPressedTime >= BACK_PRESSED_INTERVAL) {
                         backPressedTime = System.currentTimeMillis()
-                        Snackbar.make(
-                            binding.root,
-                            getString(R.string.notice_back_process),
-                            Snackbar.LENGTH_SHORT,
-                        ).show()
+                        Snackbar
+                            .make(
+                                binding.root,
+                                getString(R.string.notice_back_process),
+                                Snackbar.LENGTH_SHORT,
+                            ).show()
                     } else {
                         finish()
                     }
                 }
             }
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    private fun fetchConfigInfo(banner: ComposeView) {
+        lifecycleScope.launch {
+            homeViewModel.configInfo.collect { configInfo ->
+                setComposeContent(banner) {
+                    SmeemTheme {
+                        Surface(
+                            modifier = Modifier.fillMaxWidth(),
+                            color = MaterialTheme.colorScheme.background,
+                        ) {
+                            Banner(
+                                title = configInfo.bannerTitle,
+                                content = configInfo.bannerContent,
+                                onBannerClick = { /*TODO*/ },
+                                onBannerClose = { /*TODO*/ },
+                                modifier = Modifier.padding(horizontal = 18.dp),
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 
     companion object {

@@ -130,6 +130,15 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/compose_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_write_diary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <Button
             android:id="@+id/btn_write_diary"
             android:layout_width="0dp"
