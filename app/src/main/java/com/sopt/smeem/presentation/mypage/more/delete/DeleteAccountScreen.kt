@@ -1,14 +1,12 @@
 package com.sopt.smeem.presentation.mypage.more.delete
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.relocation.BringIntoViewRequester
@@ -29,7 +27,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
@@ -45,6 +42,8 @@ import com.sopt.smeem.presentation.compose.components.SmeemTextField
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray100
+import com.sopt.smeem.presentation.mypage.REASON_MAX_LENGTH
+import com.sopt.smeem.presentation.mypage.REASON_MIN_LENGTH
 import com.sopt.smeem.presentation.mypage.components.SelectCard
 import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.addFocusCleaner
@@ -137,7 +136,9 @@ fun DeleteAccountScreen(
         SmeemTextField(
             value = textFieldState,
             onValueChange = { newValue ->
-                textFieldState = newValue
+                if (newValue.text.length <= REASON_MAX_LENGTH) {
+                    textFieldState = newValue
+                }
             },
             keyboardActions = KeyboardActions(
                 onDone = {

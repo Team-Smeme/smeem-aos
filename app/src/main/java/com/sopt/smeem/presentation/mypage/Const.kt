@@ -14,3 +14,6 @@ const val DELETE_ACCOUNT = "DeleteAccount"
 
 const val NICKNAME_MIN_LENGTH = 1
 const val NICKNAME_MAX_LENGTH = 10
+
+const val REASON_MIN_LENGTH = 1
+const val REASON_MAX_LENGTH = 250
