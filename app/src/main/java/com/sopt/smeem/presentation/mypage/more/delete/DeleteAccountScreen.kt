@@ -181,7 +181,8 @@ fun DeleteAccountScreen(
             text = "탈퇴하기",
             onClick = {},
             modifier = Modifier.padding(horizontal = 18.dp),
-            isButtonEnabled = true
+            isButtonEnabled = (selectedItem != "기타 의견" && selectedItem.isNotEmpty())
+                    || (selectedItem == "기타 의견" && textFieldState.text.isNotBlank() && textFieldState.text.length in REASON_MIN_LENGTH..REASON_MAX_LENGTH)
         )
 
         VerticalSpacer(height = 16.dp)
