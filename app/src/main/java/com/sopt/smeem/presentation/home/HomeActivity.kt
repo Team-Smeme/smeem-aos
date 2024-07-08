@@ -43,6 +43,7 @@ import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -78,7 +79,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
             }
         }
 
-        fetchConfigInfo(banner)
+        observeBannerState(banner)
         moveToMyPage()
         observeData()
         onTouchWrite()
@@ -233,28 +234,35 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
-    private fun fetchConfigInfo(banner: ComposeView) {
+    private fun observeBannerState(bannerView: ComposeView) {
         lifecycleScope.launch {
-            homeViewModel.configInfo.collect { configInfo ->
-                setComposeContent(banner) {
-                    SmeemTheme {
-                        Surface(
-                            modifier = Modifier.fillMaxWidth(),
-                            color = MaterialTheme.colorScheme.background,
-                        ) {
-                            if (configInfo.isBannerEnabled) {
-                                Banner(
-                                    title = configInfo.bannerTitle,
-                                    content = configInfo.bannerContent,
-                                    onBannerClick = { handleBannerClickEvent(configInfo) },
-                                    onBannerClose = { /*TODO*/ },
-                                    modifier = Modifier.padding(horizontal = 18.dp),
-                                )
+            homeViewModel.configInfo
+                .combine(homeViewModel.isBannerVisible) { configInfo, isVisible ->
+                    Pair(configInfo, isVisible)
+                }.collect { (configInfo, isVisible) ->
+                    setComposeContent(bannerView) {
+                        SmeemTheme {
+                            if (isVisible) {
+                                Surface(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    color = MaterialTheme.colorScheme.background,
+                                ) {
+                                    Banner(
+                                        title = configInfo.bannerTitle,
+                                        content = configInfo.bannerContent,
+                                        onBannerClick = {
+                                            handleBannerClickEvent(configInfo)
+                                        },
+                                        onBannerClose = {
+                                            homeViewModel.closeBanner()
+                                        },
+                                        modifier = Modifier.padding(horizontal = 18.dp),
+                                    )
+                                }
                             }
                         }
                     }
                 }
-            }
         }
     }
 

@@ -9,8 +9,11 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.sopt.smeem.Smeem
+import com.sopt.smeem.data.SmeemDataStore.BANNER_CLOSED
+import com.sopt.smeem.data.SmeemDataStore.BANNER_VERSION
 import com.sopt.smeem.domain.model.Date
 import com.sopt.smeem.domain.repository.DiaryRepository
+import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.domain.repository.UserRepository
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.home.calendar.core.CalendarState
@@ -24,6 +27,7 @@ import com.sopt.smeem.util.toYearMonth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -43,6 +47,7 @@ class HomeViewModel
     constructor(
         private val diaryRepository: DiaryRepository,
         private val userRepository: UserRepository,
+        private val localRepository: LocalRepository,
     ) : ViewModel() {
         /***** variables *****/
 
@@ -93,10 +98,15 @@ class HomeViewModel
         private val _configInfo = MutableStateFlow(ConfigInfo())
         val configInfo: StateFlow<ConfigInfo> = _configInfo
 
+        // banner
+        private val _isBannerVisible = MutableStateFlow(true)
+        val isBannerVisible: StateFlow<Boolean> = _isBannerVisible
+
         /***** init *****/
 
         init {
             fetchRemoteConfig()
+            observeBannerState()
         }
 
         /***** functions *****/
@@ -293,10 +303,32 @@ class HomeViewModel
             }
         }
 
+        private suspend fun updateBannerClosed() =
+            coroutineScope {
+                launch {
+                    localRepository.setBooleanValue(
+                        BANNER_CLOSED,
+                        true,
+                    )
+                }
+            }
+
+        fun closeBanner() {
+            viewModelScope.launch {
+                updateBannerClosed()
+                _isBannerVisible.value = false
+            }
+        }
+
+        /**
+         * Firebase Remote Config 에서 데이터를 가져옴
+         * 로컬에 저장된 배너 버전과 비교하여 새로운 배너가 있을 경우
+         * 배너를 보여주고, 로컬에 저장된 버전을 업데이트
+         */
         private fun fetchRemoteConfig() {
             getRemoteConfigInstance().fetchAndActivate().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    _configInfo.value =
+                    val newConfigInfo =
                         ConfigInfo(
                             bannerVersion = getRemoteConfigInstance().getLong("banner_version").toInt(),
                             bannerTitle = getRemoteConfigInstance().getString("banner_title"),
@@ -305,8 +337,34 @@ class HomeViewModel
                             isExternalEvent = getRemoteConfigInstance().getBoolean("is_external_event"),
                             bannerEventPath = getRemoteConfigInstance().getString("banner_event_path"),
                         )
+
+                    viewModelScope.launch {
+                        val savedBannerVersion = localRepository.getIntValue("banner_version")
+                        val isBannerClosed = localRepository.getBooleanValue("banner_closed")
+
+                        if (newConfigInfo.bannerVersion > savedBannerVersion) {
+                            localRepository.setIntValue(BANNER_VERSION, newConfigInfo.bannerVersion)
+                            localRepository.setBooleanValue(BANNER_CLOSED, true)
+                            _isBannerVisible.value = newConfigInfo.isBannerEnabled
+                        } else {
+                            _isBannerVisible.value =
+                                newConfigInfo.isBannerEnabled &&
+                                !isBannerClosed
+                        }
+                    }
+
+                    _configInfo.value = newConfigInfo
                 } else {
                     Timber.tag("REMOTE_CONFIG").e("fetch failed")
+                }
+            }
+        }
+
+        private fun observeBannerState() {
+            viewModelScope.launch {
+                localRepository.getBooleanFlow("banner_closed").collect { isClosed ->
+                    val config = _configInfo.value
+                    _isBannerVisible.value = config.isBannerEnabled && !isClosed
                 }
             }
         }
