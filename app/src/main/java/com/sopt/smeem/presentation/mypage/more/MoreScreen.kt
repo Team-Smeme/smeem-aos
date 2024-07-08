@@ -53,19 +53,6 @@ fun MoreScreen(
             })
     }
 
-    // 계정 삭제 대화상자
-//    if (showDeleteDialog) {
-//        SmeemDialog(
-//            setShowDialog = setShowDeleteDialog,
-//            title = stringResource(R.string.smeem_dialog_delete_account_title),
-//            content = stringResource(R.string.smeem_dialog_delete_dialog_content),
-//            onConfirmButtonClick = {
-//                viewModel.withdrawal()
-//                context.startActivity(Intent(context, SplashLoginActivity::class.java))
-//                (context as? Activity)?.finishAffinity()
-//            })
-//    }
-
     /**** UI ****/
     Column(
         modifier = modifier

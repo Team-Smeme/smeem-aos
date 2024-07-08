@@ -1,5 +1,7 @@
 package com.sopt.smeem.presentation.mypage.more.delete
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,17 +29,22 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.sopt.smeem.R
 import com.sopt.smeem.presentation.compose.components.SmeemButton
+import com.sopt.smeem.presentation.compose.components.SmeemDialog
 import com.sopt.smeem.presentation.compose.components.SmeemTextField
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
@@ -45,6 +52,8 @@ import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.mypage.REASON_MAX_LENGTH
 import com.sopt.smeem.presentation.mypage.REASON_MIN_LENGTH
 import com.sopt.smeem.presentation.mypage.components.SelectCard
+import com.sopt.smeem.presentation.mypage.more.MoreViewModel
+import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.addFocusCleaner
 import kotlinx.coroutines.launch
@@ -55,6 +64,8 @@ fun DeleteAccountScreen(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
+    val moreViewModel: MoreViewModel = hiltViewModel()
+
     val deleteReasonList =
         listOf(
             "이용이 어렵고 서비스가 불안정해요.",
@@ -64,14 +75,30 @@ fun DeleteAccountScreen(
             "기타 의견"
         )
 
+    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
     val coroutineScope = rememberCoroutineScope()
-    var selectedItem by rememberSaveable { mutableStateOf("") }
     var textFieldState by remember { mutableStateOf(TextFieldValue(text = "")) }
     val focusRequester = remember { FocusRequester() }
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
+
+    var selectedItem by rememberSaveable { mutableStateOf("") }
+    val (showDeleteDialog, setShowDeleteDialog) = rememberSaveable { mutableStateOf(false) }
+
+    if (showDeleteDialog) {
+        SmeemDialog(
+            setShowDialog = setShowDeleteDialog,
+            title = stringResource(R.string.smeem_dialog_delete_account_title),
+            content = stringResource(R.string.smeem_dialog_delete_dialog_content),
+            onConfirmButtonClick = {
+//                moreViewModel.withdrawal()
+//                // TODO: 탈퇴사유 서버에 전송
+//                context.startActivity(Intent(context, SplashLoginActivity::class.java))
+//                (context as? Activity)?.finishAffinity()
+            })
+    }
 
     Column(
         modifier = modifier
@@ -179,7 +206,7 @@ fun DeleteAccountScreen(
 
         SmeemButton(
             text = "탈퇴하기",
-            onClick = {},
+            onClick = { setShowDeleteDialog(true) },
             modifier = Modifier.padding(horizontal = 18.dp),
             isButtonEnabled = (selectedItem != "기타 의견" && selectedItem.isNotEmpty())
                     || (selectedItem == "기타 의견" && textFieldState.text.isNotBlank() && textFieldState.text.length in REASON_MIN_LENGTH..REASON_MAX_LENGTH)
