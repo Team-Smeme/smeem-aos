@@ -1,10 +1,12 @@
 package com.sopt.smeem.presentation.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -243,7 +245,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                             Banner(
                                 title = configInfo.bannerTitle,
                                 content = configInfo.bannerContent,
-                                onBannerClick = { /*TODO*/ },
+                                onBannerClick = { handleBannerClickEvent(configInfo) },
                                 onBannerClose = { /*TODO*/ },
                                 modifier = Modifier.padding(horizontal = 18.dp),
                             )
@@ -251,6 +253,18 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                     }
                 }
             }
+        }
+    }
+
+    private fun handleBannerClickEvent(configInfo: ConfigInfo) {
+        if (configInfo.isExternalEvent) {
+            Timber.e("외부 이벤트 처리")
+            CustomTabsIntent.Builder().build().run {
+                launchUrl(this@HomeActivity, Uri.parse(configInfo.bannerEventPath))
+            }
+        } else {
+            Timber.e("내부 이벤트 처리")
+            // 내부 이벤트 처리
         }
     }
 
