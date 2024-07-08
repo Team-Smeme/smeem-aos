@@ -1,23 +1,37 @@
 package com.sopt.smeem.presentation.mypage.more.delete
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -33,7 +47,9 @@ import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.mypage.components.SelectCard
 import com.sopt.smeem.util.VerticalSpacer
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DeleteAccountScreen(
     modifier: Modifier = Modifier,
@@ -47,11 +63,21 @@ fun DeleteAccountScreen(
             "다른 앱이 더 사용하기 편해요.",
             "기타 의견"
         )
+
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    val coroutineScope = rememberCoroutineScope()
     var selectedItem by rememberSaveable { mutableStateOf("") }
     var textFieldState by remember { mutableStateOf(TextFieldValue(text = "")) }
     val focusRequester = remember { FocusRequester() }
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
         VerticalSpacer(height = 14.dp)
 
         Text(
@@ -76,7 +102,9 @@ fun DeleteAccountScreen(
         VerticalSpacer(height = 12.dp)
 
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(max = 1000.dp),
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             items(deleteReasonList.size) { index ->
@@ -109,9 +137,22 @@ fun DeleteAccountScreen(
             onValueChange = { newValue ->
                 textFieldState = newValue
             },
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    focusManager.clearFocus()
+                    keyboardController?.hide()
+                }),
             modifier = Modifier
                 .padding(horizontal = 18.dp)
+                .bringIntoViewRequester(bringIntoViewRequester)
                 .focusRequester(focusRequester)
+                .onFocusEvent { focusState ->
+                    if (focusState.isFocused) {
+                        coroutineScope.launch {
+                            bringIntoViewRequester.bringIntoView()
+                        }
+                    }
+                }
                 .onFocusChanged { focusState ->
                     if (focusState.isFocused) {
                         textFieldState = textFieldState.copy(

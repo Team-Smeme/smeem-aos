@@ -1,18 +1,15 @@
 package com.sopt.smeem.presentation.compose.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -26,7 +23,6 @@ import androidx.compose.ui.unit.sp
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray100
-import com.sopt.smeem.presentation.compose.theme.gray400
 import com.sopt.smeem.presentation.compose.theme.point
 import com.sopt.smeem.presentation.compose.theme.white
 
@@ -35,6 +31,7 @@ fun SmeemTextField(
     modifier: Modifier = Modifier,
     value: TextFieldValue,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     onValueChange: (TextFieldValue) -> Unit,
     minLines: Int = 1,
     backgroundColor: Color = white,
@@ -53,6 +50,7 @@ fun SmeemTextField(
             keyboardType = keyboardOptions.keyboardType,
             imeAction = ImeAction.Done
         ),
+        keyboardActions = keyboardActions,
         modifier = modifier
             .fillMaxWidth()
             .border(
