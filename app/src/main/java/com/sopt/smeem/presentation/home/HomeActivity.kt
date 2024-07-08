@@ -242,13 +242,15 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                             modifier = Modifier.fillMaxWidth(),
                             color = MaterialTheme.colorScheme.background,
                         ) {
-                            Banner(
-                                title = configInfo.bannerTitle,
-                                content = configInfo.bannerContent,
-                                onBannerClick = { handleBannerClickEvent(configInfo) },
-                                onBannerClose = { /*TODO*/ },
-                                modifier = Modifier.padding(horizontal = 18.dp),
-                            )
+                            if (configInfo.isBannerEnabled) {
+                                Banner(
+                                    title = configInfo.bannerTitle,
+                                    content = configInfo.bannerContent,
+                                    onBannerClick = { handleBannerClickEvent(configInfo) },
+                                    onBannerClose = { /*TODO*/ },
+                                    modifier = Modifier.padding(horizontal = 18.dp),
+                                )
+                            }
                         }
                     }
                 }
