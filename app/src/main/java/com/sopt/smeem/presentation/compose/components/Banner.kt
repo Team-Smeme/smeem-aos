@@ -25,6 +25,7 @@ import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.compose.theme.gray200
 import com.sopt.smeem.util.HorizontalSpacer
 import com.sopt.smeem.util.VerticalSpacer
+import com.sopt.smeem.util.noRippleClickable
 
 @Composable
 fun Banner(
@@ -70,7 +71,7 @@ fun Banner(
                 painter = painterResource(id = R.drawable.ic_x),
                 contentDescription = "close banner",
                 tint = gray200,
-                modifier = Modifier.clickable { onBannerClose() }
+                modifier = Modifier.noRippleClickable { onBannerClose() }
             )
 
             HorizontalSpacer(width = 8.dp)
