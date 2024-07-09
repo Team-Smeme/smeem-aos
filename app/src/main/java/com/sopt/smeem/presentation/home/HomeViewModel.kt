@@ -326,37 +326,47 @@ class HomeViewModel
          * 배너를 보여주고, 로컬에 저장된 버전을 업데이트
          */
         private fun fetchRemoteConfig() {
-            getRemoteConfigInstance().fetchAndActivate().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val newConfigInfo =
-                        ConfigInfo(
-                            bannerVersion = getRemoteConfigInstance().getLong("banner_version").toInt(),
-                            bannerTitle = getRemoteConfigInstance().getString("banner_title"),
-                            bannerContent = getRemoteConfigInstance().getString("banner_content"),
-                            isBannerEnabled = getRemoteConfigInstance().getBoolean("is_banner_enabled"),
-                            isExternalEvent = getRemoteConfigInstance().getBoolean("is_external_event"),
-                            bannerEventPath = getRemoteConfigInstance().getString("banner_event_path"),
-                        )
+            try {
+                getRemoteConfigInstance().fetchAndActivate().addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val newConfigInfo =
+                            ConfigInfo(
+                                bannerVersion =
+                                    getRemoteConfigInstance()
+                                        .getLong("banner_version")
+                                        .toInt(),
+                                bannerTitle = getRemoteConfigInstance().getString("banner_title"),
+                                bannerContent = getRemoteConfigInstance().getString("banner_content"),
+                                isBannerEnabled = getRemoteConfigInstance().getBoolean("is_banner_enabled"),
+                                isExternalEvent = getRemoteConfigInstance().getBoolean("is_external_event"),
+                                bannerEventPath = getRemoteConfigInstance().getString("banner_event_path"),
+                            )
 
-                    viewModelScope.launch {
-                        val savedBannerVersion = localRepository.getIntValue("banner_version")
-                        val isBannerClosed = localRepository.getBooleanValue("banner_closed")
+                        viewModelScope.launch {
+                            val savedBannerVersion = localRepository.getIntValue("banner_version")
+                            val isBannerClosed = localRepository.getBooleanValue("banner_closed")
 
-                        if (newConfigInfo.bannerVersion > savedBannerVersion) {
-                            localRepository.setIntValue(BANNER_VERSION, newConfigInfo.bannerVersion)
-                            localRepository.setBooleanValue(BANNER_CLOSED, true)
-                            _isBannerVisible.value = newConfigInfo.isBannerEnabled
-                        } else {
-                            _isBannerVisible.value =
-                                newConfigInfo.isBannerEnabled &&
-                                !isBannerClosed
+                            if (newConfigInfo.bannerVersion > savedBannerVersion) {
+                                localRepository.setIntValue(
+                                    BANNER_VERSION,
+                                    newConfigInfo.bannerVersion,
+                                )
+                                localRepository.setBooleanValue(BANNER_CLOSED, true)
+                                _isBannerVisible.value = newConfigInfo.isBannerEnabled
+                            } else {
+                                _isBannerVisible.value =
+                                    newConfigInfo.isBannerEnabled &&
+                                    !isBannerClosed
+                            }
                         }
-                    }
 
-                    _configInfo.value = newConfigInfo
-                } else {
-                    Timber.tag("REMOTE_CONFIG").e("fetch failed")
+                        _configInfo.value = newConfigInfo
+                    } else {
+                        Timber.tag("REMOTE_CONFIG").e("fetch failed")
+                    }
                 }
+            } catch (e: Exception) {
+                Timber.tag("REMOTE_CONFIG").e(e)
             }
         }
 
