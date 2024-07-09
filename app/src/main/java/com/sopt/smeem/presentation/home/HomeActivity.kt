@@ -3,6 +3,7 @@ package com.sopt.smeem.presentation.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
@@ -176,7 +177,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 if (isTodaySelected && !isTodayDiaryWritten) {
                     View.VISIBLE
                 } else {
-                    View.INVISIBLE
+                    View.GONE
                 }
         }
     }
@@ -242,6 +243,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 }.collect { (configInfo, isVisible) ->
                     setComposeContent(bannerView) {
                         SmeemTheme {
+                            Log.e("HomeActivity", "observeBannerState: isVisible = $isVisible")
                             if (isVisible) {
                                 Surface(
                                     modifier = Modifier.fillMaxWidth(),
@@ -256,7 +258,11 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                                         onBannerClose = {
                                             homeViewModel.closeBanner()
                                         },
-                                        modifier = Modifier.padding(horizontal = 18.dp),
+                                        modifier =
+                                            Modifier.padding(
+                                                horizontal = 18.dp,
+                                                vertical = 12.dp,
+                                            ),
                                     )
                                 }
                             }
@@ -268,12 +274,10 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private fun handleBannerClickEvent(configInfo: ConfigInfo) {
         if (configInfo.isExternalEvent) {
-            Timber.e("외부 이벤트 처리")
             CustomTabsIntent.Builder().build().run {
                 launchUrl(this@HomeActivity, Uri.parse(configInfo.bannerEventPath))
             }
         } else {
-            Timber.e("내부 이벤트 처리")
             // 내부 이벤트 처리
         }
     }
