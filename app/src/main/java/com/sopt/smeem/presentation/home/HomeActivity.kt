@@ -3,7 +3,6 @@ package com.sopt.smeem.presentation.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
@@ -37,6 +36,8 @@ import com.sopt.smeem.presentation.home.calendar.SmeemCalendar
 import com.sopt.smeem.presentation.home.calendar.core.CalendarState
 import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.presentation.mypage.MyPageActivity
+import com.sopt.smeem.presentation.write.foreign.ForeignWriteActivity
+import com.sopt.smeem.presentation.write.natiive.NativeWriteStep1Activity
 import com.sopt.smeem.util.DateUtil
 import com.sopt.smeem.util.getWeekStartDate
 import com.sopt.smeem.util.setComposeContent
@@ -243,7 +244,6 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 }.collect { (configInfo, isVisible) ->
                     setComposeContent(bannerView) {
                         SmeemTheme {
-                            Log.e("HomeActivity", "observeBannerState: isVisible = $isVisible")
                             if (isVisible) {
                                 Surface(
                                     modifier = Modifier.fillMaxWidth(),
@@ -272,13 +272,31 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
     }
 
+    /**
+     * 배너 클릭 이벤트 처리
+     * 외부 이벤트일 시 크롬 탭으로 URL 열기
+     * 내부 이벤트일 시 내부 화면으로 이동
+     */
     private fun handleBannerClickEvent(configInfo: ConfigInfo) {
         if (configInfo.isExternalEvent) {
             CustomTabsIntent.Builder().build().run {
                 launchUrl(this@HomeActivity, Uri.parse(configInfo.bannerEventPath))
             }
         } else {
-            // 내부 이벤트 처리
+            when (configInfo.bannerEventPath) {
+                // 한국어 일기 작성
+                "native_write_diary" -> {
+                    startActivity(Intent(this, NativeWriteStep1Activity::class.java))
+                }
+                // 영어 일기 작성
+                "foreign_write_diary" -> {
+                    startActivity(Intent(this, ForeignWriteActivity::class.java))
+                }
+                // 마이페이지 - 성과 요약
+                "my_page" -> {
+                    startActivity(Intent(this, MyPageActivity::class.java))
+                }
+            }
         }
     }
 
