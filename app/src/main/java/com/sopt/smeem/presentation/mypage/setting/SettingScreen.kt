@@ -1,10 +1,15 @@
 package com.sopt.smeem.presentation.mypage.setting
 
+import android.net.Uri
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,8 +27,10 @@ import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.presentation.compose.components.LoadingScreen
 import com.sopt.smeem.presentation.compose.components.SmeemAlarmCard
+import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.presentation.mypage.components.ChangeMyPlanCard
 import com.sopt.smeem.presentation.mypage.components.ChangeNicknameCard
+import com.sopt.smeem.presentation.mypage.components.SendReviewCard
 import com.sopt.smeem.presentation.mypage.components.StudyNotificationCard
 import com.sopt.smeem.presentation.mypage.components.TargetLanguageCard
 import com.sopt.smeem.presentation.mypage.navigation.SettingNavGraph
@@ -37,7 +44,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun SettingScreen(
     navController: NavController,
     viewModel: SettingViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val state by viewModel.collectAsState()
     val context = LocalContext.current
@@ -58,19 +65,26 @@ fun SettingScreen(
             val username = response.username
             val myPlan = response.trainingPlan?.content
             // val targetLanguage = response.targetLang TODO : 언어 추가시 주석 해제
-            val selectedTrainingTime = if (response.trainingTime!!.isSet()) {
-                response.trainingTime
-            } else {
-                TrainingTime(
-                    setOf(Day.MON, Day.TUE, Day.WED, Day.THU, Day.FRI),
-                    22,
-                    0
-                )
-            }
+            val selectedTrainingTime =
+                if (response.trainingTime!!.isSet()) {
+                    response.trainingTime
+                } else {
+                    TrainingTime(
+                        setOf(Day.MON, Day.TUE, Day.WED, Day.THU, Day.FRI),
+                        22,
+                        0,
+                    )
+                }
             var isSwitchChecked by rememberSaveable { mutableStateOf(response.hasPushAlarm) }
 
             Column(
-                modifier = modifier.fillMaxSize(),
+                modifier =
+                    modifier
+                        .fillMaxSize()
+                        .background(white)
+                        .verticalScroll(
+                            rememberScrollState(),
+                        ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 VerticalSpacer(height = 50.dp)
@@ -80,10 +94,10 @@ fun SettingScreen(
                     onEditClick = {
                         navController.navigate(
                             SettingNavGraph.ChangeNickname.createRoute(
-                                username
-                            )
+                                username,
+                            ),
                         )
-                    }
+                    },
                 )
 
                 VerticalSpacer(height = 28.dp)
@@ -93,7 +107,8 @@ fun SettingScreen(
                     myPlan = myPlan,
                     onEditClick = {
                         navController.navigate(SettingNavGraph.EditTrainingPlan.route)
-                    })
+                    },
+                )
 
                 VerticalSpacer(height = 28.dp)
 
@@ -110,17 +125,17 @@ fun SettingScreen(
                                 hasAlarm = true,
                                 onError = { t ->
                                     Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-                                }
+                                },
                             )
                         } else {
                             viewModel.changePushAlarm(
                                 hasAlarm = false,
                                 onError = { t ->
                                     Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-                                }
+                                },
                             )
                         }
-                    }
+                    },
                 )
 
                 VerticalSpacer(height = 10.dp)
@@ -134,15 +149,28 @@ fun SettingScreen(
                         if (isSwitchChecked) {
                             navController.currentBackStackEntry?.savedStateHandle?.set(
                                 "trainingTime",
-                                selectedTrainingTime
+                                selectedTrainingTime,
                             )
 
                             navController.navigate(
-                                SettingNavGraph.EditTrainingTime.route
+                                SettingNavGraph.EditTrainingTime.route,
                             )
                         }
-                    }
+                    },
                 )
+
+                VerticalSpacer(height = 56.dp)
+
+                SendReviewCard {
+                    CustomTabsIntent.Builder().build().run {
+                        launchUrl(
+                            context,
+                            Uri.parse("https://walla.my/survey/2SAyT8aWPKjqaL4cZ5vm"),
+                        )
+                    }
+                }
+
+                VerticalSpacer(height = 84.dp)
             }
         }
 
@@ -166,6 +194,6 @@ fun SettingScreenPreview() {
     SettingScreen(
         navController = rememberNavController(),
         viewModel = hiltViewModel(),
-        modifier = Modifier
+        modifier = Modifier,
     )
 }
