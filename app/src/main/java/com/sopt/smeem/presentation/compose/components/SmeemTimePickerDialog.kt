@@ -52,9 +52,9 @@ fun SmeemTimePickerDialog(
     val selectedMinute = minutePickerState.selectedItem.toInt()
 
     val selectedHour24 = if (selectedTimeOfDay == "오후") {
-        if (selectedHour == 12) selectedHour else selectedHour + 12
+        if (selectedHour == 12) 12 else selectedHour + 12
     } else {
-        if (selectedHour == 12) 0 else selectedHour
+        if (selectedHour == 12) 24 else selectedHour
     }
 
     Dialog(
