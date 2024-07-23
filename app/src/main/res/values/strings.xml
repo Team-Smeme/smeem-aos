@@ -112,11 +112,6 @@
     <string name="delete_account_navi_title">탈퇴하기</string>
     <string name="delete_account_title">정말 떠나시는 건가요?</string>
     <string name="delete_account_subtitle">계정을 삭제하는 이유를 선택해주세요.\n서비스 개선에 참고할게요.</string>
-    <string name="delete_account_reason_1">이용이 어렵고 서비스가 불안정해요.</string>
-    <string name="delete_account_reason_2">일기 작성을 도와주는 기능이 부족해요</string>
-    <string name="delete_account_reason_3">일기 쓰기가 귀찮아요</string>
-    <string name="delete_account_reason_4">다른 앱이 더 사용하기 편해요.</string>
-    <string name="delete_account_reason_else">기타 의견</string>
     <string name="delete_account_reason_label">계정 삭제 사유를 자유롭게 적어주세요.</string>
     <string name="delete_account_reason_placeholder">계정 삭제 사유를 적어주세요.</string>
 
