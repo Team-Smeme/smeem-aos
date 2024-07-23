@@ -3,14 +3,15 @@ package com.sopt.smeem.data.service
 import com.sopt.smeem.data.model.request.PushRequest
 import com.sopt.smeem.data.model.request.TrainingRequest
 import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
+import com.sopt.smeem.data.model.request.WithdrawRequest
 import com.sopt.smeem.data.model.response.ApiResponse
 import com.sopt.smeem.data.model.response.MyInfoResponse
 import com.sopt.smeem.data.model.response.MyPlanDataResponse
 import com.sopt.smeem.data.model.response.MySmeemDataResponse
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 
@@ -53,9 +54,11 @@ interface UserService {
         @Header("Authorization") token: String,
         @Body request: PushRequest
     ): Response<ApiResponse<Unit>>
-
-    @DELETE("/api/v2/auth")
-    suspend fun delete(): Response<ApiResponse<Unit>>
+    
+    @HTTP(method = "DELETE", path = "/api/v2/auth", hasBody = true)
+    suspend fun delete(
+        @Body request: WithdrawRequest
+    ): Response<ApiResponse<Unit>>
 
     @GET("/api/v2/members/performance/summary")
     suspend fun getMySmeemData(): Response<ApiResponse<MySmeemDataResponse>>

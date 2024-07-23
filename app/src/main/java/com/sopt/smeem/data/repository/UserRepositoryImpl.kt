@@ -3,6 +3,7 @@ package com.sopt.smeem.data.repository
 import com.sopt.smeem.data.model.request.PushRequest
 import com.sopt.smeem.data.model.request.TrainingRequest
 import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
+import com.sopt.smeem.data.model.request.WithdrawRequest
 import com.sopt.smeem.data.service.MyBadgeService
 import com.sopt.smeem.data.service.UserService
 import com.sopt.smeem.domain.common.ApiResult
@@ -13,6 +14,7 @@ import com.sopt.smeem.domain.dto.MyPlanDto
 import com.sopt.smeem.domain.dto.MyPlanDtoWrapper
 import com.sopt.smeem.domain.dto.MySmeemDataDto
 import com.sopt.smeem.domain.dto.PostOnBoardingDto
+import com.sopt.smeem.domain.dto.WithdrawDto
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.PushAlarm
 import com.sopt.smeem.domain.model.Training
@@ -211,8 +213,13 @@ class UserRepositoryImpl(
             }
         }
 
-    override suspend fun deleteUser(): ApiResult<Unit> =
-        userService.delete().let { response ->
+    override suspend fun deleteUser(withdraw: WithdrawDto): ApiResult<Unit> =
+        userService.delete(
+            request = WithdrawRequest(
+                withdrawType = withdraw.type,
+                reason = withdraw.reason
+            )
+        ).let { response ->
             if (response.isSuccessful) {
                 ApiResult(response.code(), Unit)
             } else {
