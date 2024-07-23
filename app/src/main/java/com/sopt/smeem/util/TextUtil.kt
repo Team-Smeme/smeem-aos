@@ -1,9 +1,7 @@
 package com.sopt.smeem.util
 
-import android.util.Log
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatterBuilder
-import java.time.format.DateTimeParseException
 import java.time.temporal.ChronoField
 
 object TextUtil {
@@ -19,5 +17,9 @@ object TextUtil {
             .toFormatter()
 
         return LocalDateTime.parse(this, formatter)
+    }
+
+    fun String.whitespaceToEmpty(): String {
+        return this.ifBlank { "" }
     }
 }
