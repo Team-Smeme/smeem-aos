@@ -1,6 +1,8 @@
 package com.sopt.smeem.presentation.mypage.more.delete
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import android.app.Activity
+import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +27,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -34,9 +37,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.R
+import com.sopt.smeem.domain.dto.WithdrawDto
+import com.sopt.smeem.domain.model.WithdrawType
 import com.sopt.smeem.presentation.compose.components.SmeemButton
 import com.sopt.smeem.presentation.compose.components.SmeemDialog
 import com.sopt.smeem.presentation.compose.components.SmeemTextField
@@ -44,29 +50,23 @@ import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.mypage.REASON_MAX_LENGTH
-import com.sopt.smeem.presentation.mypage.REASON_MIN_LENGTH
 import com.sopt.smeem.presentation.mypage.components.SelectCard
+import com.sopt.smeem.presentation.mypage.more.MoreViewModel
+import com.sopt.smeem.presentation.splash.SplashLoginActivity
+import com.sopt.smeem.util.TextUtil.whitespaceToEmpty
 import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.addFocusCleaner
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DeleteAccountScreen(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
-//    val moreViewModel: MoreViewModel = hiltViewModel()
+    val moreViewModel: MoreViewModel = hiltViewModel()
 
-    val deleteReasonList =
-        listOf(
-            stringResource(R.string.delete_account_reason_1),
-            stringResource(R.string.delete_account_reason_2),
-            stringResource(R.string.delete_account_reason_3),
-            stringResource(R.string.delete_account_reason_4),
-            stringResource(R.string.delete_account_reason_else)
-        )
-
+    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -75,7 +75,7 @@ fun DeleteAccountScreen(
     var textFieldState by remember { mutableStateOf(TextFieldValue(text = "")) }
     val focusRequester = remember { FocusRequester() }
 
-    var selectedItem by rememberSaveable { mutableStateOf("") }
+    var selectedType by rememberSaveable { mutableStateOf(WithdrawType.INSTABILITY) }
     val (showDeleteDialog, setShowDeleteDialog) = rememberSaveable { mutableStateOf(false) }
 
     if (showDeleteDialog) {
@@ -84,10 +84,17 @@ fun DeleteAccountScreen(
             title = stringResource(R.string.smeem_dialog_delete_account_title),
             content = stringResource(R.string.smeem_dialog_delete_dialog_content),
             onConfirmButtonClick = {
-//                moreViewModel.withdrawal()
-//                // TODO: 탈퇴사유 서버에 전송
-//                context.startActivity(Intent(context, SplashLoginActivity::class.java))
-//                (context as? Activity)?.finishAffinity()
+                moreViewModel.withdrawal(
+                    type = selectedType,
+                    reason = textFieldState.text,
+                    onSuccess = {
+                        context.startActivity(Intent(context, SplashLoginActivity::class.java))
+                        (context as? Activity)?.finishAffinity()
+                    },
+                    onError = { t ->
+                        Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+                    }
+                )
             })
     }
 
@@ -125,16 +132,16 @@ fun DeleteAccountScreen(
                 .heightIn(max = 1000.dp),
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
-            items(deleteReasonList.size) { index ->
-                val item = deleteReasonList[index]
+            items(WithdrawType.entries.size) { index ->
+                val type = WithdrawType.entries[index]
 
                 SelectCard(
-                    isSelected = selectedItem == item,
-                    selectContent = item,
+                    isSelected = selectedType == type,
+                    selectContent = type.text,
                     onClick = {
                         focusManager.clearFocus()
                         keyboardController?.hide()
-                        selectedItem = item
+                        selectedType = type
                     },
                 )
             }
@@ -208,8 +215,10 @@ fun DeleteAccountScreen(
                 setShowDeleteDialog(true)
             },
             modifier = Modifier.padding(horizontal = 18.dp),
-            isButtonEnabled = (selectedItem != stringResource(R.string.delete_account_reason_else) && selectedItem.isNotEmpty())
-                    || (selectedItem == stringResource(R.string.delete_account_reason_else) && textFieldState.text.isNotBlank() && textFieldState.text.length in REASON_MIN_LENGTH..REASON_MAX_LENGTH)
+            isButtonEnabled = WithdrawDto(
+                selectedType,
+                textFieldState.text.whitespaceToEmpty()
+            ).isValidContent()
         )
 
         VerticalSpacer(height = 16.dp)
