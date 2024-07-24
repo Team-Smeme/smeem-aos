@@ -53,11 +53,10 @@ import com.sopt.smeem.presentation.mypage.REASON_MAX_LENGTH
 import com.sopt.smeem.presentation.mypage.components.SelectCard
 import com.sopt.smeem.presentation.mypage.more.MoreViewModel
 import com.sopt.smeem.presentation.splash.SplashLoginActivity
-import com.sopt.smeem.util.TextUtil.whitespaceToEmpty
+import com.sopt.smeem.util.TextUtil.whitespaceToNull
 import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.addFocusCleaner
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @Composable
 fun DeleteAccountScreen(
@@ -86,7 +85,7 @@ fun DeleteAccountScreen(
             onConfirmButtonClick = {
                 moreViewModel.withdrawal(
                     type = selectedType,
-                    reason = textFieldState.text,
+                    reason = textFieldState.text.whitespaceToNull(),
                     onSuccess = {
                         context.startActivity(Intent(context, SplashLoginActivity::class.java))
                         (context as? Activity)?.finishAffinity()
@@ -217,7 +216,7 @@ fun DeleteAccountScreen(
             modifier = Modifier.padding(horizontal = 18.dp),
             isButtonEnabled = WithdrawDto(
                 selectedType,
-                textFieldState.text.whitespaceToEmpty()
+                textFieldState.text.whitespaceToNull()
             ).isValidContent()
         )
 

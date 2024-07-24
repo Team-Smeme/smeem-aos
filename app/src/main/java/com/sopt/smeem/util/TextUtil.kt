@@ -19,7 +19,5 @@ object TextUtil {
         return LocalDateTime.parse(this, formatter)
     }
 
-    fun String.whitespaceToEmpty(): String {
-        return this.ifBlank { "" }
-    }
+    fun String.whitespaceToNull(): String? = this.ifBlank { null }
 }

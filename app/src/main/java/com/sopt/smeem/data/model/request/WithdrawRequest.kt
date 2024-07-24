@@ -4,5 +4,5 @@ import com.sopt.smeem.domain.model.WithdrawType
 
 data class WithdrawRequest(
     val withdrawType: WithdrawType,
-    val reason: String
+    val reason: String?
 )

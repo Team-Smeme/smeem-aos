@@ -23,7 +23,7 @@ class MoreViewModel @Inject constructor(
         }
     }
 
-    fun withdrawal(type: WithdrawType, reason: String, onSuccess: () -> Unit, onError: (Throwable) -> Unit) {
+    fun withdrawal(type: WithdrawType, reason: String?, onSuccess: () -> Unit, onError: (Throwable) -> Unit) {
         viewModelScope.launch {
             try {
                 userRepository.deleteUser(
