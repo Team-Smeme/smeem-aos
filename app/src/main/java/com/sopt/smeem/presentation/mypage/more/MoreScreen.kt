@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +26,7 @@ import com.sopt.smeem.R
 import com.sopt.smeem.presentation.compose.components.SmeemDialog
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
+import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.compose.theme.gray600
 import com.sopt.smeem.presentation.mypage.navigation.MoreNavGraph
 import com.sopt.smeem.presentation.mypage.navigation.SettingNavGraph
@@ -93,7 +95,15 @@ fun MoreScreen(
             )
         }
 
-        VerticalSpacer(height = 60.dp)
+        VerticalSpacer(height = 30.dp)
+
+        HorizontalDivider(
+            color = gray100,
+            thickness = 1.dp,
+            modifier = Modifier.padding(horizontal = 19.dp)
+        )
+
+        VerticalSpacer(height = 30.dp)
 
         Text(
             text = stringResource(R.string.my_page_more_account_management),
