@@ -89,7 +89,7 @@ fun SettingScreen(
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                VerticalSpacer(height = 50.dp)
+                VerticalSpacer(height = 18.dp)
 
                 ChangeNicknameCard(
                     nickname = username,
