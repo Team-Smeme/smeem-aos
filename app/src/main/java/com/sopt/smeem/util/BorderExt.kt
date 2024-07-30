@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.sopt.smeem.presentation.compose.theme.gray200
+import com.sopt.smeem.presentation.compose.theme.gray100
 
 data class Border(val strokeWidth: Dp, val color: Color)
 
@@ -39,29 +39,29 @@ fun Modifier.sideBorder(
         }
         topStart?.let {
             drawTopStartBorderWithRoundCorner(
-                startBorder = start ?: Border(1.dp, gray200),
-                topBorder = top ?: Border(1.dp, gray200),
+                startBorder = start ?: Border(1.dp, gray100),
+                topBorder = top ?: Border(1.dp, gray100),
                 roundCornerSize = 6.dp
             )
         }
         topEnd?.let {
             drawTopAndEndBorderWithRoundCorner(
-                topBorder = top ?: Border(1.dp, gray200),
-                endBorder = end ?: Border(1.dp, gray200),
+                topBorder = top ?: Border(1.dp, gray100),
+                endBorder = end ?: Border(1.dp, gray100),
                 roundCornerSize = 6.dp
             )
         }
         bottomStart?.let {
             drawBottomStartBorderWithRoundCorner(
-                startBorder = start ?: Border(1.dp, gray200),
-                bottomBorder = bottom ?: Border(1.dp, gray200),
+                startBorder = start ?: Border(1.dp, gray100),
+                bottomBorder = bottom ?: Border(1.dp, gray100),
                 roundCornerSize = 6.dp
             )
         }
         bottomEnd?.let {
             drawBottomEndBorderWithRoundCorner(
-                endBorder = end ?: Border(1.dp, gray200),
-                bottomBorder = bottom ?: Border(1.dp, gray200),
+                endBorder = end ?: Border(1.dp, gray100),
+                bottomBorder = bottom ?: Border(1.dp, gray100),
                 roundCornerSize = 6.dp
             )
         }
