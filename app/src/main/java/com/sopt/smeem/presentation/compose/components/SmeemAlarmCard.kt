@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.presentation.compose.theme.Typography
+import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.compose.theme.gray200
 import com.sopt.smeem.presentation.compose.theme.gray500
 import com.sopt.smeem.presentation.compose.theme.point
@@ -62,7 +63,7 @@ fun SmeemAlarmCard(
         ) {
             items(daysOfWeek.size) { day ->
                 val daySelected = selectedDays.contains(Day.from(daysOfWeek[day]))
-                val borderColor = if (daySelected) point else gray200
+                val borderColor = if (daySelected) point else gray100
                 val sideBorder = Border(strokeWidth = 1.dp, color = borderColor)
 
                 val radiusModifier = when (day) {
