@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +28,7 @@ import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.TrainingTime
 import com.sopt.smeem.presentation.compose.components.LoadingScreen
 import com.sopt.smeem.presentation.compose.components.SmeemAlarmCard
+import com.sopt.smeem.presentation.compose.theme.gray100
 import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.presentation.mypage.components.ChangeMyPlanCard
 import com.sopt.smeem.presentation.mypage.components.ChangeNicknameCard
@@ -79,12 +81,12 @@ fun SettingScreen(
 
             Column(
                 modifier =
-                    modifier
-                        .fillMaxSize()
-                        .background(white)
-                        .verticalScroll(
-                            rememberScrollState(),
-                        ),
+                modifier
+                    .fillMaxSize()
+                    .background(white)
+                    .verticalScroll(
+                        rememberScrollState(),
+                    ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 VerticalSpacer(height = 50.dp)
@@ -159,7 +161,13 @@ fun SettingScreen(
                     },
                 )
 
-                VerticalSpacer(height = 56.dp)
+                VerticalSpacer(height = 28.dp)
+                HorizontalDivider(
+                    color = gray100,
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(horizontal = 19.dp)
+                )
+                VerticalSpacer(height = 28.dp)
 
                 SendReviewCard {
                     CustomTabsIntent.Builder().build().run {
