@@ -42,6 +42,8 @@ import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.R
 import com.sopt.smeem.domain.dto.WithdrawDto
 import com.sopt.smeem.domain.model.WithdrawType
+import com.sopt.smeem.event.AmplitudeEventType
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.compose.components.SmeemButton
 import com.sopt.smeem.presentation.compose.components.SmeemDialog
 import com.sopt.smeem.presentation.compose.components.SmeemTextField
@@ -64,6 +66,7 @@ fun DeleteAccountScreen(
     navController: NavController
 ) {
     val moreViewModel: MoreViewModel = hiltViewModel()
+    val eventVm: EventVM = hiltViewModel()
 
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
@@ -89,6 +92,7 @@ fun DeleteAccountScreen(
                     onSuccess = {
                         context.startActivity(Intent(context, SplashLoginActivity::class.java))
                         (context as? Activity)?.finishAffinity()
+                        eventVm.sendEvent(AmplitudeEventType.DELETE_ID_DONE)
                     },
                     onError = { t ->
                         Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
@@ -212,6 +216,7 @@ fun DeleteAccountScreen(
                 focusManager.clearFocus()
                 keyboardController?.hide()
                 setShowDeleteDialog(true)
+                eventVm.sendEvent(AmplitudeEventType.DELETE_ID_TRY)
             },
             modifier = Modifier.padding(horizontal = 18.dp),
             isButtonEnabled = WithdrawDto(

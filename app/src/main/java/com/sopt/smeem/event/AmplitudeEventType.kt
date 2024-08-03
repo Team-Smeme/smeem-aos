@@ -35,4 +35,8 @@ enum class AmplitudeEventType(val eventName: String) {
     BADGE_MORE_CLICK("badge_more_click"),
     WELCOME_QUIT_CLICK("welcome_quit_click"),
     WELCOME_MORE_CLICK("welcome_more_click"),
+
+    // delete account
+    DELETE_ID_TRY("delete_id_try"),
+    DELETE_ID_DONE("delete_id_done")
 }
