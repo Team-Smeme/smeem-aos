@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -56,6 +55,7 @@ import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.TextUtil.whitespaceToNull
 import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.addFocusCleaner
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -138,8 +138,11 @@ fun DeleteAccountScreen(
                     isSelected = selectedType == type,
                     selectContent = type.text,
                     onClick = {
-                        focusManager.clearFocus()
-                        keyboardController?.hide()
+                        if (type == WithdrawType.ETC) focusRequester.requestFocus()
+                        if (type != WithdrawType.ETC) {
+                            focusManager.clearFocus()
+                            keyboardController?.hide()
+                        }
                         selectedType = type
                     },
                 )
@@ -176,15 +179,12 @@ fun DeleteAccountScreen(
             modifier = Modifier
                 .padding(horizontal = 18.dp)
                 .focusRequester(focusRequester)
-                .onFocusEvent { focusState ->
-                    if (focusState.isFocused) {
-                        coroutineScope.launch {
-                            scrollState.animateScrollTo(scrollState.maxValue)
-                        }
-                    }
-                }
                 .onFocusChanged { focusState ->
                     if (focusState.isFocused) {
+                        coroutineScope.launch {
+                            delay(200)
+                            scrollState.animateScrollTo(scrollState.maxValue)
+                        }
                         textFieldState = textFieldState.copy(
                             selection = TextRange(
                                 textFieldState.text.length
