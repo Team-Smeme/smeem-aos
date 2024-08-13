@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.sopt.smeem.presentation.onboarding.OnBoardingVM" />
+
         <import type="android.view.View" />
 
     </data>
@@ -19,7 +23,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_rounded_box"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -129,12 +132,11 @@
                     android:id="@+id/tv_on_boarding_time_box_title_static"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="알림 시간"
                     android:textAppearance="@style/TextAppearance.Smeem.Caption2_medium"
-                    android:textColor="?colorPrimary"
+                    android:textColor="@{viewModel.isDaysEmpty ? @color/gray_400 : @color/point}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -144,7 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
-                    android:textColor="?colorPrimary"
+                    android:textColor="@{viewModel.isDaysEmpty ? @color/gray_400 : @color/point}"
                     tools:text="10" />
 
                 <TextView
@@ -153,14 +155,14 @@
                     android:layout_height="wrap_content"
                     android:text=":"
                     android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
-                    android:textColor="?colorPrimary" />
+                    android:textColor="@{viewModel.isDaysEmpty ? @color/gray_400 : @color/point}" />
 
                 <TextView
                     android:id="@+id/tv_on_boarding_time_body_minute"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
-                    android:textColor="?colorPrimary"
+                    android:textColor="@{viewModel.isDaysEmpty ? @color/gray_400 : @color/point}"
                     tools:text="00" />
 
                 <TextView
@@ -169,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:text=" PM"
                     android:textAppearance="@style/TextAppearance.Smeem.Subtitle2_semibold"
-                    android:textColor="?colorPrimary" />
+                    android:textColor="@{viewModel.isDaysEmpty ? @color/gray_400 : @color/point}" />
 
                 <androidx.constraintlayout.helper.widget.Flow
                     android:id="@+id/flow_on_boarding_time_body"
@@ -189,8 +191,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:paddingVertical="12dp"
             android:paddingHorizontal="50dp"
+            android:paddingVertical="12dp"
             android:text="@string/on_boarding_time_later"
             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
             android:textColor="@color/gray_600"
