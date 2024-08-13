@@ -12,6 +12,7 @@ import com.sopt.smeem.presentation.base.BindingFragment
 import com.sopt.smeem.util.ButtonUtil.switchOff
 import com.sopt.smeem.util.ButtonUtil.switchOn
 import com.sopt.smeem.util.setOnSingleClickListener
+import timber.log.Timber
 
 class SettingTimeFragment :
     BindingFragment<FragmentSettingTimeBinding>(R.layout.fragment_setting_time) {
@@ -22,6 +23,9 @@ class SettingTimeFragment :
 
     override fun constructLayout() {
         setUpDays()
+
+        binding.viewModel = vm
+        binding.lifecycleOwner = viewLifecycleOwner
 
         requireActivity().onBackPressedDispatcher.addCallback(
             this,
@@ -110,6 +114,7 @@ class SettingTimeFragment :
 
     private fun checkSelectedDays() {
         vm.isDaysEmpty.value = vm.days.isEmpty()
+        Timber.e(vm.isDaysEmpty.value.toString())
     }
 
     private fun onTouchTime() {
