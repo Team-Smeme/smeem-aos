@@ -38,5 +38,9 @@ enum class AmplitudeEventType(val eventName: String) {
 
     // delete account
     DELETE_ID_TRY("delete_id_try"),
-    DELETE_ID_DONE("delete_id_done")
+    DELETE_ID_DONE("delete_id_done"),
+
+    // banner
+    BANNER_CLICK("banner_click"),
+    BANNER_X("banner_x"),
 }

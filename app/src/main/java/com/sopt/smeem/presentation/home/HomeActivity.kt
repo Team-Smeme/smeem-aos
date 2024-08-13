@@ -254,15 +254,25 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                                         content = configInfo.bannerContent,
                                         onBannerClick = {
                                             handleBannerClickEvent(configInfo)
+
+                                            eventVm.sendEvent(
+                                                AmplitudeEventType.BANNER_CLICK,
+                                                mapOf("survey" to true)
+                                            )
                                         },
                                         onBannerClose = {
                                             homeViewModel.closeBanner()
+
+                                            eventVm.sendEvent(
+                                                AmplitudeEventType.BANNER_X,
+                                                mapOf("survey" to true)
+                                            )
                                         },
                                         modifier =
-                                            Modifier.padding(
-                                                horizontal = 18.dp,
-                                                vertical = 12.dp,
-                                            ),
+                                        Modifier.padding(
+                                            horizontal = 18.dp,
+                                            vertical = 12.dp,
+                                        ),
                                     )
                                 }
                             }
