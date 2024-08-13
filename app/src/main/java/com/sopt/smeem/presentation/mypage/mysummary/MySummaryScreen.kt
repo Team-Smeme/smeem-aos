@@ -80,7 +80,10 @@ fun MySummaryScreen(
                 coroutineScope.launch { sheetState.hide() }
             }
         )
-        eventVM.sendEvent(AmplitudeEventType.BADGE_BOTTOM_SHEET_VIEW)
+        eventVM.sendEvent(
+            AmplitudeEventType.BADGE_BOTTOM_SHEET_VIEW,
+            mapOf("badge_type" to selectedBadge!!.name, "get" to selectedBadge!!.hasBadge)
+        )
     }
 
     /**** UI ****/
