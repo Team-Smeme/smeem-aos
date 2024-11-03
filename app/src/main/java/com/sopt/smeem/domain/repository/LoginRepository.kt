@@ -1,5 +1,6 @@
 package com.sopt.smeem.domain.repository
 
+import com.sopt.smeem.data.model.response.TokenResponse
 import com.sopt.smeem.domain.common.ApiResult
 import com.sopt.smeem.domain.dto.LoginResultDto
 import com.sopt.smeem.domain.model.SocialType
@@ -12,4 +13,6 @@ interface LoginRepository {
     ): ApiResult<LoginResultDto>
 
     suspend fun checkNicknameDuplicated(nickname: String): ApiResult<Boolean>
+
+    suspend fun getToken(refreshToken: String): ApiResult<TokenResponse>
 }

@@ -1,6 +1,7 @@
 package com.sopt.smeem.data.repository
 
 import com.sopt.smeem.data.model.request.LoginRequest
+import com.sopt.smeem.data.model.response.TokenResponse
 import com.sopt.smeem.data.service.LoginService
 import com.sopt.smeem.domain.common.ApiResult
 import com.sopt.smeem.domain.dto.LoginResultDto
@@ -39,6 +40,15 @@ class LoginRepositoryImpl(
         loginService.checkDuplicated(nickname).let { response ->
             if (response.isSuccessful) {
                 ApiResult(response.code(), response.body()!!.data.isExist)
+            } else {
+                throw response.code().handleStatusCode()
+            }
+        }
+
+    override suspend fun getToken(refreshToken: String): ApiResult<TokenResponse> =
+        loginService.getToken(refreshToken).let { response ->
+            if (response.isSuccessful) {
+                ApiResult(response.code(), response.body()!!.data)
             } else {
                 throw response.code().handleStatusCode()
             }

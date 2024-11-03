@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
 
 @AndroidEntryPoint
-class SplashStartActivity() : AppCompatActivity() {
+class SplashStartActivity : AppCompatActivity() {
     private val vm: SplashVM by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,6 @@ class SplashStartActivity() : AppCompatActivity() {
         installSplashScreen()
 
         setContentView(R.layout.activity_splash_start)
-
         constructLayout()
     }
 
@@ -39,7 +38,6 @@ class SplashStartActivity() : AppCompatActivity() {
         setStatusBarColor()
         setNavigationBarColor()
         checkVersion()
-        vm.checkAuthed()
     }
 
     private fun setStatusBarColor() {
@@ -63,6 +61,11 @@ class SplashStartActivity() : AppCompatActivity() {
                 vm.version
                     .filter { it.isNotEmpty() }
                     .collectLatest { latestVersion ->
+                        if (latestVersion.isEmpty()) {
+                            observeAuthed()
+                            return@collectLatest
+                        }
+
                         val installedVersion = BuildConfig.VERSION_NAME
 
                         val isNewVersion = when {

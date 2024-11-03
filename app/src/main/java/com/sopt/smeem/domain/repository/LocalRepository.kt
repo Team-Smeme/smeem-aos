@@ -29,7 +29,7 @@ interface LocalRepository {
 
     suspend fun remove(key: Preferences.Key<String>)
 
-    suspend fun getAuthentication(): Authentication
+    suspend fun getAuthentication(): Authentication?
 
     suspend fun setAuthentication(authentication: Authentication)
 

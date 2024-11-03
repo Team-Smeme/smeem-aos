@@ -33,9 +33,14 @@ internal class LoginVM @Inject constructor(
             if (fcmTask.isSuccessful) {
                 viewModelScope.launch {
                     try {
-                        loginRepository.execute(kakaoAccessToken, socialType, fcmTask.result).run {
-                            _loginResult.value = data()
-                        }
+                        val result =
+                            loginRepository.execute(kakaoAccessToken, socialType, fcmTask.result)
+                        _loginResult.value = result.data()
+
+                        saveTokenOnLocal(
+                            result.data().apiAccessToken,
+                            result.data().apiRefreshToken
+                        )
                     } catch (t: Throwable) {
                         onError(t)
                     }

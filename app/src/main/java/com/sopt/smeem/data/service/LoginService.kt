@@ -4,7 +4,7 @@ import com.sopt.smeem.data.model.request.LoginRequest
 import com.sopt.smeem.data.model.response.ApiResponse
 import com.sopt.smeem.data.model.response.LoginResponse
 import com.sopt.smeem.data.model.response.NicknameCheckResponse
-import kotlinx.coroutines.flow.Flow
+import com.sopt.smeem.data.model.response.TokenResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -23,4 +23,9 @@ interface LoginService {
     suspend fun checkDuplicated(
         @Query("name") nickname: String
     ): Response<ApiResponse<NicknameCheckResponse>>
+
+    @POST("/api/v2/auth/token")
+    suspend fun getToken(
+        @Header(value = "Authorization") refreshToken: String
+    ): Response<ApiResponse<TokenResponse>>
 }
