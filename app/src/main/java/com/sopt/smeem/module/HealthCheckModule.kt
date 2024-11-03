@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import retrofit2.Retrofit
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -15,8 +16,8 @@ object HealthCheckModule {
     @Provides
     @ViewModelScoped
     fun healthRepository(
-        networkModule: NetworkModule
+        @AnonymousRetrofit apiServerRetrofitForAnonymous: Retrofit
     ): HealthRepository = HealthRepositoryImpl(
-        networkModule.apiServerRetrofitForAnonymous.create(HealthService::class.java)
+        apiServerRetrofitForAnonymous.create(HealthService::class.java)
     )
 }

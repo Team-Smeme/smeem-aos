@@ -18,6 +18,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import retrofit2.Retrofit
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -25,31 +26,37 @@ object AnonymousModule {
     @Provides
     @ViewModelScoped
     @Anonymous
-    fun anonymousMemberRepository(networkModule: NetworkModule): UserRepository =
-        UserRepositoryImpl(
-            userService = networkModule.apiServerRetrofitForAnonymous.create(UserService::class.java),
-            myBadgeService = networkModule.apiServerRetrofitForAnonymous.create(MyBadgeService::class.java)
-        )
+    fun anonymousMemberRepository(
+        @AnonymousRetrofit apiServerRetrofitForAnonymous: Retrofit
+    ): UserRepository = UserRepositoryImpl(
+        userService = apiServerRetrofitForAnonymous.create(UserService::class.java),
+        myBadgeService = apiServerRetrofitForAnonymous.create(MyBadgeService::class.java)
+    )
 
     @Provides
     @ViewModelScoped
     @Anonymous
-    fun loginRepository(networkModule: NetworkModule): LoginRepository =
-        LoginRepositoryImpl(networkModule.apiServerRetrofitForAnonymous.create(LoginService::class.java))
+    fun loginRepository(
+        @AnonymousRetrofit apiServerRetrofitForAnonymous: Retrofit
+    ): LoginRepository = LoginRepositoryImpl(
+        apiServerRetrofitForAnonymous.create(LoginService::class.java)
+    )
 
     @Provides
     @ViewModelScoped
     @Anonymous
-    fun trainingRepository(networkModule: NetworkModule): TrainingRepository =
-        TrainingRepositoryImpl(
-            networkModule.apiServerRetrofitForAnonymous.create(TrainingService::class.java)
-        )
+    fun trainingRepository(
+        @AnonymousRetrofit apiServerRetrofitForAnonymous: Retrofit
+    ): TrainingRepository = TrainingRepositoryImpl(
+        apiServerRetrofitForAnonymous.create(TrainingService::class.java)
+    )
 
     @Provides
     @ViewModelScoped
     @Anonymous
-    fun versionRepository(networkModule: NetworkModule): VersionRepository =
-        VersionRepositoryImpl(
-            networkModule.apiServerRetrofitForAnonymous.create(VersionService::class.java)
-        )
+    fun versionRepository(
+        @AnonymousRetrofit apiServerRetrofitForAnonymous: Retrofit
+    ): VersionRepository = VersionRepositoryImpl(
+        apiServerRetrofitForAnonymous.create(VersionService::class.java)
+    )
 }

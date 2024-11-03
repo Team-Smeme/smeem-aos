@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import retrofit2.Retrofit
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -16,10 +17,12 @@ object ExternalModule {
     @Provides
     @ViewModelScoped
     @Anonymous
-    fun translateRepository(networkModule: NetworkModule): TranslateRepository =
+    fun translateRepository(
+        @DeepLRetrofit apiDeepLRetrofit: Retrofit
+    ): TranslateRepository =
         TranslateRepositoryImpl(
             Translater(
-                deepLApiService = networkModule.apiDeepLAPIRetrofit.create(DeepLApiService::class.java),
+                deepLApiService = apiDeepLRetrofit.create(DeepLApiService::class.java),
             )
         )
 }

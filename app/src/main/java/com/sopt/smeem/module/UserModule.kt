@@ -13,18 +13,21 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import retrofit2.Retrofit
 
 @Module
 @InstallIn(ViewModelComponent::class)
 object UserModule {
     @Provides
     @ViewModelScoped
-    fun userRepository(networkModule: NetworkModule): UserRepository {
+    fun userRepository(
+        @AuthenticationRetrofit apiServerRetrofitForAuthentication: Retrofit
+    ): UserRepository {
         return UserRepositoryImpl(
-            userService = networkModule.apiServerRetrofitForAuthentication.create(
+            userService = apiServerRetrofitForAuthentication.create(
                 UserService::class.java
             ),
-            myBadgeService = networkModule.apiServerRetrofitForAuthentication.create(
+            myBadgeService = apiServerRetrofitForAuthentication.create(
                 MyBadgeService::class.java
             )
         )
@@ -32,11 +35,13 @@ object UserModule {
 
     @Provides
     @ViewModelScoped
-    fun diaryRepository(networkModule: NetworkModule): DiaryRepository {
+    fun diaryRepository(
+        @AuthenticationRetrofit apiServerRetrofitForAuthentication: Retrofit
+    ): DiaryRepository {
         return DiaryRepositoryImpl(
-            networkModule.apiServerRetrofitForAuthentication.create(DiaryService::class.java),
+            apiServerRetrofitForAuthentication.create(DiaryService::class.java),
             diaryReader = DiaryReader(
-                networkModule.apiServerRetrofitForAuthentication.create(DiaryService::class.java)
+                apiServerRetrofitForAuthentication.create(DiaryService::class.java)
             )
         )
     }
