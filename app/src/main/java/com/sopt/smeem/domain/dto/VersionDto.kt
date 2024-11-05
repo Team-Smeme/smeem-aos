@@ -8,7 +8,6 @@ data class VersionDto(
 ) {
     data class Version(
         val forceVersion: String? = null,
-        val version: String
+        val version: String? = null
     )
 }
-

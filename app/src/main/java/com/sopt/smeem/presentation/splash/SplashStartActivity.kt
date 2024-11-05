@@ -60,25 +60,22 @@ class SplashStartActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 vm.version
                     .filter { it.isNotEmpty() }
-                    .collectLatest { latestVersion ->
-                        if (latestVersion.isEmpty()) {
-                            observeAuthed()
-                            return@collectLatest
-                        }
+                    .collectLatest { forceVersion ->
 
                         val installedVersion = BuildConfig.VERSION_NAME
+                        val (installedX, installedY, installedZ) = installedVersion.split(".")
+                            .map { it.toInt() }
+                        val (forceX, forceY, forceZ) = forceVersion.split(".").map { it.toInt() }
 
-                        val isNewVersion = when {
-                            latestVersion.isEmpty() -> false
-                            else -> {
-                                val installedVersionX = installedVersion.split(".").first().toInt()
-                                val latestVersionX = latestVersion.split(".").first().toInt()
 
-                                installedVersionX >= latestVersionX
-                            }
+                        val isForceUpdateRequired = when {
+                            forceX > installedX -> true // 강제 업데이트 버전의 x가 더 크면 강제 업데이트
+                            forceX == installedX && forceY > installedY -> true // x가 같고 y가 크면 강제 업데이트
+                            forceX == installedX && forceY == installedY && forceZ > installedZ -> true // x, y가 같고 z가 클 때 강제 업데이트
+                            else -> false
                         }
 
-                        if (!isNewVersion) showUpdateDialog() else observeAuthed()
+                        if (isForceUpdateRequired) showUpdateDialog() else observeAuthed()
                     }
             }
         }

@@ -68,12 +68,11 @@ class SplashVM @Inject constructor(
         }
     }
 
-
     private fun getVersion(onError: (Throwable) -> Unit) {
         viewModelScope.launch {
             try {
                 versionRepository.getVersion().run {
-                    _version.value = data().androidVersion.version
+                    _version.value = data().androidVersion.forceVersion ?: ""
                 }
             } catch (t: Throwable) {
                 onError(t)
