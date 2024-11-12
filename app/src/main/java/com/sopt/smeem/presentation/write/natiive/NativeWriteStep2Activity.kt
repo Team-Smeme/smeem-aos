@@ -9,11 +9,12 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityNativeWriteStep2Binding
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.EventVM
+import com.sopt.smeem.presentation.IntentConstants.DIARY_CONTENT
 import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
 import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
 import com.sopt.smeem.presentation.base.BindingActivity
 import com.sopt.smeem.presentation.base.DefaultSnackBar
-import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.coach.CoachActivity
 import com.sopt.smeem.util.hideKeyboard
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -84,12 +85,13 @@ class NativeWriteStep2Activity :
                     hideKeyboard(currentFocus ?: View(this))
                     viewModel.uploadDiary(
                         onSuccess = {
-                            Intent(this, HomeActivity::class.java).apply {
+                            Intent(this, CoachActivity::class.java).apply {
                                 putExtra(RETRIEVED_BADGE_DTO, it as Serializable)
                                 putExtra(
                                     SNACKBAR_TEXT,
                                     resources.getString(R.string.diary_write_done_message)
                                 )
+                                putExtra(DIARY_CONTENT, viewModel.diary.value)
                                 flags =
                                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             }.run(::startActivity)
