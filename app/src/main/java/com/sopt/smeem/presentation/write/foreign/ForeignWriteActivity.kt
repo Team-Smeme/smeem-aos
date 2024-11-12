@@ -10,6 +10,7 @@ import com.sopt.smeem.databinding.ActivityForeignWriteBinding
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.IntentConstants.DIARY_CONTENT
+import com.sopt.smeem.presentation.IntentConstants.DIARY_ID
 import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
 import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
 import com.sopt.smeem.presentation.base.BindingActivity
@@ -107,9 +108,10 @@ class ForeignWriteActivity :
                 true -> {
                     hideKeyboard(currentFocus ?: View(this))
                     viewModel.uploadDiary(
-                        onSuccess = {
+                        onSuccess = { diaryId, badgeList ->
                             Intent(this, CoachActivity::class.java).apply {
-                                putExtra(RETRIEVED_BADGE_DTO, it as Serializable)
+                                putExtra(DIARY_ID, diaryId)
+                                putExtra(RETRIEVED_BADGE_DTO, badgeList as Serializable)
                                 putExtra(
                                     SNACKBAR_TEXT,
                                     resources.getString(R.string.diary_write_done_message)

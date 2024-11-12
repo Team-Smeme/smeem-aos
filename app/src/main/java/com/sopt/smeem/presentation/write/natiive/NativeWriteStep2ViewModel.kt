@@ -26,7 +26,10 @@ class NativeWriteStep2ViewModel @Inject constructor(
     val diary = MutableLiveData("")
     val isValidDiary: LiveData<Boolean> = diary.map { isValidDiaryFormat(it) }
 
-    fun uploadDiary(onSuccess: (List<RetrievedBadgeDto>) -> Unit, onError: (Throwable) -> Unit) {
+    fun uploadDiary(
+        onSuccess: (Long, List<RetrievedBadgeDto>) -> Unit,
+        onError: (Throwable) -> Unit
+    ) {
         val selectedTopicId = if (topicId < 0) null else topicId
 
         diary.value?.let { content ->
@@ -45,11 +48,12 @@ class NativeWriteStep2ViewModel @Inject constructor(
 
     private suspend fun requestToServer(
         dto: WriteDiaryRequestDto,
-        onSuccess: (List<RetrievedBadgeDto>) -> Unit,
+        onSuccess: (Long, List<RetrievedBadgeDto>) -> Unit,
         onError: (Throwable) -> Unit
     ) {
         try {
-            diaryRepository.postDiary(dto).run { onSuccess(data().retrievedBadgeList) }
+            diaryRepository.postDiary(dto)
+                .run { onSuccess(data().diaryId, data().retrievedBadgeList) }
         } catch (t: Throwable) {
             onError(t)
         }
