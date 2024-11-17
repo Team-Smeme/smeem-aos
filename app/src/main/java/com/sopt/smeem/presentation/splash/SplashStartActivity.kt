@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import kotlin.system.exitProcess
 
 @AndroidEntryPoint
@@ -62,20 +63,35 @@ class SplashStartActivity : AppCompatActivity() {
                     .filter { it.isNotEmpty() }
                     .collectLatest { forceVersion ->
 
-                        val installedVersion = BuildConfig.VERSION_NAME
-                        val (installedX, installedY, installedZ) = installedVersion.split(".")
-                            .map { it.toInt() }
-                        val (forceX, forceY, forceZ) = forceVersion.split(".").map { it.toInt() }
-
-
-                        val isForceUpdateRequired = when {
-                            forceX > installedX -> true // 강제 업데이트 버전의 x가 더 크면 강제 업데이트
-                            forceX == installedX && forceY > installedY -> true // x가 같고 y가 크면 강제 업데이트
-                            forceX == installedX && forceY == installedY && forceZ > installedZ -> true // x, y가 같고 z가 클 때 강제 업데이트
-                            else -> false
+                        // DEBUG 모드일 경우 .dev 제거, 배포 모드에서는 그대로 사용
+                        val installedVersion = if (BuildConfig.DEBUG) {
+                            BuildConfig.VERSION_NAME.removeSuffix(".dev")
+                        } else {
+                            BuildConfig.VERSION_NAME
                         }
 
-                        if (isForceUpdateRequired) showUpdateDialog() else observeAuthed()
+                        try {
+                            val (installedX, installedY, installedZ) = installedVersion.split(".")
+                                .map { it.toInt() }
+                            val (forceX, forceY, forceZ) = forceVersion.split(".")
+                                .map { it.toInt() }
+
+                            val isForceUpdateRequired = when {
+                                forceX > installedX -> true // 강제 업데이트 버전의 x가 더 크면 강제 업데이트
+                                forceX == installedX && forceY > installedY -> true // x가 같고 y가 크면 강제 업데이트
+                                forceX == installedX && forceY == installedY && forceZ > installedZ -> true // x, y가 같고 z가 클 때 강제 업데이트
+                                else -> false
+                            }
+
+                            if (isForceUpdateRequired) showUpdateDialog() else observeAuthed()
+                        } catch (e: Exception) {
+                            // 잘못된 버전 형식이 감지되면 로그 출력
+                            Timber.e(
+                                "VersionCheck",
+                                "Invalid version format: $installedVersion or $forceVersion",
+                                e
+                            )
+                        }
                     }
             }
         }
