@@ -39,6 +39,7 @@ import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.presentation.write.foreign.ForeignWriteActivity
 import com.sopt.smeem.presentation.write.natiive.NativeWriteStep1Activity
 import com.sopt.smeem.util.DateUtil
+import com.sopt.smeem.util.getParcelableArrayListExtraCompat
 import com.sopt.smeem.util.getWeekStartDate
 import com.sopt.smeem.util.setComposeContent
 import com.sopt.smeem.util.setOnSingleClickListener
@@ -139,7 +140,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private fun showBadgeDialog() {
         val retrievedBadge =
-            intent.getSerializableExtra(RETRIEVED_BADGE_DTO) as List<RetrievedBadgeDto>?
+            intent.getParcelableArrayListExtraCompat<RetrievedBadgeDto>(RETRIEVED_BADGE_DTO)
                 ?: emptyList()
         if (retrievedBadge.isNotEmpty()) {
             val badgeList = retrievedBadge.asReversed()

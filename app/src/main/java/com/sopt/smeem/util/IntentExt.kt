@@ -13,3 +13,15 @@ fun <T : Parcelable?> Intent.getParcelable(
         SDK_INT >= TIRAMISU -> this.getParcelableExtra(key, clazz)
         else -> this.getParcelableExtra(key) as? T
     }
+
+inline fun <reified T : Parcelable> Intent.getParcelableArrayListExtraCompat(key: String): List<T>? =
+    when {
+        SDK_INT >= TIRAMISU -> {
+            getParcelableArrayListExtra(key, T::class.java)
+        }
+
+        else -> {
+            @Suppress("DEPRECATION")
+            getParcelableArrayListExtra(key)
+        }
+    }
