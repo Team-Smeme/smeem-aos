@@ -2,10 +2,8 @@ package com.sopt.smeem.presentation.coach
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.smeem.domain.common.SmeemErrorCode
-import com.sopt.smeem.domain.common.SmeemException
 import com.sopt.smeem.domain.repository.DiaryRepository
-import com.sopt.smeem.util.DateUtil
+import com.sopt.smeem.presentation.detail.DiaryDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
@@ -21,18 +19,20 @@ class CoachViewModel @Inject constructor(
 ) : ContainerHost<CoachState, CoachSideEffect>, ViewModel() {
     override val container: Container<CoachState, CoachSideEffect> = container(CoachState())
 
-    fun setDiaryId(diaryId: Long) {
-        if (diaryId < 0) {
-            throw SmeemException(SmeemErrorCode.SYSTEM_ERROR, "잘못된 diaryId ($diaryId) 입니다.")
-        }
+    fun initialize(diaryId: Long, initialContent: String) {
         intent {
             reduce {
-                state.copy(diaryId = diaryId)
+                state.copy(
+                    diaryId = diaryId,
+                    initialDiaryContent = initialContent,
+                    isLoading = true
+                )
             }
         }
+        getDiaryDetail()
     }
 
-    fun getDiaryDetail() {
+    private fun getDiaryDetail() {
         viewModelScope.launch {
             try {
                 intent {
@@ -41,9 +41,8 @@ class CoachViewModel @Inject constructor(
                             intent {
                                 reduce {
                                     state.copy(
-                                        diaryContent = dto.content,
-                                        createdAt = DateUtil.asString(dto.createdAt),
-                                        writerUsername = dto.username
+                                        diaryDetail = DiaryDetail.from(dto),
+                                        isLoading = false
                                     )
                                 }
                             }
@@ -53,7 +52,10 @@ class CoachViewModel @Inject constructor(
             } catch (t: Throwable) {
                 intent {
                     reduce {
-                        state.copy(diaryContent = "일기를 불러오는데 실패했습니다.")
+                        state.copy(
+                            diaryDetail = null,
+                            isLoading = false
+                        )
                     }
                 }
             }

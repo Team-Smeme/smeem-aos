@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +13,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -33,6 +31,7 @@ import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray500
 import com.sopt.smeem.presentation.compose.theme.point
 import com.sopt.smeem.presentation.compose.theme.white
+import com.sopt.smeem.presentation.detail.DiaryDetail
 import com.sopt.smeem.util.HorizontalSpacer
 import com.sopt.smeem.util.VerticalSpacer
 import org.orbitmvi.orbit.compose.collectAsState
@@ -42,7 +41,6 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun CoachRoute(
     viewModel: CoachViewModel = hiltViewModel(),
     onClosesClick: () -> Unit,
-    onBackClick: () -> Unit,
 ) {
     val state = viewModel.collectAsState().value
 
@@ -57,7 +55,6 @@ fun CoachRoute(
     CoachScreen(
         state = state,
         onClosesClick = onClosesClick,
-        onBackClick = onBackClick
     )
 }
 
@@ -67,7 +64,6 @@ fun CoachScreen(
     state: CoachState,
     modifier: Modifier = Modifier,
     onClosesClick: () -> Unit = {},
-    onBackClick: () -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -78,17 +74,7 @@ fun CoachScreen(
                     containerColor = white
                 ),
                 title = {},
-                navigationIcon = {
-                    IconButton(
-                        modifier = Modifier.padding(start = 6.dp),
-                        onClick = onBackClick
-                    ) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_back),
-                            contentDescription = "Back",
-                        )
-                    }
-                },
+                navigationIcon = {},
                 actions = {
                     Text(
                         text = "닫기",
@@ -184,9 +170,14 @@ fun CoachScreenPreview() {
     CoachScreen(
         state = CoachState(
             diaryId = 1,
-            diaryContent = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son.",
-            createdAt = "2023년 3월 27일 4:18 PM",
-            writerUsername = "유진이"
+            initialDiaryContent = "오늘은 어떤 일이 있었나요?",
+            diaryDetail = DiaryDetail(
+                diaryId = 1,
+                topic = "일상",
+                content = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son.",
+                createdAt = "2023년 3월 27일 4:18 PM",
+                writerUsername = "유진이"
+            ),
         ),
         onClosesClick = {}
     )

@@ -1,15 +1,20 @@
 package com.sopt.smeem.presentation.coach
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import com.sopt.smeem.R
 import com.sopt.smeem.presentation.IntentConstants.DIARY_CONTENT
 import com.sopt.smeem.presentation.IntentConstants.DIARY_ID
+import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
 import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
 import com.sopt.smeem.presentation.base.DefaultSnackBar
 import com.sopt.smeem.presentation.compose.theme.SmeemTheme
+import com.sopt.smeem.presentation.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.Serializable
 
 @AndroidEntryPoint
 class CoachActivity : ComponentActivity() {
@@ -19,12 +24,24 @@ class CoachActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val diaryContent = intent.getStringExtra(DIARY_CONTENT) ?: ""
-        viewModel.setDiaryId(intent.getLongExtra(DIARY_ID, -1))
-        viewModel.getDiaryDetail()
+        val diaryId = intent.getLongExtra(DIARY_ID, -1)
+        viewModel.initialize(diaryId, diaryContent)
 
         setContent {
             SmeemTheme {
-
+                CoachRoute(
+                    viewModel = viewModel,
+                    onClosesClick = {
+                        Intent(this, HomeActivity::class.java).apply {
+                            putExtra(
+                                RETRIEVED_BADGE_DTO,
+                                intent.getSerializableExtra(RETRIEVED_BADGE_DTO) as Serializable
+                            )
+                            flags =
+                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }.run(::startActivity)
+                    }
+                )
             }
         }
 
