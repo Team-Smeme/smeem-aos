@@ -5,12 +5,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.domain.dto.RetrievedBadgeDto
 import com.sopt.smeem.presentation.IntentConstants.DIARY_CONTENT
 import com.sopt.smeem.presentation.IntentConstants.DIARY_ID
 import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
 import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
 import com.sopt.smeem.presentation.base.DefaultSnackBar
+import com.sopt.smeem.presentation.coach.navigation.CoachNavGraph
 import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.presentation.home.HomeActivity
 import com.sopt.smeem.util.getParcelableArrayListExtraCompat
@@ -29,9 +31,12 @@ class CoachActivity : ComponentActivity() {
 
         setContent {
             SmeemTheme {
-                CoachRoute(
+                val navController = rememberNavController()
+
+                CoachNavGraph(
                     viewModel = viewModel,
-                    onClosesClick = {
+                    navController = navController,
+                    onCloseClick = {
                         Intent(this, HomeActivity::class.java).apply {
                             putParcelableArrayListExtra(
                                 RETRIEVED_BADGE_DTO,

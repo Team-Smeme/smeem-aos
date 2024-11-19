@@ -17,15 +17,20 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.sopt.smeem.R
+import com.sopt.smeem.presentation.coach.navigation.navigateToCoachDetail
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray500
@@ -39,22 +44,24 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun CoachRoute(
+    navController: NavController,
     viewModel: CoachViewModel = hiltViewModel(),
-    onClosesClick: () -> Unit,
+    onCloseClick: () -> Unit,
 ) {
-    val state = viewModel.collectAsState().value
+    val state by viewModel.collectAsState()
 
     viewModel.collectSideEffect {
         when (it) {
             is CoachSideEffect.NavigateToCoachDetail -> {
-                // TODO
+                navController.navigateToCoachDetail()
             }
         }
     }
 
     CoachScreen(
         state = state,
-        onClosesClick = onClosesClick,
+        onCloseClick = onCloseClick,
+        onCoachClick = viewModel::onCoachClick
     )
 }
 
@@ -63,7 +70,8 @@ fun CoachRoute(
 fun CoachScreen(
     state: CoachState,
     modifier: Modifier = Modifier,
-    onClosesClick: () -> Unit = {},
+    onCloseClick: () -> Unit = {},
+    onCoachClick: () -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -82,7 +90,7 @@ fun CoachScreen(
                         color = black,
                         modifier = Modifier
                             .padding(end = 18.dp)
-                            .clickable { onClosesClick() }
+                            .clickable { onCloseClick() }
                     )
                 }
             )
@@ -98,6 +106,8 @@ fun CoachScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .clickable(onClick = onCoachClick)
                     .background(color = point, shape = RoundedCornerShape(5.dp))
                     .padding(vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -112,7 +122,7 @@ fun CoachScreen(
                 HorizontalSpacer(3.dp)
 
                 Text(
-                    text = "하루 한 번 무료 AI 코칭",
+                    text = stringResource(R.string.coach_banner_comment),
                     style = Typography.bodyLarge,
                     color = white
                 )
@@ -129,7 +139,6 @@ fun CoachScreen(
                 color = black,
                 style = Typography.bodyMedium.copy(lineHeight = 22.sp)
             )
-
 
             Column(
                 modifier = Modifier
@@ -179,6 +188,6 @@ fun CoachScreenPreview() {
                 writerUsername = "유진이"
             ),
         ),
-        onClosesClick = {}
+        onCloseClick = {}
     )
 }

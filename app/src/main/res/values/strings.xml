@@ -138,4 +138,7 @@
     <string name="set_my_plan">플랜 설정하기</string>
     <string name="notice_back_process">뒤로가기 버튼을 한번 더 누르면 종료됩니다.</string>
 
+    <!-- Coach -->
+    <string name="coach_banner_comment">하루 한 번 무료 AI 코칭</string>
+
 </resources>
