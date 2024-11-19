@@ -4,6 +4,7 @@ import com.sopt.smeem.data.datasource.DiaryReader
 import com.sopt.smeem.data.model.request.DiaryRequest
 import com.sopt.smeem.data.service.DiaryService
 import com.sopt.smeem.domain.common.ApiResult
+import com.sopt.smeem.domain.dto.CorrectionDto
 import com.sopt.smeem.domain.dto.DeleteDiaryRequestDto
 import com.sopt.smeem.domain.dto.GetDiaryResponseDto
 import com.sopt.smeem.domain.dto.GetDiarySummariesDto
@@ -116,6 +117,26 @@ class DiaryRepositoryImpl(
                             id = data.topicId,
                             content = data.content
                         )
+                    )
+                }
+            } else {
+                throw response.code().handleStatusCode()
+            }
+        }
+
+    override suspend fun getCorrections(diaryId: Long): ApiResult<List<CorrectionDto>> =
+        diaryService.postCorrection(diaryId).let { response ->
+            if (response.isSuccessful) {
+                response.body()!!.data.let { data ->
+                    ApiResult(
+                        response.code(), response.body()!!.data.corrections.map { correction ->
+                            CorrectionDto(
+                                corrected_sentence = correction.corrected_sentence,
+                                original_sentence = correction.original_sentence,
+                                reason = correction.reason,
+                                is_corrected = correction.is_corrected
+                            )
+                        }
                     )
                 }
             } else {

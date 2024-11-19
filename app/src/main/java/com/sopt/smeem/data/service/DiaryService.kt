@@ -4,6 +4,7 @@ import com.sopt.smeem.data.model.request.DiaryRequest
 import com.sopt.smeem.data.model.response.ApiResponse
 import com.sopt.smeem.data.model.response.DiaryResponse
 import com.sopt.smeem.data.model.response.DiaryWritingResponse
+import com.sopt.smeem.data.model.response.PostCorrectionResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -44,4 +45,9 @@ interface DiaryService {
 
     @GET("/api/v2/topics/random")
     suspend fun getTopic(): Response<ApiResponse<DiaryResponse.Topic>>
+
+    @POST("/api/v2/diaries/{diaryId}/corrections")
+    suspend fun postCorrection(
+        @Path("diaryId") diaryId: Long,
+    ): Response<ApiResponse<PostCorrectionResponse>>
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.presentation.detail.DiaryDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -66,6 +67,23 @@ class CoachViewModel @Inject constructor(
     fun onCoachClick() {
         intent {
             postSideEffect(CoachSideEffect.NavigateToCoachDetail)
+        }
+        getCorrections()
+    }
+
+    private fun getCorrections() {
+        viewModelScope.launch {
+            intent { reduce { state.copy(isLoading = true) } }
+
+            try {
+                intent {
+                    val result =
+                        diaryRepository.getCorrections(state.diaryId).data().toPersistentList()
+                    reduce { state.copy(corrections = result, isLoading = false) }
+                }
+            } catch (t: Throwable) {
+                intent { reduce { state.copy(isLoading = false) } }
+            }
         }
     }
 }

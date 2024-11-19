@@ -1,6 +1,7 @@
 package com.sopt.smeem.domain.repository
 
 import com.sopt.smeem.domain.common.ApiResult
+import com.sopt.smeem.domain.dto.CorrectionDto
 import com.sopt.smeem.domain.dto.DeleteDiaryRequestDto
 import com.sopt.smeem.domain.dto.GetDiaryResponseDto
 import com.sopt.smeem.domain.dto.GetDiarySummariesDto
@@ -15,6 +16,7 @@ interface DiaryRepository {
     suspend fun deleteDiary(dto: DeleteDiaryRequestDto): ApiResult<Unit>
     suspend fun getDiaryDetail(diaryId: Long): ApiResult<GetDiaryResponseDto>
     suspend fun getTopic(): ApiResult<GetTopicDto>
+    suspend fun getCorrections(diaryId: Long): ApiResult<List<CorrectionDto>>
 
     // calendar related
     /**
