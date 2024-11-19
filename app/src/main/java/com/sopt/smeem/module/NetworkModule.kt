@@ -1,5 +1,7 @@
 package com.sopt.smeem.module
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.sopt.smeem.BuildConfig
 import com.sopt.smeem.BuildConfig.DEV_API_SERVER_URL
 import com.sopt.smeem.BuildConfig.PROD_API_SERVER_URL
@@ -23,6 +25,7 @@ import javax.inject.Singleton
 object NetworkModule {
 
     private val apiServer = if (BuildConfig.IS_DEBUG) DEV_API_SERVER_URL else PROD_API_SERVER_URL
+    private val gson: Gson = GsonBuilder().setLenient().create()
 
     @Provides
     @Singleton
@@ -43,7 +46,7 @@ object NetworkModule {
                     )
                 }.build(),
             )
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 
