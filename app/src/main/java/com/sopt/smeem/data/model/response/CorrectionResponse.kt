@@ -7,6 +7,6 @@ data class PostCorrectionResponse(
 data class CorrectionResponse(
     val original_sentence: String,
     val corrected_sentence: String,
-    val reason: String,
+    val reason: String?,
     val is_corrected: Boolean,
 )

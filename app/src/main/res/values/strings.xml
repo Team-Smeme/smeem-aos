@@ -140,5 +140,9 @@
 
     <!-- Coach -->
     <string name="coach_banner_comment">하루 한 번 무료 AI 코칭</string>
+    <string name="coach_banner_text_0">완벽한 일기예요! 문장이 자연스럽고 오류가 없어요.</string>
+    <string name="coach_banner_text_1">잘 작성했어요! 작은 부분만 다듬으면 완벽해요.</string>
+    <string name="coach_banner_text_2">대단해요! 몇가지 피드백을 준비해봤어요.</string>
+    <string name="coach_banner_text_default">대단해요! 몇가지 피드백을 준비해봤어요.</string>
 
 </resources>
