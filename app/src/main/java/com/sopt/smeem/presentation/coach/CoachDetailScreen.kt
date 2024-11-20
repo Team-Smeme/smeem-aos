@@ -59,6 +59,7 @@ import com.sopt.smeem.util.HorizontalSpacer
 import com.sopt.smeem.util.VerticalSpacer
 import kotlinx.collections.immutable.persistentListOf
 import org.orbitmvi.orbit.compose.collectAsState
+import kotlin.text.append
 
 @Composable
 fun CoachDetailRoute(
@@ -190,108 +191,109 @@ fun CoachDetailScreen(
                 )
             }
 
+            if (correctedCount > 0) {
+                HorizontalDivider(
+                    color = gray100,
+                    thickness = 8.dp,
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-            HorizontalDivider(
-                color = gray100,
-                thickness = 8.dp,
-                modifier = Modifier.fillMaxWidth()
-            )
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .padding(top = 20.dp, start = 18.dp, end = 18.dp, bottom = 10.dp)
+                ) { page ->
+                    val correction = correctedCorrections[page]
 
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(top = 20.dp, start = 18.dp, end = 18.dp, bottom = 10.dp)
-            ) { page ->
-                val correction = correctedCorrections[page]
-
-                Column(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .verticalScroll(scrollStateBottom)
-                            .height(IntrinsicSize.Min)
+                    Column(
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        Box(
+                        Row(
                             modifier = Modifier
-                                .width(2.dp)
-                                .fillMaxHeight()
-                                .background(color = black)
-                        )
+                                .fillMaxWidth()
+                                .verticalScroll(scrollStateBottom)
+                                .height(IntrinsicSize.Min)
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .width(2.dp)
+                                    .fillMaxHeight()
+                                    .background(color = black)
+                            )
 
-                        HorizontalSpacer(8.dp)
+                            HorizontalSpacer(8.dp)
+
+                            Text(
+                                text = "나의 일기",
+                                style = Typography.bodyMedium,
+                                color = black
+                            )
+                        }
+
+                        VerticalSpacer(8.dp)
 
                         Text(
-                            text = "나의 일기",
-                            style = Typography.bodyMedium,
+                            text = correction.original_sentence,
+                            style = Typography.labelMedium,
+                        )
+
+                        VerticalSpacer(20.dp)
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(IntrinsicSize.Min)
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .width(2.dp)
+                                    .fillMaxHeight()
+                                    .background(color = point)
+                            )
+
+                            HorizontalSpacer(8.dp)
+
+                            Text(
+                                text = "고친 문장",
+                                style = Typography.bodyMedium,
+                                color = point
+                            )
+                        }
+
+                        Text(
+                            text = correction.corrected_sentence,
+                            style = Typography.labelMedium,
+                            color = point,
+                        )
+
+                        VerticalSpacer(8.dp)
+
+                        Text(
+                            text = correction.reason!!,
+                            style = Typography.labelMedium,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(
+                                    color = gray100,
+                                    shape = RoundedCornerShape(3.dp)
+                                )
+                                .padding(12.dp),
+                            textAlign = TextAlign.Start,
                             color = black
                         )
                     }
-
-                    VerticalSpacer(8.dp)
-
-                    Text(
-                        text = correction.original_sentence,
-                        style = Typography.labelMedium,
-                    )
-
-                    VerticalSpacer(20.dp)
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(IntrinsicSize.Min)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .width(2.dp)
-                                .fillMaxHeight()
-                                .background(color = point)
-                        )
-
-                        HorizontalSpacer(8.dp)
-
-                        Text(
-                            text = "고친 문장",
-                            style = Typography.bodyMedium,
-                            color = point
-                        )
-                    }
-
-                    Text(
-                        text = correction.corrected_sentence,
-                        style = Typography.labelMedium,
-                        color = point,
-                    )
-
-                    VerticalSpacer(8.dp)
-
-                    Text(
-                        text = correction.reason!!,
-                        style = Typography.labelMedium,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(
-                                color = gray100,
-                                shape = RoundedCornerShape(3.dp)
-                            )
-                            .padding(12.dp),
-                        textAlign = TextAlign.Start,
-                        color = black
-                    )
                 }
-            }
 
-            CustomPagerIndicator(
-                currentPage = pagerState.currentPage,
-                pageCount = correctedCount,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 10.dp)
-            )
+                CustomPagerIndicator(
+                    currentPage = pagerState.currentPage,
+                    pageCount = correctedCount,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 10.dp)
+                )
+            }
         }
     }
 }
@@ -334,25 +336,29 @@ fun CoachDetailScreenPreview() {
     CoachDetailScreen(state = CoachState(corrections = mockCorrection.corrections))
 }
 
+
 @Composable
 fun createHighlightedContent(
     allCorrections: List<CorrectionDto>,
     correctedCorrections: List<CorrectionDto>,
     currentPage: Int
 ): AnnotatedString {
+
+    val defaultStyle = SpanStyle(color = black)
+    val highlightStyle = SpanStyle(background = point, color = white)
+    val otherStyle = SpanStyle(color = gray400)
+
     return buildAnnotatedString {
         allCorrections.forEach { correction ->
-            if (correctedCorrections.getOrNull(currentPage) == correction && correction.is_corrected) {
-                withStyle(style = SpanStyle(background = point, color = white)) {
-                    append(correction.original_sentence)
-                }
-                append(" ") // 문장 간 간격
-            } else {
-                withStyle(style = SpanStyle(color = gray400)) {
-                    append(correction.original_sentence)
-                }
-                append(" ") // 문장 간 간격
+            val style = when {
+                correctedCorrections.getOrNull(currentPage) == correction && correction.is_corrected -> highlightStyle
+                else -> if (correctedCorrections.isNotEmpty()) otherStyle else defaultStyle
             }
+
+            withStyle(style = style) {
+                append(correction.original_sentence)
+            }
+            append(" ")
         }
     }
 }
