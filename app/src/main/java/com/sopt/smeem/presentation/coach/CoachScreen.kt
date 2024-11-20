@@ -90,7 +90,7 @@ fun CoachScreen(
                 navigationIcon = {},
                 actions = {
                     Text(
-                        text = "닫기",
+                        text = stringResource(R.string.coach_topappbar_action_text),
                         style = Typography.bodyMedium,
                         color = black,
                         modifier = Modifier

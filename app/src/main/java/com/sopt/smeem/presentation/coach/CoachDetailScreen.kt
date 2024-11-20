@@ -105,7 +105,7 @@ fun CoachLoadingScreen(
         VerticalSpacer(8.dp)
 
         Text(
-            text = "AI 코치가 내 일기를 분석하고 있어요\n잠시만 기다려주세요",
+            text = stringResource(R.string.lottie_animation_description),
             style = Typography.bodySmall,
             color = black
         )
@@ -150,7 +150,7 @@ fun CoachDetailScreen(
                 navigationIcon = {},
                 actions = {
                     Text(
-                        text = "닫기",
+                        text = stringResource(R.string.coach_topappbar_action_text),
                         style = Typography.bodyMedium,
                         color = black,
                         modifier = Modifier
@@ -230,7 +230,7 @@ fun CoachDetailScreen(
                             HorizontalSpacer(8.dp)
 
                             Text(
-                                text = "나의 일기",
+                                text = stringResource(R.string.coach_detail_my_diary),
                                 style = Typography.bodyMedium,
                                 color = black
                             )
@@ -260,7 +260,7 @@ fun CoachDetailScreen(
                             HorizontalSpacer(8.dp)
 
                             Text(
-                                text = "고친 문장",
+                                text = stringResource(R.string.coach_detail_corrected_sentence),
                                 style = Typography.bodyMedium,
                                 color = point
                             )
