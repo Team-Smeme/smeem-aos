@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.coach
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -59,7 +60,6 @@ import com.sopt.smeem.util.HorizontalSpacer
 import com.sopt.smeem.util.VerticalSpacer
 import kotlinx.collections.immutable.persistentListOf
 import org.orbitmvi.orbit.compose.collectAsState
-import kotlin.text.append
 
 @Composable
 fun CoachDetailRoute(
@@ -68,6 +68,10 @@ fun CoachDetailRoute(
     onCloseClick: () -> Unit,
 ) {
     val state by viewModel.collectAsState()
+
+    BackHandler {
+        onCloseClick()
+    }
 
     if (state.isLoading) {
         CoachLoadingScreen()
@@ -324,18 +328,6 @@ fun CustomPagerIndicator(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun CoachLoadingScreenPreview() {
-    CoachLoadingScreen()
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun CoachDetailScreenPreview() {
-    CoachDetailScreen(state = CoachState(corrections = mockCorrection.corrections))
-}
-
 
 @Composable
 fun createHighlightedContent(
@@ -362,6 +354,19 @@ fun createHighlightedContent(
         }
     }
 }
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun CoachLoadingScreenPreview() {
+    CoachLoadingScreen()
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun CoachDetailScreenPreview() {
+    CoachDetailScreen(state = CoachState(corrections = mockCorrection.corrections))
+}
+
 
 @Preview(showBackground = true)
 @Composable
