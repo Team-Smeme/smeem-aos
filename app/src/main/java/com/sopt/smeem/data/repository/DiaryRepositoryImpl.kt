@@ -131,10 +131,10 @@ class DiaryRepositoryImpl(
                     ApiResult(
                         response.code(), response.body()!!.data.corrections.map { correction ->
                             CorrectionDto(
-                                corrected_sentence = correction.corrected_sentence,
-                                original_sentence = correction.original_sentence,
+                                correctedSentence = correction.correctedSentence,
+                                originalSentence = correction.originalSentence,
                                 reason = correction.reason,
-                                is_corrected = correction.is_corrected
+                                isCorrected = correction.isCorrected
                             )
                         }
                     )

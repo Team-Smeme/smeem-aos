@@ -119,8 +119,8 @@ fun CoachDetailScreen(
     modifier: Modifier = Modifier,
     onCloseClick: () -> Unit = {},
 ) {
-    val correctedCount = state.corrections.count { it.is_corrected }
-    val correctedCorrections = state.corrections.filter { it.is_corrected }
+    val correctedCount = state.corrections.count { it.isCorrected }
+    val correctedCorrections = state.corrections.filter { it.isCorrected }
 
     val scrollStateTop = rememberScrollState()
     val scrollStateBottom = rememberScrollState()
@@ -239,7 +239,7 @@ fun CoachDetailScreen(
                         VerticalSpacer(8.dp)
 
                         Text(
-                            text = correction.original_sentence,
+                            text = correction.originalSentence,
                             style = Typography.labelMedium,
                         )
 
@@ -267,7 +267,7 @@ fun CoachDetailScreen(
                         }
 
                         Text(
-                            text = correction.corrected_sentence,
+                            text = correction.correctedSentence,
                             style = Typography.labelMedium,
                             color = point,
                         )
@@ -343,12 +343,12 @@ fun createHighlightedContent(
     return buildAnnotatedString {
         allCorrections.forEach { correction ->
             val style = when {
-                correctedCorrections.getOrNull(currentPage) == correction && correction.is_corrected -> highlightStyle
+                correctedCorrections.getOrNull(currentPage) == correction && correction.isCorrected -> highlightStyle
                 else -> if (correctedCorrections.isNotEmpty()) otherStyle else defaultStyle
             }
 
             withStyle(style = style) {
-                append(correction.original_sentence)
+                append(correction.originalSentence)
             }
             append(" ")
         }
@@ -377,27 +377,27 @@ fun CustomPagerIndicatorPreview() {
 val mockCorrection = CoachState(
     corrections = persistentListOf(
         CorrectionDto(
-            original_sentence = "오늘은 어떤 일이 있었나요?",
-            corrected_sentence = "오늘은 어떤 일이 있었나요?",
-            is_corrected = false,
+            originalSentence = "오늘은 어떤 일이 있었나요?",
+            correctedSentence = "오늘은 어떤 일이 있었나요?",
+            isCorrected = false,
             reason = "문장이 너무 짧습니다.",
         ),
         CorrectionDto(
-            original_sentence = "I have went to the park yesterday",
-            corrected_sentence = "I went to the park yesterday",
-            is_corrected = true,
+            originalSentence = "I have went to the park yesterday",
+            correctedSentence = "I went to the park yesterday",
+            isCorrected = true,
             reason = "현재완료 시제인 \"have went\"는 과거 시제인 \"went\"로 바꾸는 것이 맞습니다. \"yesterday\"와 함께 사용할 때는 단순 과거 시제를 사용해야 합니다.",
         ),
         CorrectionDto(
-            original_sentence = "오늘은 어떤 일이 있었나요?00",
-            corrected_sentence = "오늘은 어떤 일이 있었나요?00",
-            is_corrected = false,
+            originalSentence = "오늘은 어떤 일이 있었나요?00",
+            correctedSentence = "오늘은 어떤 일이 있었나요?00",
+            isCorrected = false,
             reason = "문장이 너무 짧습니다.",
         ),
         CorrectionDto(
-            original_sentence = "오늘은 어떤 일이 있었나요?22",
-            corrected_sentence = "오늘은 어떤 일이 있었나요?22",
-            is_corrected = true,
+            originalSentence = "오늘은 어떤 일이 있었나요?22",
+            correctedSentence = "오늘은 어떤 일이 있었나요?22",
+            isCorrected = true,
             reason = "문장이 너무 짧습니다.",
         ),
     )
