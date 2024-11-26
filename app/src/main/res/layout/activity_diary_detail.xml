@@ -42,28 +42,28 @@
                 android:id="@+id/toggle_coach"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true"
-                app:layout_constraintStart_toEndOf="@id/btn_diary_detail_back"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_diary_detail_menu"
+                app:layout_constraintStart_toEndOf="@id/btn_diary_detail_back"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:selectionRequired="true"
+                app:singleSelection="true">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_coach_off"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:textAppearance="@style/TextAppearance.Smeem.Toggle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/diary_detail_coaching_off" />
+                    android:text="@string/diary_detail_coaching_off"
+                    android:textAppearance="@style/TextAppearance.Smeem.Toggle" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_coach_on"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:textAppearance="@style/TextAppearance.Smeem.Toggle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/diary_detail_coaching_on" />
+                    android:text="@string/diary_detail_coaching_on"
+                    android:textAppearance="@style/TextAppearance.Smeem.Toggle" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <ImageView
@@ -120,8 +120,7 @@
                     android:id="@+id/tv_diary_detail_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:paddingVertical="2dp"
+                    android:layout_marginTop="20dp"
                     android:text="@{diaryDetail.createdAt}"
                     android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
                     android:textColor="@color/gray_500"
@@ -133,7 +132,7 @@
                     android:id="@+id/tv_diary_detail_writer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="2dp"
+                    android:layout_marginVertical="1dp"
                     android:text="@{diaryDetail.writerUsername}"
                     android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
                     android:textColor="@color/gray_500"
@@ -145,6 +144,15 @@
 
         </androidx.core.widget.NestedScrollView>
 
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/compose_view_coach_detail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_diary_detail_toolbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

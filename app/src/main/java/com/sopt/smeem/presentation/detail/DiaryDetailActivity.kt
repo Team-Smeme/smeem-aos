@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityDiaryDetailBinding
 import com.sopt.smeem.event.AmplitudeEventType
@@ -31,17 +32,47 @@ class DiaryDetailActivity :
         }
 
         eventVm.sendEvent(AmplitudeEventType.MY_DIARY_CLICK)
+        applyToggleButtonStyle(isCoachOn = false)
+        binding.toggleCoach.check(R.id.btn_coach_off)
     }
 
     override fun addListeners() {
         binding.btnDiaryDetailBack.setOnSingleClickListener {
             finish()
         }
+
         binding.btnDiaryDetailMenu.setOnSingleClickListener {
             DiaryDetailBottomSheet(viewModel, eventVm).show(
                 supportFragmentManager,
                 DiaryDetailBottomSheet.TAG
             )
+        }
+
+        binding.toggleCoach.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.btn_coach_off -> {
+                        applyToggleButtonStyle(isCoachOn = false)
+                        // 기존 XML 화면 표시
+                        binding.scrollDiaryDetail.visibility = View.VISIBLE
+                        binding.composeViewCoachDetail.visibility = View.GONE
+                    }
+
+                    R.id.btn_coach_on -> {
+                        applyToggleButtonStyle(isCoachOn = true)
+                        // Compose 화면 표시
+                        binding.scrollDiaryDetail.visibility = View.GONE
+                        binding.composeViewCoachDetail.visibility = View.VISIBLE
+
+                        // ComposeView 설정
+                        binding.composeViewCoachDetail.setContent {
+                            DiaryCoachingDetailScreen(
+                                diaryDetail = viewModel.diaryDetailResult.value!!
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -62,6 +93,25 @@ class DiaryDetailActivity :
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }.run(::startActivity)
             }
+        }
+    }
+
+    private fun applyToggleButtonStyle(isCoachOn: Boolean) {
+        if (isCoachOn) {
+            // 코칭 ON 버튼 스타일 적용
+            binding.btnCoachOn.setBackgroundColor(ContextCompat.getColor(this, R.color.point))
+            binding.btnCoachOn.setTextColor(ContextCompat.getColor(this, R.color.white))
+            // 코칭 OFF 버튼 스타일 적용
+            binding.btnCoachOff.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            binding.btnCoachOff.setTextColor(ContextCompat.getColor(this, R.color.gray_500))
+        } else {
+            // 코칭 OFF 버튼 스타일 적용
+            binding.btnCoachOff.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_100))
+            binding.btnCoachOff.setTextColor(ContextCompat.getColor(this, R.color.gray_500))
+            binding.btnCoachOff.setStrokeColorResource(R.color.gray_200)
+            // 코칭 ON 버튼 스타일 적용
+            binding.btnCoachOn.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            binding.btnCoachOn.setTextColor(ContextCompat.getColor(this, R.color.gray_500))
         }
     }
 }

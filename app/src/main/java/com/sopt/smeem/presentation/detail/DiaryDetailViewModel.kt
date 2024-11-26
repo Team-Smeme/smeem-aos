@@ -28,8 +28,7 @@ class DiaryDetailViewModel @Inject constructor(
     private lateinit var diaryCreatedAt: LocalDateTime
 
     private val _diaryDetailResult: MutableLiveData<DiaryDetail> = MutableLiveData<DiaryDetail>()
-    val diaryDetailResult: LiveData<DiaryDetail>
-        get() = _diaryDetailResult
+    val diaryDetailResult: LiveData<DiaryDetail> = _diaryDetailResult
 
     val isTopicExist: LiveData<Boolean> = _diaryDetailResult.map { !it.topic.isNullOrBlank() }
     val isDiaryDeleted = MutableLiveData(false)
@@ -55,12 +54,12 @@ class DiaryDetailViewModel @Inject constructor(
                             topic = dto.topic,
                             content = dto.content,
                             createdAt = DateUtil.asString(dto.createdAt),
+                            corrections = dto.corrections,
                             writerUsername = dto.username,
                             correctionCount = dto.correctionCount,
                             correctionMaxCount = dto.correctionMaxCount,
                         )
                         diaryCreatedAt = dto.createdAt
-
                     }
                 }
             } catch (t: Throwable) {
