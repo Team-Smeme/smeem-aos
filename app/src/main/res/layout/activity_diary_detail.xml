@@ -37,6 +37,35 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!-- Top AppBar 내에 토글 버튼 추가 -->
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggle_coach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                app:layout_constraintStart_toEndOf="@id/btn_diary_detail_back"
+                app:layout_constraintEnd_toStartOf="@id/btn_diary_detail_menu"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_coach_off"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:textAppearance="@style/TextAppearance.Smeem.Toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/diary_detail_coaching_off" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_coach_on"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:textAppearance="@style/TextAppearance.Smeem.Toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/diary_detail_coaching_on" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
             <ImageView
                 android:id="@+id/btn_diary_detail_menu"
                 android:layout_width="wrap_content"

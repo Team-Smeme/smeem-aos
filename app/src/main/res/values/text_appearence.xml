@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="TextAppearance.Smeem" parent="">
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
@@ -12,15 +13,18 @@
         <item name="lineHeight">32dp</item>
         <item name="fontFamily">@font/urbanist_semibold</item>
     </style>
+
     <style name="TextAppearance.Smeem.Headline1">
         <item name="android:textSize">26sp</item>
         <item name="android:lineHeight">32dp</item>
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
+
     <style name="TextAppearance.Smeem.Headline2">
         <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
+
     <style name="TextAppearance.Smeem.Headline3">
         <item name="android:textSize">20sp</item>
         <item name="android:lineHeight">28dp</item>
@@ -31,20 +35,25 @@
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
+
     <style name="TextAppearance.Smeem.Subtitle1_bold.Spacing_14">
         <item name="android:letterSpacing">0.14</item>
     </style>
+
     <style name="TextAppearance.Smeem.Subtitle2_semibold">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item>
     </style>
+
     <style name="TextAppearance.Smeem.Subtitle3_medium">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
+
     <style name="TextAppearance.Smeem.Subtitle3_medium.Spacing_neg4">
         <item name="android:letterSpacing">-0.04</item>
     </style>
+
     <style name="TextAppearance.Smeem.Subtitle4_regular">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
@@ -54,22 +63,27 @@
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
+
     <style name="TextAppearance.Smeem.Body2_semibold">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item>
     </style>
+
     <style name="TextAppearance.Smeem.Body3_medium">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
+
     <style name="TextAppearance.Smeem.Body3_medium_button_on">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
+
     <style name="TextAppearance.Smeem.Body4_regular">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
+
     <style name="TextAppearance.Smeem.Body4_regular.Height_22">
         <item name="android:lineHeight">22dp</item>
     </style>
@@ -79,14 +93,17 @@
         <item name="android:lineHeight">21dp</item>
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
+
     <style name="TextAppearance.Smeem.Caption2_medium">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
+
     <style name="TextAppearance.Smeem.Caption3_regular">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
+
     <style name="TextAppearance.Smeem.Caption4_regular_12">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
@@ -96,6 +113,11 @@
         <item name="android:fontFamily">@font/pretendard_light</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.04</item>
+    </style>
+
+    <style name="TextAppearance.Smeem.Toggle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
     </style>
 
 </resources>
