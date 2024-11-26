@@ -72,6 +72,16 @@ class DiaryRepositoryImpl(
                             createdAt = DateUtil.asLocalDateTime(body.data.createdAt),
                             username = body.data.username,
                             topic = body.data.topic,
+                            corrections = body.data.corrections.map { correction ->
+                                CorrectionDto(
+                                    correctedSentence = correction.correctedSentence,
+                                    originalSentence = correction.originalSentence,
+                                    reason = correction.reason,
+                                    isCorrected = correction.isCorrected
+                                )
+                            },
+                            correctionCount = body.data.correctionCount,
+                            correctionMaxCount = body.data.correctionMaxCount
                         )
                     )
                 }

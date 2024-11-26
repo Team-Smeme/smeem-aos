@@ -55,7 +55,9 @@ class DiaryDetailViewModel @Inject constructor(
                             topic = dto.topic,
                             content = dto.content,
                             createdAt = DateUtil.asString(dto.createdAt),
-                            writerUsername = dto.username
+                            writerUsername = dto.username,
+                            correctionCount = dto.correctionCount,
+                            correctionMaxCount = dto.correctionMaxCount,
                         )
                         diaryCreatedAt = dto.createdAt
 

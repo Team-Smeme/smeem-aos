@@ -7,12 +7,15 @@ class DiaryResponse {
         val content: String,
         val createdAt: String,
         val username: String,
-        val corrections: List<CorrectionResponse>?
+        val corrections: List<CorrectionResponse>,
+        val correctionCount: Int,
+        val correctionMaxCount: Int,
     ) {
         data class CorrectionResponse(
-            val correctionId: Long,
-            val before: String,
-            val after: String
+            val originalSentence: String,
+            val correctedSentence: String,
+            val reason: String,
+            val isCorrected: Boolean,
         )
     }
 

@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sopt.smeem.R
 import com.sopt.smeem.presentation.coach.navigation.navigateToCoachDetail
+import com.sopt.smeem.presentation.compose.components.CoachBanner
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray500
@@ -107,31 +108,10 @@ fun CoachScreen(
                 .background(white)
                 .padding(it)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(5.dp))
-                    .clickable(onClick = onCoachClick)
-                    .background(color = point, shape = RoundedCornerShape(5.dp))
-                    .padding(vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_crown),
-                    contentDescription = "crown",
-                    tint = white
-                )
-
-                HorizontalSpacer(3.dp)
-
-                Text(
-                    text = stringResource(R.string.coach_banner_comment),
-                    style = Typography.bodyLarge,
-                    color = white
-                )
-            }
+            CoachBanner(
+                isEnabled = state.diaryDetail.correctionCount < state.diaryDetail.correctionMaxCount,
+                onClick = onCoachClick
+            )
 
             Text(
                 modifier = Modifier.padding(
@@ -190,7 +170,9 @@ fun CoachScreenPreview() {
                 topic = "일상",
                 content = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son.",
                 createdAt = "2023년 3월 27일 4:18 PM",
-                writerUsername = "유진이"
+                writerUsername = "유진이",
+                correctionCount = 3,
+                correctionMaxCount = 5
             ),
         ),
         onCloseClick = {}

@@ -55,7 +55,6 @@ class CoachViewModel @Inject constructor(
                 intent {
                     reduce {
                         state.copy(
-                            diaryDetail = null,
                             isLoading = false
                         )
                     }

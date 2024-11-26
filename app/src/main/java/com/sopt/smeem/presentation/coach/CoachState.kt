@@ -8,7 +8,7 @@ import kotlinx.collections.immutable.persistentListOf
 data class CoachState(
     val diaryId: Long = -1L,
     val initialDiaryContent: String = "",
-    val diaryDetail: DiaryDetail? = null,
+    val diaryDetail: DiaryDetail = DiaryDetail(),
     val isLoading: Boolean = false,
     val corrections: PersistentList<CorrectionDto> = persistentListOf(),
 ) {
