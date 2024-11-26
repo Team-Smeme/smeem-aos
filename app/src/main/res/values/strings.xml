@@ -140,13 +140,17 @@
 
     <!-- Coach -->
     <string name="coach_banner_comment">하루 한 번 무료 AI 코칭</string>
-    <string name="coach_banner_text_0">완벽한 일기예요! 문장이 자연스럽고 오류가 없어요.</string>
-    <string name="coach_banner_text_1">잘 작성했어요! 작은 부분만 다듬으면 완벽해요.</string>
-    <string name="coach_banner_text_2">대단해요! 몇가지 피드백을 준비해봤어요.</string>
-    <string name="coach_banner_text_default">대단해요! 몇가지 피드백을 준비해봤어요.</string>
+    <string name="coach_banner_text_0">완벽한 일기예요!👍\n문장이 자연스럽고 오류가 없어요.</string>
+    <string name="coach_banner_text_1">잘 작성했어요!🙌\n작은 부분만 다듬으면 완벽해요.</string>
+    <string name="coach_banner_text_2">대단해요!🥳🎉\n몇 가지 피드백을 준비해 봤어요.</string>
+    <string name="coach_banner_text_default">대단해요!🥳🎉\n몇 가지 피드백을 준비해 봤어요.</string>
     <string name="lottie_animation_description">AI 코치가 내 일기를 분석하고 있어요\n잠시만 기다려주세요</string>
     <string name="coach_topappbar_action_text">닫기</string>
     <string name="coach_detail_my_diary">나의 일기</string>
     <string name="coach_detail_corrected_sentence">고친 문장</string>
+
+    <!-- Diary Detail -->
+    <string name="diary_detail_coaching_off">코칭 OFF</string>
+    <string name="diary_detail_coaching_on">코칭 ON</string>
 
 </resources>
