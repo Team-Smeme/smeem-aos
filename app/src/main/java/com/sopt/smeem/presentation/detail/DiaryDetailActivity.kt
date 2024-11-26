@@ -46,8 +46,11 @@ class DiaryDetailActivity :
     }
 
     override fun addObservers() {
-        viewModel.diaryDetailResult.observe(this) {
-            binding.diaryDetail = it
+        viewModel.diaryDetailResult.observe(this) { diaryDetail ->
+            binding.diaryDetail = diaryDetail
+
+            binding.toggleCoach.visibility =
+                if (diaryDetail.hasCorrections) View.VISIBLE else View.GONE
         }
 
         viewModel.isTopicExist.observe(this) {
