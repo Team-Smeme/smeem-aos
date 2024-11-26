@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -32,13 +31,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -49,11 +43,11 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sopt.smeem.R
 import com.sopt.smeem.domain.dto.CorrectionDto
+import com.sopt.smeem.presentation.compose.components.HighlightedDiary
+import com.sopt.smeem.presentation.compose.components.SmeemPagerIndicator
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray100
-import com.sopt.smeem.presentation.compose.theme.gray300
-import com.sopt.smeem.presentation.compose.theme.gray400
 import com.sopt.smeem.presentation.compose.theme.point
 import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.util.HorizontalSpacer
@@ -182,7 +176,7 @@ fun CoachDetailScreen(
                     .verticalScroll(scrollStateTop)
                     .padding(horizontal = 18.dp, vertical = 16.dp)
             ) {
-                val highlightedContent = createHighlightedContent(
+                val highlightedContent = HighlightedDiary(
                     state.corrections,
                     correctedCorrections,
                     pagerState.currentPage
@@ -290,7 +284,7 @@ fun CoachDetailScreen(
                     }
                 }
 
-                CustomPagerIndicator(
+                SmeemPagerIndicator(
                     currentPage = pagerState.currentPage,
                     pageCount = correctedCount,
                     modifier = Modifier
@@ -298,59 +292,6 @@ fun CoachDetailScreen(
                         .padding(vertical = 10.dp)
                 )
             }
-        }
-    }
-}
-
-@Composable
-fun CustomPagerIndicator(
-    currentPage: Int,
-    pageCount: Int,
-    modifier: Modifier = Modifier,
-    indicatorSize: Dp = 8.dp,
-    indicatorSpacing: Dp = 8.dp
-) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(indicatorSpacing),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        for (i in 0 until pageCount) {
-            Box(
-                modifier = Modifier
-                    .size(indicatorSize)
-                    .background(
-                        color = if (i == currentPage) black else gray300,
-                        shape = androidx.compose.foundation.shape.CircleShape
-                    )
-            )
-        }
-    }
-}
-
-
-@Composable
-fun createHighlightedContent(
-    allCorrections: List<CorrectionDto>,
-    correctedCorrections: List<CorrectionDto>,
-    currentPage: Int
-): AnnotatedString {
-
-    val defaultStyle = SpanStyle(color = black)
-    val highlightStyle = SpanStyle(background = point, color = white)
-    val otherStyle = SpanStyle(color = gray400)
-
-    return buildAnnotatedString {
-        allCorrections.forEach { correction ->
-            val style = when {
-                correctedCorrections.getOrNull(currentPage) == correction && correction.isCorrected -> highlightStyle
-                else -> if (correctedCorrections.isNotEmpty()) otherStyle else defaultStyle
-            }
-
-            withStyle(style = style) {
-                append(correction.originalSentence)
-            }
-            append(" ")
         }
     }
 }
@@ -365,13 +306,6 @@ fun CoachLoadingScreenPreview() {
 @Composable
 fun CoachDetailScreenPreview() {
     CoachDetailScreen(state = CoachState(corrections = mockCorrection.corrections))
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun CustomPagerIndicatorPreview() {
-    CustomPagerIndicator(currentPage = 0, pageCount = 3)
 }
 
 val mockCorrection = CoachState(

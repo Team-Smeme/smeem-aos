@@ -12,8 +12,8 @@ data class CoachState(
     val isLoading: Boolean = false,
     val corrections: PersistentList<CorrectionDto> = persistentListOf(),
 ) {
-    val diaryContent: String get() = diaryDetail?.content ?: initialDiaryContent
-    val createdAt: String get() = diaryDetail?.createdAt ?: ""
-    val writerUsername: String get() = diaryDetail?.writerUsername ?: ""
-    val topic: String? get() = diaryDetail?.topic
+    val diaryContent: String get() = diaryDetail.content
+    val createdAt: String get() = diaryDetail.createdAt
+    val writerUsername: String get() = diaryDetail.writerUsername
+    val topic: String? get() = diaryDetail.topic
 }
