@@ -30,6 +30,9 @@ class DiaryDetailViewModel @Inject constructor(
     private val _diaryDetailResult: MutableLiveData<DiaryDetail> = MutableLiveData<DiaryDetail>()
     val diaryDetailResult: LiveData<DiaryDetail> = _diaryDetailResult
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     val isTopicExist: LiveData<Boolean> = _diaryDetailResult.map { !it.topic.isNullOrBlank() }
     val isDiaryDeleted = MutableLiveData(false)
 
@@ -47,6 +50,8 @@ class DiaryDetailViewModel @Inject constructor(
     fun getDiaryDetail(onError: (Throwable) -> Unit) {
         viewModelScope.launch {
             try {
+                _isLoading.value = true
+
                 diaryRepository.getDiaryDetail(diaryId).run {
                     data().let { dto ->
                         _diaryDetailResult.value = DiaryDetail(
@@ -64,6 +69,8 @@ class DiaryDetailViewModel @Inject constructor(
                 }
             } catch (t: Throwable) {
                 onError(t)
+            } finally {
+                _isLoading.value = false
             }
         }
     }

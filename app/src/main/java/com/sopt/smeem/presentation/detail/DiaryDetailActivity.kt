@@ -94,6 +94,18 @@ class DiaryDetailActivity :
                 }.run(::startActivity)
             }
         }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                binding.progressBarLoading.visibility = View.VISIBLE
+                binding.scrollDiaryDetail.visibility = View.GONE
+                binding.composeViewCoachDetail.visibility = View.GONE
+            } else {
+                binding.progressBarLoading.visibility = View.GONE
+                binding.scrollDiaryDetail.visibility = View.VISIBLE
+                binding.composeViewCoachDetail.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun applyToggleButtonStyle(isCoachOn: Boolean) {
