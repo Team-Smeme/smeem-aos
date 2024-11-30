@@ -11,4 +11,5 @@ data class GetDiaryResponseDto(
     val corrections: List<CorrectionDto> = emptyList(),
     val correctionCount: Int = -1,
     val correctionMaxCount: Int = -1,
+    val isUpdated: Boolean = false
 )

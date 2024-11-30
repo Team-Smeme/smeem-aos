@@ -10,6 +10,7 @@ class DiaryResponse {
         val corrections: List<CorrectionResponse>,
         val correctionCount: Int,
         val correctionMaxCount: Int,
+        val isUpdated: Boolean
     ) {
         data class CorrectionResponse(
             val originalSentence: String,

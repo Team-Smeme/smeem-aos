@@ -81,7 +81,8 @@ class DiaryRepositoryImpl(
                                 )
                             },
                             correctionCount = body.data.correctionCount,
-                            correctionMaxCount = body.data.correctionMaxCount
+                            correctionMaxCount = body.data.correctionMaxCount,
+                            isUpdated = body.data.isUpdated
                         )
                     )
                 }
