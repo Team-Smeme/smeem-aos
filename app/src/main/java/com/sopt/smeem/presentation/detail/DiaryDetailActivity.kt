@@ -81,7 +81,7 @@ class DiaryDetailActivity :
             binding.diaryDetail = diaryDetail
 
             binding.toggleCoach.visibility =
-                if (diaryDetail.hasCorrections) View.VISIBLE else View.GONE
+                if (diaryDetail.hasCorrections || !diaryDetail.isUpdated) View.VISIBLE else View.GONE
         }
 
         viewModel.isTopicExist.observe(this) {

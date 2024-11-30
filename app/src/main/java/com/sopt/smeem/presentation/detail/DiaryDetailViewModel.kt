@@ -63,6 +63,7 @@ class DiaryDetailViewModel @Inject constructor(
                             writerUsername = dto.username,
                             correctionCount = dto.correctionCount,
                             correctionMaxCount = dto.correctionMaxCount,
+                            isUpdated = dto.isUpdated
                         )
                         diaryCreatedAt = dto.createdAt
                     }
