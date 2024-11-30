@@ -47,13 +47,33 @@ class DiaryDetailBottomSheet(
 
     fun addListeners() {
         binding.tvEdit.setOnClickListener {
+            checkDiaryCoached()
             dismiss()
-            moveToEdit()
         }
         binding.tvDelete.setOnClickListener {
             dismiss()
             showDeleteDialog()
         }
+    }
+
+    private fun checkDiaryCoached() {
+        viewModel.diaryDetailResult.observe(viewLifecycleOwner) { diaryDetail ->
+            if (diaryDetail.hasCorrections) {
+                showEditAlertDialog()
+            } else {
+                moveToEdit()
+            }
+        }
+    }
+
+    private fun showEditAlertDialog() {
+        MaterialAlertDialogBuilder(fragmentContext)
+            .setCustomTitle(layoutInflater.inflate(R.layout.edit_dialog_title, binding.root, false))
+            .setMessage("그래도 수정하시겠습니까?")
+            .setNegativeButton("아니요") { _, _ -> dismiss() }
+            .setPositiveButton("예") { _, _ ->
+                moveToEdit()
+            }.show()
     }
 
     private fun moveToEdit() {
@@ -66,10 +86,16 @@ class DiaryDetailBottomSheet(
     }
 
     private fun showDeleteDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setCustomTitle(layoutInflater.inflate(R.layout.delete_dialog_title, null))
-            .setNegativeButton("아니요") { dialog, which -> }
-            .setPositiveButton("예") { dialog, which ->
+        MaterialAlertDialogBuilder(fragmentContext)
+            .setCustomTitle(
+                layoutInflater.inflate(
+                    R.layout.delete_dialog_title,
+                    binding.root,
+                    false
+                )
+            )
+            .setNegativeButton("아니요") { _, _ -> dismiss() }
+            .setPositiveButton("예") { _, _ ->
                 viewModel.deleteDiary(
                     onSuccess = { dismiss() },
                     onError = { t ->
