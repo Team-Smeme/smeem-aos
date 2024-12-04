@@ -48,10 +48,8 @@ class DiaryDetailBottomSheet(
     fun addListeners() {
         binding.tvEdit.setOnClickListener {
             checkDiaryCoached()
-            dismiss()
         }
         binding.tvDelete.setOnClickListener {
-            dismiss()
             showDeleteDialog()
         }
     }
@@ -69,19 +67,24 @@ class DiaryDetailBottomSheet(
     private fun showEditAlertDialog() {
         MaterialAlertDialogBuilder(fragmentContext)
             .setCustomTitle(layoutInflater.inflate(R.layout.edit_dialog_title, binding.root, false))
-            .setMessage("그래도 수정하시겠습니까?")
+            .setView(layoutInflater.inflate(R.layout.edit_dialog_message, binding.root, false))
             .setNegativeButton("아니요") { _, _ -> dismiss() }
             .setPositiveButton("예") { _, _ ->
                 moveToEdit()
-            }.show()
+                dismiss()
+            }
+            .show()
     }
 
     private fun moveToEdit() {
-        Intent(requireContext(), DiaryEditActivity::class.java).apply {
+        Intent(fragmentContext, DiaryEditActivity::class.java).apply {
             putExtra(DIARY_ID, viewModel.getDiaryId())
             putExtra(ORIGINAL_CONTENT, viewModel.getContent())
             putExtra(RANDOM_TOPIC, viewModel.getTopic())
-        }.run(::startActivity)
+        }.also { intent ->
+            startActivity(intent)
+            dismiss()
+        }
         eventViewModel.sendEvent(AmplitudeEventType.MY_DIARY_EDIT)
     }
 

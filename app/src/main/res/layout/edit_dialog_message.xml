@@ -8,9 +8,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="수정시 모든 코칭 내용이 사라집니다."
-        android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+        android:layout_marginTop="12dp"
+        android:text="그래도 수정하시겠습니까?"
+        android:textColor="@color/gray_600"
+        android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
