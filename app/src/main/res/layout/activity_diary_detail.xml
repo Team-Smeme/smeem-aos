@@ -47,7 +47,8 @@
                 app:layout_constraintStart_toEndOf="@id/btn_diary_detail_back"
                 app:layout_constraintTop_toTopOf="parent"
                 app:selectionRequired="true"
-                app:singleSelection="true">
+                app:singleSelection="true"
+                android:visibility="gone">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_coach_off"

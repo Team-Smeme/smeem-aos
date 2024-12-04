@@ -79,9 +79,6 @@ class DiaryDetailActivity :
     override fun addObservers() {
         viewModel.diaryDetailResult.observe(this) { diaryDetail ->
             binding.diaryDetail = diaryDetail
-
-            binding.toggleCoach.visibility =
-                if (diaryDetail.hasCorrections || !diaryDetail.isUpdated) View.VISIBLE else View.GONE
         }
 
         viewModel.isTopicExist.observe(this) {
@@ -104,6 +101,12 @@ class DiaryDetailActivity :
                 binding.progressBarLoading.visibility = View.GONE
                 binding.scrollDiaryDetail.visibility = View.VISIBLE
                 binding.composeViewCoachDetail.visibility = View.VISIBLE
+
+                val diaryDetail = viewModel.diaryDetailResult.value
+                if (diaryDetail != null) {
+                    binding.toggleCoach.visibility =
+                        if (!diaryDetail.hasCorrections || diaryDetail.isUpdated) View.GONE else View.VISIBLE
+                }
             }
         }
     }
