@@ -14,6 +14,7 @@ import com.sopt.smeem.databinding.BottomSheetDiaryDetailBinding
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.IntentConstants.DIARY_ID
+import com.sopt.smeem.presentation.IntentConstants.HAS_CORRECTIONS
 import com.sopt.smeem.presentation.IntentConstants.ORIGINAL_CONTENT
 import com.sopt.smeem.presentation.IntentConstants.RANDOM_TOPIC
 
@@ -79,6 +80,7 @@ class DiaryDetailBottomSheet(
     private fun moveToEdit() {
         Intent(fragmentContext, DiaryEditActivity::class.java).apply {
             putExtra(DIARY_ID, viewModel.getDiaryId())
+            putExtra(HAS_CORRECTIONS, viewModel.diaryDetailResult.value?.hasCorrections!!)
             putExtra(ORIGINAL_CONTENT, viewModel.getContent())
             putExtra(RANDOM_TOPIC, viewModel.getTopic())
         }.also { intent ->

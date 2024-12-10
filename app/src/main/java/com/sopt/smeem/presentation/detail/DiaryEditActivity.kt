@@ -6,6 +6,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityDiaryEditBinding
+import com.sopt.smeem.event.AmplitudeEventType
+import com.sopt.smeem.presentation.EventVM
+import com.sopt.smeem.presentation.IntentConstants.HAS_CORRECTIONS
 import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
 import com.sopt.smeem.presentation.base.BindingActivity
 import com.sopt.smeem.presentation.base.DefaultSnackBar
@@ -16,6 +19,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.activity_diary_edit) {
     private val viewModel by viewModels<DiaryEditViewModel>()
+    private val eventVm by viewModels<EventVM>()
 
     override fun constructLayout() {
         // databinding
@@ -39,6 +43,10 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
             finish()
         }
         binding.btnDiaryEditDone.setOnClickListener {
+            eventVm.sendEvent(
+                AmplitudeEventType.MY_DIARY_EDIT_COMPLETE_CLICK,
+                mapOf("has_coaching" to intent.getBooleanExtra(HAS_CORRECTIONS, false))
+            )
             completeDiary()
         }
     }

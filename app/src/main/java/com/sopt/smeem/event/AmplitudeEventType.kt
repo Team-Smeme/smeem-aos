@@ -25,6 +25,7 @@ enum class AmplitudeEventType(val eventName: String) {
     // diary detail
     MY_DIARY_CLICK("mydiary_click"),
     MY_DIARY_EDIT("mydiary_edit"),
+    MY_DIARY_EDIT_COMPLETE_CLICK("mydiary_edit_complete_click"),
 
     // my page
     MY_PAGE_VIEW("mypage_view"),
