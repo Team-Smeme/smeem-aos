@@ -101,7 +101,8 @@ fun CoachLoadingScreen(
         Text(
             text = stringResource(R.string.lottie_animation_description),
             style = Typography.bodySmall,
-            color = black
+            color = black,
+            textAlign = TextAlign.Center
         )
     }
 }
