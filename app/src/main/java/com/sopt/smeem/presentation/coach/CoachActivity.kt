@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.domain.dto.RetrievedBadgeDto
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.IntentConstants.DIARY_CONTENT
 import com.sopt.smeem.presentation.IntentConstants.DIARY_ID
 import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
@@ -21,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CoachActivity : ComponentActivity() {
     private val viewModel by viewModels<CoachViewModel>()
+    private val eventVm by viewModels<EventVM>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,7 @@ class CoachActivity : ComponentActivity() {
 
                 CoachNavGraph(
                     viewModel = viewModel,
+                    eventVm = eventVm,
                     navController = navController,
                     onCloseClick = {
                         Intent(this, HomeActivity::class.java).apply {

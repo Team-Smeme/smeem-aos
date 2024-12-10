@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sopt.smeem.R
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.coach.navigation.navigateToCoachDetail
 import com.sopt.smeem.presentation.compose.components.CoachBanner
 import com.sopt.smeem.presentation.compose.theme.Typography
@@ -40,6 +41,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun CoachRoute(
     navController: NavController,
     viewModel: CoachViewModel = hiltViewModel(),
+    eventVm: EventVM = hiltViewModel(),
     onCloseClick: () -> Unit,
 ) {
     val state by viewModel.collectAsState()

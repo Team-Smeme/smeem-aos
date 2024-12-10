@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.coach.CoachDetailRoute
 import com.sopt.smeem.presentation.coach.CoachRoute
 import com.sopt.smeem.presentation.coach.CoachViewModel
@@ -12,6 +13,7 @@ import com.sopt.smeem.presentation.coach.CoachViewModel
 @Composable
 fun CoachNavGraph(
     viewModel: CoachViewModel,
+    eventVm: EventVM,
     navController: NavHostController,
     onCloseClick: () -> Unit,
 ) {
@@ -19,6 +21,7 @@ fun CoachNavGraph(
         composable<CoachRoute.Coach> {
             CoachRoute(
                 viewModel = viewModel,
+                eventVm = eventVm,
                 navController = navController,
                 onCloseClick = onCloseClick
             )
@@ -26,6 +29,7 @@ fun CoachNavGraph(
         composable<CoachRoute.CoachDetail> {
             CoachDetailRoute(
                 viewModel = viewModel,
+                eventVm = eventVm,
                 navController = navController,
                 onCloseClick = onCloseClick
             )

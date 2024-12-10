@@ -43,6 +43,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sopt.smeem.R
 import com.sopt.smeem.domain.dto.CorrectionDto
+import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.compose.components.HighlightedDiary
 import com.sopt.smeem.presentation.compose.components.SmeemPagerIndicator
 import com.sopt.smeem.presentation.compose.theme.Typography
@@ -59,6 +60,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun CoachDetailRoute(
     navController: NavController,
     viewModel: CoachViewModel = hiltViewModel(),
+    eventVm: EventVM = hiltViewModel(),
     onCloseClick: () -> Unit,
 ) {
     val state by viewModel.collectAsState()
