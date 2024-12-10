@@ -27,7 +27,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -78,6 +80,12 @@ fun CoachDetailRoute(
         CoachDetailScreen(
             state = state,
             onCloseClick = onCloseClick,
+            onSwipeFeedBack = { pageIndex ->
+                eventVm.sendEvent(
+                    AmplitudeEventType.COACHING_FEEDBACK_VIEW,
+                    mapOf("index" to pageIndex)
+                )
+            }
         )
     }
 }
@@ -118,7 +126,9 @@ fun CoachDetailScreen(
     state: CoachState,
     modifier: Modifier = Modifier,
     onCloseClick: () -> Unit = {},
+    onSwipeFeedBack: (Int) -> Unit = {},
 ) {
+
     val correctedCount = state.corrections.count { it.isCorrected }
     val correctedCorrections = state.corrections.filter { it.isCorrected }
 
@@ -136,6 +146,12 @@ fun CoachDetailScreen(
         correctedCount == 1 -> stringResource(R.string.coach_banner_text_1)
         correctedCount >= 2 -> stringResource(R.string.coach_banner_text_2)
         else -> stringResource(R.string.coach_banner_text_default)
+    }
+
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }.collect { page ->
+            onSwipeFeedBack(page)
+        }
     }
 
     Scaffold(
