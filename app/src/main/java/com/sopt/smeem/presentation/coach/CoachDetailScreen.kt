@@ -74,6 +74,7 @@ fun CoachDetailRoute(
         eventVm.sendEvent(AmplitudeEventType.COACHING_LOAD_VIEW)
         CoachLoadingScreen()
     } else {
+        eventVm.sendEvent(AmplitudeEventType.COACHING_RESULT_VIEW)
         CoachDetailScreen(
             state = state,
             onCloseClick = onCloseClick,
