@@ -53,6 +53,10 @@ class DiaryDetailActivity :
                 when (checkedId) {
                     R.id.btn_coach_off -> {
                         applyToggleButtonStyle(isCoachOn = false)
+                        eventVm.sendEvent(
+                            AmplitudeEventType.MY_DIARY_TOGGLE_CLICK,
+                            mapOf("toggle" to "off")
+                        )
                         // 기존 XML 화면 표시
                         binding.scrollDiaryDetail.visibility = View.VISIBLE
                         binding.composeViewCoachDetail.visibility = View.GONE
@@ -60,6 +64,10 @@ class DiaryDetailActivity :
 
                     R.id.btn_coach_on -> {
                         applyToggleButtonStyle(isCoachOn = true)
+                        eventVm.sendEvent(
+                            AmplitudeEventType.MY_DIARY_TOGGLE_CLICK,
+                            mapOf("toggle" to "on")
+                        )
                         // Compose 화면 표시
                         binding.scrollDiaryDetail.visibility = View.GONE
                         binding.composeViewCoachDetail.visibility = View.VISIBLE
