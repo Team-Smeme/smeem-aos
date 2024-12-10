@@ -77,7 +77,8 @@ class CoachViewModel @Inject constructor(
             try {
                 intent {
                     val result =
-                        diaryRepository.getCorrections(state.diaryId).data().toPersistentList()
+                        diaryRepository.getCorrections(state.diaryId).data().take(10)
+                            .toPersistentList()
                     reduce { state.copy(corrections = result, isLoading = false) }
                 }
             } catch (t: Throwable) {
