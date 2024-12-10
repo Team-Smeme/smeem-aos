@@ -35,9 +35,9 @@ object NetworkModule {
             .baseUrl(apiServer)
             .client(
                 OkHttpClient.Builder().apply {
-                    connectTimeout(10, TimeUnit.SECONDS)
-                    writeTimeout(5, TimeUnit.SECONDS)
-                    readTimeout(5, TimeUnit.SECONDS)
+                    connectTimeout(15, TimeUnit.SECONDS)
+                    writeTimeout(30, TimeUnit.SECONDS)
+                    readTimeout(30, TimeUnit.SECONDS)
                     addInterceptor(VersionInterceptor())
                     addInterceptor(
                         HttpLoggingInterceptor().apply {
@@ -61,9 +61,9 @@ object NetworkModule {
             .baseUrl(apiServer)
             .client(
                 OkHttpClient.Builder().apply {
-                    connectTimeout(10, TimeUnit.SECONDS)
-                    writeTimeout(5, TimeUnit.SECONDS)
-                    readTimeout(5, TimeUnit.SECONDS)
+                    connectTimeout(15, TimeUnit.SECONDS)
+                    writeTimeout(30, TimeUnit.SECONDS)
+                    readTimeout(30, TimeUnit.SECONDS)
 
                     addInterceptor(VersionInterceptor())
                     runBlocking {
@@ -105,8 +105,8 @@ object NetworkModule {
             .client(
                 OkHttpClient.Builder().apply {
                     connectTimeout(10, TimeUnit.SECONDS)
-                    writeTimeout(5, TimeUnit.SECONDS)
-                    readTimeout(5, TimeUnit.SECONDS)
+                    writeTimeout(30, TimeUnit.SECONDS)
+                    readTimeout(30, TimeUnit.SECONDS)
                 }.addInterceptor(
                     HttpLoggingInterceptor().apply {
                         level = HttpLoggingInterceptor.Level.BODY
