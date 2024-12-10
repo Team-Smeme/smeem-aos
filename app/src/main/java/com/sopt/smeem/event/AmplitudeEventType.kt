@@ -26,6 +26,7 @@ enum class AmplitudeEventType(val eventName: String) {
     MY_DIARY_CLICK("mydiary_click"),
     MY_DIARY_EDIT("mydiary_edit"),
     MY_DIARY_EDIT_COMPLETE_CLICK("mydiary_edit_complete_click"),
+    MY_DIARY_TOGGLE_CLICK("toggle_click"),
 
     // my page
     MY_PAGE_VIEW("mypage_view"),
@@ -44,4 +45,11 @@ enum class AmplitudeEventType(val eventName: String) {
     // banner
     BANNER_CLICK("banner_click"),
     BANNER_X("banner_x"),
+
+    // coach
+    COACHING_TRY_CLICK("coaching_try_click"),
+    COACHING_EXIT_CLICK("coaching_exit_click"),
+    COACHING_LOAD_VIEW("coaching_load_view"),
+    COACHING_RESULT_VIEW("coaching_result_view"),
+    COACHING_FEEDBACK_VIEW("coaching_feedback_view"),
 }
