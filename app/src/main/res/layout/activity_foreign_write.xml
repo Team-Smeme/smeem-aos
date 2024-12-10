@@ -62,10 +62,10 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="@string/diary_write_hint"
-                    android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:privateImeOptions="defaultInputmode=english"
                     android:paddingHorizontal="18dp"
                     android:paddingVertical="20dp"
-                    android:privateImeOptions="defaultInputmode==english"
                     android:text="@={vm.diary}"
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
                     android:textColor="?colorOnBackground" />
