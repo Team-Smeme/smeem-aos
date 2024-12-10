@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sopt.smeem.R
+import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.coach.navigation.navigateToCoachDetail
 import com.sopt.smeem.presentation.compose.components.CoachBanner
@@ -61,7 +62,13 @@ fun CoachRoute(
     CoachScreen(
         state = state,
         onCloseClick = onCloseClick,
-        onCoachClick = viewModel::onCoachClick
+        onCoachClick = {
+            viewModel.onCoachClick()
+            eventVm.sendEvent(
+                AmplitudeEventType.COACHING_TRY_CLICK,
+                mapOf("activity" to state.isCoachEnabled)
+            )
+        }
     )
 }
 
@@ -103,7 +110,7 @@ fun CoachScreen(
                 .padding(it)
         ) {
             CoachBanner(
-                isEnabled = state.diaryDetail.correctionCount < state.diaryDetail.correctionMaxCount,
+                isEnabled = state.isCoachEnabled,
                 onClick = onCoachClick
             )
 

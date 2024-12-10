@@ -16,4 +16,5 @@ data class CoachState(
     val createdAt: String get() = diaryDetail.createdAt
     val writerUsername: String get() = diaryDetail.writerUsername
     val topic: String? get() = diaryDetail.topic
+    val isCoachEnabled: Boolean get() = diaryDetail.correctionCount < diaryDetail.correctionMaxCount
 }
