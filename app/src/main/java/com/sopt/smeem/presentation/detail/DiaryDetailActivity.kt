@@ -31,7 +31,10 @@ class DiaryDetailActivity :
             Toast.makeText(this, t.message, Toast.LENGTH_SHORT).show()
         }
 
-        eventVm.sendEvent(AmplitudeEventType.MY_DIARY_CLICK)
+        eventVm.sendEvent(
+            AmplitudeEventType.MY_DIARY_CLICK,
+            mapOf("has_coaching" to viewModel.diaryDetailResult.value?.hasCorrections!!)
+        )
         applyToggleButtonStyle(isCoachOn = false)
         binding.toggleCoach.check(R.id.btn_coach_off)
     }
