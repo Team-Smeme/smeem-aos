@@ -62,8 +62,8 @@ fun DiaryCoachingDetailScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .verticalScroll(scrollStateTop)
                 .padding(horizontal = 18.dp, vertical = 16.dp)
+                .verticalScroll(scrollStateTop)
         ) {
             val highlightedContent = HighlightedDiary(
                 diaryDetail.corrections,
@@ -125,12 +125,13 @@ fun DiaryCoachingDetailScreen(
                 val correction = correctedCorrections[page]
 
                 Column(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(scrollStateBottom)
                 ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .verticalScroll(scrollStateBottom)
                             .height(IntrinsicSize.Min)
                     ) {
                         Box(
