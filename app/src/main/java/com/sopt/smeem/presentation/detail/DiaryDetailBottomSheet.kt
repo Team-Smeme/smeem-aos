@@ -85,7 +85,10 @@ class DiaryDetailBottomSheet(
             startActivity(intent)
             dismiss()
         }
-        eventViewModel.sendEvent(AmplitudeEventType.MY_DIARY_EDIT)
+        eventViewModel.sendEvent(
+            AmplitudeEventType.MY_DIARY_EDIT,
+            mapOf("has_coaching" to viewModel.diaryDetailResult.value?.hasCorrections!!)
+        )
     }
 
     private fun showDeleteDialog() {
