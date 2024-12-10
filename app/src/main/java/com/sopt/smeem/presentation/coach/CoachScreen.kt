@@ -56,12 +56,22 @@ fun CoachRoute(
     }
 
     BackHandler {
+        eventVm.sendEvent(
+            AmplitudeEventType.COACHING_EXIT_CLICK,
+            mapOf("activity" to state.isCoachEnabled)
+        )
         onCloseClick()
     }
 
     CoachScreen(
         state = state,
-        onCloseClick = onCloseClick,
+        onCloseClick = {
+            eventVm.sendEvent(
+                AmplitudeEventType.COACHING_EXIT_CLICK,
+                mapOf("activity" to state.isCoachEnabled)
+            )
+            onCloseClick()
+        },
         onCoachClick = {
             viewModel.onCoachClick()
             eventVm.sendEvent(
