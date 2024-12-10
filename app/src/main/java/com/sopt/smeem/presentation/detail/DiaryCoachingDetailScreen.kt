@@ -180,6 +180,8 @@ fun DiaryCoachingDetailScreen(
                         )
                     }
 
+                    VerticalSpacer(8.dp)
+
                     Text(
                         text = correction.correctedSentence,
                         style = Typography.labelMedium,
