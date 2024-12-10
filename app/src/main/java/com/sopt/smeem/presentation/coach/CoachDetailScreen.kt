@@ -43,6 +43,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sopt.smeem.R
 import com.sopt.smeem.domain.dto.CorrectionDto
+import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.compose.components.HighlightedDiary
 import com.sopt.smeem.presentation.compose.components.SmeemPagerIndicator
@@ -70,6 +71,7 @@ fun CoachDetailRoute(
     }
 
     if (state.isLoading) {
+        eventVm.sendEvent(AmplitudeEventType.COACHING_LOAD_VIEW)
         CoachLoadingScreen()
     } else {
         CoachDetailScreen(
