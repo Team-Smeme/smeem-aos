@@ -258,7 +258,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
                                             eventVm.sendEvent(
                                                 AmplitudeEventType.BANNER_CLICK,
-                                                mapOf("survey" to true)
+                                                mapOf(AmplitudeEventType.BANNER_CLICK.propertyKey.toString() to true)
                                             )
                                         },
                                         onBannerClose = {
@@ -266,7 +266,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
                                             eventVm.sendEvent(
                                                 AmplitudeEventType.BANNER_X,
-                                                mapOf("survey" to true)
+                                                mapOf(AmplitudeEventType.BANNER_CLICK.propertyKey.toString() to true)
                                             )
                                         },
                                         modifier =

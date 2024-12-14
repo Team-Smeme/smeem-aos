@@ -1,6 +1,6 @@
 package com.sopt.smeem.event
 
-enum class AmplitudeEventType(val eventName: String) {
+enum class AmplitudeEventType(val eventName: String, val propertyKey: String? = null) {
     FIRST_VIEW("first_view"),
 
     // on boarding
@@ -43,8 +43,8 @@ enum class AmplitudeEventType(val eventName: String) {
     DELETE_ID_DONE("delete_id_done"),
 
     // banner
-    BANNER_CLICK("banner_click"),
-    BANNER_X("banner_x"),
+    BANNER_CLICK("banner_click", "survey"),
+    BANNER_X("banner_x", "survey"),
 
     // coach
     COACHING_TRY_CLICK("coaching_try_click"),
