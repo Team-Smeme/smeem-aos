@@ -83,7 +83,7 @@ fun CoachDetailRoute(
             onSwipeFeedBack = { pageIndex ->
                 eventVm.sendEvent(
                     AmplitudeEventType.COACHING_FEEDBACK_VIEW,
-                    mapOf("index" to pageIndex + 1)
+                    mapOf(AmplitudeEventType.COACHING_FEEDBACK_VIEW.propertyKey.toString() to pageIndex + 1)
                 )
             }
         )

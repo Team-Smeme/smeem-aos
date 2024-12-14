@@ -68,7 +68,7 @@ fun CoachRoute(
         onCloseClick = {
             eventVm.sendEvent(
                 AmplitudeEventType.COACHING_EXIT_CLICK,
-                mapOf("active" to state.isCoachEnabled)
+                mapOf(AmplitudeEventType.COACHING_EXIT_CLICK.propertyKey.toString() to state.isCoachEnabled)
             )
             onCloseClick()
         },
@@ -76,7 +76,7 @@ fun CoachRoute(
             viewModel.onCoachClick()
             eventVm.sendEvent(
                 AmplitudeEventType.COACHING_TRY_CLICK,
-                mapOf("active" to state.isCoachEnabled)
+                mapOf(AmplitudeEventType.COACHING_TRY_CLICK.propertyKey.toString() to state.isCoachEnabled)
             )
         }
     )

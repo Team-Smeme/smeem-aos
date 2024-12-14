@@ -47,9 +47,9 @@ enum class AmplitudeEventType(val eventName: String, val propertyKey: String? = 
     BANNER_X("banner_x", "survey"),
 
     // coach
-    COACHING_TRY_CLICK("coaching_try_click"),
-    COACHING_EXIT_CLICK("coaching_exit_click"),
+    COACHING_TRY_CLICK("coaching_try_click", "active"),
+    COACHING_EXIT_CLICK("coaching_exit_click", "active"),
     COACHING_LOAD_VIEW("coaching_load_view"),
     COACHING_RESULT_VIEW("coaching_result_view"),
-    COACHING_FEEDBACK_VIEW("coaching_feedback_view"),
+    COACHING_FEEDBACK_VIEW("coaching_feedback_view", "index"),
 }
