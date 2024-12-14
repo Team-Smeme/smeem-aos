@@ -45,7 +45,12 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
         binding.btnDiaryEditDone.setOnClickListener {
             eventVm.sendEvent(
                 AmplitudeEventType.MY_DIARY_EDIT_COMPLETE_CLICK,
-                mapOf("has_coaching" to intent.getBooleanExtra(HAS_CORRECTIONS, false))
+                mapOf(
+                    AmplitudeEventType.MY_DIARY_EDIT_COMPLETE_CLICK.propertyKey.toString() to intent.getBooleanExtra(
+                        HAS_CORRECTIONS,
+                        false
+                    )
+                )
             )
             completeDiary()
         }

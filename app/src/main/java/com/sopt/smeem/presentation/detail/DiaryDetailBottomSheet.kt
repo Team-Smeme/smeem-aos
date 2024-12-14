@@ -89,7 +89,7 @@ class DiaryDetailBottomSheet(
         }
         eventViewModel.sendEvent(
             AmplitudeEventType.MY_DIARY_EDIT,
-            mapOf("has_coaching" to viewModel.diaryDetailResult.value?.hasCorrections!!)
+            mapOf(AmplitudeEventType.MY_DIARY_EDIT.propertyKey.toString() to viewModel.diaryDetailResult.value?.hasCorrections!!)
         )
     }
 

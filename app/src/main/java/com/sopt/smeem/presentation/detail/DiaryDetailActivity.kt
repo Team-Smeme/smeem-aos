@@ -54,7 +54,7 @@ class DiaryDetailActivity :
                         applyToggleButtonStyle(isCoachOn = false)
                         eventVm.sendEvent(
                             AmplitudeEventType.MY_DIARY_TOGGLE_CLICK,
-                            mapOf("toggle" to "off")
+                            mapOf(AmplitudeEventType.MY_DIARY_TOGGLE_CLICK.propertyKey.toString() to "off")
                         )
                         // 기존 XML 화면 표시
                         binding.scrollDiaryDetail.visibility = View.VISIBLE
@@ -65,7 +65,7 @@ class DiaryDetailActivity :
                         applyToggleButtonStyle(isCoachOn = true)
                         eventVm.sendEvent(
                             AmplitudeEventType.MY_DIARY_TOGGLE_CLICK,
-                            mapOf("toggle" to "on")
+                            mapOf(AmplitudeEventType.MY_DIARY_TOGGLE_CLICK.propertyKey.toString() to "on")
                         )
                         // Compose 화면 표시
                         binding.scrollDiaryDetail.visibility = View.GONE
@@ -88,7 +88,7 @@ class DiaryDetailActivity :
             binding.diaryDetail = diaryDetail
             eventVm.sendEvent(
                 AmplitudeEventType.MY_DIARY_CLICK,
-                mapOf("has_coaching" to diaryDetail.hasCorrections)
+                mapOf(AmplitudeEventType.MY_DIARY_CLICK.propertyKey.toString() to diaryDetail.hasCorrections)
             )
         }
 

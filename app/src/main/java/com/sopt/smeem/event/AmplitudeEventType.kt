@@ -23,10 +23,10 @@ enum class AmplitudeEventType(val eventName: String, val propertyKey: String? = 
     HINT_CLICK("hint_click"),
 
     // diary detail
-    MY_DIARY_CLICK("mydiary_click"),
-    MY_DIARY_EDIT("mydiary_edit"),
-    MY_DIARY_EDIT_COMPLETE_CLICK("mydiary_edit_complete_click"),
-    MY_DIARY_TOGGLE_CLICK("toggle_click"),
+    MY_DIARY_CLICK("mydiary_click", "has_coaching"),
+    MY_DIARY_EDIT("mydiary_edit", "has_coaching"),
+    MY_DIARY_EDIT_COMPLETE_CLICK("mydiary_edit_complete_click", "has_coaching"),
+    MY_DIARY_TOGGLE_CLICK("toggle_click", "toggle"),
 
     // my page
     MY_PAGE_VIEW("mypage_view"),
