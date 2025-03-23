@@ -5,6 +5,7 @@ import com.sopt.smeem.data.model.request.DiaryRequest
 import com.sopt.smeem.data.service.DiaryService
 import com.sopt.smeem.domain.common.ApiResult
 import com.sopt.smeem.domain.dto.CorrectionDto
+import com.sopt.smeem.domain.dto.CorrectionsResponseDto
 import com.sopt.smeem.domain.dto.DeleteDiaryRequestDto
 import com.sopt.smeem.domain.dto.GetDiaryResponseDto
 import com.sopt.smeem.domain.dto.GetDiarySummariesDto
@@ -135,19 +136,24 @@ class DiaryRepositoryImpl(
             }
         }
 
-    override suspend fun getCorrections(diaryId: Long): ApiResult<List<CorrectionDto>> =
+    override suspend fun getCorrections(diaryId: Long): ApiResult<CorrectionsResponseDto> =
         diaryService.postCorrection(diaryId).let { response ->
             if (response.isSuccessful) {
                 response.body()!!.data.let { data ->
                     ApiResult(
-                        response.code(), response.body()!!.data.corrections.map { correction ->
-                            CorrectionDto(
-                                correctedSentence = correction.correctedSentence,
-                                originalSentence = correction.originalSentence,
-                                reason = correction.reason,
-                                isCorrected = correction.isCorrected
-                            )
-                        }
+                        statusCode = response.code(),
+                        data = CorrectionsResponseDto(
+                            corrections = data.corrections.map { correction ->
+                                CorrectionDto(
+                                    correctedSentence = correction.correctedSentence,
+                                    originalSentence = correction.originalSentence,
+                                    reason = correction.reason,
+                                    isCorrected = correction.isCorrected
+                                )
+                            },
+                            username = data.username,
+                            totalCount = data.totalCount
+                        )
                     )
                 }
             } else {
