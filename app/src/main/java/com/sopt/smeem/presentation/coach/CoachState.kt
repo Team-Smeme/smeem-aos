@@ -10,6 +10,9 @@ data class CoachState(
     val initialDiaryContent: String = "",
     val diaryDetail: DiaryDetail = DiaryDetail(),
     val isLoading: Boolean = false,
+    val isSurvey: Boolean = true,
+    val username: String = "",
+    val totalCount: Int = 0,
     val corrections: PersistentList<CorrectionDto> = persistentListOf(),
 ) {
     val diaryContent: String get() = diaryDetail.content
