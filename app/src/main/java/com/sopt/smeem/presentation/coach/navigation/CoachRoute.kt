@@ -9,4 +9,7 @@ sealed interface CoachRoute {
 
     @Serializable
     data object CoachDetail : CoachRoute
+
+    @Serializable
+    data class CoachSurvey(val username: String, val totalCount: Int) : CoachRoute
 }

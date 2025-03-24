@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.coach.CoachDetailRoute
 import com.sopt.smeem.presentation.coach.CoachRoute
+import com.sopt.smeem.presentation.coach.CoachSurveyRoute
 import com.sopt.smeem.presentation.coach.CoachViewModel
 
 @Composable
@@ -31,6 +32,16 @@ fun CoachNavGraph(
                 viewModel = viewModel,
                 eventVm = eventVm,
                 navController = navController,
+                navigateToSurvey = { username: String, totalCount: Int ->
+                    navController.navigate(CoachRoute.CoachSurvey(username = username, totalCount = totalCount))
+                },
+                onCloseClick = onCloseClick
+            )
+        }
+        composable<CoachRoute.CoachSurvey> {
+            CoachSurveyRoute(
+                viewModel = viewModel,
+                eventVm = eventVm,
                 onCloseClick = onCloseClick
             )
         }

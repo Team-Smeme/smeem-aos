@@ -64,6 +64,7 @@ fun CoachDetailRoute(
     navController: NavController,
     viewModel: CoachViewModel = hiltViewModel(),
     eventVm: EventVM = hiltViewModel(),
+    navigateToSurvey: (String, Int) -> Unit,
     onCloseClick: () -> Unit,
 ) {
     val state by viewModel.collectAsState()
@@ -79,7 +80,10 @@ fun CoachDetailRoute(
         eventVm.sendEvent(AmplitudeEventType.COACHING_RESULT_VIEW)
         CoachDetailScreen(
             state = state,
-            onCloseClick = onCloseClick,
+            onCloseClick = {
+                if (state.isSurvey) navigateToSurvey(state.username, state.totalCount)
+                else onCloseClick()
+            },
             onSwipeFeedBack = { pageIndex ->
                 eventVm.sendEvent(
                     AmplitudeEventType.COACHING_FEEDBACK_VIEW,
