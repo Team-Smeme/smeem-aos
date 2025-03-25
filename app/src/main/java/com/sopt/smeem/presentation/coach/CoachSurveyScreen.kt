@@ -22,11 +22,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -181,6 +184,7 @@ fun ThumbsCard(
         Box(
             modifier = Modifier
                 .background(color = backgroundColor, shape = RoundedCornerShape(10.dp))
+                .clip(RoundedCornerShape(10.dp))
                 .clickable { onClick() }
                 .padding(21.dp),
             contentAlignment = Alignment.Center
@@ -202,6 +206,39 @@ fun ThumbsCard(
     }
 }
 
+class ThumbsCardPreviewProvider : PreviewParameterProvider<ThumbsCardPreviewState> {
+    override val values = sequenceOf(
+        // Initial state (THUMB_UP)
+        ThumbsCardPreviewState(ThumbSelection.THUMB_UP, false, false),
+        // Initial state (THUMB_DOWN)
+        ThumbsCardPreviewState(ThumbSelection.THUMB_DOWN, false, false),
+        // Selected state (THUMB_UP)
+        ThumbsCardPreviewState(ThumbSelection.THUMB_UP, true, false),
+        // Selected state (THUMB_DOWN)
+        ThumbsCardPreviewState(ThumbSelection.THUMB_DOWN, true, false),
+        // Unselected state (THUMB_UP)
+        ThumbsCardPreviewState(ThumbSelection.THUMB_UP, false, true),
+        // Unselected state (THUMB_DOWN)
+        ThumbsCardPreviewState(ThumbSelection.THUMB_DOWN, false, true)
+    )
+}
+
+data class ThumbsCardPreviewState(
+    val thumbType: ThumbSelection,
+    val isSelected: Boolean,
+    val isUnselected: Boolean
+)
+
+@Preview(showBackground = true)
+@Composable
+fun ThumbsCardPreview(@PreviewParameter(ThumbsCardPreviewProvider::class) state: ThumbsCardPreviewState) {
+    ThumbsCard(
+        thumbType = state.thumbType,
+        isSelected = state.isSelected,
+        isUnselected = state.isUnselected,
+        onClick = {}
+    )
+}
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
