@@ -149,6 +149,10 @@
     <string name="coach_detail_my_diary">나의 일기</string>
     <string name="coach_detail_corrected_sentence">고친 문장</string>
 
+    <!-- Survey -->
+    <string name="thumbs_up_description">좋아요</string>
+    <string name="thumbs_down_description">아쉬워요</string>
+
     <!-- Diary Detail -->
     <string name="diary_detail_coaching_off">코칭 OFF</string>
     <string name="diary_detail_coaching_on">코칭 ON</string>

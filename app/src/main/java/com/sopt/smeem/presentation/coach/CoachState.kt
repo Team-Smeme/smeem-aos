@@ -14,10 +14,15 @@ data class CoachState(
     val username: String = "",
     val totalCount: Int = 0,
     val corrections: PersistentList<CorrectionDto> = persistentListOf(),
+    val thumbSelection: ThumbSelection = ThumbSelection.NONE
 ) {
     val diaryContent: String get() = diaryDetail.content
     val createdAt: String get() = diaryDetail.createdAt
     val writerUsername: String get() = diaryDetail.writerUsername
     val topic: String? get() = diaryDetail.topic
     val isCoachEnabled: Boolean get() = diaryDetail.correctionCount < diaryDetail.correctionMaxCount
+}
+
+enum class ThumbSelection {
+    NONE, THUMB_UP, THUMB_DOWN
 }
