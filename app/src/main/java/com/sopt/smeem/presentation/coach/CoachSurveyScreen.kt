@@ -19,12 +19,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.smeem.R
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.white
+import com.sopt.smeem.util.VerticalSpacer
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -87,6 +89,14 @@ fun CoachSurveyScreen(
                 style = Typography.bodyMedium,
                 textAlign = TextAlign.Center,
             )
+
+            VerticalSpacer(16.dp)
+
+            Text(
+                text = "AI 코칭, 어떠셨나요?",
+                color = black,
+                style = Typography.headlineLarge.copy(fontSize = 28.sp)
+            )
         }
     }
 }
@@ -95,7 +105,7 @@ fun CoachSurveyScreen(
 @Composable
 fun PreviewCoachSurveyScreen() {
     CoachSurveyScreen(
-        state = CoachState(),
+        state = CoachState(username = "haeti", totalCount = 10),
         onCloseClick = {}
     )
 }
