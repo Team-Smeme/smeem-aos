@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -185,45 +186,49 @@ fun CoachSurveyScreen(
                 )
             }
 
-            SmeemTextField(
-                value = textFieldState,
-                onValueChange = { newValue ->
-                    if (newValue.text.length <= REASON_MAX_LENGTH) {
-                        textFieldState = newValue
-                    }
-                },
-                placeholder = "(선택) 이유를 적어주세요.",
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        focusManager.clearFocus()
-                        keyboardController?.hide()
-                    }),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(horizontal = 18.dp)
-                    .focusRequester(focusRequester)
-                    .onFocusChanged { focusState ->
-                        if (focusState.isFocused) {
-                            coroutineScope.launch {
-                                delay(200)
-                                scrollState.animateScrollTo(scrollState.maxValue)
-                            }
-                            textFieldState = textFieldState.copy(
-                                selection = TextRange(
-                                    textFieldState.text.length
-                                )
-                            )
+            if (state.thumbSelection != ThumbSelection.NONE) {
+                SmeemTextField(
+                    value = textFieldState,
+                    onValueChange = { newValue ->
+                        if (newValue.text.length <= REASON_MAX_LENGTH) {
+                            textFieldState = newValue
                         }
                     },
-                backgroundColor = gray100,
-                cursorColor = black,
-                minLines = 2,
-                hasBorder = false,
-                textStyle = Typography.bodySmall.copy(
-                    color = black,
+                    placeholder = "(선택) 이유를 적어주세요.",
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.clearFocus()
+                            keyboardController?.hide()
+                        }),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .padding(horizontal = 18.dp)
+                        .focusRequester(focusRequester)
+                        .onFocusChanged { focusState ->
+                            if (focusState.isFocused) {
+                                coroutineScope.launch {
+                                    delay(200)
+                                    scrollState.animateScrollTo(scrollState.maxValue)
+                                }
+                                textFieldState = textFieldState.copy(
+                                    selection = TextRange(
+                                        textFieldState.text.length
+                                    )
+                                )
+                            }
+                        },
+                    backgroundColor = gray100,
+                    cursorColor = black,
+                    minLines = 2,
+                    hasBorder = false,
+                    textStyle = Typography.bodySmall.copy(
+                        color = black,
+                    )
                 )
-            )
+            } else {
+                Spacer(modifier = Modifier.weight(1f))
+            }
 
             VerticalSpacer(15.dp)
 
@@ -411,7 +416,11 @@ fun CoachSurveyScreenPreview() {
 @Composable
 fun CoachSurveyScreenThumbsUpPreview() {
     CoachSurveyScreen(
-        state = CoachState(username = "haeti", totalCount = 10, thumbSelection = ThumbSelection.THUMB_UP),
+        state = CoachState(
+            username = "haeti",
+            totalCount = 10,
+            thumbSelection = ThumbSelection.THUMB_UP
+        ),
         onThumbSelected = {},
         onSurveyTypeSelected = {},
         onCloseClick = {}
