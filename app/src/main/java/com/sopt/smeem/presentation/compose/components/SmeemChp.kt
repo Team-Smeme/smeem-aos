@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.presentation.compose.theme.Typography
@@ -29,6 +30,7 @@ fun SmeemChp(
                 color = if (isSelected) point else gray200,
                 shape = RoundedCornerShape(6.dp)
             )
+            .clip(RoundedCornerShape(6.dp))
             .padding(10.dp)
     )
 }
