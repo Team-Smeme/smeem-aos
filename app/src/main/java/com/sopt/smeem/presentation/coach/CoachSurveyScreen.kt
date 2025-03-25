@@ -8,11 +8,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -20,13 +21,23 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -36,6 +47,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.smeem.R
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.compose.components.SmeemButton
+import com.sopt.smeem.presentation.compose.components.SmeemTextField
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray100
@@ -46,6 +58,8 @@ import com.sopt.smeem.presentation.compose.theme.pointInactive30
 import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.util.HorizontalSpacer
 import com.sopt.smeem.util.VerticalSpacer
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -77,6 +91,15 @@ fun CoachSurveyScreen(
     onThumbSelected: (ThumbSelection) -> Unit,
     onCloseClick: () -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    val scrollState = rememberScrollState()
+    val focusRequester = remember { FocusRequester() }
+    val coroutineScope = rememberCoroutineScope()
+    var textFieldState by remember { mutableStateOf(TextFieldValue(text = "")) }
+    val REASON_MAX_LENGTH = 300
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -144,18 +167,62 @@ fun CoachSurveyScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.weight(1f))
+            VerticalSpacer(16.dp)
+
+            SmeemTextField(
+                value = textFieldState,
+                onValueChange = { newValue ->
+                    if (newValue.text.length <= REASON_MAX_LENGTH) {
+                        textFieldState = newValue
+                    }
+                },
+                placeholder = "(선택) 이유를 적어주세요.",
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                        keyboardController?.hide()
+                    }),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(horizontal = 18.dp)
+                    .focusRequester(focusRequester)
+                    .onFocusChanged { focusState ->
+                        if (focusState.isFocused) {
+                            coroutineScope.launch {
+                                delay(200)
+                                scrollState.animateScrollTo(scrollState.maxValue)
+                            }
+                            textFieldState = textFieldState.copy(
+                                selection = TextRange(
+                                    textFieldState.text.length
+                                )
+                            )
+                        }
+                    },
+                backgroundColor = gray100,
+                cursorColor = black,
+                hasBorder = false,
+                textStyle = Typography.bodySmall.copy(
+                    color = black,
+                )
+            )
+
+            VerticalSpacer(15.dp)
 
             SmeemButton(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 18.dp, vertical = 20.dp),
+                    .padding(horizontal = 18.dp,),
                 text = "의견 보내기",
-                onClick = { },
+                onClick = {
+                    focusManager.clearFocus()
+                    keyboardController?.hide()
+                },
             )
+
+            VerticalSpacer(20.dp)
         }
-
-
     }
 }
 
