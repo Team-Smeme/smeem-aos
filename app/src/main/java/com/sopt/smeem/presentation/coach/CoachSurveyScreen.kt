@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -49,6 +51,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.smeem.R
 import com.sopt.smeem.domain.model.SurveyType
 import com.sopt.smeem.presentation.EventVM
+import com.sopt.smeem.presentation.coach.CoachSurveyConstants.REASON_MAX_LENGTH
 import com.sopt.smeem.presentation.compose.components.SmeemButton
 import com.sopt.smeem.presentation.compose.components.SmeemChp
 import com.sopt.smeem.presentation.compose.components.SmeemTextField
@@ -107,9 +110,11 @@ fun CoachSurveyScreen(
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
     var textFieldState by remember { mutableStateOf(TextFieldValue(text = "")) }
-    val REASON_MAX_LENGTH = 300
 
     Scaffold(
+        modifier = Modifier
+            .imePadding()
+            .navigationBarsPadding(),
         topBar = {
             CenterAlignedTopAppBar(
                 modifier = Modifier
@@ -337,6 +342,7 @@ fun SurveyTypeChips(
                     isSelected = selectedTypes.contains(surveyType),
                     modifier = Modifier
                         .padding(horizontal = 4.dp)
+                        .clip(RoundedCornerShape(6.dp))
                         .clickable { onSurveyTypeSelected(surveyType) }
                 )
             }
@@ -359,6 +365,7 @@ fun SurveyTypeChips(
                     isSelected = selectedTypes.contains(surveyType),
                     modifier = Modifier
                         .padding(horizontal = 4.dp)
+                        .clip(RoundedCornerShape(6.dp))
                         .clickable { onSurveyTypeSelected(surveyType) }
                 )
             }
@@ -448,4 +455,8 @@ fun SurveyTypeChipsPreview() {
         selectedTypes = setOf(),
         onSurveyTypeSelected = {},
     )
+}
+
+private object CoachSurveyConstants {
+    const val REASON_MAX_LENGTH = 300
 }
