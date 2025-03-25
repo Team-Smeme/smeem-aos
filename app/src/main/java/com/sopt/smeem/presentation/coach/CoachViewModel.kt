@@ -92,4 +92,12 @@ class CoachViewModel @Inject constructor(
             }
         }
     }
+
+    fun onThumbSelected(selection: ThumbSelection) {
+        intent {
+            if (state.thumbSelection == selection) return@intent
+
+            reduce { state.copy(thumbSelection = selection) }
+        }
+    }
 }

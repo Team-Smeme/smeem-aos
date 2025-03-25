@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 // keycolor
 val point = Color(0xFFFF6D4C)
 val pointInactive = Color(0xFFFFDCD4)
+val pointInactive30 = pointInactive.copy(alpha = 0.3f)
 
 // grayscale
 val white = Color(0xFFFFFFFF)
