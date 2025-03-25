@@ -219,6 +219,7 @@ fun CoachSurveyScreen(
                     focusManager.clearFocus()
                     keyboardController?.hide()
                 },
+                isButtonEnabled = state.thumbSelection != ThumbSelection.NONE,
             )
 
             VerticalSpacer(20.dp)
