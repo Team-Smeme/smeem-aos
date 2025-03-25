@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -45,8 +46,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.smeem.R
+import com.sopt.smeem.domain.model.SurveyType
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.compose.components.SmeemButton
+import com.sopt.smeem.presentation.compose.components.SmeemChp
 import com.sopt.smeem.presentation.compose.components.SmeemTextField
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
@@ -58,6 +61,7 @@ import com.sopt.smeem.presentation.compose.theme.pointInactive30
 import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.util.HorizontalSpacer
 import com.sopt.smeem.util.VerticalSpacer
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
@@ -79,6 +83,9 @@ fun CoachSurveyRoute(
         onThumbSelected = { thumbSelection: ThumbSelection ->
             viewModel.onThumbSelected(thumbSelection)
         },
+        onSurveyTypeSelected = { surveyType: SurveyType ->
+            viewModel.onSurveyTypeSelected(surveyType)
+        },
         onCloseClick = onCloseClick
     )
 }
@@ -89,6 +96,7 @@ fun CoachSurveyScreen(
     state: CoachState,
     modifier: Modifier = Modifier,
     onThumbSelected: (ThumbSelection) -> Unit,
+    onSurveyTypeSelected: (SurveyType) -> Unit,
     onCloseClick: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
@@ -126,7 +134,8 @@ fun CoachSurveyScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(it),
+                .padding(it)
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
@@ -168,6 +177,13 @@ fun CoachSurveyScreen(
             }
 
             VerticalSpacer(16.dp)
+
+            if (state.thumbSelection == ThumbSelection.THUMB_DOWN) {
+                SurveyTypeChips(
+                    selectedTypes = state.selectedSurveyTypes,
+                    onSurveyTypeSelected = onSurveyTypeSelected
+                )
+            }
 
             SmeemTextField(
                 value = textFieldState,
@@ -214,7 +230,7 @@ fun CoachSurveyScreen(
             SmeemButton(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 18.dp,),
+                    .padding(horizontal = 18.dp),
                 text = "의견 보내기",
                 onClick = {
                     focusManager.clearFocus()
@@ -288,6 +304,63 @@ fun ThumbsCard(
     }
 }
 
+@Composable
+fun SurveyTypeChips(
+    selectedTypes: Set<SurveyType>,
+    onSurveyTypeSelected: (SurveyType) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 18.dp, vertical = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            val firstRowTypes = persistentListOf(
+                SurveyType.HARD_TO_UNDERSTAND,
+                SurveyType.TOO_SHORT,
+                SurveyType.FEEDBACK_ERROR
+            )
+
+            firstRowTypes.forEach { surveyType ->
+                SmeemChp(
+                    text = surveyType.text,
+                    isSelected = selectedTypes.contains(surveyType),
+                    modifier = Modifier
+                        .padding(horizontal = 4.dp)
+                        .clickable { onSurveyTypeSelected(surveyType) }
+                )
+            }
+        }
+
+        VerticalSpacer(10.dp)
+
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            val secondRowTypes = persistentListOf(
+                SurveyType.WORD_FEEDBACK_LACK,
+                SurveyType.GRAMMAR_FEEDBACK_LACK
+            )
+
+            secondRowTypes.forEach { surveyType ->
+                SmeemChp(
+                    text = surveyType.text,
+                    isSelected = selectedTypes.contains(surveyType),
+                    modifier = Modifier
+                        .padding(horizontal = 4.dp)
+                        .clickable { onSurveyTypeSelected(surveyType) }
+                )
+            }
+        }
+    }
+}
+
 class ThumbsCardPreviewProvider : PreviewParameterProvider<ThumbsCardPreviewState> {
     override val values = sequenceOf(
         // Initial state (THUMB_UP)
@@ -324,10 +397,46 @@ fun ThumbsCardPreview(@PreviewParameter(ThumbsCardPreviewProvider::class) state:
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewCoachSurveyScreen() {
+fun CoachSurveyScreenPreview() {
     CoachSurveyScreen(
         state = CoachState(username = "haeti", totalCount = 10),
         onThumbSelected = {},
+        onSurveyTypeSelected = {},
         onCloseClick = {}
+    )
+}
+
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun CoachSurveyScreenThumbsUpPreview() {
+    CoachSurveyScreen(
+        state = CoachState(username = "haeti", totalCount = 10, thumbSelection = ThumbSelection.THUMB_UP),
+        onThumbSelected = {},
+        onSurveyTypeSelected = {},
+        onCloseClick = {}
+    )
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun CoachSurveyScreenThumbsDownPreview() {
+    CoachSurveyScreen(
+        state = CoachState(
+            username = "haeti",
+            totalCount = 10,
+            thumbSelection = ThumbSelection.THUMB_DOWN
+        ),
+        onThumbSelected = {},
+        onSurveyTypeSelected = {},
+        onCloseClick = {})
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SurveyTypeChipsPreview() {
+    SurveyTypeChips(
+        selectedTypes = setOf(),
+        onSurveyTypeSelected = {},
     )
 }

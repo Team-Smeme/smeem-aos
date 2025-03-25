@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.coach
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.domain.model.SurveyType
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.presentation.detail.DiaryDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -98,6 +99,21 @@ class CoachViewModel @Inject constructor(
             if (state.thumbSelection == selection) return@intent
 
             reduce { state.copy(thumbSelection = selection) }
+        }
+    }
+
+    fun onSurveyTypeSelected(surveyType: SurveyType) {
+        intent {
+            val currentSelectedTypes = state.selectedSurveyTypes
+            val updatedSelectedTypes = if (currentSelectedTypes.contains(surveyType)) {
+                // 이미 선택되어 있으면 제거 (선택 해제)
+                currentSelectedTypes.minus(surveyType)
+            } else {
+                // 선택되어 있지 않으면 추가
+                currentSelectedTypes.plus(surveyType)
+            }
+
+            reduce { state.copy(selectedSurveyTypes = updatedSelectedTypes) }
         }
     }
 }
