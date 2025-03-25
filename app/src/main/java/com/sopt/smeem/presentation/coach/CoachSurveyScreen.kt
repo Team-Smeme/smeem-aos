@@ -31,7 +31,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sopt.smeem.R
 import com.sopt.smeem.presentation.EventVM
@@ -117,7 +116,7 @@ fun CoachSurveyScreen(
             Text(
                 text = "AI 코칭, 어떠셨나요?",
                 color = black,
-                style = Typography.headlineLarge.copy(fontSize = 28.sp)
+                style = Typography.headlineSmall,
             )
 
             VerticalSpacer(16.dp)
