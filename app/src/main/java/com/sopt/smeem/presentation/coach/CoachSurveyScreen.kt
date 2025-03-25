@@ -202,6 +202,7 @@ fun CoachSurveyScreen(
                     },
                 backgroundColor = gray100,
                 cursorColor = black,
+                minLines = 2,
                 hasBorder = false,
                 textStyle = Typography.bodySmall.copy(
                     color = black,
