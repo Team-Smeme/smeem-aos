@@ -1,6 +1,7 @@
 package com.sopt.smeem.data.service
 
 import com.sopt.smeem.data.model.request.PushRequest
+import com.sopt.smeem.data.model.request.SurveyRequest
 import com.sopt.smeem.data.model.request.TrainingRequest
 import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
 import com.sopt.smeem.data.model.request.WithdrawRequest
@@ -14,6 +15,7 @@ import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.Header
 import retrofit2.http.PATCH
+import retrofit2.http.POST
 
 interface UserService {
     @PATCH("/api/v2/members/plan")
@@ -71,4 +73,9 @@ interface UserService {
 
     @PATCH("/api/v2/members/visit")
     suspend fun visit(): Response<ApiResponse<Unit>>
+
+    @POST("/api/v2/survey/coaching")
+    suspend fun postCoachingSurvey(
+        @Body request: SurveyRequest
+    ): Response<ApiResponse<Unit>>
 }

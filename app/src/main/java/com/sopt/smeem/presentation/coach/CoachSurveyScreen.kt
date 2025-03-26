@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.coach
 
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -38,6 +39,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -71,6 +73,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun CoachSurveyRoute(
@@ -79,6 +82,20 @@ fun CoachSurveyRoute(
     onCloseClick: () -> Unit,
 ) {
     val state by viewModel.collectAsState()
+    val context = LocalContext.current
+
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            is CoachSideEffect.NavigateToHome -> {
+                onCloseClick()
+            }
+            is CoachSideEffect.ShowError -> {
+                Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
+            }
+
+            else -> {}
+        }
+    }
 
     BackHandler {
         onCloseClick()
@@ -92,7 +109,13 @@ fun CoachSurveyRoute(
         onSurveyTypeSelected = { surveyType: SurveyType ->
             viewModel.onSurveyTypeSelected(surveyType)
         },
-        onCloseClick = onCloseClick
+        onReasonChange = { reason: String ->
+            viewModel.updateSurveyReason(reason)
+        },
+        onCloseClick = onCloseClick,
+        onSubmitClick = {
+            viewModel.postSurvey()
+        }
     )
 }
 
@@ -103,7 +126,9 @@ fun CoachSurveyScreen(
     modifier: Modifier = Modifier,
     onThumbSelected: (ThumbSelection) -> Unit,
     onSurveyTypeSelected: (SurveyType) -> Unit,
+    onReasonChange: (String) -> Unit,
     onCloseClick: () -> Unit,
+    onSubmitClick: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -207,6 +232,7 @@ fun CoachSurveyScreen(
                             onValueChange = { newValue ->
                                 if (newValue.text.length <= REASON_MAX_LENGTH) {
                                     textFieldState = newValue
+                                    onReasonChange(newValue.text)
                                 }
                             },
                             placeholder = "(선택) 이유를 적어주세요.",
@@ -255,6 +281,7 @@ fun CoachSurveyScreen(
                         onClick = {
                             focusManager.clearFocus()
                             keyboardController?.hide()
+                            onSubmitClick()
                         },
                         isButtonEnabled = state.thumbSelection != ThumbSelection.NONE,
                     )
@@ -426,7 +453,9 @@ fun CoachSurveyScreenPreview() {
         state = CoachState(username = "haeti", totalCount = 10),
         onThumbSelected = {},
         onSurveyTypeSelected = {},
-        onCloseClick = {}
+        onCloseClick = {},
+        onReasonChange = {},
+        onSubmitClick = {}
     )
 }
 
@@ -442,7 +471,9 @@ fun CoachSurveyScreenThumbsUpPreview() {
         ),
         onThumbSelected = {},
         onSurveyTypeSelected = {},
-        onCloseClick = {}
+        onCloseClick = {},
+        onReasonChange = {},
+        onSubmitClick = {}
     )
 }
 
@@ -457,7 +488,10 @@ fun CoachSurveyScreenThumbsDownPreview() {
         ),
         onThumbSelected = {},
         onSurveyTypeSelected = {},
-        onCloseClick = {})
+        onCloseClick = {},
+        onReasonChange = {},
+        onSubmitClick = {}
+    )
 }
 
 @Preview(showBackground = true)

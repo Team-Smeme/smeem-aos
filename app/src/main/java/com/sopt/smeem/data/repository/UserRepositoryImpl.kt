@@ -1,6 +1,7 @@
 package com.sopt.smeem.data.repository
 
 import com.sopt.smeem.data.model.request.PushRequest
+import com.sopt.smeem.data.model.request.SurveyRequest
 import com.sopt.smeem.data.model.request.TrainingRequest
 import com.sopt.smeem.data.model.request.UserInfoModifyingRequest
 import com.sopt.smeem.data.model.request.WithdrawRequest
@@ -14,6 +15,7 @@ import com.sopt.smeem.domain.dto.MyPlanDto
 import com.sopt.smeem.domain.dto.MyPlanDtoWrapper
 import com.sopt.smeem.domain.dto.MySmeemDataDto
 import com.sopt.smeem.domain.dto.PostOnBoardingDto
+import com.sopt.smeem.domain.dto.SurveyRequestDto
 import com.sopt.smeem.domain.dto.WithdrawDto
 import com.sopt.smeem.domain.model.Day
 import com.sopt.smeem.domain.model.PushAlarm
@@ -227,7 +229,6 @@ class UserRepositoryImpl(
             }
         }
 
-
     override suspend fun getMyBadges(): ApiResult<List<GetBadgeListDto>> =
         myBadgeService.getBadges().let { response ->
             if (response.isSuccessful) {
@@ -256,4 +257,21 @@ class UserRepositoryImpl(
             throw response.code().handleStatusCode()
         }
     }
+
+    override suspend fun postSurvey(surveyRequest: SurveyRequestDto): ApiResult<Unit> =
+        userService.postCoachingSurvey(
+            request =
+                SurveyRequest(
+                    diaryId = surveyRequest.diaryId,
+                    isSatisfied = surveyRequest.isSatisfied,
+                    dissatisfactionTypes = surveyRequest.dissatisfactionTypes,
+                    reason = surveyRequest.reason
+                )
+        ).let { response ->
+            if (response.isSuccessful) {
+                ApiResult(response.code(), Unit)
+            } else {
+                throw response.code().handleStatusCode()
+            }
+        }
 }

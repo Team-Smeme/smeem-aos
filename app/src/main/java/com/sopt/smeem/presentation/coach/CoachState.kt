@@ -16,7 +16,8 @@ data class CoachState(
     val totalCount: Int = 0,
     val corrections: PersistentList<CorrectionDto> = persistentListOf(),
     val thumbSelection: ThumbSelection = ThumbSelection.NONE,
-    val selectedSurveyTypes: Set<SurveyType> = emptySet()
+    val selectedSurveyTypes: Set<SurveyType> = emptySet(),
+    val surveyReason: String = "",
 ) {
     val diaryContent: String get() = diaryDetail.content
     val createdAt: String get() = diaryDetail.createdAt
