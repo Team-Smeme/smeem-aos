@@ -9,11 +9,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -111,14 +113,12 @@ fun CoachSurveyScreen(
     val coroutineScope = rememberCoroutineScope()
     var textFieldState by remember { mutableStateOf(TextFieldValue(text = "")) }
 
+
     Scaffold(
-        modifier = Modifier
-            .imePadding()
-            .navigationBarsPadding(),
+        modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars),
         topBar = {
             CenterAlignedTopAppBar(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
                     containerColor = white
                 ),
@@ -136,12 +136,13 @@ fun CoachSurveyScreen(
                 }
             )
         }
-    ) {
+    ) { innerPadding ->
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(it)
-                .verticalScroll(scrollState),
+                .padding(innerPadding)
+                .verticalScroll(scrollState)
+                .imePadding(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
@@ -191,65 +192,76 @@ fun CoachSurveyScreen(
                 )
             }
 
-            if (state.thumbSelection != ThumbSelection.NONE) {
-                SmeemTextField(
-                    value = textFieldState,
-                    onValueChange = { newValue ->
-                        if (newValue.text.length <= REASON_MAX_LENGTH) {
-                            textFieldState = newValue
-                        }
-                    },
-                    placeholder = "(선택) 이유를 적어주세요.",
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            focusManager.clearFocus()
-                            keyboardController?.hide()
-                        }),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .padding(horizontal = 18.dp)
-                        .focusRequester(focusRequester)
-                        .onFocusChanged { focusState ->
-                            if (focusState.isFocused) {
-                                coroutineScope.launch {
-                                    delay(200)
-                                    scrollState.animateScrollTo(scrollState.maxValue)
-                                }
-                                textFieldState = textFieldState.copy(
-                                    selection = TextRange(
-                                        textFieldState.text.length
-                                    )
-                                )
-                            }
-                        },
-                    backgroundColor = gray100,
-                    cursorColor = black,
-                    minLines = 2,
-                    hasBorder = false,
-                    textStyle = Typography.bodySmall.copy(
-                        color = black,
-                    )
-                )
-            } else {
-                Spacer(modifier = Modifier.weight(1f))
-            }
-
-            VerticalSpacer(15.dp)
-
-            SmeemButton(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 18.dp),
-                text = "의견 보내기",
-                onClick = {
-                    focusManager.clearFocus()
-                    keyboardController?.hide()
-                },
-                isButtonEnabled = state.thumbSelection != ThumbSelection.NONE,
-            )
+                    .weight(1f)
+                    .imePadding()
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    if (state.thumbSelection != ThumbSelection.NONE) {
+                        SmeemTextField(
+                            value = textFieldState,
+                            onValueChange = { newValue ->
+                                if (newValue.text.length <= REASON_MAX_LENGTH) {
+                                    textFieldState = newValue
+                                }
+                            },
+                            placeholder = "(선택) 이유를 적어주세요.",
+                            keyboardActions = KeyboardActions(
+                                onDone = {
+                                    focusManager.clearFocus()
+                                    keyboardController?.hide()
+                                }),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                                .padding(horizontal = 18.dp)
+                                .focusRequester(focusRequester)
+                                .onFocusChanged { focusState ->
+                                    if (focusState.isFocused) {
+                                        coroutineScope.launch {
+                                            delay(200)
+                                            scrollState.animateScrollTo(scrollState.maxValue)
+                                        }
+                                        textFieldState = textFieldState.copy(
+                                            selection = TextRange(
+                                                textFieldState.text.length
+                                            )
+                                        )
+                                    }
+                                },
+                            backgroundColor = gray100,
+                            cursorColor = black,
+                            minLines = 2,
+                            hasBorder = false,
+                            textStyle = Typography.bodySmall.copy(
+                                color = black,
+                            )
+                        )
+                    } else {
+                        Spacer(modifier = Modifier.weight(1f))
+                    }
 
-            VerticalSpacer(20.dp)
+                    VerticalSpacer(15.dp)
+
+                    SmeemButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 18.dp),
+                        text = "의견 보내기",
+                        onClick = {
+                            focusManager.clearFocus()
+                            keyboardController?.hide()
+                        },
+                        isButtonEnabled = state.thumbSelection != ThumbSelection.NONE,
+                    )
+
+                    VerticalSpacer(20.dp)
+                }
+            }
         }
     }
 }

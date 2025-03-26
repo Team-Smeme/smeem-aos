@@ -131,6 +131,7 @@
         <activity
             android:name=".presentation.coach.CoachActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <!-- Messaging Service -->
         <service
