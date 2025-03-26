@@ -52,6 +52,8 @@ fun CoachRoute(
             is CoachSideEffect.NavigateToCoachDetail -> {
                 navController.navigateToCoachDetail()
             }
+
+            else -> {}
         }
     }
 

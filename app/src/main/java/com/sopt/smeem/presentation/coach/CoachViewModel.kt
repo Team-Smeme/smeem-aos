@@ -2,8 +2,10 @@ package com.sopt.smeem.presentation.coach
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.smeem.domain.dto.SurveyRequestDto
 import com.sopt.smeem.domain.model.SurveyType
 import com.sopt.smeem.domain.repository.DiaryRepository
+import com.sopt.smeem.domain.repository.UserRepository
 import com.sopt.smeem.presentation.detail.DiaryDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
@@ -18,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CoachViewModel @Inject constructor(
-    private val diaryRepository: DiaryRepository
+    private val diaryRepository: DiaryRepository,
+    private val userRepository: UserRepository,
 ) : ContainerHost<CoachState, CoachSideEffect>, ViewModel() {
     override val container: Container<CoachState, CoachSideEffect> = container(CoachState())
 
@@ -115,5 +118,38 @@ class CoachViewModel @Inject constructor(
 
             reduce { state.copy(selectedSurveyTypes = updatedSelectedTypes) }
         }
+    }
+
+    fun postSurvey() {
+        viewModelScope.launch {
+            intent {
+                reduce { state.copy(isLoading = true) }
+
+                try {
+                    val surveyRequest = SurveyRequestDto(
+                        diaryId = state.diaryId,
+                        isSatisfied = state.thumbSelection == ThumbSelection.THUMB_UP,
+                        dissatisfactionTypes = if (state.thumbSelection == ThumbSelection.THUMB_DOWN) {
+                            state.selectedSurveyTypes.toList()
+                        } else {
+                            emptyList()
+                        },
+                        reason = state.surveyReason
+                    )
+
+                    userRepository.postSurvey(surveyRequest)
+
+                    reduce { state.copy(isLoading = false) }
+                    postSideEffect(CoachSideEffect.NavigateToHome)
+                } catch (t: Throwable) {
+                    intent { reduce { state.copy(isLoading = false) } }
+                    postSideEffect(CoachSideEffect.ShowError("만족도 조사 실패"))
+                }
+            }
+        }
+    }
+
+    fun updateSurveyReason(reason: String) {
+        intent { reduce { state.copy(surveyReason = reason) } }
     }
 }

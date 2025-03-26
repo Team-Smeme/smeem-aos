@@ -7,6 +7,7 @@ import com.sopt.smeem.domain.dto.MyInfoDto
 import com.sopt.smeem.domain.dto.MyPlanDtoWrapper
 import com.sopt.smeem.domain.dto.MySmeemDataDto
 import com.sopt.smeem.domain.dto.PostOnBoardingDto
+import com.sopt.smeem.domain.dto.SurveyRequestDto
 import com.sopt.smeem.domain.dto.WithdrawDto
 import com.sopt.smeem.domain.model.PushAlarm
 import com.sopt.smeem.domain.model.Training
@@ -39,4 +40,5 @@ interface UserRepository {
     suspend fun deleteUser(withdraw: WithdrawDto): ApiResult<Unit>
     suspend fun getMyBadges(): ApiResult<List<GetBadgeListDto>>
     suspend fun activeVisit(): ApiResult<Unit>
+    suspend fun postSurvey(surveyRequestDto: SurveyRequestDto): ApiResult<Unit>
 }
