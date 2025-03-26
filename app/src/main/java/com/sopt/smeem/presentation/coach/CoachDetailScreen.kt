@@ -81,7 +81,7 @@ fun CoachDetailRoute(
         CoachDetailScreen(
             state = state,
             onCloseClick = {
-                if (state.isSurvey) navigateToSurvey(state.username, state.totalCount)
+                if (state.shouldShowSurvey) navigateToSurvey(state.username ?: "UNKOWN", state.totalCount ?: 0)
                 else onCloseClick()
             },
             onSwipeFeedBack = { pageIndex ->

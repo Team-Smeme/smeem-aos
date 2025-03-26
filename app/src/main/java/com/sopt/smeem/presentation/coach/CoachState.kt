@@ -11,9 +11,8 @@ data class CoachState(
     val initialDiaryContent: String = "",
     val diaryDetail: DiaryDetail = DiaryDetail(),
     val isLoading: Boolean = false,
-    val isSurvey: Boolean = true,
-    val username: String = "",
-    val totalCount: Int = 0,
+    val username: String? = "",
+    val totalCount: Int? = 0,
     val corrections: PersistentList<CorrectionDto> = persistentListOf(),
     val thumbSelection: ThumbSelection = ThumbSelection.NONE,
     val selectedSurveyTypes: Set<SurveyType> = emptySet(),
@@ -24,8 +23,8 @@ data class CoachState(
     val writerUsername: String get() = diaryDetail.writerUsername
     val topic: String? get() = diaryDetail.topic
     val isCoachEnabled: Boolean get() = diaryDetail.correctionCount < diaryDetail.correctionMaxCount
+    val shouldShowSurvey: Boolean get() = username?.isNotEmpty() == true && totalCount != null && totalCount > 0
 }
-
 enum class ThumbSelection {
     NONE, THUMB_UP, THUMB_DOWN
 }
