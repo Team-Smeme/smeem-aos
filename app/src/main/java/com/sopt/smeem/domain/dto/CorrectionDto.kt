@@ -2,8 +2,8 @@ package com.sopt.smeem.domain.dto
 
 data class CorrectionsResponseDto(
     val corrections: List<CorrectionDto>,
-    val username: String,
-    val totalCount: Int,
+    val username: String?,
+    val totalCount: Int?,
 )
 
 data class CorrectionDto(
