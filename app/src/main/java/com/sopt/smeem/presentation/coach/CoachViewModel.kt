@@ -92,7 +92,10 @@ class CoachViewModel @Inject constructor(
                     }
                 }
             } catch (t: Throwable) {
-                intent { reduce { state.copy(isLoading = false) } }
+                intent {
+                    reduce { state.copy(isLoading = false) }
+                    postSideEffect(CoachSideEffect.ShowError(t.message.toString()))
+                }
             }
         }
     }
@@ -122,10 +125,9 @@ class CoachViewModel @Inject constructor(
 
     fun postSurvey() {
         viewModelScope.launch {
-            intent {
-                reduce { state.copy(isLoading = true) }
-
-                try {
+            intent { reduce { state.copy(isLoading = true) } }
+            try {
+                intent {
                     val surveyRequest = SurveyRequestDto(
                         diaryId = state.diaryId,
                         isSatisfied = state.thumbSelection == ThumbSelection.THUMB_UP,
@@ -141,9 +143,11 @@ class CoachViewModel @Inject constructor(
 
                     reduce { state.copy(isLoading = false) }
                     postSideEffect(CoachSideEffect.NavigateToHome)
-                } catch (t: Throwable) {
-                    intent { reduce { state.copy(isLoading = false) } }
-                    postSideEffect(CoachSideEffect.ShowError("만족도 조사 실패"))
+                }
+            } catch (t: Throwable) {
+                intent {
+                    reduce { state.copy(isLoading = false) }
+                    postSideEffect(CoachSideEffect.ShowError(t.message.toString()))
                 }
             }
         }
