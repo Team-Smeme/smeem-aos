@@ -1,82 +1,85 @@
+
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
+import java.util.Properties
+
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
-    id 'kotlin-kapt'
-    id 'com.google.dagger.hilt.android'
-    id 'kotlin-parcelize'
-    alias(libs.plugins.kotlin.serilization)
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
+val properties = Properties().apply {
+    load(project.rootProject.file("local.properties").inputStream())
+}
 
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+val keystoreProperties = Properties().apply {
+    load(project.rootProject.file("keystore.properties").inputStream())
+}
 
 android {
     signingConfigs {
-        release {
-            storeFile file(keystoreProperties['store_file'])
-            storePassword keystoreProperties['store_password']
-            keyPassword keystoreProperties['key_password']
-            keyAlias keystoreProperties['key_alias']
+        create("release") {
+            storeFile = file(keystoreProperties["store_file"] as String)
+            storePassword = keystoreProperties["store_password"] as String
+            keyPassword = keystoreProperties["key_password"] as String
+            keyAlias = keystoreProperties["key_alias"] as String
         }
     }
-    namespace 'com.sopt.smeem'
-    compileSdk 34
+    namespace = "com.sopt.smeem"
+    compileSdk = 34
 
     defaultConfig {
-        applicationId "com.sopt.smeem"
-        minSdk 28
-        targetSdk 34
-        versionCode 20250118
+        applicationId = "com.sopt.smeem"
+        minSdk = 28
+        targetSdk = 34
+        versionCode = 20250118
         /*
         x.y.z
         x: ui, 주요기능의 큰 변화
         y: 기능 추가, 가시적인 변화
         z: 오류 수정, 긴급 업데이트 사항
         */
-        versionName "4.1.0"
+        versionName = "4.1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "KAKAO_API_KEY", properties['kakao_api_key']
-        buildConfigField "String", "PROD_API_SERVER_URL", properties['prod_api_server_url']
-        buildConfigField "String", "DEV_API_SERVER_URL", properties['dev_api_server_url']
-        buildConfigField "String", "DEEPL_API_KEY", properties['deepl_api_key']
-        buildConfigField "String", "DEV_AMPLITUDE_API_KEY", properties['dev_amplitude_api_key']
-        buildConfigField "String", "PROD_AMPLITUDE_API_KEY", properties['prod_amplitude_api_key']
-        buildConfigField "String", "APPFLYER_DEV_KEY", properties['appsflyer_dev_key']
-        manifestPlaceholders = [KAKAO_API_KEY: properties['kakao_api_key_manifest']]
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "KAKAO_API_KEY", properties["kakao_api_key"] as String)
+        buildConfigField("String", "PROD_API_SERVER_URL", properties["prod_api_server_url"] as String)
+        buildConfigField("String", "DEV_API_SERVER_URL", properties["dev_api_server_url"] as String)
+        buildConfigField("String", "DEEPL_API_KEY", properties["deepl_api_key"] as String)
+        buildConfigField("String", "DEV_AMPLITUDE_API_KEY", properties["dev_amplitude_api_key"] as String)
+        buildConfigField("String", "PROD_AMPLITUDE_API_KEY", properties["prod_amplitude_api_key"] as String)
+        buildConfigField("String", "APPFLYER_DEV_KEY", properties["appsflyer_dev_key"] as String)
+        manifestPlaceholders["KAKAO_API_KEY"] = properties["kakao_api_key_manifest"] as String
+
         vectorDrawables {
-            useSupportLibrary true
+            useSupportLibrary = true
         }
     }
 
     buildTypes {
         debug {
-            applicationIdSuffix ".dev"
-
-            minifyEnabled false
+            applicationIdSuffix = ".dev"
+            isMinifyEnabled = false
             buildConfigField("boolean", "IS_DEBUG", "true")
 
-            manifestPlaceholders = [
-                    appName: "@string/dev_app_name",
-                    appIcon: "@mipmap/ic_smeem_dev"
-            ]
+            manifestPlaceholders["appName"] = "@string/dev_app_name"
+            manifestPlaceholders["appIcon"] = "@mipmap/ic_smeem_dev"
         }
         release {
-            minifyEnabled true
+            isMinifyEnabled = true
             buildConfigField("boolean", "IS_DEBUG", "false")
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
 
-            manifestPlaceholders = [
-                    appName: "@string/app_name",
-                    appIcon: "@mipmap/ic_smeem"
-            ]
+            manifestPlaceholders["appName"] = "@string/app_name"
+            manifestPlaceholders["appIcon"] = "@mipmap/ic_smeem"
         }
     }
 
@@ -84,36 +87,38 @@ android {
 
     productFlavors {
         create("dev") {
-            version "server"
-            versionNameSuffix ".dev"
+            dimension = "server"
+            versionNameSuffix = ".dev"
         }
         create("prod") {
-            version "server"
+            dimension = "server"
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+        jvmToolchain(17)
     }
-    kotlinOptions {
-        jvmTarget = '17'
+
+    extensions.getByType<KotlinAndroidProjectExtension>().apply {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
     }
+
     buildFeatures {
-        viewBinding true
-        dataBinding true
-        compose true
+        viewBinding = true
+        dataBinding = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
-    }
+
     packaging {
         resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 }
-
 
 dependencies {
     // androidx
@@ -237,5 +242,4 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-
 }
