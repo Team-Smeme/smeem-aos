@@ -104,7 +104,7 @@ class CoachViewModel @Inject constructor(
         intent {
             if (state.thumbSelection == selection) return@intent
 
-            reduce { state.copy(thumbSelection = selection) }
+            reduce { state.copy(thumbSelection = selection, surveyReason = "") }
         }
     }
 
