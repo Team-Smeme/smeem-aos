@@ -1,5 +1,7 @@
 package com.sopt.smeem.presentation.coach
 
+import android.graphics.Rect
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
@@ -28,6 +31,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +48,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
@@ -134,15 +140,16 @@ fun CoachSurveyScreen(
 ) {
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
-
     val scrollState = rememberScrollState()
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
     var textFieldState by remember { mutableStateOf(TextFieldValue(text = "")) }
 
+    val isKeyboardOpen by keyboardAsState()
 
     Scaffold(
         modifier = Modifier
+            .fillMaxSize()
             .windowInsetsPadding(WindowInsets.systemBars)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -172,122 +179,128 @@ fun CoachSurveyScreen(
             )
         }
     ) { innerPadding ->
-        Column(
+        Box(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(scrollState)
-                .imePadding(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .imePadding()
         ) {
-            Text(
-                text = "${state.username}님,\n오늘까지 코칭을 ${state.totalCount}번 받으셨네요!\n꾸준함이 대단해요! \uD83D\uDC4F",
-                color = black,
-                style = Typography.bodyMedium,
-                textAlign = TextAlign.Center,
-            )
-
-            VerticalSpacer(16.dp)
-
-            Text(
-                text = "AI 코칭, 어떠셨나요?",
-                color = black,
-                style = Typography.headlineSmall,
-            )
-
-            VerticalSpacer(16.dp)
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                ThumbsCard(
-                    thumbType = ThumbSelection.THUMB_UP,
-                    isSelected = state.thumbSelection == ThumbSelection.THUMB_UP,
-                    isUnselected = state.thumbSelection == ThumbSelection.THUMB_DOWN,
-                    onClick = { onThumbSelected(ThumbSelection.THUMB_UP) }
-                )
-
-                HorizontalSpacer(12.dp)
-
-                ThumbsCard(
-                    thumbType = ThumbSelection.THUMB_DOWN,
-                    isSelected = state.thumbSelection == ThumbSelection.THUMB_DOWN,
-                    isUnselected = state.thumbSelection == ThumbSelection.THUMB_UP,
-                    onClick = { onThumbSelected(ThumbSelection.THUMB_DOWN) }
-                )
-            }
-
-            VerticalSpacer(16.dp)
-
-            if (state.thumbSelection == ThumbSelection.THUMB_DOWN) {
-                SurveyTypeChips(
-                    selectedTypes = state.selectedSurveyTypes,
-                    onSurveyTypeSelected = onSurveyTypeSelected
-                )
-            }
-
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .imePadding()
+                    .fillMaxSize()
+                    .verticalScroll(scrollState),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
+                Text(
+                    text = stringResource(
+                        R.string.survey_coaching_count_message,
+                        state.username ?: "",
+                        state.totalCount ?: 0
+                    ),
+                    color = black,
+                    style = Typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                )
+
+                VerticalSpacer(16.dp)
+
+                Text(
+                    text = stringResource(R.string.survey_content),
+                    color = black,
+                    style = Typography.headlineSmall,
+                )
+
+                VerticalSpacer(16.dp)
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    if (state.thumbSelection != ThumbSelection.NONE) {
-                        SmeemTextField(
-                            value = textFieldState,
-                            onValueChange = { newValue ->
-                                if (newValue.text.length <= REASON_MAX_LENGTH) {
-                                    textFieldState = newValue
-                                    onReasonChange(newValue.text)
+                    ThumbsCard(
+                        thumbType = ThumbSelection.THUMB_UP,
+                        isSelected = state.thumbSelection == ThumbSelection.THUMB_UP,
+                        isUnselected = state.thumbSelection == ThumbSelection.THUMB_DOWN,
+                        onClick = { onThumbSelected(ThumbSelection.THUMB_UP) }
+                    )
+
+                    HorizontalSpacer(12.dp)
+
+                    ThumbsCard(
+                        thumbType = ThumbSelection.THUMB_DOWN,
+                        isSelected = state.thumbSelection == ThumbSelection.THUMB_DOWN,
+                        isUnselected = state.thumbSelection == ThumbSelection.THUMB_UP,
+                        onClick = { onThumbSelected(ThumbSelection.THUMB_DOWN) }
+                    )
+                }
+
+                VerticalSpacer(16.dp)
+
+                if (state.thumbSelection == ThumbSelection.THUMB_DOWN) {
+                    SurveyTypeChips(
+                        selectedTypes = state.selectedSurveyTypes,
+                        onSurveyTypeSelected = onSurveyTypeSelected
+                    )
+                }
+
+                if (state.thumbSelection != ThumbSelection.NONE) {
+                    SmeemTextField(
+                        value = textFieldState,
+                        onValueChange = { newValue ->
+                            if (newValue.text.length <= REASON_MAX_LENGTH) {
+                                textFieldState = newValue
+                                onReasonChange(newValue.text)
+                            }
+                        },
+                        placeholder = stringResource(R.string.survey_textfield_placeholder),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                focusManager.clearFocus()
+                                keyboardController?.hide()
+                            }),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(horizontal = 18.dp)
+                            .focusRequester(focusRequester)
+                            .onFocusChanged { focusState ->
+                                if (focusState.isFocused) {
+                                    coroutineScope.launch {
+                                        delay(300)
+                                        scrollState.animateScrollTo(scrollState.maxValue)
+                                    }
+                                    textFieldState = textFieldState.copy(
+                                        selection = TextRange(
+                                            textFieldState.text.length
+                                        )
+                                    )
                                 }
                             },
-                            placeholder = "(선택) 이유를 적어주세요.",
-                            keyboardActions = KeyboardActions(
-                                onDone = {
-                                    focusManager.clearFocus()
-                                    keyboardController?.hide()
-                                }),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f)
-                                .padding(horizontal = 18.dp)
-                                .focusRequester(focusRequester)
-                                .onFocusChanged { focusState ->
-                                    if (focusState.isFocused) {
-                                        coroutineScope.launch {
-                                            delay(200)
-                                            scrollState.animateScrollTo(scrollState.maxValue)
-                                        }
-                                        textFieldState = textFieldState.copy(
-                                            selection = TextRange(
-                                                textFieldState.text.length
-                                            )
-                                        )
-                                    }
-                                },
-                            backgroundColor = gray100,
-                            cursorColor = black,
-                            minLines = 2,
-                            hasBorder = false,
-                            textStyle = Typography.bodySmall.copy(
-                                color = black,
-                            )
+                        backgroundColor = gray100,
+                        cursorColor = black,
+                        minLines = if (isKeyboardOpen) 2 else 3,
+                        hasBorder = false,
+                        textStyle = Typography.bodySmall.copy(
+                            color = black,
                         )
-                    } else {
-                        Spacer(modifier = Modifier.weight(1f))
-                    }
+                    )
+                } else {
+                    Spacer(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(100.dp)
+                    )
+                }
 
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     VerticalSpacer(15.dp)
 
                     SmeemButton(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 18.dp),
-                        text = "의견 보내기",
+                        text = stringResource(R.string.survey_submit_button_text),
                         onClick = {
                             focusManager.clearFocus()
                             keyboardController?.hide()
@@ -296,11 +309,36 @@ fun CoachSurveyScreen(
                         isButtonEnabled = state.thumbSelection != ThumbSelection.NONE,
                     )
 
-                    VerticalSpacer(20.dp)
+                    VerticalSpacer(if (isKeyboardOpen) 110.dp else 20.dp)
                 }
             }
         }
     }
+}
+
+@Composable
+private fun keyboardAsState(): State<Boolean> {
+    val keyboardState = remember { mutableStateOf(false) }
+    val view = LocalView.current
+
+    DisposableEffect(view) {
+        val onGlobalListener = ViewTreeObserver.OnGlobalLayoutListener {
+            val rect = Rect()
+            view.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = view.rootView.height
+            val keypadHeight = screenHeight - rect.bottom
+
+            keyboardState.value = keypadHeight > screenHeight * 0.15
+        }
+
+        view.viewTreeObserver.addOnGlobalLayoutListener(onGlobalListener)
+
+        onDispose {
+            view.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalListener)
+        }
+    }
+
+    return keyboardState
 }
 
 @Composable
