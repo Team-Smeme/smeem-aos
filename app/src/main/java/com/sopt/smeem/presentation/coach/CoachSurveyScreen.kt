@@ -90,6 +90,7 @@ fun CoachSurveyRoute(
             is CoachSideEffect.NavigateToHome -> {
                 onCloseClick()
             }
+
             is CoachSideEffect.ShowError -> {
                 Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
             }
@@ -141,7 +142,8 @@ fun CoachSurveyScreen(
 
 
     Scaffold(
-        modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars)
+        modifier = Modifier
+            .windowInsetsPadding(WindowInsets.systemBars)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
@@ -387,10 +389,8 @@ fun SurveyTypeChips(
                 SmeemChip(
                     text = surveyType.text,
                     isSelected = selectedTypes.contains(surveyType),
-                    modifier = Modifier
-                        .padding(horizontal = 4.dp)
-                        .clip(RoundedCornerShape(6.dp))
-                        .clickable { onSurveyTypeSelected(surveyType) }
+                    modifier = Modifier.padding(horizontal = 4.dp),
+                    onClick = { onSurveyTypeSelected(surveyType) }
                 )
             }
         }
@@ -410,10 +410,8 @@ fun SurveyTypeChips(
                 SmeemChip(
                     text = surveyType.text,
                     isSelected = selectedTypes.contains(surveyType),
-                    modifier = Modifier
-                        .padding(horizontal = 4.dp)
-                        .clip(RoundedCornerShape(6.dp))
-                        .clickable { onSurveyTypeSelected(surveyType) }
+                    modifier = Modifier.padding(horizontal = 4.dp),
+                    onClick = { onSurveyTypeSelected(surveyType) }
                 )
             }
         }
