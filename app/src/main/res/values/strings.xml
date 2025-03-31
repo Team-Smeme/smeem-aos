@@ -152,9 +152,12 @@
     <!-- Survey -->
     <string name="thumbs_up_description">좋아요</string>
     <string name="thumbs_down_description">아쉬워요</string>
+    <string name="survey_submit_button_text">의견 보내기</string>
+    <string name="survey_coaching_count_message">%s님,\n오늘까지 코칭을 %d번 받으셨네요!\n꾸준함이 대단해요! 👏</string>
+    <string name="survey_content">AI 코칭, 어떠셨나요?</string>
+    <string name="survey_textfield_placeholder">(선택) 이유를 적어주세요.</string>
 
     <!-- Diary Detail -->
     <string name="diary_detail_coaching_off">코칭 OFF</string>
     <string name="diary_detail_coaching_on">코칭 ON</string>
-
 </resources>
