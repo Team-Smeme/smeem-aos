@@ -28,7 +28,7 @@ fun SmeemButton(
     text: String,
     onClick: () -> Unit,
     isButtonEnabled: Boolean = true,
-    throttleTime: Long = 300L
+    throttleTime: Long = 100L
 ) {
     var isThrottling by rememberSaveable { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
