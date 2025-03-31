@@ -58,7 +58,7 @@ import com.sopt.smeem.domain.model.SurveyType
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.coach.CoachSurveyConstants.REASON_MAX_LENGTH
 import com.sopt.smeem.presentation.compose.components.SmeemButton
-import com.sopt.smeem.presentation.compose.components.SmeemChp
+import com.sopt.smeem.presentation.compose.components.SmeemChip
 import com.sopt.smeem.presentation.compose.components.SmeemTextField
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
@@ -384,7 +384,7 @@ fun SurveyTypeChips(
             )
 
             firstRowTypes.forEach { surveyType ->
-                SmeemChp(
+                SmeemChip(
                     text = surveyType.text,
                     isSelected = selectedTypes.contains(surveyType),
                     modifier = Modifier
@@ -407,7 +407,7 @@ fun SurveyTypeChips(
             )
 
             secondRowTypes.forEach { surveyType ->
-                SmeemChp(
+                SmeemChip(
                     text = surveyType.text,
                     isSelected = selectedTypes.contains(surveyType),
                     modifier = Modifier

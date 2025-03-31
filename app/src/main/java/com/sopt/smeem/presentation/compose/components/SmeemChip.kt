@@ -14,7 +14,7 @@ import com.sopt.smeem.presentation.compose.theme.gray600
 import com.sopt.smeem.presentation.compose.theme.point
 
 @Composable
-fun SmeemChp(
+fun SmeemChip(
     text: String,
     isSelected: Boolean,
     modifier: Modifier = Modifier,
@@ -36,7 +36,7 @@ fun SmeemChp(
 @Preview(showBackground = true)
 @Composable
 fun PreviewSelectedSmeemChp() {
-    SmeemChp(
+    SmeemChip(
         text = "이것은 스밈 칩이다",
         isSelected = true,
     )
@@ -45,7 +45,7 @@ fun PreviewSelectedSmeemChp() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewUnselectedSmeemChp() {
-    SmeemChp(
+    SmeemChip(
         text = "이것은 스밈 칩이다",
         isSelected = false,
     )
