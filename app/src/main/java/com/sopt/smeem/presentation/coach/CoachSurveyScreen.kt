@@ -310,7 +310,7 @@ fun CoachSurveyScreen(
                         isButtonEnabled = state.thumbSelection != ThumbSelection.NONE,
                     )
 
-                    VerticalSpacer(if (isKeyboardOpen) 110.dp else 20.dp)
+                    VerticalSpacer(if (isKeyboardOpen) 120.dp else 20.dp)
                 }
             }
         }
