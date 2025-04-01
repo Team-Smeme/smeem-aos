@@ -19,7 +19,7 @@
 
         <include
             android:id="@+id/layout_foreign_write_toolbar"
-            layout="@layout/diary_write_toolbar"
+            layout="@layout/diary_native_write_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:language="@{@string/language_english}"

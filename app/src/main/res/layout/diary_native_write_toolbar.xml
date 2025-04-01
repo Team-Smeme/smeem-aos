@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <!-- 모두 xml 상에서만 수정 -->
+        <variable
+            name="stepVisibility"
+            type="int" />
+
+        <variable
+            name="hasNext"
+            type="Boolean" />
+
+        <variable
+            name="step"
+            type="String" />
+
+        <variable
+            name="language"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?android:colorBackground"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="19dp"
+            android:text="@string/diary_write_cancel"
+            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular"
+            android:textColor="?colorOnBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:text="@{language, default=@string/language_english}"
+            android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold"
+            android:textColor="?colorOnBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{step, default=@string/diary_write_step_1}"
+            android:textAppearance="@style/TextAppearance.Smeem.Caption4_regular_12"
+            android:textColor="@color/gray_500"
+            android:visibility="@{stepVisibility}"
+            app:layout_constraintEnd_toEndOf="@id/tv_language"
+            app:layout_constraintStart_toStartOf="@id/tv_language"
+            app:layout_constraintTop_toBottomOf="@id/tv_language"
+            tools:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/tv_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:text="@{hasNext ? @string/diary_write_next : @string/diary_write_done, default=@string/diary_write_done}"
+            android:textAppearance="@style/TextAppearance.Smeem.Body1_bold"
+            android:textColor="@color/gray_300"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_cancel"
+            tools:text="완료" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
