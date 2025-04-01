@@ -23,12 +23,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:hasNext="@{true}"
-            app:language="@{@string/language_korean}"
+            app:isStep1="@{true}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:step="@{@string/diary_write_step_1}"
-            app:stepVisibility="@{View.VISIBLE}" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <include
             android:id="@+id/layout_native_step1_random_topic"
@@ -48,10 +46,10 @@
             android:layout_height="0dp"
             android:paddingHorizontal="18dp"
             android:paddingTop="20dp"
-            app:layout_constraintBottom_toTopOf="@id/view_native_step1_line"
             android:text="@string/diary_native_write_hint"
             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
             android:textColor="@color/gray_300"
+            app:layout_constraintBottom_toTopOf="@id/view_native_step1_line"
             app:layout_constraintTop_toBottomOf="@id/layout_native_step1_random_topic" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,9 +74,9 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:inputType="textMultiLine|textNoSuggestions"
-                    android:privateImeOptions="defaultInputmode=korean"
                     android:paddingHorizontal="18dp"
                     android:paddingVertical="20dp"
+                    android:privateImeOptions="defaultInputmode=korean"
                     android:text="@={vm.diary}"
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
                     android:textColor="?colorOnBackground" />

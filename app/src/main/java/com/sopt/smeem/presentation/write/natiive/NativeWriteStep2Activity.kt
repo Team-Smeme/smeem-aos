@@ -60,7 +60,7 @@ class NativeWriteStep2Activity :
     }
 
     private fun backToStep1() {
-        binding.layoutNativeStep2Toolbar.tvCancel.setOnSingleClickListener {
+        binding.layoutNativeStep2Toolbar.ivBack.setOnSingleClickListener {
             finish()
         }
     }

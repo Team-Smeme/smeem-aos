@@ -23,12 +23,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:hasNext="@{false}"
-            app:language="@{@string/language_english}"
+            app:isStep1="@{false}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:step="@{@string/diary_write_step_2}"
-            app:stepVisibility="@{View.VISIBLE}" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_native_step2_native_diary"
@@ -37,8 +35,8 @@
             android:layout_marginHorizontal="18dp"
             android:layout_marginTop="16dp"
             android:fadeScrollbars="false"
-            android:minLines="4"
             android:maxLines="4"
+            android:minLines="4"
             android:paddingEnd="16dp"
             android:scrollbarAlwaysDrawVerticalTrack="true"
             android:scrollbarFadeDuration="0"
@@ -85,9 +83,9 @@
                     android:background="@null"
                     android:hint="@string/diary_write_hint"
                     android:inputType="textMultiLine|textNoSuggestions"
-                    android:privateImeOptions="defaultInputmode=english"
                     android:paddingHorizontal="18dp"
                     android:paddingVertical="20dp"
+                    android:privateImeOptions="defaultInputmode=english"
                     android:text="@={vm.diary}"
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
                     android:textColor="?colorOnBackground" />
