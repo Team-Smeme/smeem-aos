@@ -47,7 +47,7 @@
             android:scrollbars="vertical"
             android:text="@string/dummy_diary_korean"
             android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
-            android:textColor="?colorOnBackground"
+            android:textColor="@color/point"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_native_step2_toolbar" />
