@@ -29,10 +29,10 @@
 
         <TextView
             android:id="@+id/tv_on_boarding_header_no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
+            android:layout_width="9dp"
+            android:layout_height="26dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
             android:textAppearance="@style/TextAppearance.Smeem.Subtitle1_bold.Spacing_14"
             android:textColor="?colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
