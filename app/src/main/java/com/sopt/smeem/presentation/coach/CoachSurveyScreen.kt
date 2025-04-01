@@ -76,6 +76,7 @@ import com.sopt.smeem.presentation.compose.theme.pointInactive30
 import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.util.HorizontalSpacer
 import com.sopt.smeem.util.VerticalSpacer
+import com.sopt.smeem.util.graphemeLength
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -246,7 +247,7 @@ fun CoachSurveyScreen(
                     SmeemTextField(
                         value = textFieldState,
                         onValueChange = { newValue ->
-                            if (newValue.text.length <= REASON_MAX_LENGTH) {
+                            if (newValue.text.graphemeLength() <= REASON_MAX_LENGTH) {
                                 textFieldState = newValue
                                 onReasonChange(newValue.text)
                             }
@@ -548,5 +549,5 @@ fun SurveyTypeChipsPreview() {
 }
 
 private object CoachSurveyConstants {
-    const val REASON_MAX_LENGTH = 300
+    const val REASON_MAX_LENGTH = 250
 }
