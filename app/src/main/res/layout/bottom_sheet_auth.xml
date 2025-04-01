@@ -13,7 +13,7 @@
             android:id="@+id/tv_header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="26dp"
+            android:layout_marginStart="18dp"
             android:text="@string/splash_bs_header"
             android:textAppearance="@style/TextAppearance.Smeem.Headline3"
             app:layout_constraintStart_toStartOf="parent"
