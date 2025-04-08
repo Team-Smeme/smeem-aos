@@ -48,7 +48,9 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:selectionRequired="true"
                 app:singleSelection="true"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible"
+                >
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_coach_off"
