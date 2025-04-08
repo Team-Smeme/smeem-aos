@@ -41,9 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:layout_marginEnd="8dp"
-            android:minLines="2"
+            android:minLines="1"
             android:text="@{`     ` + randomTopic}"
-            android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_20"
+            android:textAppearance="@style/TextAppearance.Smeem.Caption3_regular.Height_20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -59,7 +59,7 @@
             android:visibility="@{refreshVisibility}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_content"
-            tools:visibility="gone" />
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

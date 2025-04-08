@@ -112,6 +112,10 @@
         <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
 
+    <style name="TextAppearance.Smeem.Caption3_regular.Height_20">
+        <item name="android:lineHeight">20dp</item>
+    </style>
+
     <style name="TextAppearance.Smeem.Caption4_regular_12">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
