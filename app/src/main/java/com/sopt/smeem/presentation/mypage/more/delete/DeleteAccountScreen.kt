@@ -31,7 +31,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -107,11 +106,11 @@ fun DeleteAccountScreen(
             .verticalScroll(scrollState)
             .addFocusCleaner(focusManager)
     ) {
-        VerticalSpacer(height = 14.dp)
+        VerticalSpacer(height = 20.dp)
 
         Text(
             text = stringResource(R.string.delete_account_title),
-            style = Typography.headlineMedium,
+            style = Typography.headlineSmall,
             color = black,
             modifier = Modifier.padding(start = 26.dp)
         )
@@ -120,20 +119,20 @@ fun DeleteAccountScreen(
 
         Text(
             text = stringResource(R.string.delete_account_subtitle),
-            style = Typography.bodySmall.copy(
-                lineHeight = 22.sp
+            style = Typography.labelLarge.copy(
+                lineHeight = 20.sp
             ),
             color = black,
             modifier = Modifier.padding(start = 26.dp)
         )
 
-        VerticalSpacer(height = 12.dp)
+        VerticalSpacer(height = 20.dp)
 
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(max = 1000.dp),
-            verticalArrangement = Arrangement.spacedBy(5.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(WithdrawType.entries.size) { index ->
                 val type = WithdrawType.entries[index]
@@ -153,19 +152,7 @@ fun DeleteAccountScreen(
             }
         }
 
-        VerticalSpacer(height = 27.dp)
-
-        Text(
-            text = stringResource(R.string.delete_account_reason_label),
-            style = Typography.bodyLarge.copy(
-                fontWeight = FontWeight.SemiBold,
-                lineHeight = 22.sp
-            ),
-            color = black,
-            modifier = Modifier.padding(start = 26.dp)
-        )
-
-        VerticalSpacer(height = 22.dp)
+        VerticalSpacer(height = 16.dp)
 
         SmeemTextField(
             value = textFieldState,
@@ -196,7 +183,7 @@ fun DeleteAccountScreen(
                         )
                     }
                 },
-            minLines = 2,
+            minLines = 4,
             backgroundColor = gray100,
             cursorColor = black,
             hasBorder = false,
@@ -208,7 +195,7 @@ fun DeleteAccountScreen(
 
         Spacer(Modifier.weight(1f))
 
-        VerticalSpacer(height = 12.dp)
+        VerticalSpacer(height = 16.dp)
 
         SmeemButton(
             text = stringResource(R.string.delete_account_navi_title),
