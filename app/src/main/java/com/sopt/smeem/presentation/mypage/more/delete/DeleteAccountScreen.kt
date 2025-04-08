@@ -112,7 +112,7 @@ fun DeleteAccountScreen(
             text = stringResource(R.string.delete_account_title),
             style = Typography.headlineSmall,
             color = black,
-            modifier = Modifier.padding(start = 26.dp)
+            modifier = Modifier.padding(start = 18.dp)
         )
 
         VerticalSpacer(height = 6.dp)
@@ -123,7 +123,7 @@ fun DeleteAccountScreen(
                 lineHeight = 20.sp
             ),
             color = black,
-            modifier = Modifier.padding(start = 26.dp)
+            modifier = Modifier.padding(start = 18.dp)
         )
 
         VerticalSpacer(height = 20.dp)
