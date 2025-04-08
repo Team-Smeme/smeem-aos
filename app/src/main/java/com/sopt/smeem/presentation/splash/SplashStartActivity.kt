@@ -79,7 +79,6 @@ class SplashStartActivity : AppCompatActivity() {
                             val isForceUpdateRequired = when {
                                 forceX > installedX -> true // 강제 업데이트 버전의 x가 더 크면 강제 업데이트
                                 forceX == installedX && forceY > installedY -> true // x가 같고 y가 크면 강제 업데이트
-                                forceX == installedX && forceY == installedY && forceZ > installedZ -> true // x, y가 같고 z가 클 때 강제 업데이트
                                 else -> false
                             }
 
