@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.R
@@ -58,9 +57,8 @@ fun MySummaryTopAppBar(
             ) {
                 Text(
                     text = "설정",
-                    style = Typography.bodyMedium.copy(
+                    style = Typography.bodySmall.copy(
                         color = gray500,
-                        fontWeight = FontWeight.SemiBold
                     ),
                 )
             }

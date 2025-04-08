@@ -59,7 +59,7 @@ fun MyPlanCard(
                 ) {
                     Text(
                         text = myPlan.plan,
-                        style = Typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+                        style = Typography.bodyMedium,
                         color = black
                     )
 

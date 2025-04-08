@@ -26,10 +26,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sopt.smeem.R
@@ -37,8 +35,8 @@ import com.sopt.smeem.data.datasource.BadgeList
 import com.sopt.smeem.domain.dto.GetBadgeListDto
 import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.presentation.compose.theme.Typography
-import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray100
+import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.previewPlaceholder
 
 @Composable
@@ -89,11 +87,12 @@ fun MyBadgesObtainedCard(
             verticalArrangement = Arrangement.Top,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 18.dp, vertical = 9.dp)
+                .padding(vertical = 9.dp)
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(horizontal = 18.dp)
                     .weight(1f),
                 contentAlignment = Alignment.Center
             ) {
@@ -108,13 +107,12 @@ fun MyBadgesObtainedCard(
                 )
             }
 
+            VerticalSpacer(4.dp)
+
             Text(
                 text = info.name,
-                style = Typography.labelSmall.copy(
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 9.sp,
-                    color = black
-                ),
+                style = Typography.labelMedium,
+                maxLines = 1
             )
         }
     }
