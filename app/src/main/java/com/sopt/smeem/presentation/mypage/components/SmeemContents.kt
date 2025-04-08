@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.black
@@ -24,7 +25,9 @@ fun SmeemContents(
     ) {
         Text(
             text = title,
-            style = Typography.titleLarge,
+            style = Typography.bodyLarge.copy(
+                fontWeight = FontWeight.SemiBold
+            ),
             color = black
         )
 
