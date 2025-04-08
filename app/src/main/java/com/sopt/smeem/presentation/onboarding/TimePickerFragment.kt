@@ -15,8 +15,8 @@ class TimePickerFragment : DialogFragment() {
     private val vm: OnBoardingVM by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val hour = vm.selectedHour?.value ?: DEFAULT_HOUR
-        val minute = vm.selectedMinute?.value ?: DEFAULT_MINUTE
+        val hour = vm.selectedHour.value ?: DEFAULT_HOUR
+        val minute = vm.selectedMinute.value ?: DEFAULT_MINUTE
 
         val hourPicker = timePicker.npTimePickerHour
         val minutePicker = timePicker.npTimePickerMinute
