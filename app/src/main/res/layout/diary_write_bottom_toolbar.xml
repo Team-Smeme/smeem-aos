@@ -19,14 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?colorSurface"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="9dp">
+        android:paddingHorizontal="18dp"
+        android:paddingVertical="15dp">
 
         <ToggleButton
             android:id="@+id/btn_translate"
             android:layout_width="wrap_content"
             android:layout_height="29dp"
-            android:layout_marginStart="8dp"
             android:background="@drawable/selector_write_translate"
             android:textOff=""
             android:textOn=""

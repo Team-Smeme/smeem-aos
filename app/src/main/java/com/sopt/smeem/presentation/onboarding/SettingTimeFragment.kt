@@ -17,7 +17,6 @@ import timber.log.Timber
 class SettingTimeFragment :
     BindingFragment<FragmentSettingTimeBinding>(R.layout.fragment_setting_time) {
     private var days: Map<Int, TextView>? = null
-    private var timePickerDialog: TimePickerDialog? = null
     private val vm: OnBoardingVM by activityViewModels()
     private val eventVm: EventVM by activityViewModels()
 
@@ -50,7 +49,6 @@ class SettingTimeFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         days = null
-        timePickerDialog = null
     }
 
     private fun setUpDays() {
