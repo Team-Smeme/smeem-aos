@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.smeem.R
@@ -34,7 +35,7 @@ fun MoreScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-//    val viewModel: MoreViewModel = hiltViewModel()
+    val viewModel: MoreViewModel = hiltViewModel()
     val context = LocalContext.current
 
     val (showLogoutDialog, setShowLogoutDialog) = rememberSaveable { mutableStateOf(false) }
@@ -45,7 +46,7 @@ fun MoreScreen(
             title = stringResource(R.string.smeem_dialog_logout_title),
             content = stringResource(R.string.smeem_dialog_logout_content),
             onConfirmButtonClick = {
-//                viewModel.clearLocal()
+                viewModel.clearLocal()
                 context.startActivity(Intent(context, SplashLoginActivity::class.java))
                 (context as? Activity)?.finishAffinity()
             })
