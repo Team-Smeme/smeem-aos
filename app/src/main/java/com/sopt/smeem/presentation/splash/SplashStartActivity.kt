@@ -15,7 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sopt.smeem.BuildConfig
 import com.sopt.smeem.R
-import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.home.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter
@@ -136,7 +136,7 @@ class SplashStartActivity : AppCompatActivity() {
         vm.isAuthed.observe(this) {
             when (it) {
                 true -> { // Home 으로 이동
-                    startActivity(Intent(this@SplashStartActivity, HomeActivity::class.java))
+                    startActivity(Intent(this@SplashStartActivity, MainActivity::class.java))
                     finish()
                 }
 

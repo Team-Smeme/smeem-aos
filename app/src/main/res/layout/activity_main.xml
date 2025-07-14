@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.home.MainActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcv_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bnv_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view_main_bnv_border"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/gray_100"
+        app:layout_constraintBottom_toTopOf="@id/bnv_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnv_main"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:itemIconTint="@color/bottom_nav_item_color"
+        app:itemRippleColor="@null"
+        app:itemTextColor="@color/bottom_nav_item_color"
+        app:itemTextAppearanceActive="@style/TextAppearance.Smeem.Caption2_light"
+        app:itemTextAppearanceInactive="@style/TextAppearance.Smeem.Caption2_light"
+        app:labelVisibilityMode="labeled"
+        app:itemActiveIndicatorStyle="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

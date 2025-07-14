@@ -12,7 +12,7 @@ import com.sopt.smeem.event.AmplitudeEventType.FIRST_VIEW
 import com.sopt.smeem.event.AmplitudeEventType.SIGN_UP_SUCCESS
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.base.BindingActivity
-import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.home.MainActivity
 import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
 import com.sopt.smeem.presentation.join.JoinConstant.REFRESH_TOKEN
 import com.sopt.smeem.presentation.join.JoinWithNicknameActivity
@@ -80,7 +80,7 @@ class SplashLoginActivity :
     }
 
     private fun gotoHome() {
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 

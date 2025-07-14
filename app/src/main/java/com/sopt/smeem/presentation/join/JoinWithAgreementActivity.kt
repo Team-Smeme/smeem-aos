@@ -12,7 +12,7 @@ import com.sopt.smeem.domain.dto.RetrievedBadgeDto
 import com.sopt.smeem.presentation.IntentConstants.RETRIEVED_BADGE_DTO
 import com.sopt.smeem.presentation.agreement.AgreementViewActivity
 import com.sopt.smeem.presentation.base.BindingActivity
-import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.home.MainActivity
 import com.sopt.smeem.presentation.join.JoinConstant.ACCESS_TOKEN
 import com.sopt.smeem.presentation.join.JoinConstant.NICKNAME
 import com.sopt.smeem.presentation.join.JoinConstant.REFRESH_TOKEN
@@ -168,7 +168,7 @@ class JoinWithAgreementActivity :
             when (it) {
                 true -> {
                     vm.saveTokenInLocal(accessToken, refreshToken)
-                    Intent(this, HomeActivity::class.java).apply {
+                    Intent(this, MainActivity::class.java).apply {
                         putExtra(
                             RETRIEVED_BADGE_DTO, listOf(
                                 RetrievedBadgeDto(

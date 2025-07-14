@@ -107,6 +107,11 @@
         <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
 
+    <style name="TextAppearance.Smeem.Caption2_light">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/pretendard_light</item>
+    </style>
+
     <style name="TextAppearance.Smeem.Caption3_regular">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
