@@ -15,7 +15,7 @@ import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
 import com.sopt.smeem.presentation.base.DefaultSnackBar
 import com.sopt.smeem.presentation.coach.navigation.CoachNavGraph
 import com.sopt.smeem.presentation.compose.theme.SmeemTheme
-import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.home.MainActivity
 import com.sopt.smeem.util.getParcelableArrayListExtraCompat
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,7 +40,7 @@ class CoachActivity : ComponentActivity() {
                     eventVm = eventVm,
                     navController = navController,
                     onCloseClick = {
-                        Intent(this, HomeActivity::class.java).apply {
+                        Intent(this, MainActivity::class.java).apply {
                             putParcelableArrayListExtra(
                                 RETRIEVED_BADGE_DTO,
                                 ArrayList(

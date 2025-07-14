@@ -12,7 +12,7 @@ import com.sopt.smeem.presentation.IntentConstants.HAS_CORRECTIONS
 import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
 import com.sopt.smeem.presentation.base.BindingActivity
 import com.sopt.smeem.presentation.base.DefaultSnackBar
-import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.home.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -74,7 +74,7 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
             true -> {
                 viewModel.editDiary(
                     onSuccess = {
-                        Intent(this, HomeActivity::class.java).apply {
+                        Intent(this, MainActivity::class.java).apply {
                             putExtra(
                                 SNACKBAR_TEXT,
                                 resources.getString(R.string.diary_edit_done_message)

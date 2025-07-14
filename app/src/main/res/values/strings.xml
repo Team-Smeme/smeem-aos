@@ -160,4 +160,8 @@
     <!-- Diary Detail -->
     <string name="diary_detail_coaching_off">코칭 OFF</string>
     <string name="diary_detail_coaching_on">코칭 ON</string>
+
+    <!-- BNV -->
+    <string name="bnv_title_bookmark">북마크</string>
+    <string name="bnv_title_calendar">캘린더</string>
 </resources>

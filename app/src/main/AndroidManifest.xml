@@ -120,7 +120,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.home.HomeActivity"
+            android:name=".presentation.home.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

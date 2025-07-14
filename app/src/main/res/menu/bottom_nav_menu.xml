@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_my_page"
+        android:title="@string/bnv_title_calendar" />
+    <item
+        android:id="@+id/menu_bookmark"
+        android:icon="@drawable/ic_bookmark"
+        android:title="@string/bnv_title_bookmark" />
+</menu>

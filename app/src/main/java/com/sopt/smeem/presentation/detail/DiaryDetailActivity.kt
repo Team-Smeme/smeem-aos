@@ -11,7 +11,7 @@ import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.IntentConstants.DIARY_ID
 import com.sopt.smeem.presentation.base.BindingActivity
-import com.sopt.smeem.presentation.home.HomeActivity
+import com.sopt.smeem.presentation.home.MainActivity
 import com.sopt.smeem.util.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -97,7 +97,7 @@ class DiaryDetailActivity :
         }
         viewModel.isDiaryDeleted.observe(this) {
             if (it) {
-                Intent(this, HomeActivity::class.java).apply {
+                Intent(this, MainActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }.run(::startActivity)
             }
