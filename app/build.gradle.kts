@@ -33,12 +33,12 @@ android {
         }
     }
     namespace = "com.sopt.smeem"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.sopt.smeem"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 20250408
         /*
         x.y.z

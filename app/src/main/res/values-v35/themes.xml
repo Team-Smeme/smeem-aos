@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Smeem" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/point</item>
+        <item name="colorPrimaryVariant">@color/point</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/point_inactive</item>
+        <item name="colorSecondaryVariant">@color/point_inactive</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Neutral brand color. -->
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="colorSurface">@color/gray_100</item>
+        <item name="colorOnSurface">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?android:colorBackground</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- window background color -->
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowBackground">@color/white</item>
+        <!-- Fix for targetSDK 35 edge-to-edge layout changes -->
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+
+        <!-- etc -->
+        <item name="colorControlActivated">@color/point</item>
+        <item name="colorControlNormal">@color/point</item>
+        <item name="colorBackgroundFloating">@color/black_opacity_30</item>
+        <item name="materialButtonStyle">@style/Widget.Smeem.Button</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Smeem.BottomSheetDialog
+        </item>
+        <item name="android:timePickerStyle">@style/Widget.Smeem.TimePicker</item>
+        <item name="android:timePickerDialogTheme">@style/ThemeOverlay.Smeem.TimePicker
+        </item>
+        <item name="snackbarStyle">@style/Widget.Smeem.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/Widget.Smeem.Snackbar.TextView</item>
+        <item name="materialAlertDialogTheme">
+            @style/ThemeOverlay.Smeem.MaterialAlertDialog
+        </item>
+    </style>
+</resources>

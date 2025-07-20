@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -33,10 +33,10 @@ import com.sopt.smeem.util.HorizontalSpacer
 
 @Composable
 fun SelectCard(
-    isSelected: Boolean = false,
     selectContent: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
 ) {
 
     val textColor = if (isSelected) point else gray600
@@ -53,7 +53,7 @@ fun SelectCard(
             .clip(RoundedCornerShape(6.dp))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(color = pointInactive),
+                indication = ripple(color = pointInactive),
                 onClick = onClick,
             ),
         shape = RoundedCornerShape(6.dp),
