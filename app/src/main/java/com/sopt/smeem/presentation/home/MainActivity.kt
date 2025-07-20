@@ -3,7 +3,6 @@ package com.sopt.smeem.presentation.home
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.sopt.smeem.R
@@ -27,8 +26,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = true
 
         initView()
         setNavigation()

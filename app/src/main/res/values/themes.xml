@@ -20,6 +20,8 @@
         <!-- window background color -->
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowBackground">@color/white</item>
+        <!-- Fix for targetSDK 35 edge-to-edge layout changes -->
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
 
         <!-- etc -->
         <item name="colorControlActivated">@color/point</item>

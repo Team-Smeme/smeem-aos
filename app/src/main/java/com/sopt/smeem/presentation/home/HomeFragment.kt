@@ -65,6 +65,7 @@ class HomeFragment : Fragment() {
 
         val calendar = binding.composeCalendar
         val banner = binding.composeBanner
+        val fab = binding.composeFabMenu
 
         initView(LocalDate.now())
         setInitListener()
@@ -80,11 +81,17 @@ class HomeFragment : Fragment() {
             }
         }
 
+        setComposeContent(fab) {
+            SmeemTheme {
+//                SmeemFabMenu()
+            }
+        }
+
 //        observeBannerState(banner)
         moveToMyPage()
         observeData()
         eventVm.sendEvent(AmplitudeEventType.HOME_VIEW)
-        
+
         homeViewModel.activeVisit { Timber.e("visit count 반영 실패.") }
     }
 
@@ -220,3 +227,60 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
     }
 }
+
+//@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+//@Composable
+//fun SmeemFabMenu() {
+//    var fabMenuExpanded by rememberSaveable { mutableStateOf(false) }
+//    val context = LocalContext.current
+//    val rotationAngle by animateFloatAsState(
+//        targetValue = if (fabMenuExpanded) 45f else 0f,
+//        label = "fab rotation"
+//    )
+//
+//    FloatingActionButtonMenu(
+//        expanded = fabMenuExpanded,
+//        button = {
+//            ToggleFloatingActionButton(
+//                checked = fabMenuExpanded,
+//                onCheckedChange = { fabMenuExpanded = it },
+//                containerColor = SmeemTheme.colors.point,
+//                contentColor = SmeemTheme.colors.white
+//            ) {
+//                Icon(
+//                    imageVector = Icons.Default.Add,
+//                    contentDescription = "fab",
+//                    modifier = Modifier.rotate(rotationAngle)
+//                )
+//            }
+//        }
+//    ) {
+//        FloatingActionButtonMenuItem(
+//            onClick = {
+//                context.startActivityOf<NativeWriteStep1Activity>()
+//                fabMenuExpanded = false
+//            },
+//            text = { Text(text = context.getString(R.string.fab_random_subject)) },
+//        )
+//        FloatingActionButtonMenuItem(
+//            onClick = {
+//                context.startActivityOf<ForeignWriteActivity>()
+//                fabMenuExpanded = false
+//            },
+//            text = { Text(text = context.getString(R.string.fab_write_diary)) },
+//        )
+//    }
+//}
+
+//@Preview(showBackground = true, widthDp = 360, heightDp = 640)
+//@Composable
+//fun HomeFabMenuPreview() {
+//    SmeemTheme {
+//        Column(
+//            modifier = Modifier.padding(16.dp)
+//        ) {
+//            SmeemFabMenu()
+//        }
+//    }
+//}
+

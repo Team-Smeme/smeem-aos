@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:paddingHorizontal="18dp"
         android:paddingTop="36dp"
         android:paddingBottom="16dp"
