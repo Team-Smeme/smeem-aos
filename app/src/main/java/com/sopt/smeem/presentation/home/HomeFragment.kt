@@ -6,12 +6,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FloatingActionButtonMenu
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.ToggleFloatingActionButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -24,6 +60,12 @@ import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.IntentConstants.DIARY_ID
 import com.sopt.smeem.presentation.compose.components.Banner
 import com.sopt.smeem.presentation.compose.theme.SmeemTheme
+import com.sopt.smeem.presentation.compose.theme.Typography
+import com.sopt.smeem.presentation.compose.theme.black
+import com.sopt.smeem.presentation.compose.theme.gray100
+import com.sopt.smeem.presentation.compose.theme.gray300
+import com.sopt.smeem.presentation.compose.theme.point
+import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.presentation.detail.DiaryDetailActivity
 import com.sopt.smeem.presentation.home.calendar.SmeemCalendar
 import com.sopt.smeem.presentation.home.calendar.core.CalendarState
@@ -34,6 +76,7 @@ import com.sopt.smeem.presentation.write.natiive.NativeWriteStep1Activity
 import com.sopt.smeem.util.getWeekStartDate
 import com.sopt.smeem.util.setComposeContent
 import com.sopt.smeem.util.setOnSingleClickListener
+import com.sopt.smeem.util.toTextDp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -83,7 +126,7 @@ class HomeFragment : Fragment() {
 
         setComposeContent(fab) {
             SmeemTheme {
-//                SmeemFabMenu()
+                SmeemFabMenu()
             }
         }
 
@@ -181,10 +224,10 @@ class HomeFragment : Fragment() {
                                             )
                                         },
                                         modifier =
-                                        Modifier.padding(
-                                            horizontal = 18.dp,
-                                            vertical = 12.dp,
-                                        ),
+                                            Modifier.padding(
+                                                horizontal = 18.dp,
+                                                vertical = 12.dp,
+                                            ),
                                     )
                                 }
                             }
@@ -228,59 +271,158 @@ class HomeFragment : Fragment() {
     }
 }
 
-//@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-//@Composable
-//fun SmeemFabMenu() {
-//    var fabMenuExpanded by rememberSaveable { mutableStateOf(false) }
-//    val context = LocalContext.current
-//    val rotationAngle by animateFloatAsState(
-//        targetValue = if (fabMenuExpanded) 45f else 0f,
-//        label = "fab rotation"
-//    )
-//
-//    FloatingActionButtonMenu(
-//        expanded = fabMenuExpanded,
-//        button = {
-//            ToggleFloatingActionButton(
-//                checked = fabMenuExpanded,
-//                onCheckedChange = { fabMenuExpanded = it },
-//                containerColor = SmeemTheme.colors.point,
-//                contentColor = SmeemTheme.colors.white
-//            ) {
-//                Icon(
-//                    imageVector = Icons.Default.Add,
-//                    contentDescription = "fab",
-//                    modifier = Modifier.rotate(rotationAngle)
-//                )
-//            }
-//        }
-//    ) {
-//        FloatingActionButtonMenuItem(
-//            onClick = {
-//                context.startActivityOf<NativeWriteStep1Activity>()
-//                fabMenuExpanded = false
-//            },
-//            text = { Text(text = context.getString(R.string.fab_random_subject)) },
-//        )
-//        FloatingActionButtonMenuItem(
-//            onClick = {
-//                context.startActivityOf<ForeignWriteActivity>()
-//                fabMenuExpanded = false
-//            },
-//            text = { Text(text = context.getString(R.string.fab_write_diary)) },
-//        )
-//    }
-//}
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun SmeemFabMenu(modifier: Modifier = Modifier) {
+    var fabMenuExpanded by rememberSaveable { mutableStateOf(false) }
+    val context = LocalContext.current
+    
+    val rotationAngle by animateFloatAsState(
+        targetValue = if (fabMenuExpanded) 45f else 0f,
+        label = "fab rotation"
+    )
+    
+    val onMenuClose = remember { { fabMenuExpanded = false } }
 
-//@Preview(showBackground = true, widthDp = 360, heightDp = 640)
-//@Composable
-//fun HomeFabMenuPreview() {
-//    SmeemTheme {
-//        Column(
-//            modifier = Modifier.padding(16.dp)
-//        ) {
-//            SmeemFabMenu()
-//        }
-//    }
-//}
+    Box(modifier = modifier) {
+        FloatingActionButtonMenu(
+            expanded = fabMenuExpanded,
+            modifier = Modifier
+                .graphicsLayer { shadowElevation = 0f }
+                .shadow(0.dp),
+            button = {
+                ToggleFloatingActionButton(
+                    checked = fabMenuExpanded,
+                    onCheckedChange = { fabMenuExpanded = it },
+                    containerColor = { point },
+                    modifier = Modifier
+                        .graphicsLayer { shadowElevation = 0f }
+                        .clip(CircleShape),
+                    content = {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "fab",
+                            modifier = Modifier.rotate(rotationAngle),
+                            tint = white
+                        )
+                    }
+                )
+            }
+        ) {
+            if (fabMenuExpanded) {
+                MenuContent(
+                    onForeignWriteClick = {
+                        context.startActivity(Intent(context, ForeignWriteActivity::class.java))
+                        onMenuClose()
+                    },
+                    onNativeWriteClick = {
+                        context.startActivity(Intent(context, NativeWriteStep1Activity::class.java))
+                        onMenuClose()
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun MenuContent(
+    onForeignWriteClick: () -> Unit,
+    onNativeWriteClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier.fillMaxWidth(),
+        contentAlignment = Alignment.TopEnd
+    ) {
+        Box(
+            modifier = Modifier
+                .width(190.dp)
+                .wrapContentHeight()
+                .border(
+                    width = 1.dp,
+                    color = gray300,
+                    shape = RoundedCornerShape(6.dp)
+                )
+                .clip(RoundedCornerShape(6.dp))
+                .background(Color.White)
+        ) {
+            Column {
+                MenuItemBox(
+                    onClick = onForeignWriteClick,
+                    highlightText = "외국어로 바로 ",
+                    normalText = "작성하기"
+                )
+
+                HorizontalDivider(
+                    thickness = 2.dp,
+                    color = gray100,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+
+                MenuItemBox(
+                    onClick = onNativeWriteClick,
+                    highlightText = "한국어로 먼저 ",
+                    normalText = "작성하기"
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun MenuItemBox(
+    onClick: () -> Unit,
+    highlightText: String,
+    normalText: String
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 18.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = createStyledText(highlightText, normalText),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+private fun createStyledText(highlightText: String, normalText: String) = buildAnnotatedString {
+    withStyle(
+        style = SpanStyle(
+            color = point,
+            fontSize = 16.dp.toTextDp(),
+            fontWeight = Typography.titleMedium.fontWeight,
+            fontFamily = Typography.titleMedium.fontFamily
+        )
+    ) {
+        append(highlightText)
+    }
+    withStyle(
+        style = SpanStyle(
+            color = black,
+            fontSize = 16.dp.toTextDp(),
+            fontWeight = Typography.titleSmall.fontWeight,
+            fontFamily = Typography.titleSmall.fontFamily
+        )
+    ) {
+        append(normalText)
+    }
+}
+
+@Preview(showBackground = true, widthDp = 360, heightDp = 640)
+@Composable
+fun HomeFabMenuPreview() {
+    SmeemTheme {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            SmeemFabMenu()
+        }
+    }
+}
 
