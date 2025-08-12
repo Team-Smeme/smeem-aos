@@ -18,8 +18,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -76,47 +74,41 @@ fun BookmarkScreen(
             .fillMaxSize()
             .background(background)
     ) {
-        TopAppBar(
-            title = {
-                Text(
-                    text = "북마크",
-                    style = Typography.headlineMedium.copy(
-                        fontWeight = FontWeight.SemiBold,
-                        color = gray900
-                    )
-                )
-            },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = background
-            )
+        Text(
+            text = "북마크",
+            style = Typography.headlineMedium.copy(
+                fontWeight = FontWeight.SemiBold,
+                color = gray900
+            ),
+            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
         )
 
-        when {
-            state.isLoading -> {
-                LoadingScreen()
-            }
+    when {
+        state.isLoading -> {
+            LoadingScreen()
+        }
 
-            else -> {
-                LazyVerticalStaggeredGrid(
-                    columns = StaggeredGridCells.Fixed(2),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 18.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalItemSpacing = 12.dp,
-                    contentPadding = PaddingValues(vertical = 18.dp)
-                ) {
-                    items(state.bookmarks) { bookmark ->
-                        BookmarkItem(
-                            bookmark = bookmark,
-                            onClick = { viewModel.onIntent(BookmarkIntent.OnBookmarkClick(bookmark.bookmarkId)) }
-                        )
-                    }
+        else -> {
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Fixed(2),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 18.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalItemSpacing = 12.dp,
+                contentPadding = PaddingValues(vertical = 10.dp)
+            ) {
+                items(state.bookmarks) { bookmark ->
+                    BookmarkItem(
+                        bookmark = bookmark,
+                        onClick = { viewModel.onIntent(BookmarkIntent.OnBookmarkClick(bookmark.bookmarkId)) }
+                    )
                 }
             }
         }
     }
 }
+    }
 
 @Composable
 private fun BookmarkItem(
@@ -142,7 +134,7 @@ private fun BookmarkItem(
                 .clip(RoundedCornerShape(8.dp))
         ) {
             var isLoading by remember { mutableStateOf(!bookmark.thumbnailImageUrl.isBlank()) }
-            
+
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(
@@ -161,7 +153,7 @@ private fun BookmarkItem(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-            
+
             if (isLoading) {
                 SmeemSkeleton(
                     shape = RoundedCornerShape(8.dp),
