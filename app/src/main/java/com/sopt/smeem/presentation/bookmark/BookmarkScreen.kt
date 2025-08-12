@@ -3,6 +3,7 @@ package com.sopt.smeem.presentation.bookmark
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +22,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -33,11 +37,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.sopt.smeem.R
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkIntent
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkItem
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkSideEffect
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkType
 import com.sopt.smeem.presentation.compose.components.LoadingScreen
+import com.sopt.smeem.presentation.compose.components.SmeemSkeleton
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.background
 import com.sopt.smeem.presentation.compose.theme.gray900
@@ -123,12 +129,7 @@ private fun BookmarkItem(
             .background(background)
             .clickable { onClick() },
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(bookmark.thumbnailImageUrl)
-                .crossfade(true)
-                .build(),
-            contentDescription = null,
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(
@@ -138,9 +139,36 @@ private fun BookmarkItem(
                     }
                 )
                 .background(shape = RoundedCornerShape(8.dp), color = Color.Transparent)
-                .clip(RoundedCornerShape(8.dp)),
-            contentScale = ContentScale.Crop
-        )
+                .clip(RoundedCornerShape(8.dp))
+        ) {
+            var isLoading by remember { mutableStateOf(!bookmark.thumbnailImageUrl.isBlank()) }
+            
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(
+                        bookmark.thumbnailImageUrl.ifBlank {
+                            R.drawable.img_bookmark_error
+                        }
+                    )
+                    .crossfade(true)
+                    .listener(
+                        onStart = { isLoading = !bookmark.thumbnailImageUrl.isBlank() },
+                        onSuccess = { _, _ -> isLoading = false },
+                        onError = { _, _ -> isLoading = false }
+                    )
+                    .build(),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+            
+            if (isLoading) {
+                SmeemSkeleton(
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.height(10.dp))
 
