@@ -8,7 +8,6 @@ import com.sopt.smeem.presentation.bookmark.contract.BookmarkSideEffect
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkState
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -51,7 +50,7 @@ class BookmarkViewModel @Inject constructor(
                     description = dto.description ?: "",
                     createdAt = dto.createdAt ?: ""
                 )
-            }
+            }.sortedByDescending { it.createdAt } // 최신순 정렬
             
             reduce { 
                 state.copy(
