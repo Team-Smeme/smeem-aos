@@ -1,11 +1,14 @@
 package com.sopt.smeem.module
 
 import com.sopt.smeem.data.datasource.DiaryReader
+import com.sopt.smeem.data.repository.BookmarkRepositoryImpl
 import com.sopt.smeem.data.repository.DiaryRepositoryImpl
 import com.sopt.smeem.data.repository.UserRepositoryImpl
+import com.sopt.smeem.data.service.BookmarkService
 import com.sopt.smeem.data.service.DiaryService
 import com.sopt.smeem.data.service.MyBadgeService
 import com.sopt.smeem.data.service.UserService
+import com.sopt.smeem.domain.repository.BookmarkRepository
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.domain.repository.UserRepository
 import dagger.Module
@@ -43,6 +46,16 @@ object UserModule {
             diaryReader = DiaryReader(
                 apiServerRetrofitForAuthentication.create(DiaryService::class.java)
             )
+        )
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun bookmarkRepository(
+        @AuthenticationRetrofit apiServerRetrofitForAuthentication: Retrofit
+    ): BookmarkRepository {
+        return BookmarkRepositoryImpl(
+            bookmarkService = apiServerRetrofitForAuthentication.create(BookmarkService::class.java)
         )
     }
 }
