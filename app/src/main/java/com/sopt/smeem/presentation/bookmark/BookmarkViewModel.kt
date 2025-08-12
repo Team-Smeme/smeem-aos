@@ -8,6 +8,7 @@ import com.sopt.smeem.presentation.bookmark.contract.BookmarkSideEffect
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkState
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
