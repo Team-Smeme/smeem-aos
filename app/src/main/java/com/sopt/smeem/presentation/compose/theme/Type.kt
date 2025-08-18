@@ -46,7 +46,7 @@ val Typography = Typography(
         fontFamily = Pretendard,
         fontWeight = FontWeight.SemiBold,
         fontSize = 18.sp,
-        lineHeight = 21.sp
+        lineHeight = 21.sp,
     ),
     titleSmall = TextStyle(
         fontFamily = Pretendard,
