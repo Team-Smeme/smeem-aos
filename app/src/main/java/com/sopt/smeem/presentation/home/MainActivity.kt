@@ -1,6 +1,7 @@
 package com.sopt.smeem.presentation.home
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -77,5 +78,15 @@ class MainActivity : AppCompatActivity() {
                 }
                 intent.removeExtra(IntentConstants.RETRIEVED_BADGE_DTO)
             }
+    }
+
+    fun hideBottomNavigation() {
+        binding.bnvMain.visibility = View.GONE
+        binding.viewMainBnvBorder.visibility = View.GONE
+    }
+
+    fun showBottomNavigation() {
+        binding.bnvMain.visibility = View.VISIBLE
+        binding.viewMainBnvBorder.visibility = View.VISIBLE
     }
 }
