@@ -3,6 +3,7 @@ package com.sopt.smeem.data.repository
 import com.sopt.smeem.data.service.BookmarkService
 import com.sopt.smeem.domain.common.ApiResult
 import com.sopt.smeem.domain.dto.BookmarkDto
+import com.sopt.smeem.domain.dto.GetBookmarkDetailResponseDto
 import com.sopt.smeem.domain.dto.GetBookmarksResponseDto
 import com.sopt.smeem.domain.repository.BookmarkRepository
 import javax.inject.Inject
@@ -31,6 +32,27 @@ class BookmarkRepositoryImpl @Inject constructor(
                                     scrapType = item.scrapType ?: "P"
                                 )
                             } ?: emptyList()
+                        )
+                    )
+                }
+            } else {
+                throw response.code().handleStatusCode()
+            }
+        }
+
+    override suspend fun getBookmarkDetail(bookmarkId: Int): ApiResult<GetBookmarkDetailResponseDto> =
+        bookmarkService.getBookmarkDetail(bookmarkId).let { response ->
+            if (response.isSuccessful) {
+                response.body()!!.let { apiResponse ->
+                    ApiResult(
+                        statusCode = response.code(),
+                        data = GetBookmarkDetailResponseDto(
+                            thumbnailImageUrl = apiResponse.data.thumbnailImageUrl ?: "",
+                            scrapedUrl = apiResponse.data.scrapedUrl ?: "",
+                            expression = apiResponse.data.expression ?: "표현식 없음",
+                            translatedExpression = apiResponse.data.translatedExpression ?: "",
+                            description = apiResponse.data.description ?: "",
+                            scrapType = apiResponse.data.scrapType ?: "P"
                         )
                     )
                 }

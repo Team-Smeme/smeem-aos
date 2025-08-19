@@ -9,6 +9,7 @@ val pointInactive30 = pointInactive.copy(alpha = 0.3f)
 
 // grayscale
 val white = Color(0xFFFFFFFF)
+val gray25 = Color(0xFFF9F9F8)
 val gray100 = Color(0xFFF5F5F5)
 val grayDialog = Color(0xFFECECEC)
 val gray200 = Color(0xFFDEDEDE)

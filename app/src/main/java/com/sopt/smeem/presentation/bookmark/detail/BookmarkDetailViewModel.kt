@@ -1,6 +1,7 @@
 package com.sopt.smeem.presentation.bookmark.detail
 
 import androidx.lifecycle.ViewModel
+import com.sopt.smeem.domain.repository.BookmarkRepository
 import com.sopt.smeem.presentation.bookmark.detail.contract.BookmarkDetailIntent
 import com.sopt.smeem.presentation.bookmark.detail.contract.BookmarkDetailItem
 import com.sopt.smeem.presentation.bookmark.detail.contract.BookmarkDetailSideEffect
@@ -15,8 +16,9 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class BookmarkDetailViewModel @Inject constructor() :
-    ContainerHost<BookmarkDetailState, BookmarkDetailSideEffect>, ViewModel() {
+class BookmarkDetailViewModel @Inject constructor(
+    private val bookmarkRepository: BookmarkRepository
+) : ContainerHost<BookmarkDetailState, BookmarkDetailSideEffect>, ViewModel() {
 
     override val container: Container<BookmarkDetailState, BookmarkDetailSideEffect> =
         container(BookmarkDetailState())
@@ -35,13 +37,16 @@ class BookmarkDetailViewModel @Inject constructor() :
         reduce { state.copy(isLoading = true, error = null) }
 
         try {
+            val response = bookmarkRepository.getBookmarkDetail(bookmarkId)
+            val data = response.data()
+            
             val bookmarkDetail = BookmarkDetailItem(
-                thumbnailImageUrl = "https://shorturl.at/0ToBd",
-                scrapedUrl = "https://shorturl.at/YwTvv",
-                expression = "can you make up our room?",
-                translatedExpression = "방 청소해주세요",
-                description = "오늘의 문장 ✅ Can you make up clean our room please?",
-                scrapType = "REELS"
+                thumbnailImageUrl = data.thumbnailImageUrl,
+                scrapedUrl = data.scrapedUrl,
+                expression = data.expression,
+                translatedExpression = data.translatedExpression,
+                description = data.description,
+                scrapType = data.scrapType
             )
 
             reduce {
