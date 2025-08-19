@@ -55,7 +55,6 @@ class BookmarkFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Fragment가 사라질 때 바텀 네비게이션 바를 다시 보여줌
         (activity as? MainActivity)?.showBottomNavigation()
     }
 }

@@ -14,9 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -58,6 +57,7 @@ import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.background
 import com.sopt.smeem.presentation.compose.theme.black
 import com.sopt.smeem.presentation.compose.theme.gray200
+import com.sopt.smeem.presentation.compose.theme.gray25
 import com.sopt.smeem.presentation.compose.theme.gray900
 import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.util.toTextDp
@@ -112,79 +112,58 @@ fun BookmarkDetailScreen(
             .fillMaxSize()
             .background(background)
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(
-                    modifier = Modifier
-                        .clickable { viewModel.onIntent(BookmarkDetailIntent.OnBackClick) }
-                        .padding(vertical = 8.dp, horizontal = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_sm),
-                        contentDescription = "뒤로가기",
-                        tint = gray900
-                    )
-
-                    Spacer(modifier = Modifier.width(4.dp))
-
-                    Text(
-                        text = "북마크",
-                        style = Typography.bodyMedium.copy(
-                            fontWeight = FontWeight.Medium,
-                            fontSize = 15.dp.toTextDp(),
-                            color = gray900
-                        )
-                    )
-                }
-
-                IconButton(
-                    onClick = { viewModel.onIntent(BookmarkDetailIntent.OnMoreClick) }
-                ) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_menu_more),
-                        contentDescription = "더보기",
-                        tint = gray900
-                    )
-                }
-            }
-
-            when {
+        when {
                 state.isLoading -> {
                     LoadingScreen()
                 }
 
                 state.bookmarkDetail != null -> {
-                    FixedTopContent(
-                        bookmarkDetail = state.bookmarkDetail!!,
-                        onImageClick = { viewModel.onIntent(BookmarkDetailIntent.OnInstagramClick) },
-                        onInstagramClick = { viewModel.onIntent(BookmarkDetailIntent.OnInstagramClick) }
-                    )
-
-                    ScrollableBottomContent(
-                        description = state.bookmarkDetail!!.description
-                    )
+                    Column(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        HeaderSection(
+                            onBackClick = { viewModel.onIntent(BookmarkDetailIntent.OnBackClick) },
+                            onMoreClick = { viewModel.onIntent(BookmarkDetailIntent.OnMoreClick) }
+                        )
+                        
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            item {
+                                ImageAndInstagramSection(
+                                    bookmarkDetail = state.bookmarkDetail!!,
+                                    onImageClick = { viewModel.onIntent(BookmarkDetailIntent.OnInstagramClick) },
+                                    onInstagramClick = { viewModel.onIntent(BookmarkDetailIntent.OnInstagramClick) }
+                                )
+                            }
+                            
+                            stickyHeader {
+                                StickyExpressionTexts(
+                                    expression = state.bookmarkDetail!!.expression,
+                                    translatedExpression = state.bookmarkDetail!!.translatedExpression
+                                )
+                            }
+                            
+                            item {
+                                ContentSection(
+                                    description = state.bookmarkDetail!!.description
+                                )
+                            }
+                        }
+                    }
                 }
 
                 state.error != null -> {
                     // TODO: error 화면 대응
                 }
             }
-        }
 
-        // Floating Action Button
         if (state.bookmarkDetail != null) {
             FloatingActionButton(
                 onClick = { viewModel.onIntent(BookmarkDetailIntent.OnUseExpressionClick) },
-                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 21.dp),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 21.dp),
                 containerColor = black,
                 shape = RoundedCornerShape(50.dp),
                 elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp)
@@ -223,14 +202,63 @@ fun BookmarkDetailScreen(
 }
 
 @Composable
-private fun FixedTopContent(
+private fun HeaderSection(
+    onBackClick: () -> Unit,
+    onMoreClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(gray25)
+            .padding(horizontal = 10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row(
+            modifier = Modifier
+                .clickable { onBackClick() }
+                .padding(vertical = 8.dp, horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_left_sm),
+                contentDescription = "뒤로가기",
+                tint = gray900
+            )
+
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Text(
+                text = "북마크",
+                style = Typography.bodyMedium.copy(
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 15.dp.toTextDp(),
+                    color = gray900
+                )
+            )
+        }
+
+        IconButton(
+            onClick = { onMoreClick() }
+        ) {
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_menu_more),
+                contentDescription = "더보기",
+                tint = gray900
+            )
+        }
+    }
+}
+
+@Composable
+private fun ImageAndInstagramSection(
     bookmarkDetail: BookmarkDetailItem,
     onImageClick: () -> Unit,
     onInstagramClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxWidth().background(gray25),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -245,10 +273,24 @@ private fun FixedTopContent(
         InstagramBox(onClick = onInstagramClick)
 
         Spacer(modifier = Modifier.height(20.dp))
+    }
+}
+
+@Composable
+private fun StickyExpressionTexts(
+    expression: String,
+    translatedExpression: String
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(gray25),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
         ExpressionTexts(
-            expression = bookmarkDetail.expression,
-            translatedExpression = bookmarkDetail.translatedExpression
+            expression = expression,
+            translatedExpression = translatedExpression
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -262,22 +304,22 @@ private fun FixedTopContent(
 }
 
 @Composable
-private fun ScrollableBottomContent(
+private fun ContentSection(
     description: String
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .fillMaxWidth()
             .padding(horizontal = 18.dp)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
         DescriptionContent(description = description)
 
-        Spacer(modifier = Modifier.height(88.dp)) // FloatingButton을 위한 여백
+        Spacer(modifier = Modifier.height(88.dp))
     }
 }
+
 
 @Composable
 private fun InstagramBox(
@@ -357,16 +399,16 @@ private fun BookmarkImage(
     onClick: () -> Unit
 ) {
     val aspectRatio = when (scrapType) {
-        BookmarkType.REELS.name -> 6f / 9f
+        BookmarkType.REELS.name -> 9f / 6f
         else -> 1f
     }
 
-    val width = (190.dp * aspectRatio)
+    val height = (132.dp * aspectRatio)
 
     Box(
         modifier = Modifier
-            .width(width)
-            .height(190.dp)
+            .width(132.dp)
+            .height(height)
             .clip(RoundedCornerShape(12.dp))
             .clickable { onClick() }
     ) {
@@ -400,48 +442,38 @@ private fun BookmarkImage(
     }
 }
 
+private fun extractMainContent(description: String): String {
+    // 패턴: ": \"본문 내용\"." 부분에서 본문만 추출
+    val startIndex = description.indexOf(": \"")
+    val endIndex = description.lastIndexOf("\".")
+    
+    return if (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
+        description.substring(startIndex + 3, endIndex).trim()
+    } else {
+        description // 패턴이 맞지 않으면 원본 반환
+    }
+}
+
 @Composable
 private fun DescriptionContent(description: String) {
-    val lines = description.split("\n")
-
-    Column(
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        lines.forEachIndexed { index, line ->
-            if (line.isNotBlank()) {
-                Text(
-                    text = line,
-                    style = Typography.bodyMedium.copy(
-                        color = gray900,
-                        fontSize = 15.dp.toTextDp(),
-                        fontWeight = if (line.startsWith("1.") || line.startsWith("2.") || line.startsWith(
-                                "3."
-                            ) || line.startsWith("4.")
-                        ) {
-                            FontWeight.SemiBold
-                        } else {
-                            FontWeight.Normal
-                        }
-                    )
-                )
-            }
-        }
-    }
+    val extractedContent = extractMainContent(description)
+    
+    Text(
+        text = extractedContent,
+        style = Typography.bodyMedium.copy(
+            color = gray900,
+            fontSize = 15.dp.toTextDp(),
+            fontWeight = FontWeight.Normal,
+            lineHeight = 1.5.em
+        )
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun FixedTopContentPreview() {
-    FixedTopContent(
-        bookmarkDetail = BookmarkDetailItem(
-            thumbnailImageUrl = "https://shorturl.at/0ToBd",
-            scrapedUrl = "https://shorturl.at/YwTvv",
-            expression = "Pissed off",
-            translatedExpression = "역정 했니다",
-            description = "1. Pissed off : 역정 했니다\n📱 I am pissed off! He is pissed off\n번역 : you're pissing me off! 나때매 기개해\n\n2. Taking the piss (out of someone) : 놀리다, 장난하다\n📱Are you taking the piss?! 넌 놀리니? 장난하니?\n\n3. Pissed (drunk) : 만취하다\n📱He is absolutely pissed : 걔 만취했;;",
-            scrapType = "REELS"
-        ),
-        onImageClick = {},
-        onInstagramClick = {}
+private fun StickyExpressionTextsPreview() {
+    StickyExpressionTexts(
+        expression = "Pissed off",
+        translatedExpression = "역정 했니다"
     )
 }
