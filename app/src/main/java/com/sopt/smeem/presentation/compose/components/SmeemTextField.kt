@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.compose.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.smeem.presentation.compose.theme.Typography
@@ -42,6 +44,12 @@ fun SmeemTextField(
     textStyle: TextStyle = Typography.headlineSmall.copy(
         color = point
     ),
+    placeholderStyle: TextStyle = Typography.bodySmall.copy(
+        lineHeight = 22.sp
+    ),
+    placeholderColor: Color = gray400,
+    contentPadding: PaddingValues = PaddingValues(vertical = 19.dp, horizontal = 20.dp),
+    cornerRadius: Dp = 6.dp,
 ) {
     BasicTextField(
         value = value,
@@ -58,21 +66,19 @@ fun SmeemTextField(
             .border(
                 width = if (hasBorder) 1.dp else 0.dp,
                 color = gray100,
-                shape = RoundedCornerShape(6.dp)
+                shape = RoundedCornerShape(cornerRadius)
             )
-            .clip(RoundedCornerShape(6.dp))
+            .clip(RoundedCornerShape(cornerRadius))
             .background(backgroundColor)
-            .padding(vertical = 19.dp, horizontal = 20.dp),
+            .padding(contentPadding),
         textStyle = textStyle,
         cursorBrush = SolidColor(cursorColor),
         decorationBox = { innerTextField ->
             if (value.text.isEmpty()) {
                 Text(
                     text = placeholder,
-                    style = Typography.bodySmall.copy(
-                        lineHeight = 22.sp
-                    ),
-                    color = gray400
+                    style = placeholderStyle,
+                    color = placeholderColor
                 )
             }
             innerTextField()

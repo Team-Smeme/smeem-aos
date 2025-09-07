@@ -69,7 +69,7 @@ fun BookmarkDetailScreen(
     bookmarkId: Int,
     viewModel: BookmarkDetailViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit = {},
-    onNavigateToUseExpression: () -> Unit = {}
+    onNavigateToUseExpression: (String) -> Unit = {}
 ) {
     val state by viewModel.collectAsState()
     val context = LocalContext.current
@@ -93,7 +93,9 @@ fun BookmarkDetailScreen(
             }
 
             is BookmarkDetailSideEffect.NavigateToUseExpression -> {
-                onNavigateToUseExpression()
+                state.bookmarkDetail?.let { detail ->
+                    onNavigateToUseExpression("${detail.expression} ${detail.translatedExpression}")
+                }
             }
 
             is BookmarkDetailSideEffect.OpenInstagram -> {

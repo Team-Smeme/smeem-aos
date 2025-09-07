@@ -89,4 +89,10 @@ class MainActivity : AppCompatActivity() {
         binding.bnvMain.visibility = View.VISIBLE
         binding.viewMainBnvBorder.visibility = View.VISIBLE
     }
+
+    fun navigateToHome() {
+        replaceFragment(homeFragment)
+        binding.bnvMain.selectedItemId = R.id.menu_home
+        showBottomNavigation()
+    }
 }
