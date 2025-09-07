@@ -88,6 +88,20 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:refreshVisibility="@{View.GONE}" />
 
+                <TextView
+                    android:id="@+id/tv_diary_edit_eng_kor_expression"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="18dp"
+                    android:layout_marginTop="16dp"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body2_semibold"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_diary_edit_random_topic"
+                    tools:text="be happy 행복하다"
+                    tools:visibility="visible" />
+
                 <EditText
                     android:id="@+id/et_diary_edit_content"
                     style="@style/Style.Smeem.Text"
@@ -104,7 +118,7 @@
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_diary_edit_random_topic"
+                    app:layout_constraintTop_toBottomOf="@id/tv_diary_edit_eng_kor_expression"
                     tools:text="@string/dummy_diary_english" />
 
                 <requestFocus />

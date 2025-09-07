@@ -14,6 +14,7 @@ import com.sopt.smeem.databinding.BottomSheetDiaryDetailBinding
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.EventVM
 import com.sopt.smeem.presentation.IntentConstants.DIARY_ID
+import com.sopt.smeem.presentation.IntentConstants.ENG_KOR_EXPRESSION
 import com.sopt.smeem.presentation.IntentConstants.HAS_CORRECTIONS
 import com.sopt.smeem.presentation.IntentConstants.ORIGINAL_CONTENT
 import com.sopt.smeem.presentation.IntentConstants.RANDOM_TOPIC
@@ -83,6 +84,7 @@ class DiaryDetailBottomSheet(
             putExtra(HAS_CORRECTIONS, viewModel.diaryDetailResult.value?.hasCorrections!!)
             putExtra(ORIGINAL_CONTENT, viewModel.getContent())
             putExtra(RANDOM_TOPIC, viewModel.getTopic())
+            putExtra(ENG_KOR_EXPRESSION, viewModel.diaryDetailResult.value?.engKorExpression)
         }.also { intent ->
             startActivity(intent)
             dismiss()

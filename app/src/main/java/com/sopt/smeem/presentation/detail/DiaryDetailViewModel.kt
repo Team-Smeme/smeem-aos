@@ -11,7 +11,6 @@ import com.sopt.smeem.domain.common.SmeemException
 import com.sopt.smeem.domain.dto.DeleteDiaryRequestDto
 import com.sopt.smeem.domain.repository.DiaryRepository
 import com.sopt.smeem.domain.repository.LocalRepository
-import com.sopt.smeem.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -54,17 +53,9 @@ class DiaryDetailViewModel @Inject constructor(
 
                 diaryRepository.getDiaryDetail(diaryId).run {
                     data().let { dto ->
-                        _diaryDetailResult.value = DiaryDetail(
-                            diaryId = dto.id,
-                            topic = dto.topic,
-                            content = dto.content,
-                            createdAt = DateUtil.asString(dto.createdAt),
-                            corrections = dto.corrections,
-                            writerUsername = dto.username,
-                            correctionCount = dto.correctionCount,
-                            correctionMaxCount = dto.correctionMaxCount,
-                            isUpdated = dto.isUpdated
-                        )
+                        val diaryDetail = DiaryDetail.from(dto)
+
+                        _diaryDetailResult.value = diaryDetail
                         diaryCreatedAt = dto.createdAt
                     }
                 }
