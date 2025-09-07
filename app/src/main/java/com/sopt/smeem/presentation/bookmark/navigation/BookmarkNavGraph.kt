@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.bookmark.navigation
 
+import android.widget.Toast
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -15,10 +16,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.sopt.smeem.presentation.bookmark.BookmarkScreen
 import com.sopt.smeem.presentation.bookmark.detail.BookmarkDetailScreen
+import com.sopt.smeem.presentation.bookmark.diary.BookmarkDiaryScreen
 
 @Composable
 fun BookmarkNavHost(
-    navController: NavHostController
+    navController: NavHostController,
+    onNavigateToHome: () -> Unit = {}
 ) {
     Scaffold { innerPadding ->
         NavHost(
@@ -69,15 +72,36 @@ fun BookmarkNavHost(
 
             composable<BookmarkRoute.BookmarkDetail> { backStackEntry ->
                 val args = backStackEntry.toRoute<BookmarkRoute.BookmarkDetail>()
-                
+
                 BookmarkDetailScreen(
                     bookmarkId = args.bookmarkId,
                     viewModel = hiltViewModel(),
                     onNavigateBack = {
                         navController.popBackStack()
                     },
-                    onNavigateToUseExpression = {
-                        // TODO: 표현 사용 화면으로 이동
+                    onNavigateToUseExpression = { combinedExpression ->
+                        val parts = combinedExpression.split(" ", limit = 2)
+                        if (parts.size >= 2) {
+                            navController.navigate(BookmarkRoute.BookmarkDiary(parts[0], parts[1]))
+                        }
+                    }
+                )
+            }
+
+            composable<BookmarkRoute.BookmarkDiary> { backStackEntry ->
+                val args = backStackEntry.toRoute<BookmarkRoute.BookmarkDiary>()
+                val context = navController.context
+
+                BookmarkDiaryScreen(
+                    expression = args.expression,
+                    translatedExpression = args.translatedExpression,
+                    viewModel = hiltViewModel(),
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigateToHome = onNavigateToHome,
+                    onShowError = { message ->
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                     }
                 )
             }

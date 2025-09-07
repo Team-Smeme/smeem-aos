@@ -9,4 +9,7 @@ sealed interface BookmarkRoute {
 
     @Serializable
     data class BookmarkDetail(val bookmarkId: Int) : BookmarkRoute
+
+    @Serializable
+    data class BookmarkDiary(val expression: String, val translatedExpression: String) : BookmarkRoute
 }

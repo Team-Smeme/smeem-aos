@@ -41,13 +41,23 @@ class BookmarkFragment : Fragment() {
                             route?.startsWith("${BookmarkRoute.BookmarkDetail::class.qualifiedName}") == true -> {
                                 mainActivity?.hideBottomNavigation()
                             }
+                            route?.startsWith("${BookmarkRoute.BookmarkDiary::class.qualifiedName}") == true -> {
+                                mainActivity?.hideBottomNavigation()
+                            }
                             else -> {
                                 mainActivity?.showBottomNavigation()
                             }
                         }
                     }
                     
-                    BookmarkNavHost(navController = navController)
+                    BookmarkNavHost(
+                        navController = navController,
+                        onNavigateToHome = {
+                            // 백스택 정리하고 홈으로 이동
+                            navController.popBackStack(BookmarkRoute.BookmarkList, false)
+                            (activity as? MainActivity)?.navigateToHome()
+                        }
+                    )
                 }
             }
         }
