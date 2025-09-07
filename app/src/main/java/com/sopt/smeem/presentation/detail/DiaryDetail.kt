@@ -14,6 +14,7 @@ data class DiaryDetail(
     val correctionCount: Int = -1,
     val correctionMaxCount: Int = 0,
     val isUpdated: Boolean = false,
+    val engKorExpression: String? = null,
 ) {
     val hasCorrections: Boolean
         get() = corrections.isNotEmpty()
@@ -29,7 +30,8 @@ data class DiaryDetail(
                 writerUsername = username,
                 correctionCount = correctionCount,
                 correctionMaxCount = correctionMaxCount,
-                isUpdated = isUpdated
+                isUpdated = isUpdated,
+                engKorExpression = engKorExpression
             )
         }
     }

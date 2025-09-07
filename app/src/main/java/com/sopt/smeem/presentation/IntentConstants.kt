@@ -10,6 +10,7 @@ object IntentConstants {
     const val RANDOM_TOPIC = "randomTopic"
     const val DIARY_CONTENT = "diaryContent"
     const val HAS_CORRECTIONS = "hasCorrections"
+    const val ENG_KOR_EXPRESSION = "engKorExpression"
 
     // goal
     const val SELECTED_GOAL = "selectedGoal"

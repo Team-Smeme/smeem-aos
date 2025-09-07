@@ -8,6 +8,7 @@ import com.sopt.smeem.R
 import com.sopt.smeem.databinding.ActivityDiaryEditBinding
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.EventVM
+import com.sopt.smeem.presentation.IntentConstants.ENG_KOR_EXPRESSION
 import com.sopt.smeem.presentation.IntentConstants.HAS_CORRECTIONS
 import com.sopt.smeem.presentation.IntentConstants.SNACKBAR_TEXT
 import com.sopt.smeem.presentation.base.BindingActivity
@@ -36,6 +37,7 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
             )
         }
         checkRandomTopic()
+        setupEngKorExpression()
     }
 
     override fun addListeners() {
@@ -66,6 +68,16 @@ class DiaryEditActivity : BindingActivity<ActivityDiaryEditBinding>(R.layout.act
             binding.layoutDiaryEditRandomTopic.layoutSection.visibility = View.GONE
         } else {
             binding.layoutDiaryEditRandomTopic.randomTopic = intent.getStringExtra("randomTopic")
+        }
+    }
+
+    private fun setupEngKorExpression() {
+        val engKorExpression = intent.getStringExtra(ENG_KOR_EXPRESSION)
+        if (engKorExpression != null) {
+            binding.tvDiaryEditEngKorExpression.text = engKorExpression
+            binding.tvDiaryEditEngKorExpression.visibility = View.VISIBLE
+        } else {
+            binding.tvDiaryEditEngKorExpression.visibility = View.GONE
         }
     }
 

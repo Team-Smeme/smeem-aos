@@ -23,7 +23,13 @@ class DiaryRepositoryImpl(
     private val diaryReader: DiaryReader,
 ) : DiaryRepository {
     override suspend fun postDiary(diary: WriteDiaryRequestDto): ApiResult<WriteDiaryResponseDto> =
-        diaryService.post(DiaryRequest.Writing(diary.content, diary.topicId)).let { response ->
+        diaryService.post(
+            DiaryRequest.Writing(
+                diary.content,
+                diary.topicId,
+                diary.engKorExpression
+            )
+        ).let { response ->
             if (response.isSuccessful) {
                 response.body()!!.let {
                     ApiResult(
@@ -83,7 +89,8 @@ class DiaryRepositoryImpl(
                             },
                             correctionCount = body.data.correctionCount,
                             correctionMaxCount = body.data.correctionMaxCount,
-                            isUpdated = body.data.isUpdated
+                            isUpdated = body.data.isUpdated,
+                            engKorExpression = body.data.engKorExpression
                         )
                     )
                 }

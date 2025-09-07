@@ -118,6 +118,21 @@
                     app:refreshVisibility="@{View.GONE}" />
 
                 <TextView
+                    android:id="@+id/tv_diary_detail_eng_kor_expression"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="18dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@{diaryDetail.engKorExpression}"
+                    android:textAppearance="@style/TextAppearance.Smeem.Body2_semibold"
+                    android:visibility="@{diaryDetail != null &amp;&amp; diaryDetail.engKorExpression != null ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_diary_detail_random_topic"
+                    tools:text="be happy 행복하다"
+                    tools:visibility="visible" />
+
+                <TextView
                     android:id="@+id/tv_diary_detail_content"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -127,7 +142,7 @@
                     android:textAppearance="@style/TextAppearance.Smeem.Body4_regular.Height_22"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_diary_detail_random_topic"
+                    app:layout_constraintTop_toBottomOf="@id/tv_diary_detail_eng_kor_expression"
                     tools:text="@string/dummy_diary_english" />
 
                 <TextView
