@@ -8,6 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -16,12 +17,14 @@ import com.sopt.smeem.presentation.bookmark.navigation.BookmarkRoute
 import com.sopt.smeem.presentation.compose.theme.SmeemTheme
 import com.sopt.smeem.presentation.home.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import org.orbitmvi.orbit.compose.collectAsState
 
 @AndroidEntryPoint
 class BookmarkFragment : Fragment() {
 
     private var navController: NavController? = null
     private var pendingUrl: String? = null
+    private val bookmarkViewModel by viewModels<BookmarkViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,26 +39,40 @@ class BookmarkFragment : Fragment() {
                     val navController = rememberNavController()
                     this@BookmarkFragment.navController = navController
                     val navBackStackEntry by navController.currentBackStackEntryAsState()
-                    
-                    LaunchedEffect(navBackStackEntry) {
+                    val bookmarkState by bookmarkViewModel.collectAsState()
+
+                    // 튜토리얼 상태에 따른 바텀 네비게이션 제어
+                    LaunchedEffect(bookmarkState.shouldShowTutorial) {
                         val mainActivity = activity as? MainActivity
-                        val route = navBackStackEntry?.destination?.route
-                        
-                        when {
-                            route == BookmarkRoute.BookmarkList::class.qualifiedName -> {
-                                mainActivity?.showBottomNavigation()
-                            }
-                            route?.startsWith("${BookmarkRoute.BookmarkDetail::class.qualifiedName}") == true -> {
-                                mainActivity?.hideBottomNavigation()
-                            }
-                            route?.startsWith("${BookmarkRoute.BookmarkDetailFromUrl::class.qualifiedName}") == true -> {
-                                mainActivity?.hideBottomNavigation()
-                            }
-                            route?.startsWith("${BookmarkRoute.BookmarkDiary::class.qualifiedName}") == true -> {
-                                mainActivity?.hideBottomNavigation()
-                            }
-                            else -> {
-                                mainActivity?.showBottomNavigation()
+                        if (bookmarkState.shouldShowTutorial) {
+                            mainActivity?.hideBottomNavigation()
+                        } else {
+                            mainActivity?.showBottomNavigation()
+                        }
+                    }
+
+                    // 기존 네비게이션 상태 제어 (튜토리얼이 아닐 때만)
+                    LaunchedEffect(navBackStackEntry, bookmarkState.shouldShowTutorial) {
+                        if (!bookmarkState.shouldShowTutorial) {
+                            val mainActivity = activity as? MainActivity
+                            val route = navBackStackEntry?.destination?.route
+
+                            when {
+                                route == BookmarkRoute.BookmarkList::class.qualifiedName -> {
+                                    mainActivity?.showBottomNavigation()
+                                }
+                                route?.startsWith("${BookmarkRoute.BookmarkDetail::class.qualifiedName}") == true -> {
+                                    mainActivity?.hideBottomNavigation()
+                                }
+                                route?.startsWith("${BookmarkRoute.BookmarkDetailFromUrl::class.qualifiedName}") == true -> {
+                                    mainActivity?.hideBottomNavigation()
+                                }
+                                route?.startsWith("${BookmarkRoute.BookmarkDiary::class.qualifiedName}") == true -> {
+                                    mainActivity?.hideBottomNavigation()
+                                }
+                                else -> {
+                                    mainActivity?.showBottomNavigation()
+                                }
                             }
                         }
                     }
@@ -64,9 +81,9 @@ class BookmarkFragment : Fragment() {
                     
                     BookmarkNavHost(
                         navController = navController,
+                        bookmarkViewModel = bookmarkViewModel,
                         initialRoute = initialRoute,
                         onNavigateToHome = {
-                            // 백스택 정리하고 홈으로 이동
                             navController.popBackStack(BookmarkRoute.BookmarkList, false)
                             (activity as? MainActivity)?.navigateToHome()
                         }

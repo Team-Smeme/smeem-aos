@@ -14,4 +14,5 @@ object SmeemDataStore {
     val RECENT_DIARY_DATE = stringPreferencesKey("recent_diary_date")
     val BANNER_CLOSED = booleanPreferencesKey("banner_closed")
     val BANNER_VERSION = intPreferencesKey("banner_version")
+    val BOOKMARK_TUTORIAL_COMPLETED = booleanPreferencesKey("bookmark_tutorial_completed")
 }

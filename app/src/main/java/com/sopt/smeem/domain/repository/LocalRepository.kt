@@ -42,5 +42,9 @@ interface LocalRepository {
 
     suspend fun checkStatus(localStatus: LocalStatus): Boolean
 
+    suspend fun isBookmarkTutorialCompleted(): Boolean
+
+    suspend fun setBookmarkTutorialCompleted()
+
     suspend fun clear()
 }

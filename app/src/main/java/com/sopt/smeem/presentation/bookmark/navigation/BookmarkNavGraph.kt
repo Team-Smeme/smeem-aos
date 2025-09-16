@@ -15,12 +15,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.sopt.smeem.presentation.bookmark.BookmarkScreen
+import com.sopt.smeem.presentation.bookmark.BookmarkViewModel
 import com.sopt.smeem.presentation.bookmark.detail.BookmarkDetailScreen
 import com.sopt.smeem.presentation.bookmark.diary.BookmarkDiaryScreen
 
 @Composable
 fun BookmarkNavHost(
     navController: NavHostController,
+    bookmarkViewModel: BookmarkViewModel,
     initialRoute: BookmarkRoute = BookmarkRoute.BookmarkList,
     onNavigateToHome: () -> Unit = {}
 ) {
@@ -65,7 +67,7 @@ fun BookmarkNavHost(
         ) {
             composable<BookmarkRoute.BookmarkList> { backStackEntry ->
                 BookmarkScreen(
-                    viewModel = hiltViewModel(),
+                    viewModel = bookmarkViewModel,
                     navBackStackEntry = backStackEntry,
                     onNavigateToDetail = { bookmarkId ->
                         navController.navigate(BookmarkRoute.BookmarkDetail(bookmarkId))
