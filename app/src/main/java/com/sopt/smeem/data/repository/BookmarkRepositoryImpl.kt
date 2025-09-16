@@ -3,6 +3,8 @@ package com.sopt.smeem.data.repository
 import com.sopt.smeem.data.model.request.CreateBookmarkRequest
 import com.sopt.smeem.data.service.BookmarkService
 import com.sopt.smeem.domain.common.ApiResult
+import com.sopt.smeem.domain.common.SmeemErrorCode
+import com.sopt.smeem.domain.common.SmeemException
 import com.sopt.smeem.domain.dto.BookmarkDto
 import com.sopt.smeem.domain.dto.CreateBookmarkResponseDto
 import com.sopt.smeem.domain.dto.GetBookmarkDetailResponseDto
@@ -67,16 +69,27 @@ class BookmarkRepositoryImpl @Inject constructor(
         bookmarkService.createBookmark(CreateBookmarkRequest(url)).let { response ->
             if (response.isSuccessful) {
                 response.body()!!.let { apiResponse ->
+                    val data = apiResponse.data
+                    
+                    // expression이 null인 경우 체크
+                    if (data.expression == null) {
+                        if (data.scrapedCountPerDay > 10) {
+                            throw SmeemException(SmeemErrorCode.BOOKMARK_DAILY_LIMIT_EXCEEDED)
+                        } else {
+                            throw SmeemException(SmeemErrorCode.BOOKMARK_EXPRESSION_FAILED)
+                        }
+                    }
+                    
                     ApiResult(
                         statusCode = response.code(),
                         data = CreateBookmarkResponseDto(
-                            thumbnailImageUrl = apiResponse.data.scrapContent.thumbnail,
-                            scrapedUrl = apiResponse.data.scrapContent.url,
-                            expression = apiResponse.data.expression,
-                            translatedExpression = apiResponse.data.translatedExpression,
-                            description = apiResponse.data.scrapContent.description,
-                            scrapType = apiResponse.data.scrapContent.scrapType,
-                            scrapedCountPerDay = apiResponse.data.scrapedCountPerDay
+                            thumbnailImageUrl = data.scrapContent.thumbnail,
+                            scrapedUrl = data.scrapContent.url,
+                            expression = data.expression,
+                            translatedExpression = data.translatedExpression,
+                            description = data.scrapContent.description,
+                            scrapType = data.scrapContent.scrapType,
+                            scrapedCountPerDay = data.scrapedCountPerDay
                         )
                     )
                 }

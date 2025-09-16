@@ -81,7 +81,9 @@ fun BookmarkDetailScreen(
     url: String? = null,
     viewModel: BookmarkDetailViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit = {},
-    onNavigateToUseExpression: (String) -> Unit = {}
+    onNavigateToUseExpression: (String) -> Unit = {},
+    onNavigateToHome: () -> Unit = {},
+    onShowToast: (String) -> Unit = {}
 ) {
     
     val state by viewModel.collectAsState()
@@ -125,6 +127,11 @@ fun BookmarkDetailScreen(
                 } catch (e: Exception) {
                     // TODO: 에러 처리
                 }
+            }
+
+            is BookmarkDetailSideEffect.ShowToastAndNavigateToHome -> {
+                onShowToast(sideEffect.message)
+                onNavigateToHome()
             }
         }
     }

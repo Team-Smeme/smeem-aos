@@ -94,6 +94,7 @@ fun BookmarkNavHost(
 
             composable<BookmarkRoute.BookmarkDetailFromUrl> { backStackEntry ->
                 val args = backStackEntry.toRoute<BookmarkRoute.BookmarkDetailFromUrl>()
+                val context = navController.context
 
                 BookmarkDetailScreen(
                     bookmarkId = null,
@@ -107,6 +108,10 @@ fun BookmarkNavHost(
                         if (parts.size >= 2) {
                             navController.navigate(BookmarkRoute.BookmarkDiary(parts[0], parts[1]))
                         }
+                    },
+                    onNavigateToHome = onNavigateToHome,
+                    onShowToast = { message ->
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                     }
                 )
             }
