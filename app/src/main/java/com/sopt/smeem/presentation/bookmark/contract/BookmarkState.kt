@@ -3,7 +3,8 @@ package com.sopt.smeem.presentation.bookmark.contract
 data class BookmarkState(
     val isLoading: Boolean = false,
     val bookmarks: List<BookmarkItem> = emptyList(),
-    val error: String? = null
+    val error: String? = null,
+    val shouldShowTutorial: Boolean = false
 )
 
 data class BookmarkItem(

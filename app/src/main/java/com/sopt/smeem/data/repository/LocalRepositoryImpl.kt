@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.sopt.smeem.data.SmeemDataStore.BOOKMARK_TUTORIAL_COMPLETED
 import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.domain.common.SmeemErrorCode
 import com.sopt.smeem.domain.common.SmeemException
@@ -145,6 +146,18 @@ constructor(
                             ?: true // 최초에는 킨 상태
                 }
             }.first()
+
+    override suspend fun isBookmarkTutorialCompleted(): Boolean =
+        context.dataStore.data
+            .catch { emit(emptyPreferences()) }
+            .map { preferences -> preferences[BOOKMARK_TUTORIAL_COMPLETED] ?: false }
+            .first()
+
+    override suspend fun setBookmarkTutorialCompleted() {
+        context.dataStore.edit { preferences ->
+            preferences[BOOKMARK_TUTORIAL_COMPLETED] = true
+        }
+    }
 
     override suspend fun clear() {
         try {

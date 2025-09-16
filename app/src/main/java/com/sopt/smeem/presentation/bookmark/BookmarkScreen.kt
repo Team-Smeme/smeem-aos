@@ -91,44 +91,52 @@ fun BookmarkScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(background)
-    ) {
-        Text(
-            text = "북마크",
-            style = Typography.headlineMedium.copy(
-                fontWeight = FontWeight.SemiBold,
-                color = gray900
-            ),
-            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
+    if (state.shouldShowTutorial) {
+        BookmarkTutorialScreen(
+            onTutorialCompleted = {
+                viewModel.onIntent(BookmarkIntent.CompleteTutorial)
+            }
         )
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(background)
+        ) {
+            Text(
+                text = "북마크",
+                style = Typography.headlineMedium.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = gray900
+                ),
+                modifier = Modifier.padding(top = 18.dp, start = 18.dp)
+            )
 
-        when {
-            state.isLoading -> {
-                LoadingScreen()
-            }
+            when {
+                state.isLoading -> {
+                    LoadingScreen()
+                }
 
-            state.bookmarks.isEmpty() -> {
-                EmptyBookmarkContent()
-            }
+                state.bookmarks.isEmpty() -> {
+                    EmptyBookmarkContent()
+                }
 
-            else -> {
-                LazyVerticalStaggeredGrid(
-                    columns = StaggeredGridCells.Fixed(2),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 18.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalItemSpacing = 12.dp,
-                    contentPadding = PaddingValues(vertical = 10.dp)
-                ) {
-                    items(state.bookmarks) { bookmark ->
-                        BookmarkItem(
-                            bookmark = bookmark,
-                            onClick = { viewModel.onIntent(BookmarkIntent.OnBookmarkClick(bookmark.bookmarkId)) }
-                        )
+                else -> {
+                    LazyVerticalStaggeredGrid(
+                        columns = StaggeredGridCells.Fixed(2),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 18.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalItemSpacing = 12.dp,
+                        contentPadding = PaddingValues(vertical = 10.dp)
+                    ) {
+                        items(state.bookmarks) { bookmark ->
+                            BookmarkItem(
+                                bookmark = bookmark,
+                                onClick = { viewModel.onIntent(BookmarkIntent.OnBookmarkClick(bookmark.bookmarkId)) }
+                            )
+                        }
                     }
                 }
             }

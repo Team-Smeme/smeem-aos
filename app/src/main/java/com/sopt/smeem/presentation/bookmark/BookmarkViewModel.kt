@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.bookmark
 
 import androidx.lifecycle.ViewModel
 import com.sopt.smeem.domain.repository.BookmarkRepository
+import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkIntent
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkItem
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkSideEffect
@@ -18,12 +19,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
-    private val bookmarkRepository: BookmarkRepository
+    private val bookmarkRepository: BookmarkRepository,
+    private val localRepository: LocalRepository
 ) : ContainerHost<BookmarkState, BookmarkSideEffect>, ViewModel() {
     
     override val container: Container<BookmarkState, BookmarkSideEffect> = container(BookmarkState())
 
     init {
+        checkTutorialStatus()
         loadBookmarks()
     }
 
@@ -31,6 +34,8 @@ class BookmarkViewModel @Inject constructor(
         when (intent) {
             is BookmarkIntent.LoadBookmarks -> loadBookmarks()
             is BookmarkIntent.OnBookmarkClick -> onBookmarkClick(intent.bookmarkId)
+            is BookmarkIntent.CompleteTutorial -> completeTutorial()
+            is BookmarkIntent.CheckTutorialStatus -> checkTutorialStatus()
         }
     }
 
@@ -72,5 +77,24 @@ class BookmarkViewModel @Inject constructor(
 
     private fun onBookmarkClick(bookmarkId: Int) = intent {
         postSideEffect(BookmarkSideEffect.NavigateToDetail(bookmarkId))
+    }
+
+    private fun checkTutorialStatus() = intent {
+        try {
+            val isCompleted = localRepository.isBookmarkTutorialCompleted()
+            reduce { state.copy(shouldShowTutorial = !isCompleted) }
+        } catch (e: Exception) {
+            // 오류 발생시 튜토리얼을 표시하지 않음
+            reduce { state.copy(shouldShowTutorial = false) }
+        }
+    }
+
+    private fun completeTutorial() = intent {
+        try {
+            localRepository.setBookmarkTutorialCompleted()
+            reduce { state.copy(shouldShowTutorial = false) }
+        } catch (e: Exception) {
+            postSideEffect(BookmarkSideEffect.ShowError("튜토리얼 상태 저장에 실패했습니다."))
+        }
     }
 }
