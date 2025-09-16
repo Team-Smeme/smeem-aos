@@ -2,23 +2,30 @@ package com.sopt.smeem.presentation.bookmark.diary
 
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
+import com.sopt.smeem.data.SmeemDataStore.RECENT_DIARY_DATE
 import com.sopt.smeem.domain.dto.WriteDiaryRequestDto
 import com.sopt.smeem.domain.repository.DiaryRepository
+import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.presentation.bookmark.diary.contract.BookmarkDiaryIntent
 import com.sopt.smeem.presentation.bookmark.diary.contract.BookmarkDiarySideEffect
 import com.sopt.smeem.presentation.bookmark.diary.contract.BookmarkDiaryState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkDiaryViewModel @Inject constructor(
-    private val diaryRepository: DiaryRepository
+    private val diaryRepository: DiaryRepository,
+    private val localRepository: LocalRepository
 ) : ContainerHost<BookmarkDiaryState, BookmarkDiarySideEffect>, ViewModel() {
 
     override val container: Container<BookmarkDiaryState, BookmarkDiarySideEffect> =
@@ -55,6 +62,7 @@ class BookmarkDiaryViewModel @Inject constructor(
         try {
             val response = diaryRepository.postDiary(dto)
             val data = response.data()
+            updateRecentDiaryDateOnLocal()
             reduce { state.copy(isLoading = false) }
             postSideEffect(BookmarkDiarySideEffect.NavigateToHomeWithSuccess(data.diaryId, data.retrievedBadgeList))
         } catch (t: Throwable) {
@@ -65,5 +73,14 @@ class BookmarkDiaryViewModel @Inject constructor(
 
     private fun onBackClick() = intent {
         postSideEffect(BookmarkDiarySideEffect.NavigateBack)
+    }
+
+    private suspend fun updateRecentDiaryDateOnLocal() = coroutineScope {
+        launch {
+            localRepository.setStringValue(
+                RECENT_DIARY_DATE, LocalDate.now()
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            )
+        }
     }
 }

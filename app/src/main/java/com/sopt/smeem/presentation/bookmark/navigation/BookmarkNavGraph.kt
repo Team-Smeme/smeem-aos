@@ -21,12 +21,14 @@ import com.sopt.smeem.presentation.bookmark.diary.BookmarkDiaryScreen
 @Composable
 fun BookmarkNavHost(
     navController: NavHostController,
+    initialRoute: BookmarkRoute = BookmarkRoute.BookmarkList,
     onNavigateToHome: () -> Unit = {}
 ) {
+    
     Scaffold { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = BookmarkRoute.BookmarkList,
+            startDestination = initialRoute,
             enterTransition = {
                 fadeIn(
                     animationSpec = tween(
@@ -61,9 +63,10 @@ fun BookmarkNavHost(
             },
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable<BookmarkRoute.BookmarkList> {
+            composable<BookmarkRoute.BookmarkList> { backStackEntry ->
                 BookmarkScreen(
                     viewModel = hiltViewModel(),
+                    navBackStackEntry = backStackEntry,
                     onNavigateToDetail = { bookmarkId ->
                         navController.navigate(BookmarkRoute.BookmarkDetail(bookmarkId))
                     }
@@ -75,6 +78,26 @@ fun BookmarkNavHost(
 
                 BookmarkDetailScreen(
                     bookmarkId = args.bookmarkId,
+                    url = null,
+                    viewModel = hiltViewModel(),
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigateToUseExpression = { combinedExpression ->
+                        val parts = combinedExpression.split(" ", limit = 2)
+                        if (parts.size >= 2) {
+                            navController.navigate(BookmarkRoute.BookmarkDiary(parts[0], parts[1]))
+                        }
+                    }
+                )
+            }
+
+            composable<BookmarkRoute.BookmarkDetailFromUrl> { backStackEntry ->
+                val args = backStackEntry.toRoute<BookmarkRoute.BookmarkDetailFromUrl>()
+
+                BookmarkDetailScreen(
+                    bookmarkId = null,
+                    url = args.url,
                     viewModel = hiltViewModel(),
                     onNavigateBack = {
                         navController.popBackStack()

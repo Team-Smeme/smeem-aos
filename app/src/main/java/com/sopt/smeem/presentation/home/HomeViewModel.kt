@@ -318,6 +318,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    suspend fun isAuthenticated(): Boolean = localRepository.isAuthenticated()
+
     /**
      * Firebase Remote Config 에서 데이터를 가져옴
      * 로컬에 저장된 배너 버전과 비교하여 새로운 배너가 있을 경우

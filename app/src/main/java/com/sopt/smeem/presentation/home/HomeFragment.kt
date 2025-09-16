@@ -29,6 +29,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleFloatingActionButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,6 +55,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.sopt.smeem.data.SmeemDataStore.RECENT_DIARY_DATE
+import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.databinding.FragmentHomeBinding
 import com.sopt.smeem.event.AmplitudeEventType
 import com.sopt.smeem.presentation.EventVM
@@ -73,12 +76,14 @@ import com.sopt.smeem.presentation.home.calendar.core.Period
 import com.sopt.smeem.presentation.mypage.MyPageActivity
 import com.sopt.smeem.presentation.write.foreign.ForeignWriteActivity
 import com.sopt.smeem.presentation.write.natiive.NativeWriteStep1Activity
+import com.sopt.smeem.util.DateUtil
 import com.sopt.smeem.util.getWeekStartDate
 import com.sopt.smeem.util.setComposeContent
 import com.sopt.smeem.util.setOnSingleClickListener
 import com.sopt.smeem.util.toTextDp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalDate
@@ -126,7 +131,22 @@ class HomeFragment : Fragment() {
 
         setComposeContent(fab) {
             SmeemTheme {
-                SmeemFabMenu()
+                val selectedDate by homeViewModel.selectedDate.collectAsState()
+                val recentDiaryDateFlow = requireContext().dataStore.data.map { storage ->
+                    storage[RECENT_DIARY_DATE] ?: "2023-01-14"
+                }
+                val recentDiaryDate by recentDiaryDateFlow.collectAsState(initial = "2023-01-14")
+                
+                val isTodaySelected = selectedDate == LocalDate.now()
+                val isTodayDiaryWritten = try {
+                    DateUtil.asLocalDate(recentDiaryDate) == LocalDate.now()
+                } catch (e: Exception) {
+                    false
+                }
+                
+                val shouldShowFab = isTodaySelected && !isTodayDiaryWritten
+                
+                SmeemFabMenu(isVisible = shouldShowFab)
             }
         }
 
@@ -273,7 +293,10 @@ class HomeFragment : Fragment() {
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun SmeemFabMenu(modifier: Modifier = Modifier) {
+fun SmeemFabMenu(
+    modifier: Modifier = Modifier,
+    isVisible: Boolean = true
+) {
     var fabMenuExpanded by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
     
@@ -284,7 +307,8 @@ fun SmeemFabMenu(modifier: Modifier = Modifier) {
     
     val onMenuClose = remember { { fabMenuExpanded = false } }
 
-    Box(modifier = modifier) {
+    if (isVisible) {
+        Box(modifier = modifier) {
         FloatingActionButtonMenu(
             expanded = fabMenuExpanded,
             modifier = Modifier
@@ -322,6 +346,7 @@ fun SmeemFabMenu(modifier: Modifier = Modifier) {
                 )
             }
         }
+    }
     }
 }
 
