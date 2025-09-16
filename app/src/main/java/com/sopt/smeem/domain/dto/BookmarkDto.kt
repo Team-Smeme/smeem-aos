@@ -25,7 +25,7 @@ data class GetBookmarkDetailResponseDto(
 data class CreateBookmarkResponseDto(
     val thumbnailImageUrl: String,
     val scrapedUrl: String,
-    val expression: String,
+    val expression: String?,
     val translatedExpression: String,
     val description: String,
     val scrapType: String,

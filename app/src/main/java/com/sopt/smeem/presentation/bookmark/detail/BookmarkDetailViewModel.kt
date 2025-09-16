@@ -1,6 +1,8 @@
 package com.sopt.smeem.presentation.bookmark.detail
 
 import androidx.lifecycle.ViewModel
+import com.sopt.smeem.domain.common.SmeemErrorCode
+import com.sopt.smeem.domain.common.SmeemException
 import com.sopt.smeem.domain.repository.BookmarkRepository
 import com.sopt.smeem.presentation.bookmark.detail.contract.BookmarkDetailIntent
 import com.sopt.smeem.presentation.bookmark.detail.contract.BookmarkDetailItem
@@ -96,7 +98,7 @@ class BookmarkDetailViewModel @Inject constructor(
             val bookmarkDetail = BookmarkDetailItem(
                 thumbnailImageUrl = data.thumbnailImageUrl,
                 scrapedUrl = data.scrapedUrl,
-                expression = data.expression,
+                expression = data.expression ?: "",
                 translatedExpression = data.translatedExpression,
                 description = data.description,
                 scrapType = data.scrapType
@@ -108,6 +110,23 @@ class BookmarkDetailViewModel @Inject constructor(
                     bookmarkDetail = bookmarkDetail,
                     error = null
                 )
+            }
+        } catch (e: SmeemException) {
+            reduce {
+                state.copy(
+                    isLoading = false,
+                    error = null
+                )
+            }
+            
+            when (e.errorCode) {
+                SmeemErrorCode.BOOKMARK_EXPRESSION_FAILED,
+                SmeemErrorCode.BOOKMARK_DAILY_LIMIT_EXCEEDED -> {
+                    postSideEffect(BookmarkDetailSideEffect.ShowToastAndNavigateToHome(e.errorCode.message))
+                }
+                else -> {
+                    postSideEffect(BookmarkDetailSideEffect.ShowError(e.errorCode.message))
+                }
             }
         } catch (e: Exception) {
             reduce {
