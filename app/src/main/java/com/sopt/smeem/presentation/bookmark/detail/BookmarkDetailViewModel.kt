@@ -26,6 +26,7 @@ class BookmarkDetailViewModel @Inject constructor(
     fun onIntent(intent: BookmarkDetailIntent) {
         when (intent) {
             is BookmarkDetailIntent.LoadBookmarkDetail -> loadBookmarkDetail(intent.bookmarkId)
+            is BookmarkDetailIntent.CreateBookmarkFromUrl -> createBookmarkFromUrl(intent.url)
             is BookmarkDetailIntent.OnBackClick -> onBackClick()
             is BookmarkDetailIntent.OnMoreClick -> onMoreClick()
             is BookmarkDetailIntent.OnUseExpressionClick -> onUseExpressionClick()
@@ -82,6 +83,40 @@ class BookmarkDetailViewModel @Inject constructor(
     private fun onInstagramClick() = intent {
         state.bookmarkDetail?.let { detail ->
             postSideEffect(BookmarkDetailSideEffect.OpenInstagram(detail.scrapedUrl))
+        }
+    }
+    
+    private fun createBookmarkFromUrl(url: String) = intent {
+        reduce { state.copy(isLoading = true, error = null) }
+
+        try {
+            val response = bookmarkRepository.createBookmark(url)
+            val data = response.data()
+            
+            val bookmarkDetail = BookmarkDetailItem(
+                thumbnailImageUrl = data.thumbnailImageUrl,
+                scrapedUrl = data.scrapedUrl,
+                expression = data.expression,
+                translatedExpression = data.translatedExpression,
+                description = data.description,
+                scrapType = data.scrapType
+            )
+
+            reduce {
+                state.copy(
+                    isLoading = false,
+                    bookmarkDetail = bookmarkDetail,
+                    error = null
+                )
+            }
+        } catch (e: Exception) {
+            reduce {
+                state.copy(
+                    isLoading = false,
+                    error = e.message ?: "알 수 없는 오류가 발생했습니다."
+                )
+            }
+            postSideEffect(BookmarkDetailSideEffect.ShowError(e.message ?: "알 수 없는 오류가 발생했습니다."))
         }
     }
 }

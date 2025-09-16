@@ -24,6 +24,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +44,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sopt.smeem.R
@@ -65,9 +67,17 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun BookmarkScreen(
     viewModel: BookmarkViewModel = hiltViewModel(),
+    navBackStackEntry: NavBackStackEntry? = null,
     onNavigateToDetail: (Int) -> Unit = {}
 ) {
     val state by viewModel.collectAsState()
+
+    // 북마크 상세에서 돌아올 때마다 목록 새로고침
+    LaunchedEffect(navBackStackEntry) {
+        navBackStackEntry?.let {
+            viewModel.onIntent(BookmarkIntent.LoadBookmarks)
+        }
+    }
 
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {

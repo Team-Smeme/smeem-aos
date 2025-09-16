@@ -24,6 +24,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
@@ -46,12 +48,17 @@ import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sopt.smeem.R
+import com.sopt.smeem.data.SmeemDataStore.RECENT_DIARY_DATE
+import com.sopt.smeem.data.SmeemDataStore.dataStore
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkType
 import com.sopt.smeem.presentation.bookmark.detail.contract.BookmarkDetailIntent
 import com.sopt.smeem.presentation.bookmark.detail.contract.BookmarkDetailItem
 import com.sopt.smeem.presentation.bookmark.detail.contract.BookmarkDetailSideEffect
-import com.sopt.smeem.presentation.compose.components.LoadingScreen
 import com.sopt.smeem.presentation.compose.components.SmeemSkeleton
 import com.sopt.smeem.presentation.compose.theme.Typography
 import com.sopt.smeem.presentation.compose.theme.background
@@ -60,22 +67,35 @@ import com.sopt.smeem.presentation.compose.theme.gray200
 import com.sopt.smeem.presentation.compose.theme.gray25
 import com.sopt.smeem.presentation.compose.theme.gray900
 import com.sopt.smeem.presentation.compose.theme.white
+import com.sopt.smeem.util.DateUtil
+import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.toTextDp
+import kotlinx.coroutines.flow.map
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import java.time.LocalDate
 
 @Composable
 fun BookmarkDetailScreen(
-    bookmarkId: Int,
+    bookmarkId: Int? = null,
+    url: String? = null,
     viewModel: BookmarkDetailViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit = {},
     onNavigateToUseExpression: (String) -> Unit = {}
 ) {
+    
     val state by viewModel.collectAsState()
     val context = LocalContext.current
 
-    LaunchedEffect(bookmarkId) {
-        viewModel.onIntent(BookmarkDetailIntent.LoadBookmarkDetail(bookmarkId))
+    LaunchedEffect(bookmarkId, url) {
+        when {
+            bookmarkId != null -> {
+                viewModel.onIntent(BookmarkDetailIntent.LoadBookmarkDetail(bookmarkId))
+            }
+            url != null -> {
+                viewModel.onIntent(BookmarkDetailIntent.CreateBookmarkFromUrl(url))
+            }
+        }
     }
 
     viewModel.collectSideEffect { sideEffect ->
@@ -116,7 +136,7 @@ fun BookmarkDetailScreen(
     ) {
         when {
                 state.isLoading -> {
-                    LoadingScreen()
+                    BookmarkAILoadingScreen()
                 }
 
                 state.bookmarkDetail != null -> {
@@ -161,7 +181,21 @@ fun BookmarkDetailScreen(
             }
 
         if (state.bookmarkDetail != null) {
-            FloatingActionButton(
+            val recentDiaryDateFlow = context.dataStore.data.map { storage ->
+                storage[RECENT_DIARY_DATE] ?: "2023-01-14"
+            }
+            val recentDiaryDate by recentDiaryDateFlow.collectAsState(initial = "2023-01-14")
+            
+            val isTodayDiaryWritten = try {
+                DateUtil.asLocalDate(recentDiaryDate) == LocalDate.now()
+            } catch (e: Exception) {
+                false
+            }
+            
+            val shouldShowFab = !isTodayDiaryWritten
+            
+            if (shouldShowFab) {
+                FloatingActionButton(
                 onClick = { viewModel.onIntent(BookmarkDetailIntent.OnUseExpressionClick) },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -198,6 +232,7 @@ fun BookmarkDetailScreen(
                         )
                     )
                 }
+            }
             }
         }
     }
@@ -469,6 +504,42 @@ private fun DescriptionContent(description: String) {
             lineHeight = 1.5.em
         )
     )
+}
+
+@Composable
+fun BookmarkAILoadingScreen(
+    modifier: Modifier = Modifier,
+) {
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.smeem_loading))
+
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        LottieAnimation(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(164.dp),
+            composition = composition,
+            iterations = LottieConstants.IterateForever
+        )
+
+        VerticalSpacer(8.dp)
+
+        Text(
+            text = stringResource(R.string.bookmark_ai_loading_description),
+            style = Typography.bodySmall,
+            color = black,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BookmarkAILoadingScreenPreview() {
+    BookmarkAILoadingScreen()
 }
 
 @Preview(showBackground = true)

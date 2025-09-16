@@ -21,3 +21,13 @@ data class GetBookmarkDetailResponseDto(
     val description: String,
     val scrapType: String
 )
+
+data class CreateBookmarkResponseDto(
+    val thumbnailImageUrl: String,
+    val scrapedUrl: String,
+    val expression: String,
+    val translatedExpression: String,
+    val description: String,
+    val scrapType: String,
+    val scrapedCountPerDay: Int
+)
