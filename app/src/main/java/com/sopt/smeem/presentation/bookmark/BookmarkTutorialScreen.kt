@@ -55,7 +55,7 @@ fun BookmarkTutorialScreen(
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val isTablet = screenWidth > 600.dp
-    val maxImageWidth = if (isTablet) 400.dp else screenWidth - 40.dp // 패딩 제외
+    val maxImageWidth = if (isTablet) 400.dp else screenWidth // 패딩 제외
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -76,15 +76,14 @@ fun BookmarkTutorialScreen(
         ) { page ->
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp),
+                    .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
                     painter = painterResource(id = getTutorialImageResource(page + 1)),
                     contentDescription = "Tutorial Step ${page + 1}",
                     modifier = Modifier
-                        .widthIn(max = maxImageWidth - 40.dp) // 패딩 제외
+                        .widthIn(max = maxImageWidth - 40.dp)
                         .aspectRatio(TUTORIAL_IMAGE_ASPECT_RATIO)
                         .clip(RoundedCornerShape(8.dp)),
                     contentScale = ContentScale.Crop
