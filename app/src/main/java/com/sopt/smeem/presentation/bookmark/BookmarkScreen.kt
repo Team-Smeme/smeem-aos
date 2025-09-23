@@ -60,6 +60,7 @@ import com.sopt.smeem.presentation.compose.theme.gray250
 import com.sopt.smeem.presentation.compose.theme.gray350
 import com.sopt.smeem.presentation.compose.theme.gray900
 import com.sopt.smeem.util.toTextDp
+import com.sopt.smeem.util.extractMainContent
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -215,7 +216,7 @@ private fun BookmarkItem(
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = bookmark.description,
+                text = bookmark.description.extractMainContent(),
                 style = Typography.labelSmall.copy(
                     color = gray900
                 ),
