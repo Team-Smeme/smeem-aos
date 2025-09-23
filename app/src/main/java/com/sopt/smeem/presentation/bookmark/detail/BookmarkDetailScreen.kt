@@ -68,6 +68,7 @@ import com.sopt.smeem.presentation.compose.theme.gray25
 import com.sopt.smeem.presentation.compose.theme.gray900
 import com.sopt.smeem.presentation.compose.theme.white
 import com.sopt.smeem.util.DateUtil
+import com.sopt.smeem.util.extractMainContent
 import com.sopt.smeem.util.VerticalSpacer
 import com.sopt.smeem.util.toTextDp
 import kotlinx.coroutines.flow.map
@@ -486,21 +487,10 @@ private fun BookmarkImage(
     }
 }
 
-private fun extractMainContent(description: String): String {
-    // 패턴: ": \"본문 내용\"." 부분에서 본문만 추출
-    val startIndex = description.indexOf(": \"")
-    val endIndex = description.lastIndexOf("\".")
-    
-    return if (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
-        description.substring(startIndex + 3, endIndex).trim()
-    } else {
-        description // 패턴이 맞지 않으면 원본 반환
-    }
-}
 
 @Composable
 private fun DescriptionContent(description: String) {
-    val extractedContent = extractMainContent(description)
+    val extractedContent = description.extractMainContent()
     
     Text(
         text = extractedContent,
