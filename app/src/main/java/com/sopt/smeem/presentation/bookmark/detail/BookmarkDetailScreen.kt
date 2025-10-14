@@ -152,7 +152,7 @@ fun BookmarkDetailScreen(
             .background(background)
     ) {
         when {
-                state.isLoading -> {
+                state.isLoading && state.isFromDeepLink -> {
                     BookmarkAILoadingScreen()
                 }
 
