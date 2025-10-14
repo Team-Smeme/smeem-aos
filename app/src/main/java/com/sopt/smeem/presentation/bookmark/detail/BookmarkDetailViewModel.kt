@@ -37,12 +37,12 @@ class BookmarkDetailViewModel @Inject constructor(
     }
 
     private fun loadBookmarkDetail(bookmarkId: Int) = intent {
-        reduce { state.copy(isLoading = true, error = null) }
+        reduce { state.copy(isLoading = false, error = null, isFromDeepLink = false) }
 
         try {
             val response = bookmarkRepository.getBookmarkDetail(bookmarkId)
             val data = response.data()
-            
+
             val bookmarkDetail = BookmarkDetailItem(
                 thumbnailImageUrl = data.thumbnailImageUrl,
                 scrapedUrl = data.scrapedUrl,
@@ -56,14 +56,16 @@ class BookmarkDetailViewModel @Inject constructor(
                 state.copy(
                     isLoading = false,
                     bookmarkDetail = bookmarkDetail,
-                    error = null
+                    error = null,
+                    isFromDeepLink = false
                 )
             }
         } catch (e: Exception) {
             reduce {
                 state.copy(
                     isLoading = false,
-                    error = e.message ?: "알 수 없는 오류가 발생했습니다."
+                    error = e.message ?: "알 수 없는 오류가 발생했습니다.",
+                    isFromDeepLink = false
                 )
             }
             postSideEffect(BookmarkDetailSideEffect.ShowError(e.message ?: "알 수 없는 오류가 발생했습니다."))
@@ -89,12 +91,12 @@ class BookmarkDetailViewModel @Inject constructor(
     }
     
     private fun createBookmarkFromUrl(url: String) = intent {
-        reduce { state.copy(isLoading = true, error = null) }
+        reduce { state.copy(isLoading = true, error = null, isFromDeepLink = true) }
 
         try {
             val response = bookmarkRepository.createBookmark(url)
             val data = response.data()
-            
+
             val bookmarkDetail = BookmarkDetailItem(
                 thumbnailImageUrl = data.thumbnailImageUrl,
                 scrapedUrl = data.scrapedUrl,
@@ -108,17 +110,19 @@ class BookmarkDetailViewModel @Inject constructor(
                 state.copy(
                     isLoading = false,
                     bookmarkDetail = bookmarkDetail,
-                    error = null
+                    error = null,
+                    isFromDeepLink = true
                 )
             }
         } catch (e: SmeemException) {
             reduce {
                 state.copy(
                     isLoading = false,
-                    error = null
+                    error = null,
+                    isFromDeepLink = true
                 )
             }
-            
+
             when (e.errorCode) {
                 SmeemErrorCode.BOOKMARK_EXPRESSION_FAILED,
                 SmeemErrorCode.BOOKMARK_DAILY_LIMIT_EXCEEDED -> {
@@ -137,7 +141,8 @@ class BookmarkDetailViewModel @Inject constructor(
             reduce {
                 state.copy(
                     isLoading = false,
-                    error = e.message ?: "알 수 없는 오류가 발생했습니다."
+                    error = e.message ?: "알 수 없는 오류가 발생했습니다.",
+                    isFromDeepLink = true
                 )
             }
             postSideEffect(BookmarkDetailSideEffect.ShowError(e.message ?: "알 수 없는 오류가 발생했습니다."))

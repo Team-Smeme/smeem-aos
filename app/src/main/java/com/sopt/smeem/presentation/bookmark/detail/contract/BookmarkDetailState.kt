@@ -3,7 +3,8 @@ package com.sopt.smeem.presentation.bookmark.detail.contract
 data class BookmarkDetailState(
     val isLoading: Boolean = false,
     val bookmarkDetail: BookmarkDetailItem? = null,
-    val error: String? = null
+    val error: String? = null,
+    val isFromDeepLink: Boolean = false
 )
 
 data class BookmarkDetailItem(

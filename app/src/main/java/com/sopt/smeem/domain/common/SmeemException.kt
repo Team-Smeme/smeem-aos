@@ -10,7 +10,6 @@ class SmeemException(
 enum class SmeemErrorCode(
     val code: Int,
     val message: String,
-    val tip: String = "앱을 껐다 켜거나 나중에 다시 시도해 주세요.",
 ) {
     SYSTEM_ERROR(0, "시스템 오류가 발생했어요"),
     NETWORK_ERROR(1, "인터넷 연결을 확인해 주세요"),
