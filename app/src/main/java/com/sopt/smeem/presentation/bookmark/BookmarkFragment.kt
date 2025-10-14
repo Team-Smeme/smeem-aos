@@ -41,6 +41,20 @@ class BookmarkFragment : Fragment() {
                     val navBackStackEntry by navController.currentBackStackEntryAsState()
                     val bookmarkState by bookmarkViewModel.collectAsState()
 
+                    // Navigation callback setup and state management
+                    LaunchedEffect(navBackStackEntry) {
+                        val currentRoute = navBackStackEntry?.destination?.route
+
+                        // Reset navigation flag when returning to bookmark list
+                        if (currentRoute == BookmarkRoute.BookmarkList::class.qualifiedName) {
+                            bookmarkViewModel.resetNavigatingFlag()
+                        }
+
+                        bookmarkViewModel.setOnNavigateToDetailCallback { bookmarkId ->
+                            navController.navigate(BookmarkRoute.BookmarkDetail(bookmarkId))
+                        }
+                    }
+
                     // 튜토리얼 상태에 따른 바텀 네비게이션 제어
                     LaunchedEffect(bookmarkState.shouldShowTutorial) {
                         val mainActivity = activity as? MainActivity
@@ -99,6 +113,11 @@ class BookmarkFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Navigation flag reset is now handled in LaunchedEffect
     }
 
     override fun onDestroyView() {

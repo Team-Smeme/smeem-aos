@@ -7,4 +7,6 @@ sealed class BookmarkDetailSideEffect {
     object NavigateToUseExpression : BookmarkDetailSideEffect()
     data class OpenInstagram(val url: String) : BookmarkDetailSideEffect()
     data class ShowToastAndNavigateToHome(val message: String) : BookmarkDetailSideEffect()
+    data class ShowCustomToast(val title: String, val subtitle: String) : BookmarkDetailSideEffect()
+    object NavigateToHome : BookmarkDetailSideEffect()
 }

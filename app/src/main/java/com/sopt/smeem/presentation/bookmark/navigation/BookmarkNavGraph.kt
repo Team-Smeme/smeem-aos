@@ -1,5 +1,6 @@
 package com.sopt.smeem.presentation.bookmark.navigation
 
+import android.app.Activity
 import android.widget.Toast
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -18,6 +19,7 @@ import com.sopt.smeem.presentation.bookmark.BookmarkScreen
 import com.sopt.smeem.presentation.bookmark.BookmarkViewModel
 import com.sopt.smeem.presentation.bookmark.detail.BookmarkDetailScreen
 import com.sopt.smeem.presentation.bookmark.diary.BookmarkDiaryScreen
+import com.sopt.smeem.presentation.base.showCustomToast
 
 @Composable
 fun BookmarkNavHost(
@@ -77,6 +79,7 @@ fun BookmarkNavHost(
 
             composable<BookmarkRoute.BookmarkDetail> { backStackEntry ->
                 val args = backStackEntry.toRoute<BookmarkRoute.BookmarkDetail>()
+                val context = navController.context
 
                 BookmarkDetailScreen(
                     bookmarkId = args.bookmarkId,
@@ -90,6 +93,9 @@ fun BookmarkNavHost(
                         if (parts.size >= 2) {
                             navController.navigate(BookmarkRoute.BookmarkDiary(parts[0], parts[1]))
                         }
+                    },
+                    onShowCustomToast = { title, subtitle ->
+                        (context as? Activity)?.showCustomToast(title, subtitle)
                     }
                 )
             }
@@ -114,6 +120,9 @@ fun BookmarkNavHost(
                     onNavigateToHome = onNavigateToHome,
                     onShowToast = { message ->
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    },
+                    onShowCustomToast = { title, subtitle ->
+                        (context as? Activity)?.showCustomToast(title, subtitle)
                     }
                 )
             }

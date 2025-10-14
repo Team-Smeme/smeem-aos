@@ -43,14 +43,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sopt.smeem.R
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkIntent
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkItem
-import com.sopt.smeem.presentation.bookmark.contract.BookmarkSideEffect
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkType
 import com.sopt.smeem.presentation.compose.components.LoadingScreen
 import com.sopt.smeem.presentation.compose.components.SmeemSkeleton
@@ -62,12 +60,11 @@ import com.sopt.smeem.presentation.compose.theme.gray900
 import com.sopt.smeem.util.toTextDp
 import com.sopt.smeem.util.extractMainContent
 import org.orbitmvi.orbit.compose.collectAsState
-import org.orbitmvi.orbit.compose.collectSideEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookmarkScreen(
-    viewModel: BookmarkViewModel = hiltViewModel(),
+    viewModel: BookmarkViewModel,
     navBackStackEntry: NavBackStackEntry? = null,
     onNavigateToDetail: (Int) -> Unit = {}
 ) {
@@ -80,17 +77,6 @@ fun BookmarkScreen(
         }
     }
 
-    viewModel.collectSideEffect { sideEffect ->
-        when (sideEffect) {
-            is BookmarkSideEffect.NavigateToDetail -> {
-                onNavigateToDetail(sideEffect.bookmarkId)
-            }
-
-            is BookmarkSideEffect.ShowError -> {
-                // TODO: 에러 처리
-            }
-        }
-    }
 
     if (state.shouldShowTutorial) {
         BookmarkTutorialScreen(
@@ -178,6 +164,7 @@ private fun BookmarkItem(
                         }
                     )
                     .crossfade(true)
+                    .error(R.drawable.img_bookmark_error)
                     .listener(
                         onStart = { isLoading = !bookmark.thumbnailImageUrl.isBlank() },
                         onSuccess = { _, _ -> isLoading = false },
