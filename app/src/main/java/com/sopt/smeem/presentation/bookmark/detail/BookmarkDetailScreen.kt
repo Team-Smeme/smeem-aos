@@ -84,9 +84,10 @@ fun BookmarkDetailScreen(
     onNavigateBack: () -> Unit = {},
     onNavigateToUseExpression: (String) -> Unit = {},
     onNavigateToHome: () -> Unit = {},
-    onShowToast: (String) -> Unit = {}
+    onShowToast: (String) -> Unit = {},
+    onShowCustomToast: (String, String) -> Unit = { _, _ -> }
 ) {
-    
+
     val state by viewModel.collectAsState()
     val context = LocalContext.current
 
@@ -132,6 +133,14 @@ fun BookmarkDetailScreen(
 
             is BookmarkDetailSideEffect.ShowToastAndNavigateToHome -> {
                 onShowToast(sideEffect.message)
+                onNavigateToHome()
+            }
+
+            is BookmarkDetailSideEffect.ShowCustomToast -> {
+                onShowCustomToast(sideEffect.title, sideEffect.subtitle)
+            }
+
+            is BookmarkDetailSideEffect.NavigateToHome -> {
                 onNavigateToHome()
             }
         }

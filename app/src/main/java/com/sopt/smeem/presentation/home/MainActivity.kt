@@ -3,7 +3,6 @@ package com.sopt.smeem.presentation.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -14,6 +13,7 @@ import com.sopt.smeem.databinding.ActivityMainBinding
 import com.sopt.smeem.domain.dto.RetrievedBadgeDto
 import com.sopt.smeem.presentation.IntentConstants
 import com.sopt.smeem.presentation.base.DefaultSnackBar
+import com.sopt.smeem.presentation.base.showCustomToast
 import com.sopt.smeem.presentation.bookmark.BookmarkFragment
 import com.sopt.smeem.presentation.splash.SplashLoginActivity
 import com.sopt.smeem.util.getParcelableArrayListExtraCompat
@@ -115,12 +115,18 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         val loginIntent = Intent(this@MainActivity, SplashLoginActivity::class.java)
                         startActivity(loginIntent)
-                        Toast.makeText(this@MainActivity, "로그인을 하고 다시 북마크를 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        showCustomToast(
+                            title = "다시 시도해 주세요",
+                            subtitle = "로그인을 하고 다시 북마크를 시도해주세요."
+                        )
                         finish()
                     }
                 }
             } else {
-                Toast.makeText(this@MainActivity, "아직 인스타그램 링크만 지원해요.", Toast.LENGTH_SHORT).show()
+                showCustomToast(
+                    title = "아직 지원하지 않는 링크예요",
+                    subtitle = "인스타그램을 잠을 바탕으로 할게 지원할 수 있어요."
+                )
             }
         }
     }

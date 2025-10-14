@@ -122,7 +122,12 @@ class BookmarkDetailViewModel @Inject constructor(
             when (e.errorCode) {
                 SmeemErrorCode.BOOKMARK_EXPRESSION_FAILED,
                 SmeemErrorCode.BOOKMARK_DAILY_LIMIT_EXCEEDED -> {
-                    postSideEffect(BookmarkDetailSideEffect.ShowToastAndNavigateToHome(e.errorCode.message))
+                    val parts = e.errorCode.message.split("\n", limit = 2)
+                    val title = parts[0]
+                    val subtitle = if (parts.size > 1) parts[1] else ""
+
+                    postSideEffect(BookmarkDetailSideEffect.ShowCustomToast(title, subtitle))
+                    postSideEffect(BookmarkDetailSideEffect.NavigateToHome)
                 }
                 else -> {
                     postSideEffect(BookmarkDetailSideEffect.ShowError(e.errorCode.message))

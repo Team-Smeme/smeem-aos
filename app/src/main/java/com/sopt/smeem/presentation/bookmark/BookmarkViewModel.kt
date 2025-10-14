@@ -1,6 +1,7 @@
 package com.sopt.smeem.presentation.bookmark
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sopt.smeem.domain.repository.BookmarkRepository
 import com.sopt.smeem.domain.repository.LocalRepository
 import com.sopt.smeem.presentation.bookmark.contract.BookmarkIntent
@@ -11,6 +12,8 @@ import com.sopt.smeem.presentation.bookmark.contract.BookmarkType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -22,8 +25,15 @@ class BookmarkViewModel @Inject constructor(
     private val bookmarkRepository: BookmarkRepository,
     private val localRepository: LocalRepository
 ) : ContainerHost<BookmarkState, BookmarkSideEffect>, ViewModel() {
-    
+
     override val container: Container<BookmarkState, BookmarkSideEffect> = container(BookmarkState())
+
+    private var isNavigating = false
+    private var onNavigateToDetailCallback: ((Int) -> Unit)? = null
+
+    fun setOnNavigateToDetailCallback(callback: (Int) -> Unit) {
+        onNavigateToDetailCallback = callback
+    }
 
     init {
         checkTutorialStatus()
@@ -32,10 +42,27 @@ class BookmarkViewModel @Inject constructor(
 
     fun onIntent(intent: BookmarkIntent) {
         when (intent) {
-            is BookmarkIntent.LoadBookmarks -> loadBookmarks()
-            is BookmarkIntent.OnBookmarkClick -> onBookmarkClick(intent.bookmarkId)
-            is BookmarkIntent.CompleteTutorial -> completeTutorial()
-            is BookmarkIntent.CheckTutorialStatus -> checkTutorialStatus()
+            is BookmarkIntent.LoadBookmarks -> {
+                loadBookmarks()
+            }
+            is BookmarkIntent.OnBookmarkClick -> {
+                if (isNavigating) return
+
+                isNavigating = true
+                onNavigateToDetailCallback?.invoke(intent.bookmarkId)
+
+                // Reset navigation flag after delay
+                viewModelScope.launch {
+                    delay(500)
+                    isNavigating = false
+                }
+            }
+            is BookmarkIntent.CompleteTutorial -> {
+                completeTutorial()
+            }
+            is BookmarkIntent.CheckTutorialStatus -> {
+                checkTutorialStatus()
+            }
         }
     }
 
@@ -75,8 +102,9 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
-    private fun onBookmarkClick(bookmarkId: Int) = intent {
-        postSideEffect(BookmarkSideEffect.NavigateToDetail(bookmarkId))
+
+    fun resetNavigatingFlag() {
+        isNavigating = false
     }
 
     private fun checkTutorialStatus() = intent {
