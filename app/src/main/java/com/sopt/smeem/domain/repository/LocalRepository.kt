@@ -47,4 +47,6 @@ interface LocalRepository {
     suspend fun setBookmarkTutorialCompleted()
 
     suspend fun clear()
+
+    suspend fun clearAuthenticationOnly()
 }

@@ -19,7 +19,7 @@ class MoreViewModel @Inject constructor(
 
     fun clearLocal() {
         viewModelScope.launch {
-            localRepository.clear()
+            localRepository.clearAuthenticationOnly()
         }
     }
 

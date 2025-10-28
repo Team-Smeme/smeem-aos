@@ -167,6 +167,18 @@ constructor(
         }
     }
 
+    override suspend fun clearAuthenticationOnly() {
+        try {
+            context.dataStore.edit { preferences ->
+                preferences.remove(API_ACCESS_TOKEN)
+                preferences.remove(API_REFRESH_TOKEN)
+                preferences.remove(RANDOM_TOPIC_TOOL_TIP_SWITCH)
+            }
+        } catch (t: Throwable) {
+            throw SmeemException(errorCode = SmeemErrorCode.SYSTEM_ERROR)
+        }
+    }
+
     companion object {
         private val API_ACCESS_TOKEN = stringPreferencesKey("api_access_token")
         private val API_REFRESH_TOKEN = stringPreferencesKey("api_refresh_token")
