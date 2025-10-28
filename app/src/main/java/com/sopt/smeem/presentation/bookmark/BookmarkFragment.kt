@@ -23,18 +23,30 @@ import org.orbitmvi.orbit.compose.collectAsState
 class BookmarkFragment : Fragment() {
 
     private var navController: NavController? = null
-    private var pendingUrl: String? = null
-    private val bookmarkViewModel by viewModels<BookmarkViewModel>()
+    val bookmarkViewModel by viewModels<BookmarkViewModel>()
+
+    companion object {
+        private const val ARG_URL = "arg_url"
+
+        fun newInstance(url: String? = null): BookmarkFragment {
+            return BookmarkFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_URL, url)
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        
+        val urlFromArgs = arguments?.getString(ARG_URL)
+
         return ComposeView(requireContext()).apply {
             setContent {
-                
+
                 SmeemTheme {
                     val navController = rememberNavController()
                     this@BookmarkFragment.navController = navController
@@ -90,9 +102,13 @@ class BookmarkFragment : Fragment() {
                             }
                         }
                     }
-                    
-                    val initialRoute = BookmarkRoute.BookmarkList
-                    
+
+                    val initialRoute = if (urlFromArgs != null) {
+                        BookmarkRoute.BookmarkDetailFromUrl(urlFromArgs)
+                    } else {
+                        BookmarkRoute.BookmarkList
+                    }
+
                     BookmarkNavHost(
                         navController = navController,
                         bookmarkViewModel = bookmarkViewModel,
@@ -102,35 +118,14 @@ class BookmarkFragment : Fragment() {
                             (activity as? MainActivity)?.navigateToHome()
                         }
                     )
-                    
-                    // NavController 준비 후 대기 중인 URL이 있다면 네비게이션
-                    LaunchedEffect(navController, pendingUrl) {
-                        pendingUrl?.let { url ->
-                            navController.navigate(BookmarkRoute.BookmarkDetailFromUrl(url))
-                            pendingUrl = null
-                        }
-                    }
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // Navigation flag reset is now handled in LaunchedEffect
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         (activity as? MainActivity)?.showBottomNavigation()
     }
-    
-    fun navigateToUrlDetail(url: String) {
-        if (navController != null) {
-            navController?.navigate(BookmarkRoute.BookmarkDetailFromUrl(url))
-        } else {
-            pendingUrl = url
-        }
-    }
-    
+
 }

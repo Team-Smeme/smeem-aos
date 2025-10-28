@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val homeViewModel by viewModels<HomeViewModel>()
 
     private val homeFragment by lazy { HomeFragment() }
-    private val bookmarkFragment by lazy { BookmarkFragment() }
+    private var bookmarkFragment: BookmarkFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +36,12 @@ class MainActivity : AppCompatActivity() {
         initView()
         setNavigation()
         handleIntentData()
+        handleSendIntent()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
         handleSendIntent()
     }
 
@@ -49,7 +55,12 @@ class MainActivity : AppCompatActivity() {
         binding.bnvMain.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_home -> replaceFragment(homeFragment)
-                R.id.menu_bookmark -> replaceFragment(bookmarkFragment)
+                R.id.menu_bookmark -> {
+                    if (bookmarkFragment == null) {
+                        bookmarkFragment = BookmarkFragment.newInstance()
+                    }
+                    replaceFragment(bookmarkFragment!!)
+                }
             }
             true
         }
@@ -101,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         binding.bnvMain.selectedItemId = R.id.menu_home
         showBottomNavigation()
     }
-    
+
     private fun handleSendIntent() {
         if (intent?.action == Intent.ACTION_SEND && intent?.type == "text/plain") {
             val sharedUrl = intent?.getStringExtra(Intent.EXTRA_TEXT)
@@ -132,8 +143,8 @@ class MainActivity : AppCompatActivity() {
     }
     
     private fun navigateToBookmarkFromUrl(url: String) {
-        replaceFragment(bookmarkFragment)
+        bookmarkFragment = BookmarkFragment.newInstance(url)
+        replaceFragment(bookmarkFragment!!)
         binding.bnvMain.selectedItemId = R.id.menu_bookmark
-        bookmarkFragment.navigateToUrlDetail(url)
     }
 }

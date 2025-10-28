@@ -2,6 +2,7 @@ package com.sopt.smeem.presentation.bookmark.navigation
 
 import android.app.Activity
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -28,7 +29,7 @@ fun BookmarkNavHost(
     initialRoute: BookmarkRoute = BookmarkRoute.BookmarkList,
     onNavigateToHome: () -> Unit = {}
 ) {
-    
+
     Scaffold { innerPadding ->
         NavHost(
             navController = navController,
@@ -104,12 +105,32 @@ fun BookmarkNavHost(
                 val args = backStackEntry.toRoute<BookmarkRoute.BookmarkDetailFromUrl>()
                 val context = navController.context
 
+                BackHandler {
+                    if (navController.previousBackStackEntry == null) {
+                        navController.navigate(BookmarkRoute.BookmarkList) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                inclusive = true
+                            }
+                        }
+                    } else {
+                        navController.popBackStack()
+                    }
+                }
+
                 BookmarkDetailScreen(
                     bookmarkId = null,
                     url = args.url,
                     viewModel = hiltViewModel(),
                     onNavigateBack = {
-                        navController.popBackStack()
+                        if (navController.previousBackStackEntry == null) {
+                            navController.navigate(BookmarkRoute.BookmarkList) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                            }
+                        } else {
+                            navController.popBackStack()
+                        }
                     },
                     onNavigateToUseExpression = { combinedExpression ->
                         val parts = combinedExpression.split(" ", limit = 2)
