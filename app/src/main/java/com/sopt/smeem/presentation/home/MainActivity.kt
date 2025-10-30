@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 showCustomToast(
                     title = "아직 지원하지 않는 링크예요",
-                    subtitle = "인스타그램을 잠을 바탕으로 할게 지원할 수 있어요."
+                    subtitle = "인스타그램은 전송 버튼으로 쉽게 저장할 수 있어요."
                 )
             }
         }
